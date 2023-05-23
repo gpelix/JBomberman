@@ -1,4 +1,3 @@
-
 package app.jbomberman.model;
 
 import app.jbomberman.JBomberManException;
@@ -17,149 +16,149 @@ import java.nio.file.Path;
 
 public class AccountBuilder
 {
-	private static AccountBuilder instance;
+    private static AccountBuilder instance;
 
-	private static final String LEVEL = "level",
-		POINTS_EARNED = "pointEarned",
-		SPEED = "speed",
-		BOMB_POWER = "bomberPower",
-		AVAILABLE_BOMS = "availableBombs",
-		REMOTE_CONTROL = "removeControl",
-		GOES_THROUGH_WALLS = "goesThroughWalls",
-		GOES_THROUGH_BOMBS = "goesThroughBombs",
-		GOES_THROUGH_FIRE = "goesThroughfire",
-		IS_INVINCIBLE = "isInvincible",
-		NO_OF_LIVES = "numberOfLives";
+    private static final String LEVEL = "level",
+        POINTS_EARNED = "pointEarned",
+        SPEED = "speed",
+        BOMB_POWER = "bomberPower",
+        AVAILABLE_BOMS = "availableBombs",
+        REMOTE_CONTROL = "removeControl",
+        GOES_THROUGH_WALLS = "goesThroughWalls",
+        GOES_THROUGH_BOMBS = "goesThroughBombs",
+        GOES_THROUGH_FIRE = "goesThroughfire",
+        IS_INVINCIBLE = "isInvincible",
+        NO_OF_LIVES = "numberOfLives";
 
-	private static final int START_LEVEL = 1;
+    private static final int START_LEVEL = 1;
 
-	private Logger logger;
+    private Logger logger;
 
-	public static AccountBuilder getInstance()
-	{
-		if (instance == null)
-			instance = new AccountBuilder();
-		return instance;
-	}
+    public static AccountBuilder getInstance()
+    {
+        if (instance == null)
+            instance = new AccountBuilder();
+        return instance;
+    }
 
-	private AccountBuilder()
-	{
-		logger = LogManager.getLogger();
-	}
+    private AccountBuilder()
+    {
+        logger = LogManager.getLogger();
+    }
 
-	private Path getFilePath()
-	{
-		return Path.of(DirUtils.getAppData(), Settings.JBOMBERMAN_DIRECTORY_NAME, Settings.PLAYERS_FILE);
-	}
+    private Path getFilePath()
+    {
+        return Path.of(DirUtils.getAppData(), Settings.JBOMBERMAN_DIRECTORY_NAME, Settings.PLAYERS_FILE);
+    }
 
-	private JSONObject getPlayersJson()
-	{
-		try {
-			String appdata = DirUtils.getAppData();
+    private JSONObject getPlayersJson()
+    {
+        try {
+            String appdata = DirUtils.getAppData();
 
-			Path jbombermanInAppdata = Path.of(appdata, Settings.JBOMBERMAN_DIRECTORY_NAME);
+            Path jbombermanInAppdata = Path.of(appdata, Settings.JBOMBERMAN_DIRECTORY_NAME);
 
-			if (!Files.exists(jbombermanInAppdata))
-				Files.createDirectory(jbombermanInAppdata);
+            if (!Files.exists(jbombermanInAppdata))
+                Files.createDirectory(jbombermanInAppdata);
 
-			Path jsonFilePath = Path.of(String.valueOf(jbombermanInAppdata), Settings.PLAYERS_FILE);
+            Path jsonFilePath = Path.of(String.valueOf(jbombermanInAppdata), Settings.PLAYERS_FILE);
 
-			if (!Files.exists(jsonFilePath))
-				try (OutputStream o = Files.newOutputStream(jsonFilePath)) {
-					o.write("{}".getBytes());
-				}
+            if (!Files.exists(jsonFilePath))
+                try (OutputStream o = Files.newOutputStream(jsonFilePath)) {
+                    o.write("{}".getBytes());
+                }
 
-			return new JSONObject(Files.readString(jsonFilePath));
-		} catch (IOException e) {
-			throw new JBomberManException(e.getMessage());
-		}
-	}
+            return new JSONObject(Files.readString(jsonFilePath));
+        } catch (IOException e) {
+            throw new JBomberManException(e.getMessage());
+        }
+    }
 
-	public Maybe<Account> retrievePlayer(String playerName)
-	{
-		JSONObject jsonPlayers;
+    public Maybe<Account> retrievePlayer(String playerName)
+    {
+        JSONObject jsonPlayers;
 
-		jsonPlayers = getPlayersJson();
+        jsonPlayers = getPlayersJson();
 
-		if (!jsonPlayers.has(playerName))
-			return Maybe.nothing();
+        if (!jsonPlayers.has(playerName))
+            return Maybe.nothing();
 
-		JSONObject playerStats = jsonPlayers.getJSONObject(playerName);
+        JSONObject playerStats = jsonPlayers.getJSONObject(playerName);
 
-		return Maybe.just(new Account(
-			playerName,
-			playerStats.getInt(LEVEL),
-			new BomberManCapabilities(
-				playerStats.getDouble(SPEED),
-				playerStats.getInt(BOMB_POWER),
-				playerStats.getInt(AVAILABLE_BOMS),
-				playerStats.getBoolean(REMOTE_CONTROL),
-				playerStats.getBoolean(GOES_THROUGH_WALLS),
-				playerStats.getBoolean(GOES_THROUGH_BOMBS),
-				playerStats.getBoolean(GOES_THROUGH_FIRE),
-				playerStats.getBoolean(IS_INVINCIBLE),
-				playerStats.getInt(POINTS_EARNED),
-				playerStats.getInt(NO_OF_LIVES)
-			)
-		));
-	}
+        return Maybe.just(new Account(
+            playerName,
+            playerStats.getInt(LEVEL),
+            new BomberManCapabilities(
+                playerStats.getDouble(SPEED),
+                playerStats.getInt(BOMB_POWER),
+                playerStats.getInt(AVAILABLE_BOMS),
+                playerStats.getBoolean(REMOTE_CONTROL),
+                playerStats.getBoolean(GOES_THROUGH_WALLS),
+                playerStats.getBoolean(GOES_THROUGH_BOMBS),
+                playerStats.getBoolean(GOES_THROUGH_FIRE),
+                playerStats.getBoolean(IS_INVINCIBLE),
+                playerStats.getInt(POINTS_EARNED),
+                playerStats.getInt(NO_OF_LIVES)
+            )
+        ));
+    }
 
-	public void buildPlayer(String playerName)
-	{
-		JSONObject playersJSON = getPlayersJson();
+    public void buildPlayer(String playerName)
+    {
+        JSONObject playersJSON = getPlayersJson();
 
-		if (playersJSON.has(playerName))
-			throw new PlayerBuilderException(playerName + " already exists. Unable to create again");
-		
-		savePlayer(getDefaultAccount(playerName));
-	}
+        if (playersJSON.has(playerName))
+            throw new PlayerBuilderException(playerName + " already exists. Unable to create again");
 
-	public void savePlayer(Account account)
-	{
-		JSONObject playerJSON = getPlayersJson();
+        savePlayer(getDefaultAccount(playerName));
+    }
 
-		String playerName = account.getPlayerName();
+    public void savePlayer(Account account)
+    {
+        JSONObject playerJSON = getPlayersJson();
 
-		JSONObject player;
+        String playerName = account.getPlayerName();
 
-		if (playerJSON.has(playerName))
-			player = playerJSON.getJSONObject(playerName);
-		else {
-			player = new JSONObject();
-			playerJSON.put(playerName, player);
-		}
+        JSONObject player;
 
-		BomberManCapabilities cap = account.getCapabilities();
+        if (playerJSON.has(playerName))
+            player = playerJSON.getJSONObject(playerName);
+        else {
+            player = new JSONObject();
+            playerJSON.put(playerName, player);
+        }
 
-		player.put(LEVEL, account.getLevel());
-		player.put(POINTS_EARNED, cap.getPointsEarned());
-		player.put(NO_OF_LIVES, cap.getNumberOfLives());
-		player.put(SPEED, cap.getSpeed());
-		player.put(BOMB_POWER, cap.getBombPower());
-		player.put(AVAILABLE_BOMS, cap.getAvailableBombs());
-		player.put(REMOTE_CONTROL, cap.hasRemoveControl());
-		player.put(GOES_THROUGH_WALLS, cap.goesThroughWalls());
-		player.put(GOES_THROUGH_BOMBS, cap.goesThroughBombs());
-		player.put(GOES_THROUGH_FIRE, cap.goesThroughFire());
-		player.put(IS_INVINCIBLE, cap.isInvincible());
+        BomberManCapabilities cap = account.getCapabilities();
 
-		saveFile(playerJSON);
-	}
+        player.put(LEVEL, account.getLevel());
+        player.put(POINTS_EARNED, cap.getPointsEarned());
+        player.put(NO_OF_LIVES, cap.getNumberOfLives());
+        player.put(SPEED, cap.getSpeed());
+        player.put(BOMB_POWER, cap.getBombPower());
+        player.put(AVAILABLE_BOMS, cap.getAvailableBombs());
+        player.put(REMOTE_CONTROL, cap.hasRemoveControl());
+        player.put(GOES_THROUGH_WALLS, cap.goesThroughWalls());
+        player.put(GOES_THROUGH_BOMBS, cap.goesThroughBombs());
+        player.put(GOES_THROUGH_FIRE, cap.goesThroughFire());
+        player.put(IS_INVINCIBLE, cap.isInvincible());
 
-	private void saveFile(JSONObject obj)
-	{
-		try {
-			Files.writeString(getFilePath(), obj.toString(2));
-		} catch (IOException e) {
-			throw new JBomberManException("Unable to write settings file " + getFilePath());
-		}
-	}
+        saveFile(playerJSON);
+    }
 
-	public Account getDefaultAccount(String playerName)
-	{
-		return new Account(
-			playerName,
-			START_LEVEL,
-			BomberManCapabilities.defaultCapabilities);
-	}
+    private void saveFile(JSONObject obj)
+    {
+        try {
+            Files.writeString(getFilePath(), obj.toString(2));
+        } catch (IOException e) {
+            throw new JBomberManException("Unable to write settings file " + getFilePath());
+        }
+    }
+
+    public Account getDefaultAccount(String playerName)
+    {
+        return new Account(
+            playerName,
+            START_LEVEL,
+            BomberManCapabilities.defaultCapabilities);
+    }
 }

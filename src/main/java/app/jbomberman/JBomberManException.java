@@ -9,13 +9,13 @@ package app.jbomberman;
  */
 public class JBomberManException extends RuntimeException
 {
-	/**
-	 * Construct a JBomberManException with a specific message
-	 *
-	 * @param str the message for this Exception
-	 */
-	public JBomberManException(String str)
-	{
-		super(str);
-	}
+    /**
+     * Construct a JBomberManException with a specific message
+     *
+     * @param str the message for this Exception
+     */
+    public JBomberManException(String str)
+    {
+        super(str);
+    }
 }

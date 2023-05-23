@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
@@ -19,62 +18,62 @@ import app.jbomberman.util.Vector2D;
  */
 public class LoadingLevelScene extends SoundyBomberManScene
 {
-	/**
-	 * loadingLevelSceneSound is the sound to be played during this scene
-	 */
-	private static final String LOADING_LEVEL_SCENE_SOUND =
-		"sounds/02 Stage Start.wav";
+    /**
+     * loadingLevelSceneSound is the sound to be played during this scene
+     */
+    private static final String LOADING_LEVEL_SCENE_SOUND =
+        "sounds/02 Stage Start.wav";
 
-	private final Controller controller;
+    private final Controller controller;
 
-	private Maybe<Drawing> drawing;
+    private Maybe<Drawing> drawing;
 
-	/**
-	 * setup() sets up a text indicating the level and Loading...
-	 */
+    /**
+     * setup() sets up a text indicating the level and Loading...
+     */
 
-	public LoadingLevelScene(Controller controller, Model model)
-	{
-		super(model);
+    public LoadingLevelScene(Controller controller, Model model)
+    {
+        super(model);
 
-		this.controller = controller;
-	}
+        this.controller = controller;
+    }
 
-	@Override
-	public void setup()
-	{
+    @Override
+    public void setup()
+    {
 
-		AudioPlayer.getInstance().stopAll();
+        AudioPlayer.getInstance().stopAll();
 
-		Vector2D dimensions = getModel().getDimensions().unwrap();
+        Vector2D dimensions = getModel().getDimensions().unwrap();
 
-		Text stageText = new Text("Stage " + getModel().getAccount().getLevel(), true, dimensions.div(2));
-		Text loadingText = new Text("Loading...", true,
-			dimensions.sub(
-				Vector2D.of(dimensions.getX() / 2,
-					FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2))); // TODO: why * 2
-
-
-		drawing = Maybe.just(new Drawing(loadingText.getDrawing(), stageText.getDrawing()));
-		drawing.unwrap().setDimensions(dimensions);
-
-		playIfNeeded(LOADING_LEVEL_SCENE_SOUND);
-	}
+        Text stageText = new Text("Stage " + getModel().getAccount().getLevel(), true, dimensions.div(2));
+        Text loadingText = new Text("Loading...", true,
+            dimensions.sub(
+                Vector2D.of(dimensions.getX() / 2,
+                    FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2))); // TODO: why * 2
 
 
-	@Override
-	public Drawing update()
-	{
-		if (!isPlayingSomething())
-			doTransition(new GameScene(getModel(), controller));
+        drawing = Maybe.just(new Drawing(loadingText.getDrawing(), stageText.getDrawing()));
+        drawing.unwrap().setDimensions(dimensions);
 
-		return drawing.unwrap();
-	}
+        playIfNeeded(LOADING_LEVEL_SCENE_SOUND);
+    }
 
-	@Override
-	public void cleanup()
-	{
-		// This should not be necessary
-		AudioPlayer.getInstance().stopAll();
-	}
+
+    @Override
+    public Drawing update()
+    {
+        if (!isPlayingSomething())
+            doTransition(new GameScene(getModel(), controller));
+
+        return drawing.unwrap();
+    }
+
+    @Override
+    public void cleanup()
+    {
+        // This should not be necessary
+        AudioPlayer.getInstance().stopAll();
+    }
 }

@@ -10,48 +10,48 @@ import app.jbomberman.util.Maybe;
 
 public class WinScene extends SoundyBomberManScene
 {
-	private final Controller controller;
+    private final Controller controller;
 
-	private Maybe<Text> winText = Maybe.nothing();
+    private Maybe<Text> winText = Maybe.nothing();
 
-	private static final String GAME_OVER_SOUND = "sounds/08 Ending.wav";
+    private static final String GAME_OVER_SOUND = "sounds/08 Ending.wav";
 
-	protected WinScene(Model model, Controller controller)
-	{
-		super(model);
+    protected WinScene(Model model, Controller controller)
+    {
+        super(model);
 
-		this.controller = controller;
-	}
+        this.controller = controller;
+    }
 
-	@Override
-	public Drawing update()
-	{
-		if (!isPlayingSomething()) {
-			doTransition(new StartDisplay(controller, getModel()));
-		}
+    @Override
+    public Drawing update()
+    {
+        if (!isPlayingSomething()) {
+            doTransition(new StartDisplay(controller, getModel()));
+        }
 
-		Drawing a = winText.unwrap().getDrawing();
-		a.setDimensions(getModel().getDimensions().unwrap());
+        Drawing a = winText.unwrap().getDrawing();
+        a.setDimensions(getModel().getDimensions().unwrap());
 
-		return a;
-	}
+        return a;
+    }
 
-	@Override
-	public void cleanup()
-	{
-		// Do nothing
-	}
+    @Override
+    public void cleanup()
+    {
+        // Do nothing
+    }
 
-	@Override
-	public void setup()
-	{
-		AudioPlayer.getInstance().stopAll();
-		playIfNeeded(GAME_OVER_SOUND);
+    @Override
+    public void setup()
+    {
+        AudioPlayer.getInstance().stopAll();
+        playIfNeeded(GAME_OVER_SOUND);
 
-		winText = Maybe.just(new Text("You have won", true));
+        winText = Maybe.just(new Text("You have won", true));
 
-		winText.unwrap().setPosition(
-			getModel().getDimensions().unwrap().div(2)
-		);
-	}
+        winText.unwrap().setPosition(
+            getModel().getDimensions().unwrap().div(2)
+        );
+    }
 }

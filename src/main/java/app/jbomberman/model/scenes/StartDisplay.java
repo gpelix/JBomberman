@@ -21,74 +21,74 @@ import app.jbomberman.util.Vector2D;
  */
 public class StartDisplay extends SoundyBomberManScene
 {
-	/**
-	 * startDisplaySound is the soundtrack to play during the scene
-	 */
-	private static final String startDisplaySound = "sounds/01 Title Screen.wav";
+    /**
+     * startDisplaySound is the soundtrack to play during the scene
+     */
+    private static final String startDisplaySound = "sounds/01 Title Screen.wav";
 
-	private static final double MENU_POSITION = 21. / 32;
+    private static final double MENU_POSITION = 21. / 32;
 
-	private final AbstractImage startImage;
+    private final AbstractImage startImage;
 
-	private Maybe<HorizontalMenu> menu;
+    private Maybe<HorizontalMenu> menu;
 
-	private final Controller controller;
+    private final Controller controller;
 
-	/**
-	 * setup() displays the images, text and sets up callbacks
-	 */
-	public StartDisplay(Controller controller, Model model)
-	{
-		super(model);
-		this.controller = controller;
+    /**
+     * setup() displays the images, text and sets up callbacks
+     */
+    public StartDisplay(Controller controller, Model model)
+    {
+        super(model);
+        this.controller = controller;
 
-		startImage = FlightWeightImagesFactory.getInstance().getImage(
-			"StartDisplay.png");
+        startImage = FlightWeightImagesFactory.getInstance().getImage(
+            "StartDisplay.png");
 
-		menu = Maybe.nothing();
-	}
+        menu = Maybe.nothing();
+    }
 
-	@Override
-	public void setup()
-	{
+    @Override
+    public void setup()
+    {
 
-		getModel().setDimensions(startImage.getDimensions());
+        getModel().setDimensions(startImage.getDimensions());
 
-		Vector2D modelDimensions = getModel().getDimensions().unwrap();
+        Vector2D modelDimensions = getModel().getDimensions().unwrap();
 
-		int width = modelDimensions.getX();
-		int height = modelDimensions.getY();
+        int width = modelDimensions.getX();
+        int height = modelDimensions.getY();
 
-		menu = Maybe.just(new HorizontalMenu(
-			new MenuEntry("Start", true,
-				() -> doTransition(new LoadingLevelScene(controller, getModel()))),
-			new MenuEntry("Log In", true,
-				() -> doTransition(new LogInScene(controller, getModel()))),
-			new MenuEntry("Exit", true, getModel()::close)
-		));
-		menu.unwrap().setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
-		menu.unwrap().setWidth(width);
+        menu = Maybe.just(new HorizontalMenu(
+            new MenuEntry("Start", true,
+                () -> doTransition(new LoadingLevelScene(controller, getModel()))),
+            new MenuEntry("Log In", true,
+                () -> doTransition(new LogInScene(controller, getModel()))),
+            new MenuEntry("Exit", true, getModel()::close)
+        ));
+        menu.unwrap().setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
+        menu.unwrap().setWidth(width);
 
-		controller.attachKeyBoardObserver(menu.unwrap());
-	}
+        controller.attachKeyBoardObserver(menu.unwrap());
+    }
 
-	@Override
-	public void cleanup()
-	{
-		controller.detachKeyBoardObserver(menu.unwrap());
-		AudioPlayer.getInstance().stopAll();
-	}
+    @Override
+    public void cleanup()
+    {
+        controller.detachKeyBoardObserver(menu.unwrap());
+        AudioPlayer.getInstance().stopAll();
+    }
 
-	@Override
-	public Drawing update()
-	{
-		playIfNeeded(startDisplaySound);
+    @Override
+    public Drawing update()
+    {
+        playIfNeeded(startDisplaySound);
 
-		Drawing drawing = new Drawing(
-			new DrawObject(Vector2D.of(0, 0), startImage));
+        Drawing drawing = new Drawing(
+            new DrawObject(Vector2D.of(0, 0), startImage));
 
-		drawing.merge(menu.unwrap().getDrawing(), FunctionalUtils::inc);
+        drawing.merge(menu.unwrap().getDrawing(), FunctionalUtils::inc);
 
-		return drawing;
-	}
+        return drawing;
+    }
 }

@@ -6,42 +6,42 @@ import app.jbomberman.util.Callback;
 public class MenuEntry extends Text
 {
 
-	private final Callback callback;
+    private final Callback callback;
 
-	public MenuEntry(String str, boolean black, Callback callback)
-	{
-		super(str, black);
+    public MenuEntry(String str, boolean black, Callback callback)
+    {
+        super(str, black);
 
-		this.callback = callback;
-	}
+        this.callback = callback;
+    }
 
-	public MenuEntry(Text text, Callback callback)
-	{
-		this(text.getText(), text.getColor(), callback);
-	}
+    public MenuEntry(Text text, Callback callback)
+    {
+        this(text.getText(), text.getColor(), callback);
+    }
 
-	@Override
-	public String getText()
-	{
-		return super.getText().substring(1); // WHAT THE HELL. Why substring?? TODO:
-	}
+    @Override
+    public String getText()
+    {
+        return super.getText().substring(1); // WHAT THE HELL. Why substring?? TODO:
+    }
 
-	public void setSelected(boolean isSelected)
-	{
-		if (isSelected)
-			setColor(false);
-		else
-			setColor(true);
-	}
+    public void setSelected(boolean isSelected)
+    {
+        if (isSelected)
+            setColor(false);
+        else
+            setColor(true);
+    }
 
-	@Override
-	public Drawing getDrawing()
-	{
-		return super.getDrawing();
-	}
+    @Override
+    public Drawing getDrawing()
+    {
+        return super.getDrawing();
+    }
 
-	public void callCallback()
-	{
-		callback.run();
-	}
+    public void callCallback()
+    {
+        callback.run();
+    }
 }

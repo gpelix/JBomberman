@@ -10,35 +10,35 @@ import app.jbomberman.model.Model;
  */
 public abstract class BomberManScene
 {
-	private final Model model;
+    private final Model model;
 
-	protected BomberManScene(Model model)
-	{
-		this.model = model;
-	}
+    protected BomberManScene(Model model)
+    {
+        this.model = model;
+    }
 
-	/**
-	 * update() should be called regularly by a timer like AnimationTimer in javafx
-	 * package. It should be used to update what gets displayed on the screen
-	 */
-	public abstract Drawing update();
+    /**
+     * update() should be called regularly by a timer like AnimationTimer in javafx
+     * package. It should be used to update what gets displayed on the screen
+     */
+    public abstract Drawing update();
 
-	/**
-	 * cleanup before transition to a new scene
-	 */
-	public abstract void cleanup();
+    /**
+     * cleanup before transition to a new scene
+     */
+    public abstract void cleanup();
 
-	public abstract void setup();
+    public abstract void setup();
 
-	protected void doTransition(BomberManScene nextScene)
-	{
-		cleanup();
-		nextScene.setup();
-		model.setScene(nextScene);
-	}
+    protected void doTransition(BomberManScene nextScene)
+    {
+        cleanup();
+        nextScene.setup();
+        model.setScene(nextScene);
+    }
 
-	protected Model getModel()
-	{
-		return model;
-	}
+    protected Model getModel()
+    {
+        return model;
+    }
 }

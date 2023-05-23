@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.drawing.Drawing;
@@ -11,42 +10,42 @@ import app.jbomberman.util.Vector2D;
 
 public class Wall extends Entity
 {
-	private GameCharacterState<Wall> state;
+    private GameCharacterState<Wall> state;
 
-	public Wall(Vector2D coordinate, GameGrid gameGrid,
-							ImageManager aliveImages, ImageManager deathImages)
-	{
-		super(coordinate, gameGrid);
+    public Wall(Vector2D coordinate, GameGrid gameGrid,
+                ImageManager aliveImages, ImageManager deathImages)
+    {
+        super(coordinate, gameGrid);
 
-		state = new WallAliveState(this, new WallDeadState<>(this,
-			deathImages), aliveImages);
-	}
+        state = new WallAliveState(this, new WallDeadState<>(this,
+            deathImages), aliveImages);
+    }
 
-	@Override
-	public void updateInModel()
-	{
-		state.updateInModel();
-	}
+    @Override
+    public void updateInModel()
+    {
+        state.updateInModel();
+    }
 
-	@Override
-	public boolean notifyExplosion(Explosion explosion)
-	{
-		return state.notifyExplosion(explosion);
-	}
+    @Override
+    public boolean notifyExplosion(Explosion explosion)
+    {
+        return state.notifyExplosion(explosion);
+    }
 
-	@Override
-	public Drawing getDrawing()
-	{
-		return state.getDrawing();
-	}
+    @Override
+    public Drawing getDrawing()
+    {
+        return state.getDrawing();
+    }
 
-	public void setState(GameCharacterState<Wall> state)
-	{
-		this.state = state;
-	}
+    public void setState(GameCharacterState<Wall> state)
+    {
+        this.state = state;
+    }
 
-	public boolean isDisappearing()
-	{
-		return state.isDisappearing();
-	}
+    public boolean isDisappearing()
+    {
+        return state.isDisappearing();
+    }
 }

@@ -5,25 +5,25 @@ import app.jbomberman.util.Maybe;
 
 public class AudioHandle
 {
-	private Maybe<ThreadPlayer> threadPlayer;
+    private Maybe<ThreadPlayer> threadPlayer;
 
-	AudioHandle(Maybe<ThreadPlayer> threadPlayer)
-	{
-		this.threadPlayer = threadPlayer;
-	}
+    AudioHandle(Maybe<ThreadPlayer> threadPlayer)
+    {
+        this.threadPlayer = threadPlayer;
+    }
 
-	public boolean isPlaying()
-	{
-		return threadPlayer.compute(true, ThreadPlayer::isPlaying);
-	}
+    public boolean isPlaying()
+    {
+        return threadPlayer.compute(true, ThreadPlayer::isPlaying);
+    }
 
-	public Maybe<String> getSoundFileName()
-	{
-		return threadPlayer.maybeCompute(ThreadPlayer::getSoundFileName);
-	}
+    public Maybe<String> getSoundFileName()
+    {
+        return threadPlayer.maybeCompute(ThreadPlayer::getSoundFileName);
+    }
 
-	public void stop()
-	{
-		threadPlayer.maybeDo(tPlayer -> AudioPlayer.getInstance().stop(tPlayer));
-	}
+    public void stop()
+    {
+        threadPlayer.maybeDo(tPlayer -> AudioPlayer.getInstance().stop(tPlayer));
+    }
 }

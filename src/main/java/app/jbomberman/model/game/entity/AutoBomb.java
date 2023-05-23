@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.Settings;
@@ -9,28 +8,28 @@ import app.jbomberman.util.Vector2D;
 
 public class AutoBomb extends Bomb
 {
-	private static final int BOMB_EXPLOSION_INTERVAL = Settings.MAX_FPS * 2;
+    private static final int BOMB_EXPLOSION_INTERVAL = Settings.MAX_FPS * 2;
 
-	private int timeToExplosion = BOMB_EXPLOSION_INTERVAL;
+    private int timeToExplosion = BOMB_EXPLOSION_INTERVAL;
 
-	public AutoBomb(Vector2D coordinate, int bombRange,
-									BomberMan bomberMan, ImageManager imageManager,
-									GameGrid gameGrid)
-	{
-		super(coordinate, bombRange, bomberMan, imageManager, gameGrid);
-	}
+    public AutoBomb(Vector2D coordinate, int bombRange,
+                    BomberMan bomberMan, ImageManager imageManager,
+                    GameGrid gameGrid)
+    {
+        super(coordinate, bombRange, bomberMan, imageManager, gameGrid);
+    }
 
-	@Override
-	public void updateInModel()
-	{
-		if (--timeToExplosion == 0) {
-			super.commonUpdateInModel();
-		}
-	}
+    @Override
+    public void updateInModel()
+    {
+        if (--timeToExplosion == 0) {
+            super.commonUpdateInModel();
+        }
+    }
 
-	@Override
-	public String toString()
-	{
-		return "AutoBomb(" + super.toString() + ")";
-	}
+    @Override
+    public String toString()
+    {
+        return "AutoBomb(" + super.toString() + ")";
+    }
 }

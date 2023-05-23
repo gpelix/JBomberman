@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
@@ -18,62 +17,62 @@ import app.jbomberman.util.Vector2D;
  */
 public abstract class Entity extends MutableVector2D
 {
-	public static final int SIZE_IN_MODEL = 16 * Settings.SCALE_FACTOR;
+    public static final int SIZE_IN_MODEL = 16 * Settings.SCALE_FACTOR;
 
-	private final GameGrid gameGrid;
+    private final GameGrid gameGrid;
 
 
-	public Entity(Vector2D coordinate, GameGrid gameGrid)
-	{
-		super(coordinate.getX(), coordinate.getY());
-		this.gameGrid = gameGrid;
-	}
+    public Entity(Vector2D coordinate, GameGrid gameGrid)
+    {
+        super(coordinate.getX(), coordinate.getY());
+        this.gameGrid = gameGrid;
+    }
 
-	/**
-	 * Utility function meant to be used by subclasses to draw a specific image
-	 *
-	 * @param img ImageView to draw at the coordinates specified by the coordinates
-	 *            of this Entity
-	 */
-	public Drawing getDrawing(AbstractImage img)
-	{
-		Drawing newDrawing = new Drawing();
+    /**
+     * Utility function meant to be used by subclasses to draw a specific image
+     *
+     * @param img ImageView to draw at the coordinates specified by the coordinates
+     *            of this Entity
+     */
+    public Drawing getDrawing(AbstractImage img)
+    {
+        Drawing newDrawing = new Drawing();
 
-		newDrawing.add(new DrawObject(this, img),
-			EntityHierarchy.getInstance().getDrawLevelFor(this).unwrapOrThrow(() ->
-				new JBomberManException("Don't know where to place " + this.getClass().getName())));
+        newDrawing.add(new DrawObject(this, img),
+            EntityHierarchy.getInstance().getDrawLevelFor(this).unwrapOrThrow(() ->
+                new JBomberManException("Don't know where to place " + this.getClass().getName())));
 
-		return newDrawing;
-	}
+        return newDrawing;
+    }
 
-	/**
-	 * draw should be used to decide which image to print
-	 */
-	public abstract Drawing getDrawing();
+    /**
+     * draw should be used to decide which image to print
+     */
+    public abstract Drawing getDrawing();
 
-	public abstract void updateInModel();
+    public abstract void updateInModel();
 
-	// boolean is because we need to know if the explosion was stopped
-	public abstract boolean notifyExplosion(Explosion explosion);
+    // boolean is because we need to know if the explosion was stopped
+    public abstract boolean notifyExplosion(Explosion explosion);
 
-	@Override
-	public String toString()
-	{
-		return "Entity(MutableVector2D=" + super.toString() + ")";
-	}
+    @Override
+    public String toString()
+    {
+        return "Entity(MutableVector2D=" + super.toString() + ")";
+    }
 
-	public final GameGrid getGameGrid()
-	{
-		return gameGrid;
-	}
+    public final GameGrid getGameGrid()
+    {
+        return gameGrid;
+    }
 
-	public final FreeCell getUnderlyingFreeCell()
-	{
-		return gameGrid.get(getCenterInGridCoord());
-	}
+    public final FreeCell getUnderlyingFreeCell()
+    {
+        return gameGrid.get(getCenterInGridCoord());
+    }
 
-	public final Vector2D getCenterInGridCoord()
-	{
-		return gameGrid.getCenterInGridCoord(this);
-	}
+    public final Vector2D getCenterInGridCoord()
+    {
+        return gameGrid.getCenterInGridCoord(this);
+    }
 }

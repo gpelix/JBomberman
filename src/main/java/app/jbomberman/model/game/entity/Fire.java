@@ -8,38 +8,38 @@ import app.jbomberman.util.Vector2D;
 
 public class Fire extends Entity
 {
-	public enum FireType
-	{
-		CENTER, HORIZONTAL, VERTICAL, NORTH, SOUTH, EAST, WEST
-	}
+    public enum FireType
+    {
+        CENTER, HORIZONTAL, VERTICAL, NORTH, SOUTH, EAST, WEST
+    }
 
-	private ImageManager imageManager;
+    private ImageManager imageManager;
 
-	public Fire(Vector2D coordinate, GameGrid gameGrid, ImageManager imageManager)
-	{
-		super(coordinate, gameGrid);
+    public Fire(Vector2D coordinate, GameGrid gameGrid, ImageManager imageManager)
+    {
+        super(coordinate, gameGrid);
 
-		this.imageManager = imageManager;
-	}
+        this.imageManager = imageManager;
+    }
 
-	@Override
-	public Drawing getDrawing()
-	{
-		return getDrawing(imageManager.getNextImage());
-	}
+    @Override
+    public Drawing getDrawing()
+    {
+        return getDrawing(imageManager.getNextImage());
+    }
 
-	@Override
-	public void updateInModel()
-	{
-		if (imageManager.hasDoneOneCycle()) {
-			FreeCell freeCell = getUnderlyingFreeCell();
-			freeCell.remove(this);
-		}
-	}
+    @Override
+    public void updateInModel()
+    {
+        if (imageManager.hasDoneOneCycle()) {
+            FreeCell freeCell = getUnderlyingFreeCell();
+            freeCell.remove(this);
+        }
+    }
 
-	@Override
-	public boolean notifyExplosion(Explosion explosion)
-	{
-		return false;
-	}
+    @Override
+    public boolean notifyExplosion(Explosion explosion)
+    {
+        return false;
+    }
 }

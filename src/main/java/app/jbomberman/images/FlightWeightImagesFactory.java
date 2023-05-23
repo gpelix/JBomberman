@@ -22,78 +22,78 @@ import static app.jbomberman.Settings.SCALE_FACTOR;
  */
 public class FlightWeightImagesFactory
 {
-	/**
-	 * factory is the unique instance of FlightWeightImagesFactory that is
-	 * created in the program
-	 */
-	static private FlightWeightImagesFactory factory;
+    /**
+     * factory is the unique instance of FlightWeightImagesFactory that is
+     * created in the program
+     */
+    static private FlightWeightImagesFactory factory;
 
-	/**
-	 * CHARACTER_SIZE_IN_PIXEL is a static int that specifies the size in
-	 * pixel of the square images containing characters
-	 */
-	static public final int CHARACTER_SIZE_IN_PIXEL = 8 * SCALE_FACTOR;
+    /**
+     * CHARACTER_SIZE_IN_PIXEL is a static int that specifies the size in
+     * pixel of the square images containing characters
+     */
+    static public final int CHARACTER_SIZE_IN_PIXEL = 8 * SCALE_FACTOR;
 
-	/**
-	 * of the unique instance of FlightWeightImagesFactory
-	 *
-	 * @return instance of FlightWeightImagesFactory
-	 */
-	public static FlightWeightImagesFactory getInstance()
-	{
-		if (factory == null)
-			factory = new FlightWeightImagesFactory();
-		return factory;
-	}
+    /**
+     * of the unique instance of FlightWeightImagesFactory
+     *
+     * @return instance of FlightWeightImagesFactory
+     */
+    public static FlightWeightImagesFactory getInstance()
+    {
+        if (factory == null)
+            factory = new FlightWeightImagesFactory();
+        return factory;
+    }
 
-	private static final AbstractImageBuilder imageBuilder = new JavaFXImageBuilder();
+    private static final AbstractImageBuilder imageBuilder = new JavaFXImageBuilder();
 
-	/**
-	 * We use a Map to implement a mapping between path names to images for
-	 * fast retrieval
-	 */
-	private final Map<String, AbstractImage> images;
+    /**
+     * We use a Map to implement a mapping between path names to images for
+     * fast retrieval
+     */
+    private final Map<String, AbstractImage> images;
 
-	/**
-	 * private constructor for FlightWeightImagesFactory that must only be
-	 * called from the getInstance() function
-	 */
-	private FlightWeightImagesFactory()
-	{
-		images = new HashMap<>();
-	}
+    /**
+     * private constructor for FlightWeightImagesFactory that must only be
+     * called from the getInstance() function
+     */
+    private FlightWeightImagesFactory()
+    {
+        images = new HashMap<>();
+    }
 
-	/**
-	 * of an image either loading it from file or if it has already been
-	 * loaded, of it from the inner map
-	 *
-	 * @param path path of the resource that contains the image to of
-	 * @return the loaded image
-	 */
-	public AbstractImage getImage(String path)
-	{
-		return images.computeIfAbsent(path,
-			p -> imageBuilder.getImage(Settings.IMAGES_DIRECTORY + p));
+    /**
+     * of an image either loading it from file or if it has already been
+     * loaded, of it from the inner map
+     *
+     * @param path path of the resource that contains the image to of
+     * @return the loaded image
+     */
+    public AbstractImage getImage(String path)
+    {
+        return images.computeIfAbsent(path,
+            p -> imageBuilder.getImage(Settings.IMAGES_DIRECTORY + p));
 
-	}
+    }
 
-	/**
-	 * getCharacterImage is similar to getNextImage but we specify a char instead
-	 * of a filename. This function loads the image associated with the
-	 * character.
-	 *
-	 * @param c     character whose image we want to load
-	 * @param black black is a boolean that specifies whether we want to load
-	 *              the black or gray version of the character
-	 * @return the loaded image of the character
-	 */
-	public AbstractImage getCharacterImage(char c, boolean black)
-	{
-		return getImage(switch (c) {
-			case '.' -> "dot";
-			case ' ' -> "space";
-			case ':' -> "column";
-			default -> String.valueOf(c);
-		} + (black ? "" : "_gray") + ".png");
-	}
+    /**
+     * getCharacterImage is similar to getNextImage but we specify a char instead
+     * of a filename. This function loads the image associated with the
+     * character.
+     *
+     * @param c     character whose image we want to load
+     * @param black black is a boolean that specifies whether we want to load
+     *              the black or gray version of the character
+     * @return the loaded image of the character
+     */
+    public AbstractImage getCharacterImage(char c, boolean black)
+    {
+        return getImage(switch (c) {
+            case '.' -> "dot";
+            case ' ' -> "space";
+            case ':' -> "column";
+            default -> String.valueOf(c);
+        } + (black ? "" : "_gray") + ".png");
+    }
 }

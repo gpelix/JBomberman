@@ -10,49 +10,49 @@ import app.jbomberman.util.Maybe;
 
 public class GameOverScene extends SoundyBomberManScene
 {
-	private final Controller controller;
+    private final Controller controller;
 
-	private Maybe<Text> gameOverText = Maybe.nothing();
+    private Maybe<Text> gameOverText = Maybe.nothing();
 
-	private static final String GAME_OVER_SOUND = "sounds/10 Game Over.wav";
+    private static final String GAME_OVER_SOUND = "sounds/10 Game Over.wav";
 
-	protected GameOverScene(Model model, Controller controller)
-	{
-		super(model);
+    protected GameOverScene(Model model, Controller controller)
+    {
+        super(model);
 
-		this.controller = controller;
-	}
+        this.controller = controller;
+    }
 
-	@Override
-	public Drawing update()
-	{
-		if (!isPlayingSomething()) {
-			getModel().getAccount().setLevel(1);
-			doTransition(new StartDisplay(controller, getModel()));
-		}
+    @Override
+    public Drawing update()
+    {
+        if (!isPlayingSomething()) {
+            getModel().getAccount().setLevel(1);
+            doTransition(new StartDisplay(controller, getModel()));
+        }
 
-		Drawing a = gameOverText.unwrap().getDrawing();
-		a.setDimensions(getModel().getDimensions().unwrap());
+        Drawing a = gameOverText.unwrap().getDrawing();
+        a.setDimensions(getModel().getDimensions().unwrap());
 
-		return a;
-	}
+        return a;
+    }
 
-	@Override
-	public void cleanup()
-	{
-		// Do nothing
-	}
+    @Override
+    public void cleanup()
+    {
+        // Do nothing
+    }
 
-	@Override
-	public void setup()
-	{
-		AudioPlayer.getInstance().stopAll();
-		playIfNeeded(GAME_OVER_SOUND);
+    @Override
+    public void setup()
+    {
+        AudioPlayer.getInstance().stopAll();
+        playIfNeeded(GAME_OVER_SOUND);
 
-		gameOverText = Maybe.just(new Text("Game over", true));
+        gameOverText = Maybe.just(new Text("Game over", true));
 
-		gameOverText.unwrap().setPosition(
-			getModel().getDimensions().unwrap().div(2)
-		);
-	}
+        gameOverText.unwrap().setPosition(
+            getModel().getDimensions().unwrap().div(2)
+        );
+    }
 }

@@ -12,13 +12,13 @@ import app.jbomberman.controller.Controller;
 public class JBomberMan
 {
 
-	/**
-	 * Entry point of the program
-	 *
-	 * @param args command line parameters
-	 */
-	public static void main(String[] args)
-	{
-		Controller.launch();
-	}
+    /**
+     * Entry point of the program
+     *
+     * @param args command line parameters
+     */
+    public static void main(String[] args)
+    {
+        Controller.launch();
+    }
 }

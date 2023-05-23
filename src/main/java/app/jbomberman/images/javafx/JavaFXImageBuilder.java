@@ -8,9 +8,9 @@ import javafx.scene.image.Image;
 
 public class JavaFXImageBuilder extends AbstractImageBuilder
 {
-	@Override
-	public AbstractImage getImage(String path)
-	{
-		return new JavaFXImage(new Image(Resources.getResourceAsStream(path)));
-	}
+    @Override
+    public AbstractImage getImage(String path)
+    {
+        return new JavaFXImage(new Image(Resources.getResourceAsStream(path)));
+    }
 }

@@ -9,19 +9,19 @@ import javafx.stage.Stage;
 
 public class JavaFXSetup extends Application
 {
-	private static Maybe<Callback> callback = Maybe.nothing();
+    private static Maybe<Callback> callback = Maybe.nothing();
 
-	@Override
-	public void start(Stage primaryStage)
-	{
-		callback.doOrThrow(Callback::run, () -> new JBomberManException(
-			"Callback is uninitialized"
-		));
-	}
+    @Override
+    public void start(Stage primaryStage)
+    {
+        callback.doOrThrow(Callback::run, () -> new JBomberManException(
+            "Callback is uninitialized"
+        ));
+    }
 
-	public static void initialize(Callback callback)
-	{
-		JavaFXSetup.callback = Maybe.just(callback);
-		launch();
-	}
+    public static void initialize(Callback callback)
+    {
+        JavaFXSetup.callback = Maybe.just(callback);
+        launch();
+    }
 }

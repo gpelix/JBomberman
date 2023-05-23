@@ -9,11 +9,11 @@ package app.jbomberman.util;
 @FunctionalInterface
 public interface Callback
 {
-	/**
-	 * run() is the single abstract method
-	 */
-	void run();
+    /**
+     * run() is the single abstract method
+     */
+    void run();
 
-	Callback NULL_CALLBACK = () -> {
-	};
+    Callback NULL_CALLBACK = () -> {
+    };
 }

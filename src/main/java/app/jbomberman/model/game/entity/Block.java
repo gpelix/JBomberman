@@ -7,24 +7,24 @@ import app.jbomberman.util.Vector2D;
 
 public class Block extends Cell
 {
-	private static final String img = "block.png";
+    private static final String img = "block.png";
 
-	public Block(Vector2D coordinate, GameGrid gameGrid)
-	{
-		super(coordinate,
-			FlightWeightImagesFactory.getInstance().getImage(img),
-			gameGrid);
-	}
+    public Block(Vector2D coordinate, GameGrid gameGrid)
+    {
+        super(coordinate,
+            FlightWeightImagesFactory.getInstance().getImage(img),
+            gameGrid);
+    }
 
-	@Override
-	public void updateInModel()
-	{
-		// DO NOTHING
-	}
+    @Override
+    public void updateInModel()
+    {
+        // DO NOTHING
+    }
 
-	@Override
-	public boolean notifyExplosion(Explosion explosion)
-	{
-		return true; // Just handle it
-	}
+    @Override
+    public boolean notifyExplosion(Explosion explosion)
+    {
+        return true; // Just handle it
+    }
 }

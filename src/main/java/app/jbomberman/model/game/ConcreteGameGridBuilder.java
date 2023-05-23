@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game;
 
 import app.jbomberman.model.game.entity.Block;
@@ -20,126 +19,126 @@ import app.jbomberman.util.Vector2D;
  */
 public class ConcreteGameGridBuilder
 {
-	/**
-	 * grid that is going to be built that is also the final product for
-	 * GameGridBuilder
-	 */
-	private Maybe<GameGrid> grid;
+    /**
+     * grid that is going to be built that is also the final product for
+     * GameGridBuilder
+     */
+    private Maybe<GameGrid> grid;
 
-	/**
-	 * top left coordinate of the built grid
-	 */
-	private final Vector2D topLeft;
-
-
-	public ConcreteGameGridBuilder(Vector2D topLeft)
-	{
-		grid = Maybe.nothing();
-		this.topLeft = topLeft;
-	}
-
-	public void setup(Vector2D dimensions)
-	{
-		grid = Maybe.just(new GameGrid(dimensions, topLeft));
-	}
-
-	// PLEASE USE ONLY FROM THE DIRECTOR
-	public GameGrid getGameGrid()
-	{
-		return getGrid();
-	}
-
-	public GameGrid getResult()
-	{
-		return getGrid();
-	}
-
-	private GameGrid getGrid()
-	{
-		return grid.unwrapOrThrow(() -> new RuntimeException("Grid not " +
-			"build" +
-			". Evidently the builder didn't call setup or did you forget to call " +
-			"director.construct()?"));
-	}
+    /**
+     * top left coordinate of the built grid
+     */
+    private final Vector2D topLeft;
 
 
-	public void addEnemy(Vector2D gridCoordinate, int enemyNumber)
-	{
-		getGrid().addGameCharacter(EntityFactory.getInstance().buildEnemy(
-				enemyNumber,
-				getGrid().gridCoord2modelCoor(gridCoordinate),
-				getGrid()),
-			gridCoordinate);
-	}
+    public ConcreteGameGridBuilder(Vector2D topLeft)
+    {
+        grid = Maybe.nothing();
+        this.topLeft = topLeft;
+    }
 
-	public void addBlock(Vector2D gridCoordinate)
-	{
-		getGrid().addEntityInFreeCell(
-			new Block(getGrid().gridCoord2modelCoor(gridCoordinate), getGrid()),
-			gridCoordinate
-		);
-	}
+    public void setup(Vector2D dimensions)
+    {
+        grid = Maybe.just(new GameGrid(dimensions, topLeft));
+    }
 
-	public void addWall(Vector2D gridCoordinate)
-	{
-		Wall wall = EntityFactory.getInstance().buildWall(
-			getGrid().gridCoord2modelCoor(gridCoordinate),
-			getGrid()
-		);
+    // PLEASE USE ONLY FROM THE DIRECTOR
+    public GameGrid getGameGrid()
+    {
+        return getGrid();
+    }
 
-		getGrid().addEntityInFreeCell(
-			wall,
-			gridCoordinate
-		);
-	}
+    public GameGrid getResult()
+    {
+        return getGrid();
+    }
 
-	public void addPowerUp(Vector2D gridCoordinate, int powerUpNumber)
-	{
-		Powerup powerup = EntityFactory.getInstance().buildPowerUp(
-			powerUpNumber,
-			getGrid().gridCoord2modelCoor(gridCoordinate),
-			getGrid()
-		);
+    private GameGrid getGrid()
+    {
+        return grid.unwrapOrThrow(() -> new RuntimeException("Grid not " +
+            "build" +
+            ". Evidently the builder didn't call setup or did you forget to call " +
+            "director.construct()?"));
+    }
 
-		getGrid().addEntityInFreeCell(
-			powerup,
-			gridCoordinate
-		);
-	}
 
-	public void addDoor(Vector2D gridCoordinate, GameScene gameScene)
-	{
-		getGrid().addEntityInFreeCell(
-			EntityFactory.getInstance().buildDoor(
-				getGameGrid().gridCoord2modelCoor(gridCoordinate),
-				getGameGrid(),
-				gameScene
-			),
-			gridCoordinate
-		);
-	}
+    public void addEnemy(Vector2D gridCoordinate, int enemyNumber)
+    {
+        getGrid().addGameCharacter(EntityFactory.getInstance().buildEnemy(
+                enemyNumber,
+                getGrid().gridCoord2modelCoor(gridCoordinate),
+                getGrid()),
+            gridCoordinate);
+    }
 
-	public void addFreeCell(Vector2D gridCoordinate)
-	{
-		getGrid().set(
-			new FreeCell(getGrid().gridCoord2modelCoor(gridCoordinate), getGrid()),
-			gridCoordinate
-		);
-	}
+    public void addBlock(Vector2D gridCoordinate)
+    {
+        getGrid().addEntityInFreeCell(
+            new Block(getGrid().gridCoord2modelCoor(gridCoordinate), getGrid()),
+            gridCoordinate
+        );
+    }
 
-	// Here gameScene acts as a bridge that routes LEFT RIGHT ... to BomberMan
-	public void addBomberMan(GameScene gameScene, Vector2D gridCoordinate,
-													 BomberManCapabilities capabilities)
-	{
-		BomberMan bomberMan = EntityFactory.getInstance().buildBomberMan(
-			getGrid().gridCoord2modelCoor(gridCoordinate),
-			capabilities,
-			getGrid(), gameScene);
+    public void addWall(Vector2D gridCoordinate)
+    {
+        Wall wall = EntityFactory.getInstance().buildWall(
+            getGrid().gridCoord2modelCoor(gridCoordinate),
+            getGrid()
+        );
 
-		// Attach observer bomberman to Scene
-		gameScene.attachObserver(bomberMan);
-		getGrid().attachBomberman(bomberMan);
+        getGrid().addEntityInFreeCell(
+            wall,
+            gridCoordinate
+        );
+    }
 
-		getGrid().addGameCharacter(bomberMan, gridCoordinate);
-	}
+    public void addPowerUp(Vector2D gridCoordinate, int powerUpNumber)
+    {
+        Powerup powerup = EntityFactory.getInstance().buildPowerUp(
+            powerUpNumber,
+            getGrid().gridCoord2modelCoor(gridCoordinate),
+            getGrid()
+        );
+
+        getGrid().addEntityInFreeCell(
+            powerup,
+            gridCoordinate
+        );
+    }
+
+    public void addDoor(Vector2D gridCoordinate, GameScene gameScene)
+    {
+        getGrid().addEntityInFreeCell(
+            EntityFactory.getInstance().buildDoor(
+                getGameGrid().gridCoord2modelCoor(gridCoordinate),
+                getGameGrid(),
+                gameScene
+            ),
+            gridCoordinate
+        );
+    }
+
+    public void addFreeCell(Vector2D gridCoordinate)
+    {
+        getGrid().set(
+            new FreeCell(getGrid().gridCoord2modelCoor(gridCoordinate), getGrid()),
+            gridCoordinate
+        );
+    }
+
+    // Here gameScene acts as a bridge that routes LEFT RIGHT ... to BomberMan
+    public void addBomberMan(GameScene gameScene, Vector2D gridCoordinate,
+                             BomberManCapabilities capabilities)
+    {
+        BomberMan bomberMan = EntityFactory.getInstance().buildBomberMan(
+            getGrid().gridCoord2modelCoor(gridCoordinate),
+            capabilities,
+            getGrid(), gameScene);
+
+        // Attach observer bomberman to Scene
+        gameScene.attachObserver(bomberMan);
+        getGrid().attachBomberman(bomberMan);
+
+        getGrid().addGameCharacter(bomberMan, gridCoordinate);
+    }
 }
