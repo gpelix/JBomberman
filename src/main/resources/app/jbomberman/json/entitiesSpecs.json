@@ -1,0 +1,417 @@
+{
+  "Enemy1": {
+    "right": [
+      "Enemy1_1.png",
+      "Enemy1_2.png",
+      "Enemy1_3.png"
+    ],
+    "left": [
+      "Enemy1_4.png",
+      "Enemy1_5.png",
+      "Enemy1_6.png"
+    ],
+    "death": [
+      "Enemy1_7.png",
+      "Enemy1_8.png",
+      "Enemy1_9.png",
+      "Enemy1_10.png",
+      "Enemy1_11.png"
+    ],
+    "points": 100,
+    "speed": 0.7,
+    "goesThroughWalls": false
+  },
+  "Enemy2": {
+    "right": [
+      "Enemy2_1.png",
+      "Enemy2_2.png",
+      "Enemy2_3.png"
+    ],
+    "left": [
+      "Enemy2_4.png",
+      "Enemy2_5.png",
+      "Enemy2_6.png"
+    ],
+    "_": "This change from 2 to 5 is not an error",
+    "death": [
+      "Enemy2_7.png",
+      "Enemy5_8.png",
+      "Enemy5_9.png",
+      "Enemy5_10.png",
+      "Enemy5_11.png"
+    ],
+    "points": 200,
+    "speed": 1,
+    "goesThroughWalls": false
+  },
+  "Enemy3": {
+    "right": [
+      "Enemy3_1.png",
+      "Enemy3_2.png",
+      "Enemy3_3.png"
+    ],
+    "left": [
+      "Enemy3_4.png",
+      "Enemy3_5.png",
+      "Enemy3_6.png"
+    ],
+    "death": [
+      "Enemy3_7.png",
+      "Enemy3_8.png",
+      "Enemy3_9.png",
+      "Enemy3_10.png",
+      "Enemy3_11.png"
+    ],
+    "points": 400,
+    "speed": 1.3,
+    "goesThroughWalls": false
+  },
+  "Enemy4": {
+    "right": [
+      "Enemy4_1.png",
+      "Enemy4_2.png",
+      "Enemy4_3.png"
+    ],
+    "left": [
+      "Enemy4_4.png",
+      "Enemy4_5.png",
+      "Enemy4_6.png"
+    ],
+    "_": "This change from 4 to 1 is not an error",
+    "death": [
+      "Enemy4_7.png",
+      "Enemy1_8.png",
+      "Enemy1_9.png",
+      "Enemy1_10.png",
+      "Enemy1_11.png"
+    ],
+    "points": 800,
+    "speed": 1.5,
+    "goesThroughWalls": false
+  },
+  "Enemy5": {
+    "right": [
+      "Enemy5_1.png",
+      "Enemy5_2.png",
+      "Enemy5_3.png"
+    ],
+    "left": [
+      "Enemy5_4.png",
+      "Enemy5_5.png",
+      "Enemy5_6.png"
+    ],
+    "death": [
+      "Enemy5_7.png",
+      "Enemy5_8.png",
+      "Enemy5_9.png",
+      "Enemy5_10.png",
+      "Enemy5_11.png"
+    ],
+    "points": 1000,
+    "speed": 0.5,
+    "goesThroughWalls": true
+  },
+  "Enemy6": {
+    "right": [
+      "Enemy6_1.png",
+      "Enemy6_2.png",
+      "Enemy6_3.png"
+    ],
+    "left": [
+      "Enemy6_4.png",
+      "Enemy6_5.png",
+      "Enemy6_6.png"
+    ],
+    "_": "This change from 6 to 3 is not an error",
+    "death": [
+      "Enemy6_7.png",
+      "Enemy3_8.png",
+      "Enemy3_9.png",
+      "Enemy3_10.png",
+      "Enemy3_11.png"
+    ],
+    "points": 2000,
+    "speed": 1.3,
+    "goesThroughWalls": true
+  },
+  "Enemy7": {
+    "right": [
+      "Enemy7_1.png",
+      "Enemy7_2.png",
+      "Enemy7_3.png"
+    ],
+    "left": [
+      "Enemy7_4.png",
+      "Enemy7_5.png",
+      "Enemy7_6.png"
+    ],
+    "_": "This change from 7 to 1 is not an error",
+    "death": [
+      "Enemy7_7.png",
+      "Enemy1_8.png",
+      "Enemy1_9.png",
+      "Enemy1_10.png",
+      "Enemy1_11.png"
+    ],
+    "points": 4000,
+    "speed": 1.5,
+    "goesThroughWalls": false
+  },
+  "Enemy8": {
+    "right": [
+      "Enemy8_1.png",
+      "Enemy8_2.png",
+      "Enemy8_3.png",
+      "Enemy8_4.png"
+    ],
+    "left": [
+      "Enemy8_1.png",
+      "Enemy8_2.png",
+      "Enemy8_3.png",
+      "Enemy8_4.png"
+    ],
+    "_": "This change from 8 to 1 is not an error",
+    "death": [
+      "Enemy8_5.png",
+      "Enemy1_8.png",
+      "Enemy1_9.png",
+      "Enemy1_10.png",
+      "Enemy1_11.png"
+    ],
+    "points": 8000,
+    "speed": 2.0,
+    "goesThroughWalls": true
+  },
+  "bomberMan": {
+    "left": [
+      "BomberMan1.png",
+      "BomberMan2.png",
+      "BomberMan3.png"
+    ],
+    "down": [
+      "BomberMan4.png",
+      "BomberMan5.png",
+      "BomberMan6.png"
+    ],
+    "right": [
+      "BomberMan7.png",
+      "BomberMan8.png",
+      "BomberMan9.png"
+    ],
+    "up": [
+      "BomberMan10.png",
+      "BomberMan11.png",
+      "BomberMan12.png"
+    ],
+    "death": [
+      "BomberMan13.png",
+      "BomberMan14.png",
+      "BomberMan15.png",
+      "BomberMan16.png",
+      "BomberMan17.png",
+      "BomberMan18.png",
+      "BomberMan19.png"
+    ],
+    "_NOTE": "speed and goesThroughWalls are unspecified as they must be set by other means"
+  },
+  "bomb": [
+    "Bomb1.png",
+    "Bomb2.png",
+    "Bomb3.png"
+  ],
+  "wall": {
+    "alive": [
+      "Wall.png"
+    ],
+    "death": [
+      "RedWall.png",
+      "RedWall1.png",
+      "RedWall2.png",
+      "RedWall3.png",
+      "RedWall4.png",
+      "RedWall5.png"
+    ]
+  },
+  "NUMBER_OF_POWERUPS": 8,
+  "powerup1": {
+    "img": "Powerup1.png",
+    "enemyAfterExplosion": 2,
+    "addedCapabilities": {
+      "availableBombs": 1,
+      "bombRange": 0,
+      "speed": 0,
+      "remoteControl": false,
+      "goesThroughWalls": false,
+      "goesThroughBombs": false,
+      "goesThroughFire": false,
+      "isInvincible": false
+    }
+  },
+  "powerup2": {
+    "img": "Powerup2.png",
+    "enemyAfterExplosion": 1,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 1,
+      "speed": 0,
+      "remoteControl": false,
+      "goesThroughWalls": false,
+      "goesThroughBombs": false,
+      "goesThroughFire": false,
+      "isInvincible": false
+    }
+  },
+  "powerup3": {
+    "img": "Powerup3.png",
+    "enemyAfterExplosion": 2,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 0,
+      "speed": 0.2,
+      "remoteControl": false,
+      "goesThroughWalls": false,
+      "goesThroughBombs": false,
+      "goesThroughFire": false,
+      "isInvincible": false
+    }
+  },
+  "powerup4": {
+    "img": "Powerup4.png",
+    "enemyAfterExplosion": 3,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 0,
+      "speed": 0,
+      "remoteControl": true,
+      "goesThroughWalls": false,
+      "goesThroughBombs": false,
+      "goesThroughFire": false,
+      "isInvincible": false
+    }
+  },
+  "powerup5": {
+    "img": "Powerup5.png",
+    "enemyAfterExplosion": 4,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 0,
+      "speed": 0,
+      "remoteControl": false,
+      "goesThroughWalls": true,
+      "goesThroughBombs": false,
+      "goesThroughFire": false,
+      "isInvincible": false
+    }
+  },
+  "powerup6": {
+    "img": "Powerup6.png",
+    "enemyAfterExplosion": 5,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 0,
+      "speed": 0,
+      "remoteControl": false,
+      "goesThroughWalls": false,
+      "goesThroughBombs": true,
+      "goesThroughFire": false,
+      "isInvincible": false
+    }
+  },
+  "powerup7": {
+    "img": "Powerup7.png",
+    "enemyAfterExplosion": 6,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 0,
+      "speed": 0,
+      "remoteControl": false,
+      "goesThroughWalls": false,
+      "goesThroughBombs": false,
+      "goesThroughFire": true,
+      "isInvincible": false
+    }
+  },
+  "powerup8": {
+    "img": "Powerup8.png",
+    "enemyAfterExplosion": 7,
+    "addedCapabilities": {
+      "availableBombs": 0,
+      "bombRange": 0,
+      "speed": 0,
+      "remoteControl": false,
+      "goesThroughWalls": false,
+      "goesThroughBombs": false,
+      "goesThroughFire": false,
+      "isInvincible": true
+    }
+  },
+  "fire": {
+    "_": "These names are based on the names in app.jbomberman.model.game.entity.Fire.FireType Class",
+    "CENTER": [
+      "Small1.png",
+      "Medium1.png",
+      "Big1.png",
+      "Huge1.png",
+      "Big1.png",
+      "Medium1.png",
+      "Small1.png"
+    ],
+    "HORIZONTAL": [
+      "Small3.png",
+      "Medium3.png",
+      "Big3.png",
+      "Huge3.png",
+      "Big3.png",
+      "Medium3.png",
+      "Small3.png"
+    ],
+    "VERTICAL": [
+      "Small2.png",
+      "Medium2.png",
+      "Big2.png",
+      "Huge2.png",
+      "Big2.png",
+      "Medium2.png",
+      "Small2.png"
+    ],
+    "SOUTH": [
+      "Small7.png",
+      "Medium7.png",
+      "Big7.png",
+      "Huge7.png",
+      "Big7.png",
+      "Medium7.png",
+      "Small7.png"
+    ],
+    "NORTH": [
+      "Small5.png",
+      "Medium5.png",
+      "Big5.png",
+      "Huge5.png",
+      "Big5.png",
+      "Medium5.png",
+      "Small5.png"
+    ],
+    "EAST": [
+      "Small4.png",
+      "Medium4.png",
+      "Big4.png",
+      "Huge4.png",
+      "Big4.png",
+      "Medium4.png",
+      "Small4.png"
+    ],
+    "WEST": [
+      "Small6.png",
+      "Medium6.png",
+      "Big6.png",
+      "Huge6.png",
+      "Big6.png",
+      "Medium6.png",
+      "Small6.png"
+    ]
+  },
+  "door": {
+    "img": "Door.png"
+  }
+}

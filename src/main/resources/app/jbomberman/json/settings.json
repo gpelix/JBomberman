@@ -1,0 +1,7 @@
+{
+  "SCALE_FACTOR": 2,
+  "MAX_FPS": 60,
+  "APPLICATION_NAME": "JBomberMan",
+  "IMAGES_DIRECTORY": "images/",
+  "JBOMBERMAN_DIRECTORY_NAME": "jbomberman"
+}
