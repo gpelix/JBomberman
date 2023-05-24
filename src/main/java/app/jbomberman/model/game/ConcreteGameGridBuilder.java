@@ -1,12 +1,12 @@
 package app.jbomberman.model.game;
 
 import app.jbomberman.model.game.entity.Block;
+import app.jbomberman.model.game.entity.BomberMan;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.Wall;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
 import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;

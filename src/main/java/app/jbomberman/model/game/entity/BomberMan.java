@@ -1,6 +1,7 @@
-package app.jbomberman.model.game.entity.gamecharacter;
+package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioHandle;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.KeyBoardController;
@@ -8,11 +9,6 @@ import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.MoveManager;
 import app.jbomberman.model.game.MovingImageManager;
-import app.jbomberman.model.game.entity.AutoBomb;
-import app.jbomberman.model.game.entity.Bomb;
-import app.jbomberman.model.game.entity.ControlledBomb;
-import app.jbomberman.model.game.entity.EntityFactory;
-import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.state.BomberManAliveState;
 import app.jbomberman.model.game.entity.state.BomberManDeadState;
 import app.jbomberman.model.scenes.GameScene;
@@ -34,13 +30,13 @@ public class BomberMan extends GameCharacter implements Observer
     private final Set<Direction> directions;
 
     private static final String HORIZONTAL_MOVE_SOUND_FILE =
-        "sounds/Bomberman SFX horizontal.wav";
+        Properties.getInstance().getSoundPath("Bomberman SFX horizontal.wav");
 
     private static final String BOMB_PLACED_SOUND =
-        "sounds/Bomberman SFX bomb in place.wav";
+        Properties.getInstance().getSoundPath("Bomberman SFX bomb in place.wav");
 
     private static final String BOMBERMAN_DEATH_SOUND =
-        "sounds/Bomberman SFX bomberman death sound.wav";
+        Properties.getInstance().getSoundPath("Bomberman SFX bomberman death sound.wav");
 
     private static final long INVINCIBILITY_DURATION_IN_MILLIS =
         30_000;

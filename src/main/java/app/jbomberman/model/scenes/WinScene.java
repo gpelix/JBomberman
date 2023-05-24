@@ -1,5 +1,6 @@
 package app.jbomberman.model.scenes;
 
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
@@ -13,7 +14,7 @@ public class WinScene extends SoundyBomberManScene
 
     private Maybe<Text> winText = Maybe.nothing();
 
-    private static final String GAME_OVER_SOUND = "sounds/08 Ending.wav";
+    private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("08 Ending.wav");
 
     protected WinScene(Model model, Controller controller)
     {

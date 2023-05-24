@@ -2,8 +2,8 @@ package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.MovingImageManager;
+import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Explosion;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
 import app.jbomberman.util.Direction;
 
 public class EnemyAliveState extends AliveState<Enemy>

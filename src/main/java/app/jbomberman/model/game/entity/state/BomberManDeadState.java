@@ -3,8 +3,8 @@ package app.jbomberman.model.game.entity.state;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
+import app.jbomberman.model.game.entity.BomberMan;
 import app.jbomberman.model.game.entity.Explosion;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
 
 public class BomberManDeadState extends DeadState<BomberMan>
 {

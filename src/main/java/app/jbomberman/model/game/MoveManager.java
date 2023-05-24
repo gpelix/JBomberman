@@ -2,11 +2,11 @@ package app.jbomberman.model.game;
 
 import app.jbomberman.model.game.entity.Block;
 import app.jbomberman.model.game.entity.Bomb;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
+import app.jbomberman.model.game.entity.GameCharacterCapabilities;
 import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.Wall;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
-import app.jbomberman.model.game.entity.gamecharacter.GameCharacterCapabilities;
 import app.jbomberman.util.Direction;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;

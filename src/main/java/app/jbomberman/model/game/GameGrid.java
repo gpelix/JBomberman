@@ -1,14 +1,15 @@
 package app.jbomberman.model.game;
 
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.game.entity.BomberMan;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
+import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
-import app.jbomberman.model.game.entity.gamecharacter.GameCharacter;
+import app.jbomberman.model.game.entity.GameCharacter;
 import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Grid;
 import app.jbomberman.util.Maybe;
@@ -38,7 +39,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
     private final MoveManager moveManager;
 
     private static final String ALL_ENEMIES_ARE_DEAD_SOUND =
-        "sounds/Bomberman SFX enemies are dead.wav";
+        Properties.getInstance().getSoundPath("Bomberman SFX enemies are dead.wav");
 
     /**
      * coordinate of the top left corner of the grid

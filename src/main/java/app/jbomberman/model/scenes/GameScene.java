@@ -1,5 +1,6 @@
 package app.jbomberman.model.scenes;
 
+import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.drawing.Drawing;
@@ -10,8 +11,8 @@ import app.jbomberman.model.Model;
 import app.jbomberman.model.game.ConcreteGameGridBuilder;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.GameGridBuilderDirector;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
@@ -34,18 +35,18 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
      * during the game before any powerup is picked
      */
     private static final String NORMAL_BACKGROUND_NOISE =
-        "sounds/03 Main BGM.wav";
+        Properties.getInstance().getSoundPath("03 Main BGM.wav");
 
     private static final long TIME = 200_000;
 
     private static final String POWERUP_TAKEN_BACKGROUND_NOISE =
-        "sounds/04 Power-Up Get.wav";
+        Properties.getInstance().getSoundPath("04 Power-Up Get.wav");
 
     private static final String GAME_OVER_SOUND =
-        "sounds/09 Miss.wav";
+        Properties.getInstance().getSoundPath("09 Miss.wav");
 
     private static final String WIN_SOUND =
-        "sounds/05 Stage Clear.wav";
+        Properties.getInstance().getSoundPath("05 Stage Clear.wav");
     private static final int LAST_LEVEL = 50;
 
     private String currentlyPlayingBackgroundNoiseName;
@@ -169,7 +170,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
         currentDimensions =
             Maybe.just(gameGrid.getDimensions().multiply(Entity.SIZE_IN_MODEL));
-        
+
         topPanel.setTopLeft(Vector2D.of(0, 0));
         topPanel.setWidth(currentDimensions.unwrap().getX());
     }

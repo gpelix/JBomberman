@@ -1,5 +1,4 @@
-
-package app.jbomberman.model.game.entity.gamecharacter;
+package app.jbomberman.model.game.entity;
 
 import app.jbomberman.util.RandomNumberGenerator;
 

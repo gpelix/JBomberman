@@ -1,14 +1,13 @@
 package app.jbomberman.model.game.entity;
 
-import app.jbomberman.Settings;
+import app.jbomberman.Properties;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
 import app.jbomberman.util.Vector2D;
 
 public class AutoBomb extends Bomb
 {
-    private static final int BOMB_EXPLOSION_INTERVAL = Settings.getInstance().getMaxFps() * 2;
+    private static final int BOMB_EXPLOSION_INTERVAL = Properties.getInstance().getMaxFps() * 2;
 
     private int timeToExplosion = BOMB_EXPLOSION_INTERVAL;
 

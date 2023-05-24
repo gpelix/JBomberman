@@ -1,17 +1,15 @@
 package app.jbomberman.model.game.entity;
 
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
 import app.jbomberman.util.Vector2D;
 
 public class Powerup extends PickableCell
 {
     private static final String POWERUP_TAKEN_MUSIC =
-        "sounds/Bomberman SFX powerup picked.wav";
+        Properties.getInstance().getSoundPath("Bomberman SFX powerup picked.wav");
 
     private final BomberManCapabilities deltaCapabilities;
 

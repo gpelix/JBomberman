@@ -11,6 +11,7 @@ import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 import javafx.application.Platform;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -49,6 +50,8 @@ public class View implements Observer
         stage.setFullScreen(true);
         stage.setFullScreenExitHint("");
         stage.setFullScreenExitKeyCombination(KeyCombination.NO_MATCH);
+
+        scene.setCursor(Cursor.NONE);
 
         scene.setFill(Color.BLACK);
         stage.setScene(scene);

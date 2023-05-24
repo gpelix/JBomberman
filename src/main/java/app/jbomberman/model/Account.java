@@ -1,6 +1,6 @@
 package app.jbomberman.model;
 
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 
 public class Account
 {

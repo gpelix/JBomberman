@@ -1,5 +1,4 @@
-
-package app.jbomberman.model.game.entity.gamecharacter;
+package app.jbomberman.model.game.entity;
 
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
@@ -28,9 +27,9 @@ public class Enemy extends GameCharacter
 
 
     public Enemy(Vector2D coordinate, double speed,
-                             boolean goesThroughWalls,
-                             GameGrid gameGrid, MovingImageManager movingImageManager,
-                             ImageManager deathImages, int points)
+                 boolean goesThroughWalls,
+                 GameGrid gameGrid, MovingImageManager movingImageManager,
+                 ImageManager deathImages, int points)
     {
         super(coordinate, new GameCharacterCapabilities(goesThroughWalls, speed), gameGrid);
 

@@ -1,6 +1,6 @@
 package app.jbomberman.images;
 
-import app.jbomberman.Settings;
+import app.jbomberman.Properties;
 import app.jbomberman.images.javafx.JavaFXImageBuilder;
 
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class FlightWeightImagesFactory
      * CHARACTER_SIZE_IN_PIXEL is a static int that specifies the size in
      * pixel of the square images containing characters
      */
-    static public final int CHARACTER_SIZE_IN_PIXEL = 8 * Settings.getInstance().getScaleFactor();
+    static public final int CHARACTER_SIZE_IN_PIXEL = 8 * Properties.getInstance().getScaleFactor();
 
     /**
      * of the unique instance of FlightWeightImagesFactory
@@ -43,6 +43,10 @@ public class FlightWeightImagesFactory
         return factory;
     }
 
+    /**
+     * imageBuilder is a reference to the concrete imageBuilder used to create
+     * images. At the moment it's a JavaFXImageBuilder
+     */
     private static final AbstractImageBuilder imageBuilder = new JavaFXImageBuilder();
 
     /**
@@ -70,7 +74,7 @@ public class FlightWeightImagesFactory
     public AbstractImage getImage(String path)
     {
         return images.computeIfAbsent(path,
-            p -> imageBuilder.getImage(Settings.getInstance().getImagesDirectory() + p));
+            p -> imageBuilder.getImage(Properties.getInstance().getImagesDirectory() + p));
 
     }
 

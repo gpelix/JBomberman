@@ -1,9 +1,9 @@
 package app.jbomberman.model.game;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.EntityFactory;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
-import app.jbomberman.model.game.entity.gamecharacter.GameCharacterCapabilities;
+import app.jbomberman.model.game.entity.GameCharacterCapabilities;
 import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.CollectionUtils;
 import app.jbomberman.util.Maybe;

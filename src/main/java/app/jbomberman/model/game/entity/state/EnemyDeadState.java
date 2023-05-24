@@ -1,9 +1,8 @@
-
 package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
+import app.jbomberman.model.game.entity.Enemy;
 
 public class EnemyDeadState extends WallDeadState<Enemy>
 {

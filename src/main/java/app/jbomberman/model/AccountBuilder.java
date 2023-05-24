@@ -1,8 +1,8 @@
 package app.jbomberman.model;
 
 import app.jbomberman.JBomberManException;
-import app.jbomberman.Settings;
-import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
+import app.jbomberman.Properties;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.DirUtils;
 import app.jbomberman.util.Maybe;
 import org.apache.logging.log4j.LogManager;
@@ -48,7 +48,7 @@ public class AccountBuilder
 
     private Path getFilePath()
     {
-        return Path.of(DirUtils.getAppData(), Settings.getJsonDirectory(), Settings.getInstance().getPlayersFile());
+        return Path.of(DirUtils.getAppData(), Properties.getJsonDirectory(), Properties.getInstance().getPlayersFile());
     }
 
     private JSONObject getPlayersJson()
@@ -56,12 +56,12 @@ public class AccountBuilder
         try {
             String appdata = DirUtils.getAppData();
 
-            Path jbombermanInAppdata = Path.of(appdata, Settings.getInstance().getJbombermanDirectoryDataName());
+            Path jbombermanInAppdata = Path.of(appdata, Properties.getInstance().getJbombermanDirectoryDataName());
 
             if (!Files.exists(jbombermanInAppdata))
                 Files.createDirectory(jbombermanInAppdata);
 
-            Path jsonFilePath = Path.of(String.valueOf(jbombermanInAppdata), Settings.getInstance().getPlayersFile());
+            Path jsonFilePath = Path.of(String.valueOf(jbombermanInAppdata), Properties.getInstance().getPlayersFile());
 
             if (!Files.exists(jsonFilePath))
                 try (OutputStream o = Files.newOutputStream(jsonFilePath)) {

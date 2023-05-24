@@ -1,5 +1,6 @@
 package app.jbomberman.model.scenes;
 
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
@@ -22,7 +23,7 @@ public class LoadingLevelScene extends SoundyBomberManScene
      * loadingLevelSceneSound is the sound to be played during this scene
      */
     private static final String LOADING_LEVEL_SCENE_SOUND =
-        "sounds/02 Stage Start.wav";
+        Properties.getInstance().getSoundPath("02 Stage Start.wav");
 
     private final Controller controller;
 
@@ -42,16 +43,15 @@ public class LoadingLevelScene extends SoundyBomberManScene
     @Override
     public void setup()
     {
-
         AudioPlayer.getInstance().stopAll();
 
-        Vector2D dimensions = getModel().getDimensions();
+        Vector2D dimensions = Model.getDimensions();
 
         Text stageText = new Text("Stage " + getModel().getAccount().getLevel(), true, dimensions.div(2));
         Text loadingText = new Text("Loading...", true,
             dimensions.sub(
                 Vector2D.of(dimensions.getX() / 2,
-                    FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2))); // TODO: why * 2
+                    FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)));
 
 
         drawing = Maybe.just(new Drawing(loadingText.getDrawing(), stageText.getDrawing()));

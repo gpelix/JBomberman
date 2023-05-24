@@ -2,7 +2,6 @@ package app.jbomberman.model.game.entity;
 
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
 import app.jbomberman.util.Vector2D;
 
 public class ControlledBomb extends Bomb

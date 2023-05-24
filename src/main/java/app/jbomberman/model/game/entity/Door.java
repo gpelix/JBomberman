@@ -2,8 +2,6 @@ package app.jbomberman.model.game.entity;
 
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
 import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Vector2D;
 

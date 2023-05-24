@@ -4,8 +4,6 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
 import app.jbomberman.util.Direction;
 import app.jbomberman.util.FunctionalUtils;
 import app.jbomberman.util.Maybe;

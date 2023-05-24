@@ -4,9 +4,36 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 
+/**
+ * Vector2D is a class that represents a two-dimensional vector. It is a kind
+ * of pair but with added operations which are typical of vectors like multiplication
+ * by a scalar value. Since a lot of those vectors will be around, we implement
+ * their creation using the FlightWeight pattern and we make them immutable.
+ *
+ * @author gp
+ */
 public class Vector2D extends Pair<Integer, Integer>
 {
+    private static final Map<Integer, Map<Integer, Vector2D>> pool = new HashMap<>();
+
+    public static Vector2D of(int x, int y)
+    {
+        if (!pool.containsKey(x))
+            pool.put(x, new HashMap<>());
+
+        Map<Integer, Vector2D> innerMap = pool.get(x);
+        if (!innerMap.containsKey(y))
+            innerMap.put(y, new Vector2D(x, y));
+
+        return innerMap.get(y);
+    }
+
     /**
+     * protected constructor that builds a 2D vector from a pair of values
+     * It must not be called by other classes that want to instantiate a
+     * Vector2D (except for subclasses) as they have to call .of() method of
+     * Vector2D
+     *
      * @param x x coordinate
      * @param y y coordinate
      */
@@ -18,9 +45,9 @@ public class Vector2D extends Pair<Integer, Integer>
     /**
      * vector sum of coordinates
      *
-     * @param coordinate the other coordinate that must be summed to this
+     * @param other the other Vector2D that must be summed to this
      * @return a new coordinate that has as x attribute the sum of this.x and
-     * coordinate.getX() and the same thing happens for the y attribute
+     * other.getX() and the same thing happens for the y attribute
      */
     public Vector2D sum(Vector2D other)
     {
@@ -37,12 +64,12 @@ public class Vector2D extends Pair<Integer, Integer>
     /**
      * equals() compares two coordinates to see if they indicate the same point.
      *
-     * @param obj the other coordinate
-     * @return a boolean saying whether this represents the same coordinate
+     * @param obj the other vector
+     * @return a boolean saying whether this represents the same vector
      * as this
      * @implNote we don't respect the symmetric property of the equivalence
      * relation. It would be nonsense to say that a coordinate is different
-     * from a Mutable coordinate just because they are not exactly the same type
+     * from a MutableVector2D just because they are not exactly the same type
      */
     @Override
     public boolean equals(Object obj)
@@ -54,10 +81,10 @@ public class Vector2D extends Pair<Integer, Integer>
     }
 
     /**
-     * multiplication of coordinate by a scalar as if it was a vector
+     * multiplication of vector by a scalar
      *
-     * @param i scalar by which coordinates must be multiplied
-     * @return the coordinate after multiplication
+     * @param i scalar by which the vector must be multiplied
+     * @return the vector after multiplication
      */
     public Vector2D multiply(int i)
     {
@@ -65,11 +92,11 @@ public class Vector2D extends Pair<Integer, Integer>
     }
 
     /**
-     * vector sum of coordinates
+     * vector sum of vector
      *
-     * @param coordinate the other coordinate that must be subtracted from this
-     * @return a new coordinate that has as x attribute the subtraction of
-     * this.x and coordinate.getX() and the same thing happens for
+     * @param other the other vector that must be subtracted from this
+     * @return a new vector that has as x attribute the subtraction of
+     * this.x and other.getX() and the same thing happens for
      * the y attribute
      */
     public Vector2D sub(Vector2D other)
@@ -79,10 +106,10 @@ public class Vector2D extends Pair<Integer, Integer>
     }
 
     /**
-     * division of coordinate by a scalar as if it was a vector
+     * division of vector by a scalar
      *
-     * @param i scalar by which coordinates must be divided
-     * @return the coordinate after multiplication
+     * @param i scalar by which the vector must be divided
+     * @return the vector after multiplication
      */
     public Vector2D div(int i)
     {
@@ -90,10 +117,10 @@ public class Vector2D extends Pair<Integer, Integer>
     }
 
     /**
-     * modulus operation by a scalar as if this was a vector
+     * modulus operation by a scalar
      *
      * @param i the argument of %
-     * @return the coordinate after % operation
+     * @return the vector after % operation
      */
     public Vector2D mod(int i)
     {
@@ -101,35 +128,34 @@ public class Vector2D extends Pair<Integer, Integer>
     }
 
     /**
-     * is the coordinate (0, 0)
-     *
-     * @return a boolean that says whether the coordinate is the origin of
+     * @return a boolean that says whether the vector is the origin of
      * the axis
      */
     public boolean isZero()
     {
-        return getX() == 0 && getY() == 0;
+        return getIdentity().equals(this);
     }
 
-    private static final Map<Integer, Map<Integer, Vector2D>> pool = new HashMap<>();
-
-    public static Vector2D of(int x, int y)
-    {
-        if (!pool.containsKey(x))
-            pool.put(x, new HashMap<>());
-
-        Map<Integer, Vector2D> innerMap = pool.get(x);
-        if (!innerMap.containsKey(y))
-            innerMap.put(y, new Vector2D(x, y));
-
-        return innerMap.get(y);
-    }
-
+    /**
+     * @return the origin of the axis
+     */
     public static Vector2D getIdentity()
     {
         return Vector2D.of(0, 0);
     }
 
+    /**
+     * elementWiseApply applies a BinaryOperator to this.x and otherVector.x
+     * to create the new x coordinate of the result. The same is done for the y
+     * attribute
+     *
+     * @param otherVector the other vector used to compute the result
+     * @param function    function of this.x and otherVector.x to determine the value
+     *                    of the x coordinate of the vector to return. The same gets
+     *                    done on the y coordinate
+     * @return the vector whose coordinates are the result of the application of
+     * function on the coordinate of this and otherVector
+     */
     public Vector2D elementWiseApply(Vector2D otherVector,
                                      BinaryOperator<Integer> function)
     {

@@ -1,7 +1,5 @@
 package app.jbomberman.model.game.entity;
 
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
-import app.jbomberman.model.game.entity.gamecharacter.Enemy;
 import app.jbomberman.util.Maybe;
 
 import java.util.HashMap;

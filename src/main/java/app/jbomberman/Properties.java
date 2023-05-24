@@ -8,25 +8,26 @@ import org.json.JSONObject;
  *
  * @author gp
  */
-public class Settings
+public class Properties
 {
     /**
      * SCALE_FACTOR is the scaling factor we used to create the images
      */
     private final int scaleFactor;
-
     private final int maxFps;
     private final String applicationName;
     private static final String JSON_DIRECTORY = "json/";
     private final String imagesDirectory;
+    private final String soundsDirectory;
     private final String jbombermanDirectoryDataName;
     private static final String playersFile = "players.json";
+    private final String icon;
 
     private static final String SETTINGS_FILE =
         JSON_DIRECTORY + "settings.json";
 
     // load the json file and set SCALE_FACTOR
-    private Settings()
+    private Properties()
     {
         JSONObject settingsJsonRead =
             new JSONObject(Resources.readResource(SETTINGS_FILE));
@@ -35,14 +36,16 @@ public class Settings
         applicationName = settingsJsonRead.getString("APPLICATION_NAME");
         imagesDirectory = settingsJsonRead.getString("IMAGES_DIRECTORY");
         jbombermanDirectoryDataName = settingsJsonRead.getString("JBOMBERMAN_DATA_DIRECTORY_NAME");
+        soundsDirectory = settingsJsonRead.getString("SOUNDS_DIRECTORY");
+        icon = settingsJsonRead.getString("ICON");
     }
 
-    private static Settings instance;
+    private static Properties instance;
 
-    public static Settings getInstance()
+    public static Properties getInstance()
     {
         if (instance == null) {
-            instance = new Settings();
+            instance = new Properties();
         }
         return instance;
     }
@@ -80,5 +83,20 @@ public class Settings
     public String getPlayersFile()
     {
         return playersFile;
+    }
+
+    public String getIconFileName()
+    {
+        return icon;
+    }
+
+    public String getSoundsDirectory()
+    {
+        return soundsDirectory;
+    }
+
+    public String getSoundPath(String filename)
+    {
+        return getSoundsDirectory() + filename;
     }
 }

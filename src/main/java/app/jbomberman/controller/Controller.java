@@ -1,6 +1,6 @@
 package app.jbomberman.controller;
 
-import app.jbomberman.Settings;
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Observer;
@@ -28,15 +28,15 @@ public class Controller
 
         model = new Model(this);
 
-        EventLoopHandler eventLoopHandler = new EventLoopHandler(this, model::update);
-        eventLoopHandler.setFps(Settings.getInstance().getMaxFps());
+        EventLoopHandler eventLoopHandler = new EventLoopHandler(this, model::update,
+            Properties.getInstance().getMaxFps());
         eventLoopHandler.start();
 
         model.attachObserver(view);
 
 
-        view.setTitle("JBomberMan");
-        view.setIcon("icon.png");
+        view.setTitle(Properties.getInstance().getApplicationName());
+        view.setIcon(Properties.getInstance().getIconFileName());
         view.setCloseOperationCallBack(model::close);
     }
 

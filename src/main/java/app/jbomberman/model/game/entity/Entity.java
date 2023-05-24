@@ -1,7 +1,7 @@
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
-import app.jbomberman.Settings;
+import app.jbomberman.Properties;
 import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.AbstractImage;
@@ -17,7 +17,7 @@ import app.jbomberman.util.Vector2D;
  */
 public abstract class Entity extends MutableVector2D
 {
-    public static final int SIZE_IN_MODEL = 16 * Settings.getInstance().getScaleFactor();
+    public static final int SIZE_IN_MODEL = 16 * Properties.getInstance().getScaleFactor();
 
     private final GameGrid gameGrid;
 

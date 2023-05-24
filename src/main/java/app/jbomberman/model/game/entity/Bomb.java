@@ -1,10 +1,10 @@
 package app.jbomberman.model.game.entity;
 
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
-import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
 import app.jbomberman.util.Vector2D;
 
 // Observer of B key events and observable by bomberman TODO:
@@ -16,9 +16,9 @@ public abstract class Bomb extends Entity
         T construct(Vector2D coordinate, int bombRange, BomberMan bomberMan,
                     ImageManager imageManager, GameGrid gameGrid);
     }
-    
+
     private static final String BOMB_DETONATION_SOUND =
-        "sounds/explosion.wav";
+        Properties.getInstance().getSoundPath("explosion.wav");
     private final int bombRange;
 
     private final ImageManager imageManager;

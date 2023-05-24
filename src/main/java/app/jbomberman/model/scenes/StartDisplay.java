@@ -1,5 +1,6 @@
 package app.jbomberman.model.scenes;
 
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.DrawObject;
@@ -23,7 +24,7 @@ public class StartDisplay extends SoundyBomberManScene
     /**
      * startDisplaySound is the soundtrack to play during the scene
      */
-    private static final String startDisplaySound = "sounds/01 Title Screen.wav";
+    private static final String startDisplaySound = Properties.getInstance().getSoundPath("01 Title Screen.wav");
 
     private static final double MENU_POSITION = 21. / 32;
 

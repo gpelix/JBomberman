@@ -1,11 +1,8 @@
-
-package app.jbomberman.model.game.entity.gamecharacter;
+package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.game.entity.Entity;
-import app.jbomberman.model.game.entity.Explosion;
 import app.jbomberman.model.game.entity.state.GameCharacterState;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
@@ -27,8 +24,8 @@ public abstract class GameCharacter extends Entity
     // be initialized rightly after having called the constructor
 
     protected GameCharacter(Vector2D coordinate,
-                                                    GameCharacterCapabilities capabilities,
-                                                    GameGrid gameGrid)
+                            GameCharacterCapabilities capabilities,
+                            GameGrid gameGrid)
     {
         super(coordinate, gameGrid);
         this.capabilities = capabilities;
