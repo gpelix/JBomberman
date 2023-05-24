@@ -1,10 +1,6 @@
-
 package app.jbomberman.util;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -223,14 +219,20 @@ public class Grid<T> implements Iterable<T>
         return new GridIterator();
     }
 
-    public List<Vector2D> getNeighborsCoordinates(Vector2D coordinate)
+    /**
+     * getNeighborsCoordinates is a method that returns the neighbors of a coordinate
+     * checking that they are within boundaries
+     *
+     * @param coordinate the coordinate whose neighbors we want to know about
+     * @return a stream containing the neighbors of the coordinate which are within boundaries
+     */
+    public Stream<Vector2D> getNeighborsCoordinates(Vector2D coordinate)
     {
         return Stream.of(
                 coordinate.sum(Vector2D.of(0, 1)),
                 coordinate.sum(Vector2D.of(0, -1)),
                 coordinate.sum(Vector2D.of(1, 0)),
                 coordinate.sum(Vector2D.of(-1, 0)))
-            .filter(this::isWithinBoundaries)
-            .collect(Collectors.toCollection(ArrayList::new));
+            .filter(this::isWithinBoundaries);
     }
 }

@@ -5,13 +5,12 @@ import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.util.Direction;
-import app.jbomberman.util.FunctionalUtils;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 public class FreeCell extends Cell
 {
@@ -121,7 +120,7 @@ public class FreeCell extends Cell
         Drawing ret = super.getDrawing();
 
         entities.forEach(entity -> ret.merge(entity.getDrawing(),
-            FunctionalUtils::inc));
+            x -> x + 1));
 
         return ret;
     }
@@ -171,7 +170,7 @@ public class FreeCell extends Cell
             deltaSfromPrevious);
 
         if (direction.isNothing()) {
-            List<Vector2D> neighbors = gameGrid.getNeighborsCoordinates(getCenterInGridCoord());
+            Stream<Vector2D> neighbors = gameGrid.getNeighborsCoordinates(getCenterInGridCoord());
 
             neighbors.forEach(coordinate -> gameGrid.get(coordinate).notifyExplosion(newExplosion));
 

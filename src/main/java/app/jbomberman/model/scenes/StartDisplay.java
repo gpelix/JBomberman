@@ -10,7 +10,6 @@ import app.jbomberman.drawing.MenuEntry;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
-import app.jbomberman.util.FunctionalUtils;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 
@@ -84,7 +83,7 @@ public class StartDisplay extends SoundyBomberManScene
         Drawing drawing = new Drawing(
             new DrawObject(Vector2D.of(0, 0), startImage));
 
-        drawing.merge(menu.unwrap().getDrawing(), FunctionalUtils::inc);
+        drawing.merge(menu.unwrap().getDrawing(), x -> x + 1);
 
         return drawing;
     }
