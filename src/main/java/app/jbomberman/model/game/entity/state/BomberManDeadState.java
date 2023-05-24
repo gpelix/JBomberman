@@ -29,7 +29,7 @@ public class BomberManDeadState extends DeadState<BomberMan>
     @Override
     public void updateInModel()
     {
-        if (bomberMan.getSoundHandle().unwrap().getSoundFileName()
+        if (bomberMan.getSoundHandle().fromJust().getSoundFileName()
             .compute(false,
                 sound -> sound.equals(BomberMan.getBombermanDeathSound())) &&
             deathImageManager.hasDoneOneCycle())

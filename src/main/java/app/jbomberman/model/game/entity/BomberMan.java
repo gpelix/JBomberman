@@ -80,7 +80,7 @@ public class BomberMan extends GameCharacter implements Observer
         if (maybeMoveDirection.isNothing())
             return;
 
-        Direction moveDirection = maybeMoveDirection.unwrap();
+        Direction moveDirection = maybeMoveDirection.fromJust();
 
         GameGrid gameGrid = getGameGrid();
         MoveManager moveManager = gameGrid.getMoveManager();
@@ -268,7 +268,7 @@ public class BomberMan extends GameCharacter implements Observer
     public void update(Observable observable)
     {
         if (observable instanceof GameScene)
-            update(((GameScene) observable).getKeyBoardUpdateInfo().unwrap());
+            update(((GameScene) observable).getKeyBoardUpdateInfo().fromJust());
     }
 
     public void takePowerup(Powerup powerup)

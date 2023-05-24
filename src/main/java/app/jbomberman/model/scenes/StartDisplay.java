@@ -62,16 +62,16 @@ public class StartDisplay extends SoundyBomberManScene
                 () -> doTransition(new LogInScene(controller, getModel()))),
             new MenuEntry("Exit", true, getModel()::close)
         ));
-        menu.unwrap().setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
-        menu.unwrap().setWidth(width);
+        menu.fromJust().setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
+        menu.fromJust().setWidth(width);
 
-        controller.attachKeyBoardObserver(menu.unwrap());
+        controller.attachKeyBoardObserver(menu.fromJust());
     }
 
     @Override
     public void cleanup()
     {
-        controller.detachKeyBoardObserver(menu.unwrap());
+        controller.detachKeyBoardObserver(menu.fromJust());
         AudioPlayer.getInstance().stopAll();
     }
 
@@ -83,7 +83,7 @@ public class StartDisplay extends SoundyBomberManScene
         Drawing drawing = new Drawing(
             new DrawObject(Vector2D.of(0, 0), startImage));
 
-        drawing.merge(menu.unwrap().getDrawing(), x -> x + 1);
+        drawing.merge(menu.fromJust().getDrawing(), x -> x + 1);
 
         return drawing;
     }

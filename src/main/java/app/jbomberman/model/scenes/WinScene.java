@@ -30,7 +30,7 @@ public class WinScene extends SoundyBomberManScene
             doTransition(new StartDisplay(controller, getModel()));
         }
 
-        Drawing a = winText.unwrap().getDrawing();
+        Drawing a = winText.fromJust().getDrawing();
         a.setDimensions(getModel().getDimensions());
 
         return a;
@@ -50,7 +50,7 @@ public class WinScene extends SoundyBomberManScene
 
         winText = Maybe.just(new Text("You have won", true));
 
-        winText.unwrap().setPosition(
+        winText.fromJust().setPosition(
             getModel().getDimensions().div(2)
         );
     }

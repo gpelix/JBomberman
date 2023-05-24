@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 import app.jbomberman.JBomberManException;
@@ -50,7 +49,7 @@ public abstract class Panel<T extends Text>
         Maybe<Vector2D> topLeft = getTopLeft();
 
         if (topLeft.isJust()) {
-            Vector2D topLeftUnwrapped = topLeft.unwrap();
+            Vector2D topLeftUnwrapped = topLeft.fromJust();
 
             for (int i = 0; i < entries.size(); i++) {
                 T entry = entries.get(i);
@@ -74,7 +73,7 @@ public abstract class Panel<T extends Text>
         Maybe<Vector2D> topLeft = getTopLeft();
 
         if (topLeft.isJust()) {
-            Vector2D topLeftUnwrapped = topLeft.unwrap();
+            Vector2D topLeftUnwrapped = topLeft.fromJust();
 
             for (int i = 0; i < entries.size(); i++) {
                 T entry = entries.get(i);

@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 import app.jbomberman.controller.Controller;
@@ -38,7 +37,7 @@ public class TypingBox implements Observer
             if (code != KeyBoardController.KeyBoardControllerKeyCode.OTHER
                 && code.isPrintable())
             {
-                text.append(updateInfo.getKeyCode().getRepr().unwrap().toString());
+                text.append(updateInfo.getKeyCode().getRepr().fromJust().toString());
             }
         }
     }

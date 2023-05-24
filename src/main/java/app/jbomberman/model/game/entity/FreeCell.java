@@ -52,9 +52,9 @@ public class FreeCell extends Cell
             wall = Maybe.just(wallUnwrapped);
         else if (entity instanceof BomberMan bomberManU) {
             bomberMan = Maybe.just(bomberManU);
-            if (wall.isNothing() || wall.unwrap().isDisappearing()) {
+            if (wall.isNothing() || wall.fromJust().isDisappearing()) {
                 if (powerup.isJust())
-                    bomberManU.takePowerup(powerup.unwrap());
+                    bomberManU.takePowerup(powerup.fromJust());
                 door.maybeDo(d -> d.pick(bomberManU));
             }
             if (getEntitiesOn().stream()
@@ -67,7 +67,7 @@ public class FreeCell extends Cell
         else if (entity instanceof Fire fireU)
             fire = Maybe.just(fireU);
         else if (entity instanceof Enemy && bomberMan.isJust()) {
-            bomberMan.unwrap().caughtByEnemy();
+            bomberMan.fromJust().caughtByEnemy();
         }
 
         // This is just a trick
@@ -143,10 +143,10 @@ public class FreeCell extends Cell
 
         // What I'm doing is really a horror
         if (wall.isJust())
-            if (wall.unwrap().notifyExplosion(explosion))
+            if (wall.fromJust().notifyExplosion(explosion))
                 return true;
         if (bomb.isJust())
-            if (bomb.unwrap().notifyExplosion(explosion))
+            if (bomb.fromJust().notifyExplosion(explosion))
                 return true;
 
         for (Entity entity : new HashSet<>(entities)) {
@@ -180,7 +180,7 @@ public class FreeCell extends Cell
                 getCenterInGridCoord()
             );
         } else {
-            Direction directionUnwrapped = direction.unwrap();
+            Direction directionUnwrapped = direction.fromJust();
 
             Vector2D freeCellToNotify = gridCoordinate.sum(deltaSfromPrevious);
 

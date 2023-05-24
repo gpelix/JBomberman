@@ -83,6 +83,6 @@ public abstract class GameCharacter extends Entity
 
     public GameCharacterState getState()
     {
-        return state.unwrap();
+        return state.fromJust();
     }
 }

@@ -64,7 +64,7 @@ public class View implements Observer
     {
         root.getChildren().clear();
 
-        Vector2D sceneDimensions = drawing.getDimensions().orElse(
+        Vector2D sceneDimensions = drawing.getDimensions().orElse(() ->
             drawing.getDrawObjects().values().stream().flatMap(List::stream)
                 .reduce(
                     Vector2D.getIdentity(),

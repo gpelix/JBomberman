@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 import app.jbomberman.controller.KeyBoardController;
@@ -38,7 +37,7 @@ public class VerticalMenu extends Menu
     @Override
     protected final int getHeight()
     {
-        return height.unwrap();
+        return height.fromJust();
     }
 
     public void setHeight(int height)

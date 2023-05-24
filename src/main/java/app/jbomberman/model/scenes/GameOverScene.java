@@ -31,7 +31,7 @@ public class GameOverScene extends SoundyBomberManScene
             doTransition(new StartDisplay(controller, getModel()));
         }
 
-        return gameOverText.unwrap().getDrawing();
+        return gameOverText.fromJust().getDrawing();
     }
 
     @Override
@@ -48,7 +48,7 @@ public class GameOverScene extends SoundyBomberManScene
 
         gameOverText = Maybe.just(new Text("Game over", true));
 
-        gameOverText.unwrap().setPosition(
+        gameOverText.fromJust().setPosition(
             getModel().getDimensions().div(2)
         );
     }

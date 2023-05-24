@@ -20,7 +20,7 @@ public abstract class MovingImageManager extends ImageManager
         if (currentMoveDirection.isNothing())
             return getCurrentImage();
 
-        Direction currentMoveDirectionU = currentMoveDirection.unwrap();
+        Direction currentMoveDirectionU = currentMoveDirection.fromJust();
 
         if (previousMoveDirection.compute(true,
             x -> !x.equals(currentMoveDirectionU)))

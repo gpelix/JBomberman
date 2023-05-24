@@ -46,22 +46,22 @@ public class PauseScene extends BomberManScene
 
         Vector2D modelDims = Model.getDimensions();
 
-        menu.unwrap().setWidth(modelDims.getX());
-        menu.unwrap().setTopLeft(Vector2D.of(0, 0));
+        menu.fromJust().setWidth(modelDims.getX());
+        menu.fromJust().setTopLeft(Vector2D.of(0, 0));
 
-        controller.attachKeyBoardObserver(menu.unwrap());
+        controller.attachKeyBoardObserver(menu.fromJust());
     }
 
     @Override
     public void cleanup()
     {
         AudioPlayer.getInstance().resumePlaying();
-        controller.detachKeyBoardObserver(menu.unwrap());
+        controller.detachKeyBoardObserver(menu.fromJust());
     }
 
     @Override
     public Drawing update()
     {
-        return menu.unwrap().getDrawing();
+        return menu.fromJust().getDrawing();
     }
 }

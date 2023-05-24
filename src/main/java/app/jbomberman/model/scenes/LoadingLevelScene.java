@@ -55,7 +55,7 @@ public class LoadingLevelScene extends SoundyBomberManScene
 
 
         drawing = Maybe.just(new Drawing(loadingText.getDrawing(), stageText.getDrawing()));
-        drawing.unwrap().setDimensions(dimensions);
+        drawing.fromJust().setDimensions(dimensions);
 
         playIfNeeded(LOADING_LEVEL_SCENE_SOUND);
     }
@@ -67,7 +67,7 @@ public class LoadingLevelScene extends SoundyBomberManScene
         if (!isPlayingSomething())
             doTransition(new GameScene(getModel(), controller));
 
-        return drawing.unwrap();
+        return drawing.fromJust();
     }
 
     @Override

@@ -118,7 +118,7 @@ public class MoveManager
                 Direction.fromDirectionVector(gridCoordinate.sub(currentEntityGameGridCoordinate));
 
             if (directionTowardsBomb.isJust() && moveDirection.isJust() &&
-                directionTowardsBomb.unwrap().equals(moveDirection.unwrap()) &&
+                directionTowardsBomb.fromJust().equals(moveDirection.fromJust()) &&
                 isOnBomb(gridCoordinate) && !isOnBomb(currentEntityGameGridCoordinate))
                 return false;
         }

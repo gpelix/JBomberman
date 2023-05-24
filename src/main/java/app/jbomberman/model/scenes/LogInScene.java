@@ -69,48 +69,48 @@ public class LogInScene extends BomberManScene
             new MenuEntry("go back", true, () ->
                 doTransition(new StartDisplay(controller, model))),
             new MenuEntry("sign up", true, () -> {
-                String playerName = loginBox.unwrap().getText();
+                String playerName = loginBox.fromJust().getText();
                 try {
                     AccountBuilder.getInstance().buildPlayer(playerName);
-                    maybeUnableToLogin.unwrap().setText("Successful sign up. You can now sign in");
+                    maybeUnableToLogin.fromJust().setText("Successful sign up. You can now sign in");
                 } catch (PlayerBuilderException e) {
-                    maybeUnableToLogin.unwrap().setText(e.getMessage());
+                    maybeUnableToLogin.fromJust().setText(e.getMessage());
                 } finally {
                     errorMessageTimer.start();
                 }
             }),
             new MenuEntry("sign in", true, () -> {
-                String playerName = loginBox.unwrap().getText();
+                String playerName = loginBox.fromJust().getText();
                 Maybe<Account> player = AccountBuilder.getInstance().retrievePlayer(playerName);
                 if (player.isNothing()) {
-                    maybeUnableToLogin.unwrap().setText("Username: " + playerName + " Unable to login.");
+                    maybeUnableToLogin.fromJust().setText("Username: " + playerName + " Unable to login.");
                     errorMessageTimer.start();
                 } else {
-                    model.setAccount(player.unwrap());
+                    model.setAccount(player.fromJust());
                     doTransition(new StartDisplay(controller, model));
                 }
             })
         ));
 
-        menu.unwrap().setWidth(dimensions.getX());
-        menu.unwrap().setTopLeft(
+        menu.fromJust().setWidth(dimensions.getX());
+        menu.fromJust().setTopLeft(
             Vector2D.of(0, dimensions.getY() - FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)
         );
 
-        controller.attachKeyBoardObserver(menu.unwrap());
+        controller.attachKeyBoardObserver(menu.fromJust());
 
     }
 
     @Override
     public Drawing update()
     {
-        if (maybeUnableToLogin.unwrap().length() != 0 && errorMessageTimer.hasStarted() && errorMessageTimer.timeIsUp()) {
-            maybeUnableToLogin.unwrap().setText("");
+        if (maybeUnableToLogin.fromJust().length() != 0 && errorMessageTimer.hasStarted() && errorMessageTimer.timeIsUp()) {
+            maybeUnableToLogin.fromJust().setText("");
         }
-        Drawing drawing = menu.unwrap().getDrawing();
-        drawing.merge(loginBox.unwrap().getDrawing());
-        drawing.merge(insertLoginName.unwrap().getDrawing());
-        drawing.merge(maybeUnableToLogin.unwrap().getDrawing());
+        Drawing drawing = menu.fromJust().getDrawing();
+        drawing.merge(loginBox.fromJust().getDrawing());
+        drawing.merge(insertLoginName.fromJust().getDrawing());
+        drawing.merge(maybeUnableToLogin.fromJust().getDrawing());
 
         drawing.setDimensions(model.getDimensions());
 
@@ -121,6 +121,6 @@ public class LogInScene extends BomberManScene
     public void cleanup()
     {
         AudioPlayer.getInstance().resumePlaying();
-        controller.detachKeyBoardObserver(menu.unwrap());
+        controller.detachKeyBoardObserver(menu.fromJust());
     }
 }
