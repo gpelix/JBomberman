@@ -1,4 +1,3 @@
-
 module app.jbomberman {
     requires javafx.controls;
     requires java.desktop;
@@ -15,7 +14,6 @@ module app.jbomberman {
     exports app.jbomberman.images;
     exports app.jbomberman.model;
     opens app.jbomberman.view to javafx.graphics;
-    exports app.jbomberman.model.game.entity.gamecharacter;
     exports app.jbomberman.model.game.entity.state;
     exports app.jbomberman.drawing;
     exports app.jbomberman.images.javafx;

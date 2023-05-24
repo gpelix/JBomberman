@@ -24,7 +24,7 @@ public abstract class Entity extends MutableVector2D
 
     public Entity(Vector2D coordinate, GameGrid gameGrid)
     {
-        super(coordinate.getX(), coordinate.getY());
+        super(coordinate);
         this.gameGrid = gameGrid;
     }
 

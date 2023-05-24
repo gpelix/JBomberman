@@ -1,20 +1,28 @@
-
 package app.jbomberman.util;
 
+/**
+ * Pair represents a pair of objects
+ *
+ * @param <T> the type of the first object
+ * @param <S> the type of the second object
+ * @author gp
+ */
 public class Pair<T, S>
 {
     /**
-     * x coordinate
+     * x is the first element of the pair
      */
     private T x;
     /**
-     * y coordinate
+     * y is the second element of the pair
      */
     private S y;
 
     /**
-     * @param x x coordinate
-     * @param y y coordinate
+     * Create a Pair from two values
+     *
+     * @param x the first value
+     * @param y the second value
      */
     public Pair(T x, S y)
     {
@@ -24,38 +32,46 @@ public class Pair<T, S>
 
 
     /**
-     * of the x coordinate
+     * get first value
      *
-     * @return the x coordinate
+     * @return the first value
      */
-    public T getX() { return x; }
+    public T getX()
+    {
+        return x;
+    }
 
     /**
-     * of the y coordinate
+     * get second value
      *
-     * @return the y coordinate
+     * @return the second value
      */
-    public S getY() { return y; }
+    public S getY()
+    {
+        return y;
+    }
 
     /**
      * We must provide some way to allow subclasses to set the x attribute, so
-     * it's protected. PLEASE DON'T CALL ON A COORDINATE WHICH IS NOT ALSO AN
-     * INSTANCE OF A MUTABLE SUBCLASS OF COORDINATE. Thanks to this,
-     * subclasses might be made mutable
+     * it's protected.
      *
-     * @param x set the x attribute
+     * @param x set the first value
      */
-    protected void setX(T x) { this.x = x; }
+    protected void setX(T x)
+    {
+        this.x = x;
+    }
 
     /**
      * We must provide some way to allow subclasses to set the y attribute, so
-     * it's protected. PLEASE DON'T CALL ON A COORDINATE WHICH IS NOT ALSO AN
-     * INSTANCE OF A MUTABLE SUBCLASS OF COORDINATE. Thanks to this,
-     * subclasses might be made mutable
+     * it's protected.
      *
-     * @param y set the y attribute
+     * @param y set the second value
      */
-    protected void setY(S y) { this.y = y; }
+    protected void setY(S y)
+    {
+        this.y = y;
+    }
 
     @Override
     public String toString()

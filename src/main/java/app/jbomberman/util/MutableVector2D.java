@@ -1,24 +1,21 @@
-
 package app.jbomberman.util;
 
 /**
- * MutableVector2D represents a mutable 2D coordinate object
+ * MutableVector2D represents a mutable 2D vector object. It's much like a
+ * Vector2D object, but it's mutable, and we don't use the FlightWeight pattern
+ * anymore (it really cannot be used unless we did something like a copy
+ * on write on Vector2D)
  *
  * @author gp
  */
 public class MutableVector2D extends Vector2D
 {
     /**
-     * Construct a MutableVector2D object from (x, y) coordinates
+     * Construct a MutableVector2D object from a Vector2D
      *
-     * @param x the x coordinate
-     * @param y the y coordinate
+     * @param vector2D the 2D vector whose coordinates must be taken and set
+     *                 for the new MutableVector2D
      */
-    public MutableVector2D(int x, int y)
-    {
-        super(x, y);
-    }
-
     public MutableVector2D(Vector2D vector2D)
     {
         super(vector2D.getX(),
@@ -29,7 +26,7 @@ public class MutableVector2D extends Vector2D
      * getValuesFrom sets the values of x and y of this getting them from the
      * ones of another coordinate object
      *
-     * @param c the coordinate object whose values must be used to initialize
+     * @param c the vector2D object whose values must be used to initialize
      *          this.x and this.y
      */
     public void getValuesFrom(Vector2D c)
@@ -39,17 +36,21 @@ public class MutableVector2D extends Vector2D
     }
 
     /**
-     * @param x set the x attribute
+     * set the x attribute
+     *
+     * @param x the x attribute to set
      */
-    public void setX(int x)
+    public void setX(Integer x)
     {
         super.setX(x);
     }
 
     /**
-     * @param y set the y attribute
+     * set the y attribute
+     *
+     * @param y the y attribute to set
      */
-    public void setY(int y)
+    public void setY(Integer y)
     {
         super.setY(y);
     }
