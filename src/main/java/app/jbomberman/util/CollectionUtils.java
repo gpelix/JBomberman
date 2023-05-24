@@ -1,4 +1,3 @@
-
 package app.jbomberman.util;
 
 import java.util.Collection;
@@ -7,6 +6,7 @@ import java.util.List;
 
 /**
  * CollectionUtils is a utility class that provides some useful static functions
+ * to work with collections
  *
  * @author gp
  */
@@ -26,7 +26,7 @@ public class CollectionUtils
     }
 
     /**
-     * randomPick() is a function that picks an element from a list
+     * randomPick() is a function that picks a random element from a list
      *
      * @param list the list from which the element must be picked
      * @param <T>  the type of the elements in the list
@@ -37,6 +37,14 @@ public class CollectionUtils
         return list.get(RandomNumberGenerator.getInstance().nextInt(list.size()));
     }
 
+    /**
+     * pick() is a function that picks a generic (non necessarily random)
+     * element from a collection
+     *
+     * @param collection the collection from which the element must be picked
+     * @param <T>        the type of the elements in the Collection
+     * @return the element picked
+     */
     public static <T> Maybe<T> pick(Collection<T> collection)
     {
         Iterator<T> iterator = collection.iterator();
