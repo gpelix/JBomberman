@@ -39,7 +39,7 @@ public class ConcreteGameGridBuilder
 
     public void setup(Vector2D dimensions)
     {
-        grid = Maybe.just(new GameGrid(dimensions, topLeft));
+        grid = Maybe.just(new GameGrid(dimensions, topLeft, this));
     }
 
     // PLEASE USE ONLY FROM THE DIRECTOR

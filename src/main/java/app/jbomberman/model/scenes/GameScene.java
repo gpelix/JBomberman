@@ -36,6 +36,8 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     private static final String NORMAL_BACKGROUND_NOISE =
         "sounds/03 Main BGM.wav";
 
+    private static final long TIME = 200_000;
+
     private static final String POWERUP_TAKEN_BACKGROUND_NOISE =
         "sounds/04 Power-Up Get.wav";
 
@@ -101,9 +103,9 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
         gameGrid.setScene(this);
 
-        timer = new Timer(200_000);
+        timer = new Timer(TIME);
     }
-    
+
     @Override
     public void setup()
     {
@@ -112,13 +114,17 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         initialize();
     }
 
+    private boolean timeGone = false;
+
     @Override
     public Drawing update()
     {
         if (!timer.hasStarted())
             timer.start();
-        else if (timer.timeIsUp())
+        else if (timer.timeIsUp() && !timeGone) {
+            timeGone = true;
             gameGrid.timeHasEnded();
+        }
 
         gameGrid.update();
 
@@ -140,7 +146,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         }
 
         Drawing drawing = gameGrid.getDrawing();
-        timeEntry.setText("time  " + timer.millisToEnd() / 1000);
+        timeEntry.setText("time  " + Math.max(0, timer.millisToEnd() / 1000));
         drawing.merge(topPanel.getDrawing());
         return drawing;
     }

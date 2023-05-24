@@ -1,4 +1,3 @@
-
 package app.jbomberman.audio;
 
 import app.jbomberman.JBomberManException;
@@ -73,7 +72,7 @@ public class AudioPlayer extends Thread
         players = Collections.synchronizedSet(new HashSet<>());
         stopAllTime = 0;
         pause = false;
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogger(getClass());
     }
 
     /**

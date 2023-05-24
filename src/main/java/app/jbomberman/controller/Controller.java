@@ -1,4 +1,3 @@
-
 package app.jbomberman.controller;
 
 import app.jbomberman.Settings;
@@ -19,7 +18,7 @@ public class Controller
 
     public Controller()
     {
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogger(getClass());
 
         view = new View();
 

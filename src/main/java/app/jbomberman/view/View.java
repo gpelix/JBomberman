@@ -40,7 +40,7 @@ public class View implements Observer
 
     public View()
     {
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogger(getClass());
 
         root = new Group();
         scene = new Scene(root);

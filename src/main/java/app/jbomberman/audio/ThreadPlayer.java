@@ -1,4 +1,3 @@
-
 package app.jbomberman.audio;
 
 import app.jbomberman.JBomberManException;
@@ -79,15 +78,15 @@ public class ThreadPlayer extends Thread
     public void run()
     {
         try (InputStream inputStream =
-                     new BufferedInputStream(Resources.getResourceAsStream(soundFile));
-                 AudioInputStream audioInputStream =
-                     AudioSystem.getAudioInputStream(inputStream))
+                 new BufferedInputStream(Resources.getResourceAsStream(soundFile));
+             AudioInputStream audioInputStream =
+                 AudioSystem.getAudioInputStream(inputStream))
         {
             AudioFormat audioFormat = audioInputStream.getFormat();
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
             try (SourceDataLine sourceDataLine =
-                         (SourceDataLine) AudioSystem.getLine(info))
+                     (SourceDataLine) AudioSystem.getLine(info))
             {
                 sourceDataLine.open(audioFormat);
                 sourceDataLine.start();

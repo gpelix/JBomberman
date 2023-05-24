@@ -86,10 +86,10 @@ public class MoveManager
             Maybe.just(moveDirection));
     }
 
-    public boolean generalCanAccess(Stream<Vector2D> coordinatesToCheck,
-                                    GameCharacterCapabilities capabilities,
-                                    Vector2D currentEntityGameGridCoordinate,
-                                    Maybe<Direction> moveDirection)
+    private boolean generalCanAccess(Stream<Vector2D> coordinatesToCheck,
+                                     GameCharacterCapabilities capabilities,
+                                     Vector2D currentEntityGameGridCoordinate,
+                                     Maybe<Direction> moveDirection)
     {
         return coordinatesToCheck.allMatch(c ->
             checkCoordinate(c, capabilities, currentEntityGameGridCoordinate, moveDirection));

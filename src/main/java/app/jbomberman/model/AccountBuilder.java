@@ -43,7 +43,7 @@ public class AccountBuilder
 
     private AccountBuilder()
     {
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogger(getClass());
     }
 
     private Path getFilePath()

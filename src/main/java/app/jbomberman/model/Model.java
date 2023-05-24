@@ -38,7 +38,7 @@ public class Model implements Observable
         currentDraw = Maybe.nothing();
         account = AccountBuilder.getInstance().getDefaultAccount("Unknown");
 
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogger(getClass());
     }
 
     private final Set<Observer> observers = new HashSet<>();

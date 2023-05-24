@@ -18,7 +18,7 @@ public abstract class SoundyBomberManScene extends BomberManScene
     {
         super(model);
         audioHandle = Maybe.nothing();
-        logger = LogManager.getLogger();
+        logger = LogManager.getLogger(getClass());
     }
 
     public boolean isPlayingSomething()

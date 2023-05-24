@@ -1,9 +1,9 @@
 package app.jbomberman.model.game;
 
-import app.jbomberman.JBomberManException;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.entity.Entity;
+import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.gamecharacter.BomberMan;
 import app.jbomberman.model.game.entity.gamecharacter.BomberManCapabilities;
@@ -11,8 +11,10 @@ import app.jbomberman.model.game.entity.gamecharacter.Enemy;
 import app.jbomberman.model.game.entity.gamecharacter.GameCharacter;
 import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Grid;
+import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
+import app.jbomberman.util.RandomNumberGenerator;
 import app.jbomberman.util.Vector2D;
 
 import java.util.Collection;
@@ -43,11 +45,14 @@ public class GameGrid extends Grid<FreeCell> implements Observable
      */
     private final Vector2D topLeftCorner;
 
-    public GameGrid(Vector2D dimensions, Vector2D topLeftCorner)
+    private final ConcreteGameGridBuilder gameGridBuilder;
+
+    public GameGrid(Vector2D dimensions, Vector2D topLeftCorner, ConcreteGameGridBuilder gameGridBuilder)
     {
         super(dimensions);
         moveManager = new MoveManager(this);
         this.topLeftCorner = topLeftCorner;
+        this.gameGridBuilder = gameGridBuilder;
     }
 
     public void update()
@@ -197,8 +202,20 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 
     public void timeHasEnded()
     {
-        // TODO: sdfkldsfkljfkljds
-        throw new JBomberManException("Time has ended");
+        // Spawn 10 random enemies
+        for (int i = 0; i < 10; i++) {
+            int x, y;
+            do {
+                x = RandomNumberGenerator.getInstance().nextInt(1, getWidth() - 1);
+                y = RandomNumberGenerator.getInstance().nextInt(1, getHeight() - 1);
+            } while (!moveManager.canAccessForCommonSizeEntity(
+                EntityFactory.getInstance().getCharacterCapabilities(8),
+                gridCoord2modelCoor(Vector2D.of(x, y)),
+                Vector2D.of(x, y),
+                Maybe.nothing()
+            ));
+            gameGridBuilder.addEnemy(Vector2D.of(x, y), 8);
+        }
     }
 
     public int getScore()
