@@ -167,12 +167,9 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     {
         controller.attachKeyBoardObserver(this); // Listen for ESC
 
-        dimensionsUponEntry = Maybe.just(getModel().getDimensions().unwrap());
         currentDimensions =
             Maybe.just(gameGrid.getDimensions().multiply(Entity.SIZE_IN_MODEL));
-
-        getModel().setDimensions(currentDimensions.unwrap());
-
+        
         topPanel.setTopLeft(Vector2D.of(0, 0));
         topPanel.setWidth(currentDimensions.unwrap().getX());
     }

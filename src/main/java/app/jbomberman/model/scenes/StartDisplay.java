@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
@@ -51,10 +50,7 @@ public class StartDisplay extends SoundyBomberManScene
     @Override
     public void setup()
     {
-
-        getModel().setDimensions(startImage.getDimensions());
-
-        Vector2D modelDimensions = getModel().getDimensions().unwrap();
+        Vector2D modelDimensions = getModel().getDimensions();
 
         int width = modelDimensions.getX();
         int height = modelDimensions.getY();

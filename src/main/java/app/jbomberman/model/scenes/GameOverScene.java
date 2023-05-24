@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
@@ -31,10 +30,7 @@ public class GameOverScene extends SoundyBomberManScene
             doTransition(new StartDisplay(controller, getModel()));
         }
 
-        Drawing a = gameOverText.unwrap().getDrawing();
-        a.setDimensions(getModel().getDimensions().unwrap());
-
-        return a;
+        return gameOverText.unwrap().getDrawing();
     }
 
     @Override
@@ -52,7 +48,7 @@ public class GameOverScene extends SoundyBomberManScene
         gameOverText = Maybe.just(new Text("Game over", true));
 
         gameOverText.unwrap().setPosition(
-            getModel().getDimensions().unwrap().div(2)
+            getModel().getDimensions().div(2)
         );
     }
 }

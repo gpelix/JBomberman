@@ -61,18 +61,11 @@ public class PauseScene extends BomberManScene
     {
         AudioPlayer.getInstance().resumePlaying();
         controller.detachKeyBoardObserver(menu.unwrap());
-
-        getModel().setDimensions(gameScene.getDimensionsUponEntry().unwrapOrThrow(
-            () -> new JBomberManException("gameScene didn't set heightUponEntry or " +
-                "widthUponEntry. That should have been done in the setup() method")
-        ));
     }
 
     @Override
     public Drawing update()
     {
-        Drawing menuDrawing = menu.unwrap().getDrawing();
-        menuDrawing.setDimensions(getModel().getDimensions().unwrap());
-        return menuDrawing;
+        return menu.unwrap().getDrawing();
     }
 }

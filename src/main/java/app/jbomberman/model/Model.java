@@ -19,7 +19,7 @@ public class Model implements Observable
 {
     private BomberManScene currentBomberManScene;
 
-    private Maybe<Vector2D> dimensions = Maybe.nothing();
+    private static final Vector2D dimensions = Vector2D.of(512, 480);
 
     private Maybe<Drawing> currentDraw;
     private Account account;
@@ -66,25 +66,15 @@ public class Model implements Observable
         currentBomberManScene = newScene;
     }
 
-    public void setDimensions(Vector2D dimensions)
-    {
-        this.dimensions = Maybe.just(dimensions);
-    }
-
-    public Maybe<Vector2D> getDimensions()
-    {
-        return dimensions;
-    }
-
-    public Logger getLogger()
-    {
-        return logger;
-    }
-
     public void setAccount(Account account)
     {
         this.account = account;
         isDefaultAccount = false;
+    }
+
+    public static Vector2D getDimensions()
+    {
+        return dimensions;
     }
 
     public Account getAccount()

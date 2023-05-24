@@ -46,7 +46,7 @@ public class LogInScene extends BomberManScene
     public void setup()
     {
 
-        Vector2D dimensions = model.getDimensions().unwrap();
+        Vector2D dimensions = model.getDimensions();
 
         insertLoginName = Maybe.just(
             new Text("Insert login name...", true,
@@ -112,7 +112,7 @@ public class LogInScene extends BomberManScene
         drawing.merge(insertLoginName.unwrap().getDrawing());
         drawing.merge(maybeUnableToLogin.unwrap().getDrawing());
 
-        drawing.setDimensions(model.getDimensions().unwrap());
+        drawing.setDimensions(model.getDimensions());
 
         return drawing;
     }

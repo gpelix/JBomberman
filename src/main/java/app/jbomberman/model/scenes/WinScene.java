@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
@@ -31,7 +30,7 @@ public class WinScene extends SoundyBomberManScene
         }
 
         Drawing a = winText.unwrap().getDrawing();
-        a.setDimensions(getModel().getDimensions().unwrap());
+        a.setDimensions(getModel().getDimensions());
 
         return a;
     }
@@ -51,7 +50,7 @@ public class WinScene extends SoundyBomberManScene
         winText = Maybe.just(new Text("You have won", true));
 
         winText.unwrap().setPosition(
-            getModel().getDimensions().unwrap().div(2)
+            getModel().getDimensions().div(2)
         );
     }
 }

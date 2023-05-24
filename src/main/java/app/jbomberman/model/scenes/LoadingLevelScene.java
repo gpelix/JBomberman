@@ -45,7 +45,7 @@ public class LoadingLevelScene extends SoundyBomberManScene
 
         AudioPlayer.getInstance().stopAll();
 
-        Vector2D dimensions = getModel().getDimensions().unwrap();
+        Vector2D dimensions = getModel().getDimensions();
 
         Text stageText = new Text("Stage " + getModel().getAccount().getLevel(), true, dimensions.div(2));
         Text loadingText = new Text("Loading...", true,
