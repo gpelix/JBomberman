@@ -1,8 +1,7 @@
-
 package app.jbomberman.util;
 
 /**
- * Callback is a SAM that provide a single abstact method run
+ * Callback is a SAM that provide a single abstract method run
  *
  * @author gp
  */
@@ -13,7 +12,4 @@ public interface Callback
      * run() is the single abstract method
      */
     void run();
-
-    Callback NULL_CALLBACK = () -> {
-    };
 }
