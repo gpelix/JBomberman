@@ -17,7 +17,7 @@ import app.jbomberman.util.Vector2D;
  */
 public abstract class Entity extends MutableVector2D
 {
-    public static final int SIZE_IN_MODEL = 16 * Settings.SCALE_FACTOR;
+    public static final int SIZE_IN_MODEL = 16 * Settings.getInstance().getScaleFactor();
 
     private final GameGrid gameGrid;
 

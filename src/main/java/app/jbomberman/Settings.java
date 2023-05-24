@@ -1,4 +1,3 @@
-
 package app.jbomberman;
 
 import app.jbomberman.util.Resources;
@@ -14,26 +13,72 @@ public class Settings
     /**
      * SCALE_FACTOR is the scaling factor we used to create the images
      */
-    public static final int SCALE_FACTOR;
+    private final int scaleFactor;
 
-    public static final int MAX_FPS;
-    public static final String APPLICATION_NAME;
-    public static final String JSON_DIRECTORY = "json/";
-    public static final String IMAGES_DIRECTORY;
-    public static final String JBOMBERMAN_DIRECTORY_NAME;
-    public static final String PLAYERS_FILE = "players.json";
-    
+    private final int maxFps;
+    private final String applicationName;
+    private static final String JSON_DIRECTORY = "json/";
+    private final String imagesDirectory;
+    private final String jbombermanDirectoryDataName;
+    private static final String playersFile = "players.json";
+
     private static final String SETTINGS_FILE =
         JSON_DIRECTORY + "settings.json";
 
     // load the json file and set SCALE_FACTOR
-    static {
+    private Settings()
+    {
         JSONObject settingsJsonRead =
             new JSONObject(Resources.readResource(SETTINGS_FILE));
-        SCALE_FACTOR = settingsJsonRead.getInt("SCALE_FACTOR");
-        MAX_FPS = settingsJsonRead.getInt("MAX_FPS");
-        APPLICATION_NAME = settingsJsonRead.getString("APPLICATION_NAME");
-        IMAGES_DIRECTORY = settingsJsonRead.getString("IMAGES_DIRECTORY");
-        JBOMBERMAN_DIRECTORY_NAME = settingsJsonRead.getString("JBOMBERMAN_DIRECTORY_NAME");
+        scaleFactor = settingsJsonRead.getInt("SCALE_FACTOR");
+        maxFps = settingsJsonRead.getInt("MAX_FPS");
+        applicationName = settingsJsonRead.getString("APPLICATION_NAME");
+        imagesDirectory = settingsJsonRead.getString("IMAGES_DIRECTORY");
+        jbombermanDirectoryDataName = settingsJsonRead.getString("JBOMBERMAN_DATA_DIRECTORY_NAME");
+    }
+
+    private static Settings instance;
+
+    public static Settings getInstance()
+    {
+        if (instance == null) {
+            instance = new Settings();
+        }
+        return instance;
+    }
+
+    public int getMaxFps()
+    {
+        return maxFps;
+    }
+
+    public int getScaleFactor()
+    {
+        return scaleFactor;
+    }
+
+    public String getApplicationName()
+    {
+        return applicationName;
+    }
+
+    public String getImagesDirectory()
+    {
+        return imagesDirectory;
+    }
+
+    public String getJbombermanDirectoryDataName()
+    {
+        return jbombermanDirectoryDataName;
+    }
+
+    public static String getJsonDirectory()
+    {
+        return JSON_DIRECTORY;
+    }
+
+    public String getPlayersFile()
+    {
+        return playersFile;
     }
 }

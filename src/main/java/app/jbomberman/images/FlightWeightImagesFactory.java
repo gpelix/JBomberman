@@ -1,4 +1,3 @@
-
 package app.jbomberman.images;
 
 import app.jbomberman.Settings;
@@ -6,8 +5,6 @@ import app.jbomberman.images.javafx.JavaFXImageBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static app.jbomberman.Settings.SCALE_FACTOR;
 
 /**
  * FlightWeightImagesFactory is a class that can handle Image loading. The idea
@@ -32,7 +29,7 @@ public class FlightWeightImagesFactory
      * CHARACTER_SIZE_IN_PIXEL is a static int that specifies the size in
      * pixel of the square images containing characters
      */
-    static public final int CHARACTER_SIZE_IN_PIXEL = 8 * SCALE_FACTOR;
+    static public final int CHARACTER_SIZE_IN_PIXEL = 8 * Settings.getInstance().getScaleFactor();
 
     /**
      * of the unique instance of FlightWeightImagesFactory
@@ -73,7 +70,7 @@ public class FlightWeightImagesFactory
     public AbstractImage getImage(String path)
     {
         return images.computeIfAbsent(path,
-            p -> imageBuilder.getImage(Settings.IMAGES_DIRECTORY + p));
+            p -> imageBuilder.getImage(Settings.getInstance().getImagesDirectory() + p));
 
     }
 

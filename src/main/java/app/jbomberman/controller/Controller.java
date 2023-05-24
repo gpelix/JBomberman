@@ -29,7 +29,7 @@ public class Controller
         model = new Model(this);
 
         EventLoopHandler eventLoopHandler = new EventLoopHandler(this, model::update);
-        eventLoopHandler.setFps(Settings.MAX_FPS);
+        eventLoopHandler.setFps(Settings.getInstance().getMaxFps());
         eventLoopHandler.start();
 
         model.attachObserver(view);

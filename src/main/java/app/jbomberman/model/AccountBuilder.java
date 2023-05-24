@@ -48,7 +48,7 @@ public class AccountBuilder
 
     private Path getFilePath()
     {
-        return Path.of(DirUtils.getAppData(), Settings.JBOMBERMAN_DIRECTORY_NAME, Settings.PLAYERS_FILE);
+        return Path.of(DirUtils.getAppData(), Settings.getJsonDirectory(), Settings.getInstance().getPlayersFile());
     }
 
     private JSONObject getPlayersJson()
@@ -56,12 +56,12 @@ public class AccountBuilder
         try {
             String appdata = DirUtils.getAppData();
 
-            Path jbombermanInAppdata = Path.of(appdata, Settings.JBOMBERMAN_DIRECTORY_NAME);
+            Path jbombermanInAppdata = Path.of(appdata, Settings.getInstance().getJbombermanDirectoryDataName());
 
             if (!Files.exists(jbombermanInAppdata))
                 Files.createDirectory(jbombermanInAppdata);
 
-            Path jsonFilePath = Path.of(String.valueOf(jbombermanInAppdata), Settings.PLAYERS_FILE);
+            Path jsonFilePath = Path.of(String.valueOf(jbombermanInAppdata), Settings.getInstance().getPlayersFile());
 
             if (!Files.exists(jsonFilePath))
                 try (OutputStream o = Files.newOutputStream(jsonFilePath)) {

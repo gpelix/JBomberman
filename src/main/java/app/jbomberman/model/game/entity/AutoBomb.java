@@ -8,7 +8,7 @@ import app.jbomberman.util.Vector2D;
 
 public class AutoBomb extends Bomb
 {
-    private static final int BOMB_EXPLOSION_INTERVAL = Settings.MAX_FPS * 2;
+    private static final int BOMB_EXPLOSION_INTERVAL = Settings.getInstance().getMaxFps() * 2;
 
     private int timeToExplosion = BOMB_EXPLOSION_INTERVAL;
 
