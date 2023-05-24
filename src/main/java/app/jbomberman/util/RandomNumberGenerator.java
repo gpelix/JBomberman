@@ -1,8 +1,6 @@
-
 package app.jbomberman.util;
 
 import java.util.Random;
-
 
 /**
  * RandomNumberGenerator is a wrapper for a java.util.Random object that is kept as
