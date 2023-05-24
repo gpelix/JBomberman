@@ -1,11 +1,10 @@
 package app.jbomberman.model.scenes;
 
-import app.jbomberman.JBomberManException;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
-import app.jbomberman.drawing.VerticalMenu;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
@@ -19,7 +18,7 @@ public class PauseScene extends BomberManScene
 
     private final Controller controller;
 
-    private Maybe<VerticalMenu> menu;
+    private Maybe<HorizontalMenu> menu;
 
     public PauseScene(Model model, Controller controller, GameScene gameScene)
     {
@@ -34,7 +33,7 @@ public class PauseScene extends BomberManScene
     {
         AudioPlayer.getInstance().pausePlaying();
 
-        menu = Maybe.just(new VerticalMenu(
+        menu = Maybe.just(new HorizontalMenu(
             new MenuEntry("resume", true, () -> {
                 doTransition(gameScene);
                 gameScene.resume();
@@ -45,13 +44,10 @@ public class PauseScene extends BomberManScene
             })
         ));
 
-        gameScene.getCurrentDimensions().doOrThrow(
-            dimensions -> {
-                menu.unwrap().setHeight(dimensions.getY());
-                menu.unwrap().setTopLeft(Vector2D.of(dimensions.getX() / 2, 0));
-            },
-            () -> new JBomberManException("gameScene didn't set currentWidth and currentHeight in the setup method!!")
-        );
+        Vector2D modelDims = Model.getDimensions();
+
+        menu.unwrap().setWidth(modelDims.getX());
+        menu.unwrap().setTopLeft(Vector2D.of(0, 0));
 
         controller.attachKeyBoardObserver(menu.unwrap());
     }

@@ -73,7 +73,7 @@ public class Enemy extends GameCharacter
                 previousMoveDirection = Maybe.just(
                     CollectionUtils.randomPickAndRemove(possibleMoves));
                 finalPlace =
-                    this.sum(previousMoveDirection.unwrap().asVector2D().multiply(integerStepSize));
+                    this.sum(previousMoveDirection.unwrap().getVersor().multiply(integerStepSize));
             } while (!moveManager.canAccessForCommonSizeEntity(
                 getCapabilities(),
                 finalPlace,
@@ -85,7 +85,7 @@ public class Enemy extends GameCharacter
             int i;
             for (i = 0; i < 2; i++) {
                 finalPlace =
-                    this.sum(previousMoveDirection.unwrap().asVector2D().multiply(integerStepSize));
+                    this.sum(previousMoveDirection.unwrap().getVersor().multiply(integerStepSize));
                 // Is this move ok?
                 if (moveManager.canAccessForCommonSizeEntity(this.getCapabilities(), finalPlace,
                     gridCoordCenter, previousMoveDirection))

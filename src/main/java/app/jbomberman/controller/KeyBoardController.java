@@ -1,6 +1,7 @@
 package app.jbomberman.controller;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.util.Direction;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
@@ -13,6 +14,11 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static app.jbomberman.util.Direction.EAST;
+import static app.jbomberman.util.Direction.NORTH;
+import static app.jbomberman.util.Direction.SOUTH;
+import static app.jbomberman.util.Direction.WEST;
 
 public class KeyBoardController implements Observable
 {
@@ -118,6 +124,17 @@ public class KeyBoardController implements Observable
         public Maybe<Character> getRepr()
         {
             return repr;
+        }
+
+        public Maybe<Direction> toDirection()
+        {
+            return switch (this) {
+                case UP -> Maybe.just(NORTH);
+                case DOWN -> Maybe.just(SOUTH);
+                case LEFT -> Maybe.just(WEST);
+                case RIGHT -> Maybe.just(EAST);
+                default -> Maybe.nothing();
+            };
         }
     }
 

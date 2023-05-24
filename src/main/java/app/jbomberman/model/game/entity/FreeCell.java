@@ -167,7 +167,7 @@ public class FreeCell extends Cell
         // forward
         Vector2D deltaSfromPrevious = gridCoordinate.sub(explosion.getFromGridCoordinate());
 
-        Maybe<Direction> direction = Direction.fromDirectionCoordinate(
+        Maybe<Direction> direction = Direction.fromDirectionVector(
             deltaSfromPrevious);
 
         if (direction.isNothing()) {

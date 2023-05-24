@@ -1,8 +1,11 @@
-
 package app.jbomberman.util;
 
-import app.jbomberman.controller.KeyBoardController;
-
+/**
+ * Direction is an enum that represents the four possible cardinal points and
+ * the only possible moves of an element in a grid
+ *
+ * @author gp
+ */
 public enum Direction
 {
     NORTH(Vector2D.of(0, -1)),
@@ -10,58 +13,73 @@ public enum Direction
     SOUTH(Vector2D.of(0, 1)),
     WEST(Vector2D.of(-1, 0));
 
-    private final Vector2D associatedCoordinate;
+    /**
+     * A versor associated with the direction
+     */
+    private final Vector2D associatedVersor;
 
-    Direction(Vector2D associatedCoordinate)
+    /**
+     * Create an instance of a Direction specifying the versor that must be
+     * associated to it
+     *
+     * @param associatedVersor the versor that must be associated to the
+     *                         enum
+     */
+    Direction(Vector2D associatedVersor)
     {
-        this.associatedCoordinate = associatedCoordinate;
+        this.associatedVersor = associatedVersor;
     }
 
-    public Vector2D getAssociatedCoordinate()
+    /**
+     * get the versor
+     *
+     * @return the associated versor
+     */
+    public Vector2D getVersor()
     {
-        return associatedCoordinate;
+        return associatedVersor;
     }
 
+    /**
+     * check is the direction is EAST/WEST
+     *
+     * @return whether the direction is EAST/WEST
+     */
     public boolean isHorizontal()
     {
         return this == EAST || this == WEST;
     }
 
+    /**
+     * check is the direction is NORTH/SOUTH
+     *
+     * @return whether the direction is NORTH/SOUTH
+     */
+    @SuppressWarnings("unused")
     public boolean isVertical()
     {
         return this == NORTH || this == SOUTH;
     }
 
-    public static Maybe<Direction> fromKeyCode(KeyBoardController.KeyBoardControllerKeyCode keyCode)
+    /**
+     * get a direction from a vector indicating that
+     *
+     * @param vector a vector that points in a certain direction
+     * @return a maybe object that contains the direction if the vector indicated
+     * a valid direction or nothing if the vector is askew
+     */
+    public static Maybe<Direction> fromDirectionVector(Vector2D vector)
     {
-        return switch (keyCode) {
-            case UP -> Maybe.just(NORTH);
-            case DOWN -> Maybe.just(SOUTH);
-            case LEFT -> Maybe.just(WEST);
-            case RIGHT -> Maybe.just(EAST);
-            default -> Maybe.nothing();
-        };
-    }
-
-    public static Maybe<Direction> fromDirectionCoordinate(Vector2D coordinate)
-    {
-        int x = coordinate.getX();
-        int y = coordinate.getY();
+        int x = vector.getX();
+        int y = vector.getY();
 
         return Maybe.something(
             x > 0 ? EAST : x < 0 ? WEST : y > 0 ? SOUTH : y < 0 ? NORTH : null);
     }
 
-    public Vector2D asVector2D()
-    {
-        return switch (this) {
-            case EAST -> Vector2D.of(1, 0);
-            case WEST -> Vector2D.of(-1, 0);
-            case SOUTH -> Vector2D.of(0, 1);
-            case NORTH -> Vector2D.of(0, -1);
-        };
-    }
-
+    /**
+     * @return the opposite direction of this
+     */
     public Direction opposite()
     {
         return switch (this) {

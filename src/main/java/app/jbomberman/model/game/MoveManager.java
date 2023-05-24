@@ -115,7 +115,7 @@ public class MoveManager
             bomberManCapabilities.goesThroughBombs()))
         {
             Maybe<Direction> directionTowardsBomb =
-                Direction.fromDirectionCoordinate(gridCoordinate.sub(currentEntityGameGridCoordinate));
+                Direction.fromDirectionVector(gridCoordinate.sub(currentEntityGameGridCoordinate));
 
             if (directionTowardsBomb.isJust() && moveDirection.isJust() &&
                 directionTowardsBomb.unwrap().equals(moveDirection.unwrap()) &&

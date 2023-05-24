@@ -51,9 +51,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
     private String currentlyPlayingBackgroundNoiseName;
 
-    private Maybe<Vector2D> dimensionsUponEntry = Maybe.nothing();
-    private Maybe<Vector2D> currentDimensions = Maybe.nothing();
-
     /**
      * GameGrid is the gameGrid built by the builder
      */
@@ -168,11 +165,8 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     {
         controller.attachKeyBoardObserver(this); // Listen for ESC
 
-        currentDimensions =
-            Maybe.just(gameGrid.getDimensions().multiply(Entity.SIZE_IN_MODEL));
-
         topPanel.setTopLeft(Vector2D.of(0, 0));
-        topPanel.setWidth(currentDimensions.unwrap().getX());
+        topPanel.setWidth(gameGrid.getDimensions().multiply(Entity.SIZE_IN_MODEL).getX());
     }
 
     @Override
@@ -213,16 +207,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     public Maybe<KeyBoardController.KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
     {
         return keyBoardUpdateInfo;
-    }
-
-    public Maybe<Vector2D> getDimensionsUponEntry()
-    {
-        return dimensionsUponEntry;
-    }
-
-    public Maybe<Vector2D> getCurrentDimensions()
-    {
-        return currentDimensions;
     }
 
     // Just BomberMan character for now. Why the hell is this. I'd say we move

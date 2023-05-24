@@ -87,7 +87,7 @@ public class BomberMan extends GameCharacter implements Observer
 
         int integerStepSize = (int) stepSize;
         Vector2D finalPlace =
-            this.sum(moveDirection.getAssociatedCoordinate().multiply(integerStepSize));
+            this.sum(moveDirection.getVersor().multiply(integerStepSize));
 
         if (!moveManager.canAccessForSmallEntity(getCapabilities(), finalPlace,
             gameGrid.getCenterInGridCoord(this), moveDirection))
@@ -116,7 +116,7 @@ public class BomberMan extends GameCharacter implements Observer
                         !checkCoordinateAccess(bottomRight, maybeMoveDirection)) ||
                         (!checkCoordinateAccess(bottomLeft, maybeMoveDirection) &&
                             !checkCoordinateAccess(topLeft, maybeMoveDirection))) {
-                        finalPlace = finalPlace.sum(pushDir.getAssociatedCoordinate());
+                        finalPlace = finalPlace.sum(pushDir.getVersor());
                         topLeft = finalPlace;
                         topRight = moveManager.getTopRight(finalPlace);
                         bottomLeft = moveManager.getBottomLeft(finalPlace);
@@ -125,7 +125,7 @@ public class BomberMan extends GameCharacter implements Observer
 
                     while (!checkCoordinateAccess(topLeft, maybeMoveDirection) ||
                         !checkCoordinateAccess(topRight, maybeMoveDirection)) {
-                        finalPlace = finalPlace.sum(Direction.SOUTH.getAssociatedCoordinate());
+                        finalPlace = finalPlace.sum(Direction.SOUTH.getVersor());
                         topLeft = finalPlace;
                         topRight = moveManager.getTopRight(finalPlace);
                         bottomLeft = moveManager.getBottomLeft(finalPlace);
@@ -134,7 +134,7 @@ public class BomberMan extends GameCharacter implements Observer
 
                     while (!checkCoordinateAccess(bottomLeft, maybeMoveDirection) ||
                         !checkCoordinateAccess(bottomRight, maybeMoveDirection)) {
-                        finalPlace = finalPlace.sum(Direction.NORTH.getAssociatedCoordinate());
+                        finalPlace = finalPlace.sum(Direction.NORTH.getVersor());
                         bottomLeft = moveManager.getBottomLeft(finalPlace);
                         bottomRight = moveManager.getBottomRight(finalPlace);
                     }
@@ -148,7 +148,7 @@ public class BomberMan extends GameCharacter implements Observer
                         !checkCoordinateAccess(topLeft, maybeMoveDirection)) ||
                         (!checkCoordinateAccess(bottomLeft, maybeMoveDirection) &&
                             !checkCoordinateAccess(bottomRight, maybeMoveDirection))) {
-                        finalPlace = finalPlace.sum(pushDir.getAssociatedCoordinate());
+                        finalPlace = finalPlace.sum(pushDir.getVersor());
                         topLeft = finalPlace;
                         topRight = moveManager.getTopRight(finalPlace);
                         bottomLeft = moveManager.getBottomLeft(finalPlace);
@@ -157,7 +157,7 @@ public class BomberMan extends GameCharacter implements Observer
 
                     while (!checkCoordinateAccess(topLeft, maybeMoveDirection) ||
                         !checkCoordinateAccess(bottomLeft, maybeMoveDirection)) {
-                        finalPlace = finalPlace.sum(Direction.EAST.getAssociatedCoordinate());
+                        finalPlace = finalPlace.sum(Direction.EAST.getVersor());
                         topLeft = finalPlace;
                         topRight = moveManager.getTopRight(finalPlace);
                         bottomLeft = moveManager.getBottomLeft(finalPlace);
@@ -166,7 +166,7 @@ public class BomberMan extends GameCharacter implements Observer
 
                     while (!checkCoordinateAccess(topRight, maybeMoveDirection) ||
                         !checkCoordinateAccess(bottomRight, maybeMoveDirection)) {
-                        finalPlace = finalPlace.sum(Direction.WEST.getAssociatedCoordinate());
+                        finalPlace = finalPlace.sum(Direction.WEST.getVersor());
                         bottomRight = moveManager.getBottomRight(finalPlace);
                         topRight = moveManager.getTopRight(finalPlace);
                     }
@@ -209,7 +209,7 @@ public class BomberMan extends GameCharacter implements Observer
         KeyBoardController.KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
         switch (updateInfo.getKeyBoardEventType()) {
             case KEY_RELEASED ->
-                Direction.fromKeyCode(keyCode).maybeDo(directions::remove);
+                keyCode.toDirection().maybeDo(directions::remove);
             case KEY_PRESSED -> {
                 BomberManCapabilities capabilities = getCapabilities();
                 switch (keyCode) {
@@ -246,8 +246,7 @@ public class BomberMan extends GameCharacter implements Observer
                         if (!bombs.isEmpty())
                             bombs.remove().makeExplode();
                     }
-                    default ->
-                        Direction.fromKeyCode(keyCode).maybeDo(directions::add);
+                    default -> keyCode.toDirection().maybeDo(directions::add);
                 }
             }
         }
