@@ -129,7 +129,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         } else {
             Model model = Model.getInstance();
             if (!isPlayingSomething()) {
-                if (gameGrid.getBomberMan().getCapabilities().getNumberOfLives() >= 0) {
+                if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
                     if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
                         doTransition(new WinScene());
                         model.getAccount().setLevel(1);

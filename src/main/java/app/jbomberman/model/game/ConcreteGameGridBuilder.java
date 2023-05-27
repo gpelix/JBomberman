@@ -137,7 +137,6 @@ public class ConcreteGameGridBuilder
 
         // Attach observer bomberman to Scene
         gameScene.attachObserver(bomberMan);
-        getGrid().attachBomberman(bomberMan);
 
         getGrid().addGameCharacter(bomberMan, gridCoordinate);
     }
