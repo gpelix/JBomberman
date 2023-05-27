@@ -11,7 +11,6 @@ import org.apache.logging.log4j.Logger;
 public class Controller
 {
     private final View view;
-    private final Model model;
     private final Logger logger;
 
     private final KeyBoardController keyBoardController;
@@ -26,18 +25,19 @@ public class Controller
         keyBoardController.attachToScene(view.getScene());
 
 
-        model = new Model(this);
+        Model.setController(this);
+        Model.getInstance().setup();
 
-        EventLoopHandler eventLoopHandler = new EventLoopHandler(this, model::update,
+        EventLoopHandler eventLoopHandler = new EventLoopHandler(this, Model.getInstance()::update,
             Properties.getInstance().getMaxFps());
         eventLoopHandler.start();
 
-        model.attachObserver(view);
+        Model.getInstance().attachObserver(view);
 
 
         view.setTitle(Properties.getInstance().getApplicationName());
         view.setIcon(Properties.getInstance().getIconFileName());
-        view.setCloseOperationCallBack(model::close);
+        view.setCloseOperationCallBack(Model.getInstance()::close);
     }
 
     public void close()

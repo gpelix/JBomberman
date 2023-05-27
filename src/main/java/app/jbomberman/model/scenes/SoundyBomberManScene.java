@@ -2,7 +2,6 @@ package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioHandle;
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.model.Model;
 import app.jbomberman.util.Maybe;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,9 +13,8 @@ public abstract class SoundyBomberManScene extends BomberManScene
 
     private final Logger logger;
 
-    protected SoundyBomberManScene(Model model)
+    protected SoundyBomberManScene()
     {
-        super(model);
         audioHandle = Maybe.nothing();
         logger = LogManager.getLogger(getClass());
     }

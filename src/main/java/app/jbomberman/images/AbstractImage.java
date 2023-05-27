@@ -1,4 +1,3 @@
-
 package app.jbomberman.images;
 
 import app.jbomberman.util.Vector2D;

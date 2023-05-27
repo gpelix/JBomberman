@@ -48,7 +48,7 @@ public class AccountBuilder
 
     private Path getFilePath()
     {
-        return Path.of(DirUtils.getAppData(), Properties.getJsonDirectory(), Properties.getInstance().getPlayersFile());
+        return Path.of(DirUtils.getAppData(), Properties.getInstance().getJbombermanDirectoryDataName(), Properties.getInstance().getPlayersFile());
     }
 
     private JSONObject getPlayersJson()
@@ -150,7 +150,8 @@ public class AccountBuilder
         try {
             Files.writeString(getFilePath(), obj.toString(2));
         } catch (IOException e) {
-            throw new JBomberManException("Unable to write settings file " + getFilePath());
+            e.printStackTrace();
+            throw new JBomberManException("Unable to write settings file " + getFilePath() + " " + e.getMessage());
         }
     }
 

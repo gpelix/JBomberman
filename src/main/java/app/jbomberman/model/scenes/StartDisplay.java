@@ -2,7 +2,6 @@ package app.jbomberman.model.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
@@ -31,16 +30,11 @@ public class StartDisplay extends SoundyBomberManScene
 
     private Maybe<HorizontalMenu> menu;
 
-    private final Controller controller;
-
     /**
      * setup() displays the images, text and sets up callbacks
      */
-    public StartDisplay(Controller controller, Model model)
+    public StartDisplay()
     {
-        super(model);
-        this.controller = controller;
-
         startImage = FlightWeightImagesFactory.getInstance().getImage(
             "StartDisplay.png");
 
@@ -50,28 +44,29 @@ public class StartDisplay extends SoundyBomberManScene
     @Override
     public void setup()
     {
-        Vector2D modelDimensions = getModel().getDimensions();
+        Model model = Model.getInstance();
+        Vector2D modelDimensions = model.getDimensions();
 
         int width = modelDimensions.getX();
         int height = modelDimensions.getY();
 
         menu = Maybe.just(new HorizontalMenu(
             new MenuEntry("Start", true,
-                () -> doTransition(new LoadingLevelScene(controller, getModel()))),
+                () -> doTransition(new LoadingLevelScene())),
             new MenuEntry("Log In", true,
-                () -> doTransition(new LogInScene(controller, getModel()))),
-            new MenuEntry("Exit", true, getModel()::close)
+                () -> doTransition(new LogInScene())),
+            new MenuEntry("Exit", true, model::close)
         ));
         menu.fromJust().setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
         menu.fromJust().setWidth(width);
 
-        controller.attachKeyBoardObserver(menu.fromJust());
+        Model.getController().attachKeyBoardObserver(menu.fromJust());
     }
 
     @Override
     public void cleanup()
     {
-        controller.detachKeyBoardObserver(menu.fromJust());
+        Model.getController().detachKeyBoardObserver(menu.fromJust());
         AudioPlayer.getInstance().stopAll();
     }
 

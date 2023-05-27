@@ -1,7 +1,6 @@
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
@@ -16,16 +15,11 @@ public class PauseScene extends BomberManScene
      */
     private final GameScene gameScene;
 
-    private final Controller controller;
-
     private Maybe<HorizontalMenu> menu;
 
-    public PauseScene(Model model, Controller controller, GameScene gameScene)
+    public PauseScene(GameScene gameScene)
     {
-        super(model);
-
         this.gameScene = gameScene;
-        this.controller = controller;
     }
 
     @Override
@@ -40,23 +34,23 @@ public class PauseScene extends BomberManScene
             }),
             new MenuEntry("exit", true, () -> {
                 AudioPlayer.getInstance().stopAll();
-                doTransition(new StartDisplay(controller, getModel()));
+                doTransition(new StartDisplay());
             })
         ));
 
-        Vector2D modelDims = Model.getDimensions();
+        Vector2D modelDims = Model.getInstance().getDimensions();
 
         menu.fromJust().setWidth(modelDims.getX());
         menu.fromJust().setTopLeft(Vector2D.of(0, 0));
 
-        controller.attachKeyBoardObserver(menu.fromJust());
+        Model.getController().attachKeyBoardObserver(menu.fromJust());
     }
 
     @Override
     public void cleanup()
     {
         AudioPlayer.getInstance().resumePlaying();
-        controller.detachKeyBoardObserver(menu.fromJust());
+        Model.getController().detachKeyBoardObserver(menu.fromJust());
     }
 
     @Override

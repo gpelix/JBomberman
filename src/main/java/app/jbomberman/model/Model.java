@@ -19,7 +19,7 @@ public class Model implements Observable
 {
     private BomberManScene currentBomberManScene;
 
-    private static final Vector2D dimensions = Vector2D.of(512, 480);
+    private Vector2D dimensions = Vector2D.of(512, 480);
 
     private Maybe<Drawing> currentDraw;
     private Account account;
@@ -27,18 +27,34 @@ public class Model implements Observable
 
     private final Logger logger;
 
-    private final Controller controller;
+    private static Controller controller;
 
-    public Model(Controller controller)
+    private Model()
     {
-        currentBomberManScene = new StartDisplay(controller, this);
-        currentBomberManScene.setup();
-        this.controller = controller;
-
         currentDraw = Maybe.nothing();
         account = AccountBuilder.getInstance().getDefaultAccount("Unknown");
 
         logger = LogManager.getLogger(getClass());
+    }
+
+    public void setup()
+    {
+        currentBomberManScene = new StartDisplay();
+        currentBomberManScene.setup();
+    }
+
+    public static void setController(Controller controller)
+    {
+        Model.controller = controller;
+    }
+
+    public static Controller getController()
+    {
+        if (controller == null)
+            throw new JBomberManException("Controller is unset");
+
+        return controller;
+
     }
 
     private final Set<Observer> observers = new HashSet<>();
@@ -72,7 +88,7 @@ public class Model implements Observable
         isDefaultAccount = false;
     }
 
-    public static Vector2D getDimensions()
+    public Vector2D getDimensions()
     {
         return dimensions;
     }
@@ -88,5 +104,14 @@ public class Model implements Observable
             AccountBuilder.getInstance().savePlayer(account);
         logger.info("Closing model");
         controller.close();
+    }
+
+    private static Model instance;
+
+    public static Model getInstance()
+    {
+        if (instance == null)
+            instance = new Model();
+        return instance;
     }
 }

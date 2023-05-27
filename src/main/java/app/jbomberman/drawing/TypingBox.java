@@ -10,11 +10,18 @@ import app.jbomberman.util.Vector2D;
 public class TypingBox implements Observer
 {
     private final Text text;
+    private final Controller controller;
 
     public TypingBox(Controller controller, boolean black, Vector2D modelCoordinateOfCenter)
     {
         text = new Text(black, modelCoordinateOfCenter);
+        this.controller = controller;
         controller.attachKeyBoardObserver(this);
+    }
+
+    public void destruct()
+    {
+        controller.detachKeyBoardObserver(this);
     }
 
     @Override

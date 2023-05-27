@@ -1,7 +1,6 @@
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.Properties;
-import app.jbomberman.controller.Controller;
 import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalPanel;
@@ -55,8 +54,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
      * GameGrid is the gameGrid built by the builder
      */
     private final GameGrid gameGrid;
-    private final Controller controller;
-
     private boolean exiting = false;
 
     private final HorizontalPanel<Text> topPanel;
@@ -67,10 +64,9 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
     private final Timer timer;
 
-    public GameScene(Model model, Controller controller)
+    public GameScene()
     {
-        super(model);
-        this.controller = controller;
+        Model model = Model.getInstance();
 
         int levelNumber = model.getAccount().getLevel();
 
@@ -131,15 +127,16 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         if (!exiting) {
             playIfNeeded(currentlyPlayingBackgroundNoiseName);
         } else {
+            Model model = Model.getInstance();
             if (!isPlayingSomething()) {
                 if (gameGrid.getBomberMan().getCapabilities().getNumberOfLives() >= 0) {
-                    if (getModel().getAccount().getLevel() == LAST_LEVEL + 1) {
-                        doTransition(new WinScene(getModel(), controller));
-                        getModel().getAccount().setLevel(1);
+                    if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
+                        doTransition(new WinScene());
+                        model.getAccount().setLevel(1);
                     } else
-                        doTransition(new LoadingLevelScene(controller, getModel()));
+                        doTransition(new LoadingLevelScene());
                 } else
-                    doTransition(new GameOverScene(getModel(), controller));
+                    doTransition(new GameOverScene());
             }
         }
 
@@ -163,7 +160,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
      */
     private void initialize()
     {
-        controller.attachKeyBoardObserver(this); // Listen for ESC
+        Model.getController().attachKeyBoardObserver(this); // Listen for ESC
 
         topPanel.setTopLeft(Vector2D.of(0, 0));
         topPanel.setWidth(gameGrid.getDimensions().multiply(Entity.SIZE_IN_MODEL).getX());
@@ -172,7 +169,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     @Override
     public void cleanup()
     {
-        controller.detachKeyBoardObserver(this);
+        Model.getController().detachKeyBoardObserver(this);
     }
 
     private Maybe<KeyBoardController.KeyBoardUpdateInfo> keyBoardUpdateInfo =
@@ -189,7 +186,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
             if (keyBoardUpdateInfo.getKeyBoardEventType() == KeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
                 && keyBoardUpdateInfo.getKeyCode() == KeyBoardController.KeyBoardControllerKeyCode.ESC)
             {
-                doTransition(new PauseScene(getModel(), controller, this));
+                doTransition(new PauseScene(this));
             } else {
                 if (!exiting) {
                     // Forward it to bomberman
@@ -223,7 +220,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     {
         if (victory) {
             replace(WIN_SOUND);
-            getModel().getAccount().incrementLevel();
+            Model.getInstance().getAccount().incrementLevel();
         } else {
             replace(GAME_OVER_SOUND);
         }
@@ -233,6 +230,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
     public void removeLife()
     {
-        getModel().getAccount().getCapabilities().removeLife();
+        Model.getInstance().getAccount().getCapabilities().removeLife();
     }
 }

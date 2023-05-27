@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.drawing.Drawing;
@@ -10,13 +9,6 @@ import app.jbomberman.model.Model;
  */
 public abstract class BomberManScene
 {
-    private final Model model;
-
-    protected BomberManScene(Model model)
-    {
-        this.model = model;
-    }
-
     /**
      * update() should be called regularly by a timer like AnimationTimer in javafx
      * package. It should be used to update what gets displayed on the screen
@@ -34,11 +26,6 @@ public abstract class BomberManScene
     {
         cleanup();
         nextScene.setup();
-        model.setScene(nextScene);
-    }
-
-    protected Model getModel()
-    {
-        return model;
+        Model.getInstance().setScene(nextScene);
     }
 }

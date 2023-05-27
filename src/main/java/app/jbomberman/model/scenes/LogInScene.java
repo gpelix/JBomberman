@@ -1,7 +1,6 @@
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
@@ -26,25 +25,18 @@ public class LogInScene extends BomberManScene
 
     private static final int MARGIN = 10;
 
-
-    private final Model model;
-
-    private final Controller controller;
-
-    public LogInScene(Controller controller, Model model)
+    public LogInScene()
     {
-        super(model);
-
         AudioPlayer.getInstance().pausePlaying();
 
-        this.model = model;
-        this.controller = controller;
         errorMessageTimer = new Timer(10_000);
     }
 
     @Override
     public void setup()
     {
+
+        Model model = Model.getInstance();
 
         Vector2D dimensions = model.getDimensions();
 
@@ -55,7 +47,7 @@ public class LogInScene extends BomberManScene
 
 
         loginBox = Maybe.just(
-            new TypingBox(controller, true, Vector2D.of(
+            new TypingBox(Model.getController(), true, Vector2D.of(
                 dimensions.getX() / 2,
                 dimensions.getY() / 2
             ))
@@ -67,7 +59,7 @@ public class LogInScene extends BomberManScene
 
         menu = Maybe.just(new HorizontalMenu(
             new MenuEntry("go back", true, () ->
-                doTransition(new StartDisplay(controller, model))),
+                doTransition(new StartDisplay())),
             new MenuEntry("sign up", true, () -> {
                 String playerName = loginBox.fromJust().getText();
                 try {
@@ -87,7 +79,7 @@ public class LogInScene extends BomberManScene
                     errorMessageTimer.start();
                 } else {
                     model.setAccount(player.fromJust());
-                    doTransition(new StartDisplay(controller, model));
+                    doTransition(new StartDisplay());
                 }
             })
         ));
@@ -97,7 +89,7 @@ public class LogInScene extends BomberManScene
             Vector2D.of(0, dimensions.getY() - FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)
         );
 
-        controller.attachKeyBoardObserver(menu.fromJust());
+        Model.getController().attachKeyBoardObserver(menu.fromJust());
 
     }
 
@@ -112,7 +104,7 @@ public class LogInScene extends BomberManScene
         drawing.merge(insertLoginName.fromJust().getDrawing());
         drawing.merge(maybeUnableToLogin.fromJust().getDrawing());
 
-        drawing.setDimensions(model.getDimensions());
+        drawing.setDimensions(Model.getInstance().getDimensions());
 
         return drawing;
     }
@@ -121,6 +113,7 @@ public class LogInScene extends BomberManScene
     public void cleanup()
     {
         AudioPlayer.getInstance().resumePlaying();
-        controller.detachKeyBoardObserver(menu.fromJust());
+        loginBox.fromJust().destruct(); // Detach from controller
+        Model.getController().detachKeyBoardObserver(menu.fromJust());
     }
 }
