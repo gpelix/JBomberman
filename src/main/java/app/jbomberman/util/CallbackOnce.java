@@ -27,4 +27,9 @@ public abstract class CallbackOnce implements Callback
             hasRun = true;
         }
     }
+
+    public void reset()
+    {
+        hasRun = false;
+    }
 }

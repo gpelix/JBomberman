@@ -8,6 +8,7 @@ import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.GameCharacter;
+import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Grid;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
@@ -25,8 +26,6 @@ import java.util.stream.StreamSupport;
 public class GameGrid extends Grid<FreeCell> implements Observable
 {
     private int numberOfEnemies = 0;
-
-    boolean hasReachedZero = false;
 
     private final MoveManager moveManager;
 
@@ -48,12 +47,20 @@ public class GameGrid extends Grid<FreeCell> implements Observable
         this.gameGridBuilder = gameGridBuilder;
     }
 
+
+    private final CallbackOnce deadEnemiesSoundPlayer = new CallbackOnce()
+    {
+        @Override
+        public void run()
+        {
+            AudioPlayer.getInstance().playSound(ALL_ENEMIES_ARE_DEAD_SOUND);
+        }
+    };
+
     public void update()
     {
-        if (numberOfEnemies == 0 && !hasReachedZero) {
-            AudioPlayer.getInstance().playSound(ALL_ENEMIES_ARE_DEAD_SOUND);
-            hasReachedZero = true;
-        }
+        if (numberOfEnemies == 0)
+            deadEnemiesSoundPlayer.runOnce();
 
         this.forEach(Entity::updateInModel);
     }
@@ -79,7 +86,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
     {
         if (character instanceof Enemy) {
             numberOfEnemies++;
-            hasReachedZero = false;
+            deadEnemiesSoundPlayer.reset();
         }
         addEntityInFreeCell(character, coordinate);
     }
