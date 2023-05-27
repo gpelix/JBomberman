@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public abstract class Panel<T extends Text>
+public abstract class Panel<T extends Text> implements Drawable
 {
     private final List<T> entries;
 
@@ -100,6 +100,4 @@ public abstract class Panel<T extends Text>
         throw new JBomberManException(
             "Classes that use arrangeVertically or any other function that call getHeight must override this method");
     }
-
-    public abstract Drawing getDrawing();
 }

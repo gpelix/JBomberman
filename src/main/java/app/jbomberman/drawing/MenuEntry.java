@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 import app.jbomberman.util.Callback;
@@ -32,12 +31,6 @@ public class MenuEntry extends Text
             setColor(false);
         else
             setColor(true);
-    }
-
-    @Override
-    public Drawing getDrawing()
-    {
-        return super.getDrawing();
     }
 
     public void callCallback()

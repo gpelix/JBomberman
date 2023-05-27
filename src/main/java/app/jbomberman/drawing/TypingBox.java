@@ -7,7 +7,7 @@ import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 
 // Observe the KeyBoardController
-public class TypingBox implements Observer
+public class TypingBox implements Observer, Drawable
 {
     private final Text text;
     private final Controller controller;
@@ -54,6 +54,7 @@ public class TypingBox implements Observer
         return text.getText();
     }
 
+    @Override
     public Drawing getDrawing()
     {
         return text.getDrawing();

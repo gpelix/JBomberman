@@ -168,7 +168,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 
     public void powerUpTaken()
     {
-        updateAllObservers(); // Tell the gameGrid that a powerup has been picked
+        updateAllObservers(); // Tell the gameScene that a powerup has been picked
     }
 
     private final Set<Observer> observers = new HashSet<>();

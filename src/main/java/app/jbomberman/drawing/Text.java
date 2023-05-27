@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 import app.jbomberman.images.AbstractImage;
@@ -18,7 +17,7 @@ import java.util.stream.IntStream;
  *
  * @author gp
  */
-public class Text extends MutableVector2D
+public class Text extends MutableVector2D implements Drawable
 {
     /**
      * text is a string representing the text currently displayed
@@ -138,6 +137,7 @@ public class Text extends MutableVector2D
         return length() * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL;
     }
 
+    @Override
     public Drawing getDrawing()
     {
         return drawing;

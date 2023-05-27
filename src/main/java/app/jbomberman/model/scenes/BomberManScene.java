@@ -3,9 +3,13 @@ package app.jbomberman.model.scenes;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.Model;
 
+import java.util.function.Supplier;
+
 /**
  * BomberManScene is one of the Scenes of the Application. It's an abstract class
  * that provides an easy way to handle what the screen is currently displaying
+ *
+ * @author gp
  */
 public abstract class BomberManScene
 {
@@ -16,16 +20,23 @@ public abstract class BomberManScene
     public abstract Drawing update();
 
     /**
-     * cleanup before transition to a new scene
+     * cleanup() must be called before transition to a new scene
      */
     public abstract void cleanup();
 
-    public abstract void setup();
 
-    protected void doTransition(BomberManScene nextScene)
+    /**
+     * doTransition allows subclasses to make smooth painless uniform transitions
+     * from one scene to another one
+     *
+     * @param nextSceneSupplier a supplier of a new scene
+     * @implNote we pass a supplier in almost all the cases we want to defer
+     * the creation and initialization of the new scene up to the moment after
+     * which we did the cleanup of the previous scene
+     */
+    protected void doTransition(Supplier<BomberManScene> nextSceneSupplier)
     {
         cleanup();
-        nextScene.setup();
-        Model.getInstance().setScene(nextScene);
+        Model.getInstance().setScene(nextSceneSupplier.get());
     }
 }

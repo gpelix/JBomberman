@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 import app.jbomberman.controller.KeyBoardController;
@@ -34,8 +33,7 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     {
         arrangementPolicy = policy;
     }
-
-
+    
     @Override
     public final Drawing getDrawing()
     {
@@ -73,7 +71,6 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     protected abstract KeyBoardController.KeyBoardControllerKeyCode getNextKey();
 
     protected abstract KeyBoardController.KeyBoardControllerKeyCode getPrevKey();
-
 
     protected Maybe<Integer> getSelectedEntry()
     {

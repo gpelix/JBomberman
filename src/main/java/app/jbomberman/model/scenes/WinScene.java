@@ -5,22 +5,20 @@ import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.Text;
 import app.jbomberman.model.Model;
-import app.jbomberman.util.Maybe;
 
 public class WinScene extends SoundyBomberManScene
 {
-    private Maybe<Text> winText = Maybe.nothing();
+    private final Text winText;
 
     private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("08 Ending.wav");
 
     @Override
     public Drawing update()
     {
-        if (!isPlayingSomething()) {
-            doTransition(new StartDisplay());
-        }
+        if (!isPlayingSomething())
+            doTransition(StartDisplay::new);
 
-        Drawing a = winText.fromJust().getDrawing();
+        Drawing a = winText.getDrawing();
         a.setDimensions(Model.getInstance().getDimensions());
 
         return a;
@@ -32,15 +30,14 @@ public class WinScene extends SoundyBomberManScene
         // Do nothing
     }
 
-    @Override
-    public void setup()
+    public WinScene()
     {
         AudioPlayer.getInstance().stopAll();
         playIfNeeded(GAME_OVER_SOUND);
 
-        winText = Maybe.just(new Text("You have won", true));
+        winText = new Text("You have won", true);
 
-        winText.fromJust().setPosition(
+        winText.setPosition(
             Model.getInstance().getDimensions().div(2)
         );
     }

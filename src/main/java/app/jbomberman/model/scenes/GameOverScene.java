@@ -18,7 +18,7 @@ public class GameOverScene extends SoundyBomberManScene
     {
         if (!isPlayingSomething()) {
             Model.getInstance().getAccount().setLevel(1);
-            doTransition(new StartDisplay());
+            doTransition(StartDisplay::new);
         }
 
         return gameOverText.fromJust().getDrawing();
@@ -30,8 +30,7 @@ public class GameOverScene extends SoundyBomberManScene
         // Do nothing
     }
 
-    @Override
-    public void setup()
+    public GameOverScene()
     {
         AudioPlayer.getInstance().stopAll();
         playIfNeeded(GAME_OVER_SOUND);

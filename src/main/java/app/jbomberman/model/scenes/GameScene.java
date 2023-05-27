@@ -97,11 +97,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         gameGrid = builder.getResult();
 
         timer = new Timer(TIME);
-    }
-
-    @Override
-    public void setup()
-    {
+        
         gameGrid.attachObserver(this);
 
         initialize();
@@ -135,12 +131,12 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
             if (!isPlayingSomething()) {
                 if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
                     if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
-                        doTransition(new WinScene());
+                        doTransition(WinScene::new);
                         model.getAccount().setLevel(1);
                     } else
-                        doTransition(new LoadingLevelScene());
+                        doTransition(LoadingLevelScene::new);
                 } else
-                    doTransition(new GameOverScene());
+                    doTransition(GameOverScene::new);
             }
         }
 
@@ -190,7 +186,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
             if (keyBoardUpdateInfo.getKeyBoardEventType() == KeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
                 && keyBoardUpdateInfo.getKeyCode() == KeyBoardController.KeyBoardControllerKeyCode.ESC)
             {
-                doTransition(new PauseScene(this));
+                doTransition(() -> new PauseScene(this));
             } else {
                 if (!exiting) {
                     // Forward it to bomberman

@@ -9,7 +9,6 @@ import app.jbomberman.drawing.MenuEntry;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
-import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 
 /**
@@ -28,7 +27,7 @@ public class StartDisplay extends SoundyBomberManScene
 
     private final AbstractImage startImage;
 
-    private Maybe<HorizontalMenu> menu;
+    private HorizontalMenu menu;
 
     /**
      * setup() displays the images, text and sets up callbacks
@@ -38,35 +37,29 @@ public class StartDisplay extends SoundyBomberManScene
         startImage = FlightWeightImagesFactory.getInstance().getImage(
             "StartDisplay.png");
 
-        menu = Maybe.nothing();
-    }
-
-    @Override
-    public void setup()
-    {
         Model model = Model.getInstance();
         Vector2D modelDimensions = model.getDimensions();
 
         int width = modelDimensions.getX();
         int height = modelDimensions.getY();
 
-        menu = Maybe.just(new HorizontalMenu(
+        menu = new HorizontalMenu(
             new MenuEntry("Start", true,
-                () -> doTransition(new LoadingLevelScene())),
+                () -> doTransition(LoadingLevelScene::new)),
             new MenuEntry("Log In", true,
-                () -> doTransition(new LogInScene())),
+                () -> doTransition(LogInScene::new)),
             new MenuEntry("Exit", true, model::close)
-        ));
-        menu.fromJust().setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
-        menu.fromJust().setWidth(width);
+        );
+        menu.setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
+        menu.setWidth(width);
 
-        Model.getController().attachKeyBoardObserver(menu.fromJust());
+        Model.getController().attachKeyBoardObserver(menu);
     }
 
     @Override
     public void cleanup()
     {
-        Model.getController().detachKeyBoardObserver(menu.fromJust());
+        Model.getController().detachKeyBoardObserver(menu);
         AudioPlayer.getInstance().stopAll();
     }
 
@@ -78,7 +71,7 @@ public class StartDisplay extends SoundyBomberManScene
         Drawing drawing = new Drawing(
             new DrawObject(Vector2D.of(0, 0), startImage));
 
-        drawing.merge(menu.fromJust().getDrawing(), x -> x + 1);
+        drawing.merge(menu.getDrawing(), x -> x + 1);
 
         return drawing;
     }

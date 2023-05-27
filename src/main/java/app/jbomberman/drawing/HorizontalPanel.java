@@ -1,4 +1,3 @@
-
 package app.jbomberman.drawing;
 
 public class HorizontalPanel<T extends Text> extends Panel<T>

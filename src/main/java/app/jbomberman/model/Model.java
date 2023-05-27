@@ -40,7 +40,6 @@ public class Model implements Observable
     public void setup()
     {
         currentBomberManScene = new StartDisplay();
-        currentBomberManScene.setup();
     }
 
     public static void setController(Controller controller)
