@@ -122,7 +122,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
         gameGrid.update();
 
-        scoreEntry.setText(String.valueOf(gameGrid.getScore()));
+        scoreEntry.setText(String.valueOf(Model.getInstance().getAccount().getCapabilities().getPointsEarned()));
 
         if (!exiting) {
             playIfNeeded(currentlyPlayingBackgroundNoiseName);
@@ -226,10 +226,5 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         }
 
         exiting = true;
-    }
-
-    public void removeLife()
-    {
-        Model.getInstance().getAccount().getCapabilities().removeLife();
     }
 }

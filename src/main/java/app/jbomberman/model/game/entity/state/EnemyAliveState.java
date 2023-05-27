@@ -1,6 +1,7 @@
 package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.MovingImageManager;
 import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Explosion;
@@ -27,7 +28,7 @@ public class EnemyAliveState extends AliveState<Enemy>
     @Override
     public boolean notifyExplosion(Explosion explosion)
     {
-        enemy.getGameGrid().addScore(enemy.getDeathPoints());
+        Model.getInstance().getAccount().getCapabilities().addPoints(enemy.getDeathPoints());
         die();
         return false;
     }

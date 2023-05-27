@@ -4,7 +4,6 @@ import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.entity.BomberMan;
-import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.model.game.entity.EntityFactory;
@@ -217,18 +216,6 @@ public class GameGrid extends Grid<FreeCell> implements Observable
             ));
             gameGridBuilder.addEnemy(Vector2D.of(x, y), 8);
         }
-    }
-
-    public int getScore()
-    {
-        return bomberMan.getCapabilities().getPointsEarned();
-    }
-
-    public void addScore(int points)
-    {
-        BomberManCapabilities capabilities = bomberMan.getCapabilities();
-
-        capabilities.addPoints(points);
     }
 
     public void attachBomberman(BomberMan bomberMan)

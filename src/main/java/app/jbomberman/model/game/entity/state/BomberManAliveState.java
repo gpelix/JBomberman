@@ -2,6 +2,7 @@ package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.MovingImageManager;
 import app.jbomberman.model.game.entity.BomberMan;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
@@ -70,7 +71,7 @@ public class BomberManAliveState extends AliveState<BomberMan>
     {
         bomberMan.setState(nextState);
 
-        bomberMan.getGameGrid().getScene().removeLife();
+        Model.getInstance().getAccount().getCapabilities().removeLife();
 
         bomberMan.setSoundHandle(
             Maybe.just(AudioPlayer.getInstance().playSound(BomberMan.getBombermanDeathSound())));
