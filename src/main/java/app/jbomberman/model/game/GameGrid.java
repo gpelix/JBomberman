@@ -8,7 +8,6 @@ import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.GameCharacter;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Grid;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
@@ -28,8 +27,6 @@ public class GameGrid extends Grid<FreeCell> implements Observable
     private int numberOfEnemies = 0;
 
     boolean hasReachedZero = false;
-
-    private GameScene scene;
 
     private final MoveManager moveManager;
 
@@ -87,10 +84,6 @@ public class GameGrid extends Grid<FreeCell> implements Observable
         addEntityInFreeCell(character, coordinate);
     }
 
-    /**
-     * @param entity
-     * @param coordinate
-     */
     public void addEntityInFreeCell(Entity entity, Vector2D coordinate)
     {
         get(coordinate).addEntity(entity);
@@ -182,18 +175,6 @@ public class GameGrid extends Grid<FreeCell> implements Observable
     public int getNumberOfEnemiesStillAlive()
     {
         return numberOfEnemies;
-    }
-
-    @Deprecated
-    public void setScene(GameScene scene)
-    {
-        this.scene = scene;
-    }
-
-    @Deprecated
-    public GameScene getScene()
-    {
-        return scene;
     }
 
     public void timeHasEnded()

@@ -40,12 +40,6 @@ public class MoveManager
             coordinate.getY() + Entity.SIZE_IN_MODEL - 1);
     }
 
-    // Take this coordinate, rescale it to grid size and see if it's in
-    public boolean isInsideGrid(Vector2D coordinate)
-    {
-        return gameGrid.isWithinBoundaries(gameGrid.modelCoord2GridCoord(coordinate));
-    }
-
     /**
      * @param finalPlaceTopLeft gameCharacter's top left coordinate where it
      *                          wants to go
@@ -128,26 +122,6 @@ public class MoveManager
 
     private static final int PIXEL_OFFSET = 15;
 
-    private Vector2D getTopRightSmall(Vector2D coordinateTopLeft)
-    {
-        return getTopRight(coordinateTopLeft).sum(Vector2D.of(-PIXEL_OFFSET, PIXEL_OFFSET));
-    }
-
-    private Vector2D getBottomRightSmall(Vector2D coordinateTopLeft)
-    {
-        return getBottomRight(coordinateTopLeft).sum(Vector2D.of(-PIXEL_OFFSET, -PIXEL_OFFSET));
-    }
-
-    private Vector2D getBottomLeftSmall(Vector2D coordinateTopLeft)
-    {
-        return getBottomLeft(coordinateTopLeft).sum(Vector2D.of(PIXEL_OFFSET, -PIXEL_OFFSET));
-    }
-
-    private Vector2D smallify(Vector2D coordinate)
-    {
-        return coordinate.sum(Vector2D.of(PIXEL_OFFSET, PIXEL_OFFSET));
-    }
-
 
     public boolean isOnBlock(Vector2D gridCoordinate)
     {
@@ -179,25 +153,6 @@ public class MoveManager
             .getEntitiesOn()
             .stream()
             .anyMatch(entity -> entity instanceof Powerup);
-    }
-
-    @Deprecated(forRemoval = true)
-    public boolean isInCorner(Vector2D gridCoordinate)
-    {
-        int x = gridCoordinate.getX();
-        int y = gridCoordinate.getY();
-        return (y == 1 || y == gameGrid.getHeight() - 2) &&
-            (x == 1 || x == gameGrid.getWidth() - 2);
-    }
-
-    @Deprecated(forRemoval = true)
-    public boolean IsAlongSides(Vector2D gridCoordinate)
-    {
-        int x = gridCoordinate.getX();
-        int y = gridCoordinate.getY();
-
-        return y == 1 || y == gameGrid.getHeight() - 2 ||
-            x == 1 || x == gameGrid.getWidth() - 2;
     }
 
     /**

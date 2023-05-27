@@ -12,6 +12,7 @@ import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.GameGridBuilderDirector;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
+import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
@@ -95,8 +96,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
         gameGrid = builder.getResult();
 
-        gameGrid.setScene(this);
-
         timer = new Timer(TIME);
     }
 
@@ -108,17 +107,22 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         initialize();
     }
 
-    private boolean timeGone = false;
+    private final CallbackOnce func = new CallbackOnce()
+    {
+        @Override
+        public void run()
+        {
+            gameGrid.timeHasEnded();
+        }
+    };
 
     @Override
     public Drawing update()
     {
         if (!timer.hasStarted())
             timer.start();
-        else if (timer.timeIsUp() && !timeGone) {
-            timeGone = true;
-            gameGrid.timeHasEnded();
-        }
+        else if (timer.timeIsUp())
+            func.runOnce();
 
         gameGrid.update();
 
