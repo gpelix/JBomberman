@@ -17,19 +17,24 @@ import java.io.InputStream;
 
 /**
  * ThreadPlayer is the actual thread playing sounds. These are
- * spawned by AudioPlayer as independent threads
+ * spawned by {@link AudioPlayer} as independent threads. Outside this package, no other
+ * class must directly call ThreadPlayer's methods. In fact, all the communication
+ * between clients and ThreadPlayers must pass through the corresponding {@link AudioHandle}
  *
  * @author gp
+ * @see AudioPlayer
+ * @see ThreadPlayer
  */
-public class ThreadPlayer extends Thread
+class ThreadPlayer extends Thread
 {
     /**
-     * BUFFER_SIZE indicates the chunk size for efficient loading of audio files
+     * BUFFER_SIZE indicates the chunk size in bytes
+     * for efficient loading of audio files
      */
     private static final int BUFFER_SIZE = 4096;
 
     /**
-     * After all the sounds have been stopped, there is still a short period of time
+     * After having stopped all the sounds, there is still a short period of time
      * over which you can still here a bit of noise. So WAIT_TIME_MILLIS is the
      * time in milliseconds for which any player will wait before playing a
      * new sound
@@ -41,14 +46,18 @@ public class ThreadPlayer extends Thread
      */
     private final String soundFile;
 
+    /**
+     * stopAllTime contains the timestamp of the last stopAll call that the
+     * {@link AudioPlayer} received
+     */
     private final long stopAllTime;
 
     private final AudioPlayer audioPlayer;
 
 
     /**
-     * Create a new ThreadPlayer. It's private as we should only be able
-     * to initialize ThreadPlayer's from the AudioPlayer class
+     * Create a new ThreadPlayer. Its visibility is default as we should only be able
+     * to initialize ThreadPlayer's from the {@link AudioPlayer} class
      *
      * @param soundFile filename that contains the audio to play
      */
@@ -60,7 +69,7 @@ public class ThreadPlayer extends Thread
     }
 
     /**
-     * isPlaying returns if the thread isAlive() that is if the thread is playing
+     * isPlaying returns if the thread isAlive(); that is if the thread is playing
      * a sound
      *
      * @return whether the thread is playing an audio
@@ -118,6 +127,12 @@ public class ThreadPlayer extends Thread
         }
     }
 
+    /**
+     * getSoundFileName() returns the name of the file containing the sound that
+     * this thread is playing
+     *
+     * @return the name of the file containing the sound that this thread is playing
+     */
     public String getSoundFileName()
     {
         return soundFile;

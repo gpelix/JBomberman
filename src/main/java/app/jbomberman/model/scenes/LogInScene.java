@@ -1,7 +1,6 @@
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
@@ -90,8 +89,8 @@ public class LogInScene extends BomberManScene
             maybeUnableToLogin.setText("");
 
         Drawing drawing = new Drawing();
-        Stream.<Drawable>of(menu, loginBox, insertLoginName, maybeUnableToLogin)
-            .forEach(d -> d.getDrawing());
+        Stream.of(menu, loginBox, insertLoginName, maybeUnableToLogin)
+            .forEach(d -> drawing.merge(d.getDrawing()));
 
         drawing.setDimensions(Model.getInstance().getDimensions());
 

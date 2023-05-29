@@ -2,6 +2,7 @@ package app.jbomberman.model;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.controller.Controller;
+import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.scenes.BomberManScene;
 import app.jbomberman.model.scenes.StartDisplay;
@@ -15,11 +16,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Model implements Observable
+public class Model implements Observable, Drawable
 {
     private BomberManScene currentBomberManScene;
 
-    private Vector2D dimensions = Vector2D.of(512, 480);
+    private final Vector2D dimensions = Vector2D.of(512, 480);
 
     private Maybe<Drawing> currentDraw;
     private Account account;
@@ -64,7 +65,8 @@ public class Model implements Observable
         return observers;
     }
 
-    public Drawing getDraw()
+    @Override
+    public Drawing getDrawing()
     {
         return currentDraw.unwrapOrThrow(() ->
             new JBomberManException("Drawing is nothing"));

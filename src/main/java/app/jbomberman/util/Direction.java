@@ -78,6 +78,8 @@ public enum Direction
     }
 
     /**
+     * get the opposite direction of this
+     *
      * @return the opposite direction of this
      */
     public Direction opposite()

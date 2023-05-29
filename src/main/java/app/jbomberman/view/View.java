@@ -126,7 +126,7 @@ public class View implements Observer
     public void update(Observable observable)
     {
         if (observable instanceof Model model) {
-            draw(model.getDraw());
+            draw(model.getDrawing());
         }
     }
 
