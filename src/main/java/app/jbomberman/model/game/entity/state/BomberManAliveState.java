@@ -10,11 +10,11 @@ import app.jbomberman.model.game.entity.Explosion;
 import app.jbomberman.util.CollectionUtils;
 import app.jbomberman.util.Maybe;
 
-public class BomberManAliveState extends AliveState<BomberMan>
+public class BomberManAliveState extends AliveState
 {
     private final BomberMan bomberMan;
 
-    private final GameCharacterState<BomberMan> nextState;
+    private final GameCharacterState nextState;
 
     private final MovingImageManager imageManager;
 
@@ -22,7 +22,7 @@ public class BomberManAliveState extends AliveState<BomberMan>
 
     public BomberManAliveState(BomberMan bomberMan,
                                MovingImageManager imageManager,
-                               GameCharacterState<BomberMan> nextState)
+                               GameCharacterState nextState)
     {
         super(bomberMan, nextState);
         this.bomberMan = bomberMan;
@@ -69,7 +69,7 @@ public class BomberManAliveState extends AliveState<BomberMan>
     @Override
     protected void die()
     {
-        bomberMan.setState(nextState);
+        super.die();
 
         Model.getInstance().getAccount().getCapabilities().removeLife();
 

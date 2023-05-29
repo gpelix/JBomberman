@@ -1,9 +1,8 @@
-
 package app.jbomberman.model.game.entity.state;
 
-public abstract class DeadState<T> extends GameCharacterState<T>
+public abstract class DeadState extends GameCharacterState
 {
-    protected DeadState(T character)
+    protected DeadState(StateFul character)
     {
         super(character);
     }

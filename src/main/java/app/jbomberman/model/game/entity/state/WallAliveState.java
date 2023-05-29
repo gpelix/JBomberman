@@ -5,15 +5,15 @@ import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.entity.Explosion;
 import app.jbomberman.model.game.entity.Wall;
 
-public class WallAliveState extends AliveState<Wall>
+public class WallAliveState extends AliveState
 {
-    private final GameCharacterState<Wall> nextState;
+    private final GameCharacterState nextState;
 
     private final Wall wall;
 
     private final ImageManager imageManager;
 
-    public WallAliveState(Wall wall, GameCharacterState<Wall> nextState,
+    public WallAliveState(Wall wall, GameCharacterState nextState,
                           ImageManager imageManager)
     {
         super(wall, nextState);
@@ -39,11 +39,5 @@ public class WallAliveState extends AliveState<Wall>
     public Drawing getDrawing()
     {
         return wall.getDrawing(imageManager.getNextImage());
-    }
-
-    @Override
-    protected void die()
-    {
-        wall.setState(nextState);
     }
 }

@@ -7,17 +7,17 @@ import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Explosion;
 import app.jbomberman.util.Direction;
 
-public class EnemyAliveState extends AliveState<Enemy>
+public class EnemyAliveState extends AliveState
 {
     private final Enemy enemy;
 
-    private final GameCharacterState<Enemy> nextState;
+    private final GameCharacterState nextState;
 
     private final MovingImageManager imageManager;
 
     public EnemyAliveState(Enemy enemy,
                            MovingImageManager imageManager,
-                           GameCharacterState<Enemy> nextState)
+                           GameCharacterState nextState)
     {
         super(enemy, nextState);
         this.enemy = enemy;
@@ -43,11 +43,5 @@ public class EnemyAliveState extends AliveState<Enemy>
     public Drawing getDrawing()
     {
         return enemy.getDrawing(imageManager.getNextImage(enemy.getPreviousMoveDirection().orElseWrapped(Direction.NORTH)));
-    }
-
-    @Override
-    public void die()
-    {
-        enemy.setState(nextState);
     }
 }

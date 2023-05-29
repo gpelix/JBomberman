@@ -4,6 +4,7 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.entity.state.GameCharacterState;
+import app.jbomberman.model.game.entity.state.StateFul;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 
@@ -15,7 +16,7 @@ import java.util.function.Supplier;
  *
  * @author gp
  */
-public abstract class GameCharacter extends Entity
+public abstract class GameCharacter extends Entity implements StateFul
 {
 
     private GameCharacterCapabilities capabilities;

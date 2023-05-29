@@ -6,7 +6,7 @@ import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.entity.BomberMan;
 import app.jbomberman.model.game.entity.Explosion;
 
-public class BomberManDeadState extends DeadState<BomberMan>
+public class BomberManDeadState extends DeadState
 {
     private final BomberMan bomberMan;
 
