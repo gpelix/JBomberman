@@ -1,6 +1,5 @@
 package app.jbomberman.model.game;
 
-import app.jbomberman.model.Model;
 import app.jbomberman.model.game.entity.Block;
 import app.jbomberman.model.game.entity.BomberMan;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
@@ -134,7 +133,9 @@ public class GameGridBuilder
             getGrid());
 
         // Attach observer bomberman to Scene
-        Model.getController().attachKeyBoardObserver(bomberMan);
+        // TODO: This is not what we want as we want filtering by gameScene and
+        // TODO: will disable it for now!
+//        Model.getController().attachKeyBoardObserver(bomberMan);
         // Who will detach it??
 
         getGrid().addGameCharacter(bomberMan, gridCoordinate);

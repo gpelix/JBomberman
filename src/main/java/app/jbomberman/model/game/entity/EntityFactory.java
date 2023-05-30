@@ -196,8 +196,8 @@ public class EntityFactory
                     getImagesList(bomberManSpecification, RIGHT),
                     getImagesList(bomberManSpecification, UP),
                     getImagesList(bomberManSpecification, DOWN)),
-                new ImageManager(getImagesList(bomberManSpecification, DEATH)
-                    , 0)
+                new ImageManager(getImagesList(bomberManSpecification, DEATH),
+                    0)
             );
         } catch (JSONException e) {
             throw new JBomberManException(
