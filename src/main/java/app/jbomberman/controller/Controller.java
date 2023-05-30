@@ -99,9 +99,8 @@ public class Controller
 
     /**
      * launch() is the function that must be called during the bootstrap process
-     * that is described in the relation
-     *
-     * @// TODO: 5/29/23 Relazione
+     * The callback passed to the view is the constructor of the controller
+     * itself
      */
     public static void launch()
     {

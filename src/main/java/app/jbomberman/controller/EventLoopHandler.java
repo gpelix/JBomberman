@@ -6,7 +6,7 @@ import javafx.animation.AnimationTimer;
 /**
  * EventLoopHandler is a concrete implementation of javafx AnimationTimer.
  * It also provides a way to limit the frame spikes and make the game smooth and
- * to call an action when handle() gets File.separatorrun
+ * to call an action when handle() gets File.separator
  *
  * @author gp
  */
@@ -15,7 +15,7 @@ public class EventLoopHandler extends AnimationTimer
     /**
      * fps is the desired fps rate for the application
      */
-    private int fps;
+    private final int fps;
 
     /**
      * timeOfLastFrame is the number of nanoseconds since 1/1/70. 0 is a
