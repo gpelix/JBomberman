@@ -1,9 +1,8 @@
-
 package app.jbomberman;
 
 /**
  * JBomberManException is a generic unchecked exception that must be raised
- * by the program
+ * by the program if something weird has occurred
  *
  * @author gp
  */

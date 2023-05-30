@@ -1,4 +1,3 @@
-
 package app.jbomberman;
 
 import app.jbomberman.controller.Controller;

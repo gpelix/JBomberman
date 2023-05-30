@@ -1,5 +1,6 @@
 package app.jbomberman.view;
 
+import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.AbstractImage;
@@ -26,19 +27,55 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * View class plays the role of the View in the MVC pattern we used to build
+ * the application
+ *
+ * @author gp
+ */
 public class View implements Observer
 {
+    /**
+     * initialize() must be called to initialize the view.
+     * It will spawn a javafx thread and call callback inside that thread
+     *
+     * @param callback the callback to be run in the javafx thread
+     */
     public static void initialize(Callback callback)
     {
         JavaFXSetup.initialize(callback);
     }
 
+    /**
+     * root is the group to which every other Group will be attached
+     */
     private final Group root;
+    /**
+     * scene is the only javafx scene in our application containing the root
+     * group
+     */
     private final Scene scene;
+    /**
+     * stage is the only stage in our application, and its scene will always be
+     * the variable called scene
+     */
     private final Stage stage;
 
+    /**
+     * a logger for this class
+     */
     private final Logger logger;
 
+    /**
+     * View is the public constructor of the View.
+     * Once a javafx thread has been spawned calling the initialize static method
+     * of this class from the callback passed to the initialize() method, a View
+     * can be finally created.
+     *
+     * @implNote this startup method is not optional but mandatory. We don't
+     * want the view to subclass javafx.Application as we want to be able to
+     * build an object of type view from the controller as a normal class
+     */
     public View()
     {
         logger = LogManager.getLogger(getClass());
@@ -60,6 +97,16 @@ public class View implements Observer
         stage.show();
     }
 
+    /**
+     * Given a drawing, draw() centers it in the middle of the screen and displays
+     * it.
+     *
+     * @param drawing the drawing to be displayed
+     * @implNote This approach is kind of slow as every time we have to redraw everything.
+     * However, with some benchmarks we saw that the total amount of time needed
+     * to draw the screen is less than the time that the model needs to update
+     * himself. So using this approach is not such a bad choice
+     */
     public void draw(Drawing drawing)
     {
         root.getChildren().clear();
@@ -86,6 +133,13 @@ public class View implements Observer
             .forEachOrdered(drawObj -> this.drawDrawObject(drawObj, shamt));
     }
 
+    /**
+     * drawDrawObject draws the drawObject in the appropriate place shifting it
+     * depending on the value of the shift Vector2D
+     *
+     * @param drawObject the drawObject
+     * @param shift      the vector by which the object must be shifted towards SE
+     */
     private void drawDrawObject(DrawObject drawObject, Vector2D shift)
     {
         ImageView imageView =
@@ -96,40 +150,80 @@ public class View implements Observer
         root.getChildren().add(imageView);
     }
 
+    /**
+     * getScene() return the scene
+     *
+     * @return the scene
+     */
     public Scene getScene()
     {
         return scene;
     }
 
+    /**
+     * setTitle() sets the title to the window
+     *
+     * @param title the title that we want to set to the window
+     */
     public void setTitle(String title)
     {
         stage.setTitle(title);
     }
 
+    /**
+     * setIcon() sets the icon to be displayed for this application
+     *
+     * @param path the path of the icon to display
+     */
     public void setIcon(String path)
     {
         stage.getIcons().add(toJavaFXImage(FlightWeightImagesFactory.getInstance()
             .getImage(path)));
     }
 
+    /**
+     * setCloseOperationCallBack() is needed if we want to add a callback to be
+     * called when the application gets closed by the user
+     *
+     * @param callBack the callback to call on close of the window
+     */
     public void setCloseOperationCallBack(Callback callBack)
     {
         stage.setOnHidden(ignoredEvent -> callBack.run());
     }
 
+    /**
+     * toJavaFXImage is a utility method used internally to unwrap AbstractImages
+     * that for now we now to be instances of JavaFXImages
+     *
+     * @param abstractImage the image to unwrap
+     * @return the unwrapped image
+     */
     private static Image toJavaFXImage(AbstractImage abstractImage)
     {
         return ((JavaFXImage) abstractImage).unwrap();
     }
 
+    /**
+     * update() listens for update requests by the model. In that case, it draws
+     * the drawing
+     *
+     * @param observable the observable that called the method update.
+     */
     @Override
     public void update(Observable observable)
     {
-        if (observable instanceof Model model) {
+        if (observable instanceof Model model)
             draw(model.getDrawing());
-        }
+        else
+            throw new JBomberManException("not implemented");
     }
 
+    /**
+     * close() is needed to close the view. It might sometimes be needed to close
+     * the view from the controller. In that case, we provide the close() function
+     * that shuts down javafx
+     */
     public void close()
     {
         logger.info("Closing view");

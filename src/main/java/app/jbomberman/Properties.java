@@ -7,6 +7,7 @@ import org.json.JSONObject;
  * General settings for the program
  *
  * @author gp
+ * @// TODO: 5/30/23 solve scale factor problem
  */
 public class Properties
 {
