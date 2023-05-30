@@ -37,9 +37,9 @@ public class GameGrid extends Grid<FreeCell> implements Observable
      */
     private final Vector2D topLeftCorner;
 
-    private final ConcreteGameGridBuilder gameGridBuilder;
+    private final GameGridBuilder gameGridBuilder;
 
-    public GameGrid(Vector2D dimensions, Vector2D topLeftCorner, ConcreteGameGridBuilder gameGridBuilder)
+    public GameGrid(Vector2D dimensions, Vector2D topLeftCorner, GameGridBuilder gameGridBuilder)
     {
         super(dimensions);
         moveManager = new MoveManager(this);

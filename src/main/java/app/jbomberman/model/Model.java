@@ -5,6 +5,7 @@ import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.scenes.BomberManScene;
+import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.model.scenes.StartDisplay;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
@@ -114,5 +115,10 @@ public class Model implements Observable, Drawable
         if (instance == null)
             instance = new Model();
         return instance;
+    }
+
+    public void endGame(boolean b)
+    {
+        ((GameScene) currentBomberManScene).endGame(b);
     }
 }

@@ -7,7 +7,6 @@ import app.jbomberman.model.game.FullMovementMovingImageManager;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.LeftRightMovingImageManager;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Resources;
 import app.jbomberman.util.Vector2D;
 import org.json.JSONArray;
@@ -138,8 +137,7 @@ public class EntityFactory
         }
     }
 
-    public Entity buildDoor(Vector2D modelCoordinate, GameGrid gameGrid,
-                            GameScene gameScene)
+    public Entity buildDoor(Vector2D modelCoordinate, GameGrid gameGrid)
     {
         try {
             JSONObject doorSpec = entitiesSpecification.getJSONObject("door");
@@ -151,8 +149,7 @@ public class EntityFactory
             return new Door(modelCoordinate,
                 image,
                 gameGrid,
-                () -> buildEnemy(2, modelCoordinate, gameGrid),
-                gameScene);
+                () -> buildEnemy(2, modelCoordinate, gameGrid));
         } catch (JSONException e) {
             e.printStackTrace();
             throw new JBomberManException(
@@ -178,7 +175,6 @@ public class EntityFactory
                     ALIVE), 0),
                 deathImages
             );
-//                getGrid().gridCoord2modelCoor(gridCoordinate), getGrid()),
         } catch (JSONException e) {
             throw new JBomberManException(
                 "Json format error in specificationFile " + e.getMessage());
@@ -187,7 +183,7 @@ public class EntityFactory
 
     public BomberMan buildBomberMan(Vector2D screenCoordinate,
                                     BomberManCapabilities capabilities,
-                                    GameGrid gameGrid, GameScene gameScene)
+                                    GameGrid gameGrid)
     {
         try {
             JSONObject bomberManSpecification =
@@ -201,8 +197,7 @@ public class EntityFactory
                     getImagesList(bomberManSpecification, UP),
                     getImagesList(bomberManSpecification, DOWN)),
                 new ImageManager(getImagesList(bomberManSpecification, DEATH)
-                    , 0),
-                gameScene
+                    , 0)
             );
         } catch (JSONException e) {
             throw new JBomberManException(

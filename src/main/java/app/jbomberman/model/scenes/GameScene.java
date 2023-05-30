@@ -7,8 +7,8 @@ import app.jbomberman.drawing.HorizontalPanel;
 import app.jbomberman.drawing.Text;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
-import app.jbomberman.model.game.ConcreteGameGridBuilder;
 import app.jbomberman.model.game.GameGrid;
+import app.jbomberman.model.game.GameGridBuilder;
 import app.jbomberman.model.game.GameGridBuilderDirector;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
@@ -73,7 +73,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
         currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
 
-        ConcreteGameGridBuilder builder = new ConcreteGameGridBuilder(
+        GameGridBuilder builder = new GameGridBuilder(
             Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
 
         Text lives = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), true);
@@ -89,7 +89,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
             model.getAccount().setCapabilities(BomberManCapabilities.defaultCapabilities);
 
         GameGridBuilderDirector director =
-            new GameGridBuilderDirector(this, builder, levelNumber,
+            new GameGridBuilderDirector(builder, levelNumber,
                 model.getAccount().getCapabilities());
 
         director.construct();
@@ -97,7 +97,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         gameGrid = builder.getResult();
 
         timer = new Timer(TIME);
-        
+
         gameGrid.attachObserver(this);
 
         initialize();

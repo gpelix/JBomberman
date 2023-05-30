@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.images.FlightWeightImagesFactory;

@@ -1,5 +1,6 @@
 package app.jbomberman.model.game;
 
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.entity.Block;
 import app.jbomberman.model.game.entity.BomberMan;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
@@ -7,17 +8,16 @@ import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.Wall;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 
 /**
- * ConcreteGameGridBuilder is responsible for building the grid. It must
+ * GameGridBuilder is responsible for building the grid. It must
  * cooperate with GameGridBuilderDirector.
  *
  * @author gp
  */
-public class ConcreteGameGridBuilder
+public class GameGridBuilder
 {
     /**
      * grid that is going to be built that is also the final product for
@@ -31,7 +31,7 @@ public class ConcreteGameGridBuilder
     private final Vector2D topLeft;
 
 
-    public ConcreteGameGridBuilder(Vector2D topLeft)
+    public GameGridBuilder(Vector2D topLeft)
     {
         grid = Maybe.nothing();
         this.topLeft = topLeft;
@@ -106,14 +106,12 @@ public class ConcreteGameGridBuilder
         );
     }
 
-    public void addDoor(Vector2D gridCoordinate, GameScene gameScene)
+    public void addDoor(Vector2D gridCoordinate)
     {
         getGrid().addEntityInFreeCell(
             EntityFactory.getInstance().buildDoor(
                 getGameGrid().gridCoord2modelCoor(gridCoordinate),
-                getGameGrid(),
-                gameScene
-            ),
+                getGameGrid()),
             gridCoordinate
         );
     }
@@ -127,16 +125,17 @@ public class ConcreteGameGridBuilder
     }
 
     // Here gameScene acts as a bridge that routes LEFT RIGHT ... to BomberMan
-    public void addBomberMan(GameScene gameScene, Vector2D gridCoordinate,
+    public void addBomberMan(Vector2D gridCoordinate,
                              BomberManCapabilities capabilities)
     {
         BomberMan bomberMan = EntityFactory.getInstance().buildBomberMan(
             getGrid().gridCoord2modelCoor(gridCoordinate),
             capabilities,
-            getGrid(), gameScene);
+            getGrid());
 
         // Attach observer bomberman to Scene
-        gameScene.attachObserver(bomberMan);
+        Model.getController().attachKeyBoardObserver(bomberMan);
+        // Who will detach it??
 
         getGrid().addGameCharacter(bomberMan, gridCoordinate);
     }

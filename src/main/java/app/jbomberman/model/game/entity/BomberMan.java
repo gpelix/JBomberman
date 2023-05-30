@@ -11,7 +11,6 @@ import app.jbomberman.model.game.MoveManager;
 import app.jbomberman.model.game.MovingImageManager;
 import app.jbomberman.model.game.entity.state.BomberManAliveState;
 import app.jbomberman.model.game.entity.state.BomberManDeadState;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.CollectionUtils;
 import app.jbomberman.util.Direction;
 import app.jbomberman.util.Maybe;
@@ -44,16 +43,13 @@ public class BomberMan extends GameCharacter implements Observer
     private static Maybe<Timer> invincibilityTimer =
         Maybe.nothing();
 
-    private final GameScene gameScene;
-
     private final Queue<Bomb> bombs = new LinkedList<>();
 
     private Maybe<AudioHandle> soundHandle;
 
     public BomberMan(Vector2D modelCoordinate, BomberManCapabilities capabilities,
                      GameGrid gameGrid, MovingImageManager movingImageManager,
-                     ImageManager deathImages,
-                     GameScene gameScene)
+                     ImageManager deathImages)
     {
         super(modelCoordinate, capabilities, gameGrid);
 
@@ -63,8 +59,6 @@ public class BomberMan extends GameCharacter implements Observer
         directions = new HashSet<>();
 
         soundHandle = Maybe.nothing();
-
-        this.gameScene = gameScene;
     }
 
     private double stepSize = 0;
@@ -267,8 +261,8 @@ public class BomberMan extends GameCharacter implements Observer
     @Override
     public void update(Observable observable)
     {
-        if (observable instanceof GameScene)
-            update(((GameScene) observable).getKeyBoardUpdateInfo().fromJust());
+        if (observable instanceof KeyBoardController keyBoardController)
+            update(keyBoardController.getUpdateInfo());
     }
 
     public void takePowerup(Powerup powerup)
@@ -300,11 +294,6 @@ public class BomberMan extends GameCharacter implements Observer
     public static String getBombermanDeathSound()
     {
         return BOMBERMAN_DEATH_SOUND;
-    }
-
-    public GameScene getGameScene()
-    {
-        return gameScene;
     }
 
     public Set<Direction> getDirections()

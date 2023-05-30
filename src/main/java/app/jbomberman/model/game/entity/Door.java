@@ -1,24 +1,20 @@
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.images.AbstractImage;
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Vector2D;
 
 import java.util.function.Supplier;
 
 public class Door extends PickableCell
 {
-    private final GameScene gameScene;
-
     public Door(Vector2D coordinate, AbstractImage image, GameGrid gameGrid,
-                Supplier<Enemy> enemySupplier, GameScene gameScene)
+                Supplier<Enemy> enemySupplier)
     {
         super(coordinate, gameGrid,
             image,
             enemySupplier);
-
-        this.gameScene = gameScene;
     }
 
     @Override
@@ -28,7 +24,7 @@ public class Door extends PickableCell
             bomberMan.getCapabilities().addLife();
             bomberMan.stopListening();
             bomberMan.getValuesFrom(this); // Attract bomberman
-            gameScene.endGame(true);
+            Model.getInstance().endGame(true);
         }
     }
 }

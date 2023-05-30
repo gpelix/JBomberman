@@ -4,7 +4,6 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.GameCharacterCapabilities;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.CollectionUtils;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.RandomNumberGenerator;
@@ -27,7 +26,7 @@ public class GameGridBuilderDirector
 
     private static final int NUMBER_OF_POWERUPS = 8;
 
-    private final ConcreteGameGridBuilder builder;
+    private final GameGridBuilder builder;
 
     /**
      * Width of the grid that must be transmitted to the builder
@@ -40,18 +39,15 @@ public class GameGridBuilderDirector
 
     private final int levelNumber;
 
-    private final GameScene gameScene;
-
     private final BomberManCapabilities account;
 
     private static final Vector2D bombermanEntryPointGridRelative =
         Vector2D.of(1, 1);
 
-    public GameGridBuilderDirector(GameScene gameScene, ConcreteGameGridBuilder builder,
+    public GameGridBuilderDirector(GameGridBuilder builder,
                                    int levelNumber,
                                    BomberManCapabilities capabilities)
     {
-        this.gameScene = gameScene;
         this.builder = builder;
         this.levelNumber = levelNumber;
         this.account = capabilities;
@@ -138,7 +134,7 @@ public class GameGridBuilderDirector
                 thisLevelSpec.getInt("powerUpNumber") :
                 Math.abs(RandomNumberGenerator.getInstance().nextInt()) % NUMBER_OF_POWERUPS + 1;
 
-            builder.addDoor(placeForDoor, gameScene);
+            builder.addDoor(placeForDoor);
             builder.addPowerUp(placeForPowerUp, powerUpNumber);
 
 
@@ -183,8 +179,7 @@ public class GameGridBuilderDirector
                 "`" + LEVEL_JSON_FILE + "'. " + e.getMessage());
         }
 
-        builder.addBomberMan(gameScene, bombermanEntryPointGridRelative, account); // These may be
-        // changed at will
+        builder.addBomberMan(bombermanEntryPointGridRelative, account);
     }
 
 

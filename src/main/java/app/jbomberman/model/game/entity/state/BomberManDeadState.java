@@ -1,6 +1,7 @@
 package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.entity.BomberMan;
@@ -38,7 +39,7 @@ public class BomberManDeadState extends DeadState
             gameGrid.get(
                 gameGrid.getCenterInGridCoord(bomberMan)
             ).remove(bomberMan);
-            bomberMan.getGameScene().endGame(false);
+            Model.getInstance().endGame(false);
         }
     }
 
