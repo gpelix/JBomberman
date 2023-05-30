@@ -74,7 +74,7 @@ public class AudioPlayer extends Thread
         if (audioPlayer == null) {
             audioPlayer = new AudioPlayer();
             audioPlayer.start();
-            audioPlayer.setName("Audio Account");
+            audioPlayer.setName("Audio Player");
         }
         return audioPlayer;
     }

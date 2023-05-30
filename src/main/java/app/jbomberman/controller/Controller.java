@@ -5,6 +5,7 @@ import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Observer;
 import app.jbomberman.view.View;
+import javafx.animation.AnimationTimer;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -45,13 +46,16 @@ public class Controller
 
         Model.setController(this);
         Model.getInstance().setup();
-
-        EventLoopHandler eventLoopHandler = new EventLoopHandler(this,
-            Model.getInstance()::update,
-            Properties.getInstance().getMaxFps());
-        eventLoopHandler.start();
-
         Model.getInstance().attachObserver(view);
+
+        new AnimationTimer()
+        {
+            @Override
+            public void handle(long ignored)
+            {
+                Model.getInstance().update();
+            }
+        }.start();
 
 
         view.setTitle(Properties.getInstance().getApplicationName());

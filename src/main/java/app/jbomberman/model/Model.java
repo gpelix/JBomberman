@@ -1,6 +1,7 @@
 package app.jbomberman.model;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
@@ -10,6 +11,7 @@ import app.jbomberman.model.scenes.StartDisplay;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
+import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -28,8 +30,11 @@ public class Model implements Observable, Drawable
     private boolean isDefaultAccount = true;
 
     private final Logger logger;
-
     private static Controller controller;
+
+    private final Timer frameTimer;
+
+    private static final int FPS = Properties.getInstance().getMaxFps();
 
     private Model()
     {
@@ -37,6 +42,9 @@ public class Model implements Observable, Drawable
         account = AccountBuilder.getInstance().getDefaultAccount("Unknown");
 
         logger = LogManager.getLogger(getClass());
+
+        frameTimer = new Timer(1000 / FPS);
+        frameTimer.start();
     }
 
     public void setup()
@@ -75,6 +83,8 @@ public class Model implements Observable, Drawable
 
     public void update()
     {
+        if (!frameTimer.timeIsUp())
+            return;
         currentDraw = Maybe.just(currentBomberManScene.update());
         updateAllObservers();
     }
