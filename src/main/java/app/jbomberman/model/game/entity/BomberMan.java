@@ -24,6 +24,11 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+import static app.jbomberman.util.Direction.EAST;
+import static app.jbomberman.util.Direction.NORTH;
+import static app.jbomberman.util.Direction.SOUTH;
+import static app.jbomberman.util.Direction.WEST;
+
 public class BomberMan extends GameCharacter implements Observer
 {
     private final Set<Direction> directions;
@@ -203,7 +208,7 @@ public class BomberMan extends GameCharacter implements Observer
         KeyBoardController.KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
         switch (updateInfo.getKeyBoardEventType()) {
             case KEY_RELEASED ->
-                keyCode.toDirection().maybeDo(directions::remove);
+                keyCodeToDirection(keyCode).maybeDo(directions::remove);
             case KEY_PRESSED -> {
                 BomberManCapabilities capabilities = getCapabilities();
                 switch (keyCode) {
@@ -240,7 +245,8 @@ public class BomberMan extends GameCharacter implements Observer
                         if (!bombs.isEmpty())
                             bombs.remove().makeExplode();
                     }
-                    default -> keyCode.toDirection().maybeDo(directions::add);
+                    default ->
+                        keyCodeToDirection(keyCode).maybeDo(directions::add);
                 }
             }
         }
@@ -328,5 +334,16 @@ public class BomberMan extends GameCharacter implements Observer
     public void stopListening()
     {
         directions.clear();
+    }
+
+    public Maybe<Direction> keyCodeToDirection(KeyBoardController.KeyBoardControllerKeyCode keyCode)
+    {
+        return switch (keyCode) {
+            case UP -> Maybe.just(NORTH);
+            case DOWN -> Maybe.just(SOUTH);
+            case LEFT -> Maybe.just(WEST);
+            case RIGHT -> Maybe.just(EAST);
+            default -> Maybe.nothing();
+        };
     }
 }
