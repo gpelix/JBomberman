@@ -1,4 +1,4 @@
-package app.jbomberman.view;
+package app.jbomberman.view.javafx;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.util.Callback;
@@ -34,7 +34,7 @@ public class JavaFXSetup extends Application
     }
 
     /**
-     * initialize() must be called by the View to initialize javafx
+     * initialize() must be called by the JavaFXView to initialize javafx
      *
      * @param callback the callback to be called inside the javafx thread
      */

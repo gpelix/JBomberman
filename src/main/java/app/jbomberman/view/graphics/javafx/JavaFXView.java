@@ -1,4 +1,4 @@
-package app.jbomberman.view;
+package app.jbomberman.view.javafx;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.DrawObject;
@@ -11,6 +11,7 @@ import app.jbomberman.util.Callback;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.AbstractView;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
@@ -28,12 +29,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * View class plays the role of the View in the MVC pattern we used to build
+ * JavaFXView class plays the role of the JavaFXView in the MVC pattern we used to build
  * the application
  *
  * @author gp
  */
-public class View implements Observer
+public class JavaFXView extends AbstractView implements Observer
 {
     /**
      * initialize() must be called to initialize the view.
@@ -67,16 +68,16 @@ public class View implements Observer
     private final Logger logger;
 
     /**
-     * View is the public constructor of the View.
+     * JavaFXView is the public constructor of the JavaFXView.
      * Once a javafx thread has been spawned calling the initialize static method
-     * of this class from the callback passed to the initialize() method, a View
+     * of this class from the callback passed to the initialize() method, a JavaFXView
      * can be finally created.
      *
      * @implNote this startup method is not optional but mandatory. We don't
      * want the view to subclass javafx.Application as we want to be able to
      * build an object of type view from the controller as a normal class
      */
-    public View()
+    public JavaFXView()
     {
         logger = LogManager.getLogger(getClass());
 
@@ -107,6 +108,7 @@ public class View implements Observer
      * to draw the screen is less than the time that the model needs to update
      * himself. So using this approach is not such a bad choice
      */
+    @Override
     public void draw(Drawing drawing)
     {
         root.getChildren().clear();
@@ -165,6 +167,7 @@ public class View implements Observer
      *
      * @param title the title that we want to set to the window
      */
+    @Override
     public void setTitle(String title)
     {
         stage.setTitle(title);
@@ -224,6 +227,7 @@ public class View implements Observer
      * the view from the controller. In that case, we provide the close() function
      * that shuts down javafx
      */
+    @Override
     public void close()
     {
         logger.info("Closing view");
