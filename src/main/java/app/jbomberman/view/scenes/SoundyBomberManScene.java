@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioHandle;
 import app.jbomberman.audio.AudioPlayer;

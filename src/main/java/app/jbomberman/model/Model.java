@@ -5,14 +5,14 @@ import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.model.scenes.BomberManScene;
-import app.jbomberman.model.scenes.GameScene;
-import app.jbomberman.model.scenes.StartDisplay;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.scenes.BomberManScene;
+import app.jbomberman.view.scenes.GameScene;
+import app.jbomberman.view.scenes.StartDisplay;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

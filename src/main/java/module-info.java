@@ -5,7 +5,7 @@ module app.jbomberman {
     requires org.apache.logging.log4j;
 
     exports app.jbomberman;
-    exports app.jbomberman.model.scenes;
+    exports app.jbomberman.view.scenes;
     exports app.jbomberman.util;
     exports app.jbomberman.model.game.entity;
     exports app.jbomberman.model.game;
