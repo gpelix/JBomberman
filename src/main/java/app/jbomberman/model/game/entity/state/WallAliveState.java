@@ -7,8 +7,6 @@ import app.jbomberman.model.game.entity.Wall;
 
 public class WallAliveState extends AliveState
 {
-    private final GameCharacterState nextState;
-
     private final Wall wall;
 
     private final ImageManager imageManager;
@@ -18,7 +16,6 @@ public class WallAliveState extends AliveState
     {
         super(wall, nextState);
         this.wall = wall;
-        this.nextState = nextState;
         this.imageManager = imageManager;
     }
 

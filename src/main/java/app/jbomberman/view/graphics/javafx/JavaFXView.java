@@ -1,4 +1,4 @@
-package app.jbomberman.view.javafx;
+package app.jbomberman.view.graphics.javafx;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.DrawObject;
@@ -79,6 +79,7 @@ public class JavaFXView extends AbstractView implements Observer
      */
     public JavaFXView()
     {
+        super(new JavaFXKeyBoardController(), new JavaFXGraphicFactory());
         logger = LogManager.getLogger(getClass());
 
         root = new Group();

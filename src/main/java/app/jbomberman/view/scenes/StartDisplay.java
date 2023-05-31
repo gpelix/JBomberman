@@ -8,7 +8,6 @@ import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
-import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
 
 /**

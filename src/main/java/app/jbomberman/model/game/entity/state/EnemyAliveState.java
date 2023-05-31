@@ -11,8 +11,6 @@ public class EnemyAliveState extends AliveState
 {
     private final Enemy enemy;
 
-    private final GameCharacterState nextState;
-
     private final MovingImageManager imageManager;
 
     public EnemyAliveState(Enemy enemy,
@@ -21,7 +19,6 @@ public class EnemyAliveState extends AliveState
     {
         super(enemy, nextState);
         this.enemy = enemy;
-        this.nextState = nextState;
         this.imageManager = imageManager;
     }
 

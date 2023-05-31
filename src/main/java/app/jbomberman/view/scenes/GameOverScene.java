@@ -4,7 +4,6 @@ import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.Text;
-import app.jbomberman.model.Model;
 import app.jbomberman.util.Maybe;
 
 public class GameOverScene extends SoundyBomberManScene

@@ -1,7 +1,8 @@
 package app.jbomberman.view.scenes;
 
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.model.Model;
+import app.jbomberman.util.Observer;
+import app.jbomberman.view.AbstractView;
 
 import java.util.function.Supplier;
 
@@ -11,8 +12,15 @@ import java.util.function.Supplier;
  *
  * @author gp
  */
-public abstract class BomberManScene
+public abstract class BomberManScene implements Observer
 {
+    private final AbstractView view;
+
+    protected BomberManScene(AbstractView abstractView)
+    {
+        view = abstractView;
+    }
+
     /**
      * update() should be called regularly by a timer like AnimationTimer in javafx
      * package. It should be used to update what gets displayed on the screen
@@ -37,6 +45,6 @@ public abstract class BomberManScene
     protected void doTransition(Supplier<BomberManScene> nextSceneSupplier)
     {
         cleanup();
-        Model.getInstance().setScene(nextSceneSupplier.get());
+        view.setScene(nextSceneSupplier.get());
     }
 }

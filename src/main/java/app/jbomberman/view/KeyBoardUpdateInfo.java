@@ -1,4 +1,4 @@
-import app.jbomberman.view.KeyBoardControllerKeyCode;
+package app.jbomberman.view;
 
 import java.util.Set;
 
@@ -42,9 +42,9 @@ public class KeyBoardUpdateInfo
      * @param keyCode           the code of the key that triggered the event
      * @param pressedKeyCodes   the set of currently pressed codes
      */
-    private KeyBoardUpdateInfo(KeyBoardEventType keyBoardEventType,
-                               KeyBoardControllerKeyCode keyCode,
-                               Set<KeyBoardControllerKeyCode> pressedKeyCodes)
+    public KeyBoardUpdateInfo(KeyBoardEventType keyBoardEventType,
+                              KeyBoardControllerKeyCode keyCode,
+                              Set<KeyBoardControllerKeyCode> pressedKeyCodes)
     {
         this.keyBoardEventType = keyBoardEventType;
         this.keyCode = keyCode;

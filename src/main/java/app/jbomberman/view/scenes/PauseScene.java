@@ -4,7 +4,6 @@ import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
-import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
 
 public class PauseScene extends BomberManScene

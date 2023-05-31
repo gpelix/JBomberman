@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.drawing.Drawing;
@@ -13,7 +12,7 @@ public class Fire extends Entity
         CENTER, HORIZONTAL, VERTICAL, NORTH, SOUTH, EAST, WEST
     }
 
-    private ImageManager imageManager;
+    private final ImageManager imageManager;
 
     public Fire(Vector2D coordinate, GameGrid gameGrid, ImageManager imageManager)
     {

@@ -1,6 +1,7 @@
 package app.jbomberman;
 
 import app.jbomberman.controller.Controller;
+import app.jbomberman.view.graphics.javafx.JavaFXView;
 
 /**
  * JbomberMan is the Main class of the program. It contains the main
@@ -18,6 +19,6 @@ public class JBomberMan
      */
     public static void main(String[] args)
     {
-        Controller.launch();
+        JavaFXView.initialize(() -> new Controller(new JavaFXView()));
     }
 }

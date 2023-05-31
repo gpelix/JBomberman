@@ -4,8 +4,8 @@ import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Observer;
-import app.jbomberman.view.View;
-import javafx.animation.AnimationTimer;
+import app.jbomberman.view.AbstractView;
+import app.jbomberman.view.scenes.StartDisplay;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,51 +16,37 @@ import org.apache.logging.log4j.Logger;
  *
  * @author gp
  * @see Model
- * @see View
+ * @see AbstractView
  */
 public class Controller
 {
-    /**
-     * view is the View in our program
-     */
-    private final View view;
+    private final AbstractView abstractView;
+
     /**
      * logger is an instance of a logger for the Controller
      */
     private final Logger logger;
 
-    private final KeyBoardController keyBoardController;
-
     /**
      * Controller() is the only constructor of the controller
      */
-    public Controller()
+    public Controller(AbstractView view)
     {
+        abstractView = view;
+
         logger = LogManager.getLogger(getClass());
-
-        view = new View();
-
-        keyBoardController = new KeyBoardController();
-        keyBoardController.attachToScene(view.getScene());
-
+        view.setScene(new StartDisplay());
 
         Model.setController(this);
         Model.getInstance().setup();
         Model.getInstance().attachObserver(view);
 
-        new AnimationTimer()
-        {
-            @Override
-            public void handle(long ignored)
-            {
-                Model.getInstance().update();
-            }
-        }.start();
+        abstractView.getAbstractGraphicFactory().buildLoopTimer(abstractView::update).start();
 
 
-        view.setTitle(Properties.getInstance().getApplicationName());
-        view.setIcon(Properties.getInstance().getIconFileName());
-        view.setCloseOperationCallBack(Model.getInstance()::close);
+        abstractView.setTitle(Properties.getInstance().getApplicationName());
+        abstractView.setIcon(Properties.getInstance().getIconFileName());
+        abstractView.setCloseOperationCallBack(Model.getInstance()::close);
     }
 
     /**
@@ -74,7 +60,7 @@ public class Controller
     {
         logger.info("Closing Controller");
         AudioPlayer.getInstance().close();
-        view.close();
+        abstractView.close();
     }
 
     /**
@@ -86,7 +72,7 @@ public class Controller
      */
     public void attachKeyBoardObserver(Observer observer)
     {
-        keyBoardController.attachObserver(observer);
+        abstractView.getInputController().attachObserver(observer);
     }
 
     /**
@@ -98,16 +84,6 @@ public class Controller
      */
     public void detachKeyBoardObserver(Observer keyBoardObserver)
     {
-        keyBoardController.detachObserver(keyBoardObserver);
-    }
-
-    /**
-     * launch() is the function that must be called during the bootstrap process
-     * The callback passed to the view is the constructor of the controller
-     * itself
-     */
-    public static void launch()
-    {
-        View.initialize(Controller::new);
+        abstractView.getInputController().detachObserver(keyBoardObserver);
     }
 }

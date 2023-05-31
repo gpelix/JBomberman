@@ -1,23 +1,18 @@
 package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalPanel;
 import app.jbomberman.drawing.Text;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
-import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.game.GameGridBuilder;
-import app.jbomberman.model.game.GameGridBuilderDirector;
-import app.jbomberman.model.game.entity.BomberManCapabilities;
-import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.graphics.javafx.JavaFXKeyBoardController;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -172,19 +167,19 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         Model.getController().detachKeyBoardObserver(this);
     }
 
-    private Maybe<KeyBoardController.KeyBoardUpdateInfo> keyBoardUpdateInfo =
+    private Maybe<JavaFXKeyBoardController.KeyBoardUpdateInfo> keyBoardUpdateInfo =
         Maybe.nothing();
 
 
     @Override
     public void update(Observable observable)
     {
-        if (observable instanceof KeyBoardController keyBoardController) {
-            KeyBoardController.KeyBoardUpdateInfo keyBoardUpdateInfo =
+        if (observable instanceof JavaFXKeyBoardController keyBoardController) {
+            JavaFXKeyBoardController.KeyBoardUpdateInfo keyBoardUpdateInfo =
                 keyBoardController.getUpdateInfo();
 
-            if (keyBoardUpdateInfo.getKeyBoardEventType() == KeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
-                && keyBoardUpdateInfo.getKeyCode() == KeyBoardController.KeyBoardControllerKeyCode.ESC)
+            if (keyBoardUpdateInfo.getKeyBoardEventType() == JavaFXKeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
+                && keyBoardUpdateInfo.getKeyCode() == JavaFXKeyBoardController.KeyBoardControllerKeyCode.ESC)
             {
                 doTransition(() -> new PauseScene(this));
             } else {
@@ -201,7 +196,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     }
 
     // Called by bomberman or whatever
-    public Maybe<KeyBoardController.KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
+    public Maybe<JavaFXKeyBoardController.KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
     {
         return keyBoardUpdateInfo;
     }

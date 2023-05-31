@@ -4,7 +4,6 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioHandle;
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.MoveManager;
@@ -18,6 +17,9 @@ import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.KeyBoardControllerKeyCode;
+import app.jbomberman.view.KeyBoardUpdateInfo;
+import app.jbomberman.view.graphics.javafx.JavaFXKeyBoardController;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -203,9 +205,9 @@ public class BomberMan extends GameCharacter implements Observer
         );
     }
 
-    public void update(KeyBoardController.KeyBoardUpdateInfo updateInfo)
+    public void update(KeyBoardUpdateInfo updateInfo)
     {
-        KeyBoardController.KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
+        KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
         switch (updateInfo.getKeyBoardEventType()) {
             case KEY_RELEASED ->
                 keyCodeToDirection(keyCode).maybeDo(directions::remove);
@@ -267,7 +269,7 @@ public class BomberMan extends GameCharacter implements Observer
     @Override
     public void update(Observable observable)
     {
-        if (observable instanceof KeyBoardController keyBoardController)
+        if (observable instanceof JavaFXKeyBoardController keyBoardController)
             update(keyBoardController.getUpdateInfo());
     }
 
@@ -336,7 +338,7 @@ public class BomberMan extends GameCharacter implements Observer
         directions.clear();
     }
 
-    public Maybe<Direction> keyCodeToDirection(KeyBoardController.KeyBoardControllerKeyCode keyCode)
+    public Maybe<Direction> keyCodeToDirection(KeyBoardControllerKeyCode keyCode)
     {
         return switch (keyCode) {
             case UP -> Maybe.just(NORTH);
