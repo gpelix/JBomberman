@@ -1,7 +1,6 @@
 package app.jbomberman.model.scenes;
 
 import app.jbomberman.Properties;
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalPanel;
 import app.jbomberman.drawing.Text;
@@ -18,6 +17,9 @@ import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.KeyBoardController;
+import app.jbomberman.view.KeyBoardControllerKeyCode;
+import app.jbomberman.view.KeyBoardUpdateInfo;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,7 +76,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
 
         GameGridBuilder builder = new GameGridBuilder(
-            Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
+            Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL), this);
 
         Text lives = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), true);
         timeEntry = new Text("", true);
@@ -172,7 +174,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         Model.getController().detachKeyBoardObserver(this);
     }
 
-    private Maybe<KeyBoardController.KeyBoardUpdateInfo> keyBoardUpdateInfo =
+    private Maybe<KeyBoardUpdateInfo> keyBoardUpdateInfo =
         Maybe.nothing();
 
 
@@ -180,11 +182,11 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     public void update(Observable observable)
     {
         if (observable instanceof KeyBoardController keyBoardController) {
-            KeyBoardController.KeyBoardUpdateInfo keyBoardUpdateInfo =
+            KeyBoardUpdateInfo keyBoardUpdateInfo =
                 keyBoardController.getUpdateInfo();
 
-            if (keyBoardUpdateInfo.getKeyBoardEventType() == KeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
-                && keyBoardUpdateInfo.getKeyCode() == KeyBoardController.KeyBoardControllerKeyCode.ESC)
+            if (keyBoardUpdateInfo.getKeyBoardEventType() == KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
+                && keyBoardUpdateInfo.getKeyCode() == KeyBoardControllerKeyCode.ESC)
             {
                 doTransition(() -> new PauseScene(this));
             } else {
@@ -201,7 +203,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
     }
 
     // Called by bomberman or whatever
-    public Maybe<KeyBoardController.KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
+    public Maybe<KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
     {
         return keyBoardUpdateInfo;
     }

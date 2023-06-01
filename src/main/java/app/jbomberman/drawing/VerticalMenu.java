@@ -1,7 +1,7 @@
 package app.jbomberman.drawing;
 
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.util.Maybe;
+import app.jbomberman.view.KeyBoardControllerKeyCode;
 
 import java.util.stream.Stream;
 
@@ -23,15 +23,15 @@ public class VerticalMenu extends Menu
     }
 
     @Override
-    protected final KeyBoardController.KeyBoardControllerKeyCode getNextKey()
+    protected final KeyBoardControllerKeyCode getNextKey()
     {
-        return KeyBoardController.KeyBoardControllerKeyCode.DOWN;
+        return KeyBoardControllerKeyCode.DOWN;
     }
 
     @Override
-    protected final KeyBoardController.KeyBoardControllerKeyCode getPrevKey()
+    protected final KeyBoardControllerKeyCode getPrevKey()
     {
-        return KeyBoardController.KeyBoardControllerKeyCode.UP;
+        return KeyBoardControllerKeyCode.UP;
     }
 
     @Override

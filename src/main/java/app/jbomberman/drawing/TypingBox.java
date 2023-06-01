@@ -1,10 +1,12 @@
 package app.jbomberman.drawing;
 
 import app.jbomberman.controller.Controller;
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.KeyBoardController;
+import app.jbomberman.view.KeyBoardControllerKeyCode;
+import app.jbomberman.view.KeyBoardUpdateInfo;
 
 // Observe the KeyBoardController
 public class TypingBox implements Observer, Drawable
@@ -28,20 +30,19 @@ public class TypingBox implements Observer, Drawable
     public void update(Observable observable)
     {
         if (observable instanceof KeyBoardController keyBoardController) {
-            KeyBoardController.KeyBoardUpdateInfo updateInfo =
+            KeyBoardUpdateInfo updateInfo =
                 keyBoardController.getUpdateInfo();
 
-            if (updateInfo.getKeyBoardEventType() == KeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED)
+            if (updateInfo.getKeyBoardEventType() == KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED)
                 return;
 
-            KeyBoardController.KeyBoardControllerKeyCode code =
-                updateInfo.getKeyCode();
+            KeyBoardControllerKeyCode code = updateInfo.getKeyCode();
 
-            if (code == KeyBoardController.KeyBoardControllerKeyCode.BACK_SPACE &&
+            if (code == KeyBoardControllerKeyCode.BACK_SPACE &&
                 text.length() != 0)
                 text.pop();
 
-            if (code != KeyBoardController.KeyBoardControllerKeyCode.OTHER
+            if (code != KeyBoardControllerKeyCode.OTHER
                 && code.isPrintable())
             {
                 text.append(updateInfo.getKeyCode().getRepr().fromJust().toString());

@@ -1,4 +1,4 @@
-package app.jbomberman.view;
+package app.jbomberman.view.graphics.javafx;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.util.Callback;

@@ -5,7 +5,7 @@ import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Observer;
 import app.jbomberman.view.View;
-import javafx.animation.AnimationTimer;
+import app.jbomberman.view.graphics.javafx.JavaFXView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -29,8 +29,6 @@ public class Controller
      */
     private final Logger logger;
 
-    private final KeyBoardController keyBoardController;
-
     /**
      * Controller() is the only constructor of the controller
      */
@@ -38,25 +36,13 @@ public class Controller
     {
         logger = LogManager.getLogger(getClass());
 
-        view = new View();
-
-        keyBoardController = new KeyBoardController();
-        keyBoardController.attachToScene(view.getScene());
-
+        view = new JavaFXView();
 
         Model.setController(this);
         Model.getInstance().setup();
         Model.getInstance().attachObserver(view);
 
-        new AnimationTimer()
-        {
-            @Override
-            public void handle(long ignored)
-            {
-                Model.getInstance().update();
-            }
-        }.start();
-
+        view.getGraphicFactory().getLoopTimer(Model.getInstance()::update).start();
 
         view.setTitle(Properties.getInstance().getApplicationName());
         view.setIcon(Properties.getInstance().getIconFileName());
@@ -86,7 +72,7 @@ public class Controller
      */
     public void attachKeyBoardObserver(Observer observer)
     {
-        keyBoardController.attachObserver(observer);
+        view.getKeyBoardController().attachObserver(observer);
     }
 
     /**
@@ -98,7 +84,7 @@ public class Controller
      */
     public void detachKeyBoardObserver(Observer keyBoardObserver)
     {
-        keyBoardController.detachObserver(keyBoardObserver);
+        view.getKeyBoardController().detachObserver(keyBoardObserver);
     }
 
     /**
@@ -108,6 +94,6 @@ public class Controller
      */
     public static void launch()
     {
-        View.initialize(Controller::new);
+        JavaFXView.initialize(Controller::new);
     }
 }

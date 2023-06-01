@@ -17,4 +17,7 @@ module app.jbomberman {
     exports app.jbomberman.model.game.entity.state;
     exports app.jbomberman.drawing;
     exports app.jbomberman.images.javafx;
+    exports app.jbomberman.view;
+    exports app.jbomberman.view.graphics.javafx;
+    opens app.jbomberman.view.graphics.javafx to javafx.graphics;
 }

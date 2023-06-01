@@ -1,9 +1,11 @@
 package app.jbomberman.drawing;
 
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
+import app.jbomberman.view.KeyBoardController;
+import app.jbomberman.view.KeyBoardControllerKeyCode;
+import app.jbomberman.view.KeyBoardUpdateInfo;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
@@ -33,7 +35,7 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     {
         arrangementPolicy = policy;
     }
-    
+
     @Override
     public final Drawing getDrawing()
     {
@@ -46,16 +48,16 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     public void update(Observable observable)
     {
         if (observable instanceof KeyBoardController keyBoardController) {
-            KeyBoardController.KeyBoardUpdateInfo updateInfo =
+            KeyBoardUpdateInfo updateInfo =
                 keyBoardController.getUpdateInfo();
 
-            if (updateInfo.getKeyBoardEventType() == KeyBoardController.KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED)
+            if (updateInfo.getKeyBoardEventType() == KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED)
                 return;
 
-            if (updateInfo.getKeyCode() == KeyBoardController.KeyBoardControllerKeyCode.ENTER)
+            if (updateInfo.getKeyCode() == KeyBoardControllerKeyCode.ENTER)
                 selectedEntry.maybeDo(currentEntryIdx -> getEntries().get(currentEntryIdx).callCallback());
             else {
-                KeyBoardController.KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
+                KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
 
                 if (keyCode == getNextKey()) {
                     selectedEntry = selectedEntry.maybeCompute(entryOffset ->
@@ -68,9 +70,9 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
         }
     }
 
-    protected abstract KeyBoardController.KeyBoardControllerKeyCode getNextKey();
+    protected abstract KeyBoardControllerKeyCode getNextKey();
 
-    protected abstract KeyBoardController.KeyBoardControllerKeyCode getPrevKey();
+    protected abstract KeyBoardControllerKeyCode getPrevKey();
 
     protected Maybe<Integer> getSelectedEntry()
     {

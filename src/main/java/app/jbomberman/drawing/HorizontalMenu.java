@@ -1,8 +1,8 @@
 package app.jbomberman.drawing;
 
 import app.jbomberman.JBomberManException;
-import app.jbomberman.controller.KeyBoardController;
 import app.jbomberman.util.Maybe;
+import app.jbomberman.view.KeyBoardControllerKeyCode;
 
 import java.util.stream.Stream;
 
@@ -30,15 +30,15 @@ public class HorizontalMenu extends Menu
     }
 
     @Override
-    protected KeyBoardController.KeyBoardControllerKeyCode getNextKey()
+    protected KeyBoardControllerKeyCode getNextKey()
     {
-        return KeyBoardController.KeyBoardControllerKeyCode.RIGHT;
+        return KeyBoardControllerKeyCode.RIGHT;
     }
 
     @Override
-    protected KeyBoardController.KeyBoardControllerKeyCode getPrevKey()
+    protected KeyBoardControllerKeyCode getPrevKey()
     {
-        return KeyBoardController.KeyBoardControllerKeyCode.LEFT;
+        return KeyBoardControllerKeyCode.LEFT;
     }
 
     public void setWidth(int width)

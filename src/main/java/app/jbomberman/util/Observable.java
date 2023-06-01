@@ -1,5 +1,7 @@
 package app.jbomberman.util;
 
+import org.apache.logging.log4j.LogManager;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -38,6 +40,10 @@ public interface Observable
      */
     default void detachObserver(Observer observer)
     {
+        Collection<Observer> observers = getObservers();
+
+        if (!observers.contains(observer))
+            LogManager.getLogger().info("Strange... Detaching an object that was not attached");
         getObservers().remove(observer);
     }
 
