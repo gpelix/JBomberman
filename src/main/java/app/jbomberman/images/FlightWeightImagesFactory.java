@@ -86,7 +86,7 @@ public class FlightWeightImagesFactory
     }
 
     /**
-     * getCharacterImage is similar to getNextImage but we specify a char instead
+     * getCharacterImage is similar to getNextImage, but we specify a char instead
      * of a filename. This function loads the image associated with the
      * character.
      *

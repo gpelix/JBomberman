@@ -23,7 +23,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 // TODO: TODO
@@ -71,14 +70,7 @@ public class SwingView extends View implements Observer
     public void draw(Drawing drawing)
     {
         frame.removeAll();
-        Vector2D sceneDimensions = drawing.getDimensions().orElse(() ->
-            drawing.getDrawObjects().values().stream().flatMap(List::stream)
-                .reduce(
-                    Vector2D.getIdentity(),
-                    (acc, drawObj) -> acc.elementWiseApply(drawObj.sum(drawObj.getDimensions()),
-                        Math::max),
-                    (product1, product2) ->
-                        product1.elementWiseApply(product2, Math::max)));
+        Vector2D sceneDimensions = getDrawingDimensions(drawing);
         Vector2D sceneCenter = sceneDimensions.div(2);
         Vector2D screenCenter =
             Vector2D.of(frame.getWidth(), frame.getHeight()).div(2);

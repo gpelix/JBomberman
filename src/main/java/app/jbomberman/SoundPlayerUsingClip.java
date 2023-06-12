@@ -1,4 +1,3 @@
-
 package app.jbomberman;
 
 import javax.sound.sampled.AudioInputStream;
@@ -20,7 +19,7 @@ public class SoundPlayerUsingClip
                 try {
                     Clip clip = AudioSystem.getClip();
                     AudioInputStream inputStream = AudioSystem.getAudioInputStream(
-                            new File(url));
+                        new File(url));
                     clip.open(inputStream);
                     clip.start();
                     clip.loop(4);

@@ -22,7 +22,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -112,14 +111,7 @@ public class JavaFXView extends View implements Observer
     {
         root.getChildren().clear();
 
-        Vector2D sceneDimensions = drawing.getDimensions().orElse(() ->
-            drawing.getDrawObjects().values().stream().flatMap(List::stream)
-                .reduce(
-                    Vector2D.getIdentity(),
-                    (acc, drawObj) -> acc.elementWiseApply(drawObj.sum(drawObj.getDimensions()),
-                        Math::max),
-                    (product1, product2) ->
-                        product1.elementWiseApply(product2, Math::max)));
+        Vector2D sceneDimensions = getDrawingDimensions(drawing);
 
         Vector2D sceneCenter = sceneDimensions.div(2);
         Vector2D screenCenter =
