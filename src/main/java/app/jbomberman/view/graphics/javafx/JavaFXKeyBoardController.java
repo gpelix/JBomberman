@@ -1,9 +1,5 @@
 package app.jbomberman.view.graphics.javafx;
 
-import app.jbomberman.JBomberManException;
-import app.jbomberman.util.Maybe;
-import app.jbomberman.util.Observable;
-import app.jbomberman.util.Observer;
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
@@ -12,7 +8,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -63,13 +58,13 @@ import static app.jbomberman.view.KeyBoardControllerKeyCode.Z;
  *
  * @author gp
  */
-public class JavaFXKeyBoardController extends KeyBoardController implements Observable
+public class JavaFXKeyBoardController extends KeyBoardController
 {
 
     /**
      * Set of KeyCodes currently pressed
      */
-    private final HashSet<KeyCode> pressedKeyCodes;
+    private final Set<KeyCode> pressedKeyCodes;
     /**
      * pressedHandler is an EventHandler that will get attached to the javafx scene
      * we'll need to listen to
@@ -82,17 +77,6 @@ public class JavaFXKeyBoardController extends KeyBoardController implements Obse
     private final EventHandler<KeyEvent> releasedHandler;
 
     /**
-     * KeyBoardController has a Set of observers that will be notified in case
-     * of the detection of a keyboard related event
-     */
-    private final Set<Observer> observers;
-
-    /**
-     * updateInfo contains a reference to the most recent keyboard event
-     */
-    private Maybe<KeyBoardUpdateInfo> updateInfo;
-
-    /**
      * KeyBoardController
      */
     public JavaFXKeyBoardController()
@@ -100,11 +84,13 @@ public class JavaFXKeyBoardController extends KeyBoardController implements Obse
         pressedKeyCodes = new HashSet<>();
 
         pressedHandler = event -> {
-            pressedKeyCodes.add(event.getCode());
+            KeyCode keyCode = event.getCode();
 
-            updateInfo = Maybe.just(new KeyBoardUpdateInfo(
+            pressedKeyCodes.add(keyCode);
+
+            setUpdateInfo(new KeyBoardUpdateInfo(
                 KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED,
-                fromJavaFXKeyCode(event.getCode()),
+                fromJavaFXKeyCode(keyCode),
                 pressedKeyCodes.stream()
                     .map(JavaFXKeyBoardController::fromJavaFXKeyCode)
                     .collect(Collectors.toCollection(HashSet::new))));
@@ -113,11 +99,12 @@ public class JavaFXKeyBoardController extends KeyBoardController implements Obse
         };
 
         releasedHandler = event -> {
-            pressedKeyCodes.remove(event.getCode());
+            KeyCode keyCode = event.getCode();
+            pressedKeyCodes.remove(keyCode);
 
-            updateInfo = Maybe.just(new KeyBoardUpdateInfo(
+            setUpdateInfo(new KeyBoardUpdateInfo(
                 KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED,
-                fromJavaFXKeyCode(event.getCode()),
+                fromJavaFXKeyCode(keyCode),
                 pressedKeyCodes.stream()
                     .map(JavaFXKeyBoardController::fromJavaFXKeyCode)
                     .collect(Collectors.toCollection(HashSet::new))
@@ -125,8 +112,6 @@ public class JavaFXKeyBoardController extends KeyBoardController implements Obse
 
             updateAllObservers();
         };
-
-        observers = new HashSet<>();
     }
 
     /**
@@ -151,24 +136,6 @@ public class JavaFXKeyBoardController extends KeyBoardController implements Obse
     {
         scene.removeEventHandler(KeyEvent.KEY_PRESSED, pressedHandler);
         scene.removeEventHandler(KeyEvent.KEY_RELEASED, releasedHandler);
-    }
-
-    @Override
-    public Collection<Observer> getObservers()
-    {
-        return observers;
-    }
-
-    /**
-     * getUpdateInfo() must be called by the observer upon notification to get
-     * information about the event that triggered the notification
-     *
-     * @return the KeyBoardUpdateInfo represent the event
-     */
-    public KeyBoardUpdateInfo getUpdateInfo()
-    {
-        return updateInfo.unwrapOrThrow(() -> new JBomberManException(
-            "Called update but there are no update info"));
     }
 
 

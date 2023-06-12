@@ -6,14 +6,14 @@ import javafx.animation.AnimationTimer;
 
 public class JavaFXLoopTimer extends LoopTimer
 {
-    private AnimationTimer timer;
+    private final AnimationTimer timer;
 
     public JavaFXLoopTimer(Callback callback)
     {
         timer = new AnimationTimer()
         {
             @Override
-            public void handle(long ingored)
+            public void handle(long ignored)
             {
                 callback.run();
             }

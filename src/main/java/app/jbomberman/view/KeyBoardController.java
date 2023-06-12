@@ -1,6 +1,8 @@
 package app.jbomberman.view;
 
-import app.jbomberman.util.Observable;
+import app.jbomberman.JBomberManException;
+import app.jbomberman.util.AbstractObservable;
+import app.jbomberman.util.Maybe;
 
 /**
  * KeyBoardController is the class responsible for the handling the keyboard
@@ -11,8 +13,12 @@ import app.jbomberman.util.Observable;
  *
  * @author gp
  */
-public abstract class KeyBoardController implements Observable
+public abstract class KeyBoardController extends AbstractObservable
 {
+    /**
+     * updateInfo contains a reference to the most recent keyboard event
+     */
+    private Maybe<KeyBoardUpdateInfo> updateInfo = Maybe.nothing();
 
     /**
      * getUpdateInfo() must be called by the observer upon notification to get
@@ -20,5 +26,14 @@ public abstract class KeyBoardController implements Observable
      *
      * @return the KeyBoardUpdateInfo represent the event
      */
-    public abstract KeyBoardUpdateInfo getUpdateInfo();
+    public KeyBoardUpdateInfo getUpdateInfo()
+    {
+        return updateInfo.unwrapOrThrow(() -> new JBomberManException(
+            "Called update but there are no update info"));
+    }
+
+    protected void setUpdateInfo(KeyBoardUpdateInfo info)
+    {
+        updateInfo = Maybe.just(info);
+    }
 }
