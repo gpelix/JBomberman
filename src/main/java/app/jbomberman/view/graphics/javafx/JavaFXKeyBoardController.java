@@ -2,15 +2,10 @@ package app.jbomberman.view.graphics.javafx;
 
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
-import app.jbomberman.view.KeyBoardUpdateInfo;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static app.jbomberman.view.KeyBoardControllerKeyCode.A;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.B;
@@ -60,11 +55,6 @@ import static app.jbomberman.view.KeyBoardControllerKeyCode.Z;
  */
 public class JavaFXKeyBoardController extends KeyBoardController
 {
-
-    /**
-     * Set of KeyCodes currently pressed
-     */
-    private final Set<KeyCode> pressedKeyCodes;
     /**
      * pressedHandler is an EventHandler that will get attached to the javafx scene
      * we'll need to listen to
@@ -81,37 +71,8 @@ public class JavaFXKeyBoardController extends KeyBoardController
      */
     public JavaFXKeyBoardController()
     {
-        pressedKeyCodes = new HashSet<>();
-
-        pressedHandler = event -> {
-            KeyCode keyCode = event.getCode();
-
-            pressedKeyCodes.add(keyCode);
-
-            setUpdateInfo(new KeyBoardUpdateInfo(
-                KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED,
-                fromJavaFXKeyCode(keyCode),
-                pressedKeyCodes.stream()
-                    .map(JavaFXKeyBoardController::fromJavaFXKeyCode)
-                    .collect(Collectors.toCollection(HashSet::new))));
-
-            updateAllObservers();
-        };
-
-        releasedHandler = event -> {
-            KeyCode keyCode = event.getCode();
-            pressedKeyCodes.remove(keyCode);
-
-            setUpdateInfo(new KeyBoardUpdateInfo(
-                KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED,
-                fromJavaFXKeyCode(keyCode),
-                pressedKeyCodes.stream()
-                    .map(JavaFXKeyBoardController::fromJavaFXKeyCode)
-                    .collect(Collectors.toCollection(HashSet::new))
-            ));
-
-            updateAllObservers();
-        };
+        pressedHandler = event -> onPressed(fromJavaFXKeyCode(event.getCode()));
+        releasedHandler = event -> onReleased(fromJavaFXKeyCode(event.getCode()));
     }
 
     /**

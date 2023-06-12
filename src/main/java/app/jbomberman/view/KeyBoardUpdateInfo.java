@@ -1,5 +1,7 @@
 package app.jbomberman.view;
 
+import com.google.common.collect.ImmutableSet;
+
 import java.util.Set;
 
 /**
@@ -32,7 +34,7 @@ public class KeyBoardUpdateInfo
     /**
      * currentlyPressed is a reference to the set of currently pressed keys
      */
-    private final Set<KeyBoardControllerKeyCode> currentlyPressed;
+    private final ImmutableSet<KeyBoardControllerKeyCode> currentlyPressed;
 
     /**
      * KeyBoardUpdateInfo() is used to initialize a KeyBoardUpdateInfo from
@@ -45,7 +47,7 @@ public class KeyBoardUpdateInfo
     /*~*/
     public KeyBoardUpdateInfo(KeyBoardEventType keyBoardEventType,
                               KeyBoardControllerKeyCode keyCode,
-                              Set<KeyBoardControllerKeyCode> pressedKeyCodes)
+                              ImmutableSet<KeyBoardControllerKeyCode> pressedKeyCodes)
     {
         this.keyBoardEventType = keyBoardEventType;
         this.keyCode = keyCode;
