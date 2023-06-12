@@ -2,10 +2,14 @@ package app.jbomberman.controller;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
+import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.images.javafx.JavaFXImageBuilder;
+import app.jbomberman.images.swing.SwingImageBuilder;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Observer;
 import app.jbomberman.view.View;
 import app.jbomberman.view.graphics.javafx.JavaFXView;
+import app.jbomberman.view.graphics.swing.SwingView;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,11 +36,11 @@ public class Controller
     /**
      * Controller() is the only constructor of the controller
      */
-    public Controller()
+    public Controller(View view)
     {
         logger = LogManager.getLogger(getClass());
 
-        view = new JavaFXView();
+        this.view = view;
 
         Model.setController(this);
         Model.getInstance().setup();
@@ -94,6 +98,12 @@ public class Controller
      */
     public static void launch()
     {
-        JavaFXView.initialize(Controller::new);
+        if (false) {
+            FlightWeightImagesFactory.initializeImageBuilder(new JavaFXImageBuilder());
+            JavaFXView.initialize(() -> new Controller(new JavaFXView()));
+        } else {
+            FlightWeightImagesFactory.initializeImageBuilder(new SwingImageBuilder());
+            new Controller(new SwingView());
+        }
     }
 }

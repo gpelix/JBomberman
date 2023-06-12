@@ -1,7 +1,8 @@
 package app.jbomberman.images;
 
+import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
-import app.jbomberman.images.javafx.JavaFXImageBuilder;
+import app.jbomberman.util.Maybe;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,7 +48,12 @@ public class FlightWeightImagesFactory
      * imageBuilder is a reference to the concrete imageBuilder used to create
      * images. At the moment it's a JavaFXImageBuilder
      */
-    private static final AbstractImageBuilder imageBuilder = new JavaFXImageBuilder();
+    private static Maybe<AbstractImageBuilder> imageBuilder = Maybe.nothing();
+
+    public static void initializeImageBuilder(AbstractImageBuilder imageBuilder)
+    {
+        FlightWeightImagesFactory.imageBuilder = Maybe.just(imageBuilder);
+    }
 
     /**
      * We use a Map to implement a mapping between path names to images for
@@ -74,8 +80,9 @@ public class FlightWeightImagesFactory
     public AbstractImage getImage(String path)
     {
         return images.computeIfAbsent(path,
-            p -> imageBuilder.getImage(Properties.getInstance().getImagesDirectory() + p));
-
+            p -> imageBuilder.unwrapOrThrow(() -> new JBomberManException(
+                "FlightWeightImagesFactory must be initialized before its first use calling initializeImageBuilder")
+            ).getImage(Properties.getInstance().getImagesDirectory() + p));
     }
 
     /**
