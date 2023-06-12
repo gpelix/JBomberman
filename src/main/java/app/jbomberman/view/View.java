@@ -1,6 +1,8 @@
 package app.jbomberman.view;
 
+import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.Model;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
@@ -73,7 +75,14 @@ public abstract class View implements Observer
      *
      * @param observable the observable that called the method update.
      */
-    public abstract void update(Observable observable);
+    @Override
+    public void update(Observable observable)
+    {
+        if (observable instanceof Model model)
+            draw(model.getDrawing());
+        else
+            throw new JBomberManException("not implemented");
+    }
 
     /**
      * close() is needed to close the view. It might sometimes be needed to close

@@ -1,14 +1,11 @@
 package app.jbomberman.view.graphics.javafx;
 
-import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.javafx.JavaFXImage;
-import app.jbomberman.model.Model;
 import app.jbomberman.util.Callback;
-import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
@@ -206,21 +203,6 @@ public class JavaFXView extends View implements Observer
     private static Image toJavaFXImage(AbstractImage abstractImage)
     {
         return ((JavaFXImage) abstractImage).unwrap();
-    }
-
-    /**
-     * update() listens for update requests by the model. In that case, it draws
-     * the drawing
-     *
-     * @param observable the observable that called the method update.
-     */
-    @Override
-    public void update(Observable observable)
-    {
-        if (observable instanceof Model model)
-            draw(model.getDrawing());
-        else
-            throw new JBomberManException("not implemented");
     }
 
     /**

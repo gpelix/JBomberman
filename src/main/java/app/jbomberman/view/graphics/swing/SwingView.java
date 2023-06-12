@@ -1,6 +1,134 @@
 package app.jbomberman.view.graphics.swing;
 
+import app.jbomberman.drawing.DrawObject;
+import app.jbomberman.drawing.Drawing;
+import app.jbomberman.images.AbstractImage;
+import app.jbomberman.images.swing.SwingImage;
+import app.jbomberman.util.Callback;
+import app.jbomberman.util.Maybe;
+import app.jbomberman.util.Observer;
+import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.View;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.image.BufferedImage;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+
 // TODO: TODO
-public class SwingView
+public class SwingView extends View implements Observer
 {
+    private final JFrame frame;
+
+    private Maybe<Callback> callback;
+
+    public SwingView()
+    {
+        super(new SwingGraphicFactory(), new SwingKeyBoardController());
+
+        frame = new JFrame();
+
+        frame.addWindowListener(new WindowAdapter()
+        {
+            @Override
+            public void windowClosing(WindowEvent e)
+            {
+                callback.maybeDo(Callback::run);
+                System.exit(0);
+            }
+        });
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        ((SwingKeyBoardController) getKeyBoardController()).addToComponent(frame);
+
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.setUndecorated(true);
+
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+            cursorImg, new Point(0, 0), "blank cursor"
+        );
+        frame.getContentPane().setCursor(blankCursor);
+
+        frame.getContentPane().setBackground(Color.BLACK);
+        frame.setResizable(false);
+
+        frame.setVisible(true);
+    }
+
+    @Override
+    public void draw(Drawing drawing)
+    {
+        frame.removeAll();
+        Vector2D sceneDimensions = drawing.getDimensions().orElse(() ->
+            drawing.getDrawObjects().values().stream().flatMap(List::stream)
+                .reduce(
+                    Vector2D.getIdentity(),
+                    (acc, drawObj) -> acc.elementWiseApply(drawObj.sum(drawObj.getDimensions()),
+                        Math::max),
+                    (product1, product2) ->
+                        product1.elementWiseApply(product2, Math::max)));
+        Vector2D sceneCenter = sceneDimensions.div(2);
+        Vector2D screenCenter =
+            Vector2D.of(frame.getWidth(), frame.getHeight()).div(2);
+
+        Vector2D shamt = screenCenter.sub(sceneCenter);
+
+        drawing.getDrawObjects().entrySet()
+            .stream()
+            .sorted(Comparator.comparingInt(Map.Entry::getKey))
+            .flatMap(entry -> entry.getValue().stream())
+            .forEachOrdered(drawObj -> this.drawDrawObject(drawObj, shamt));
+    }
+
+    private void drawDrawObject(DrawObject drawObject, Vector2D shift)
+    {
+        JLabel label = new JLabel();
+        label.setIcon(new ImageIcon(toSwingImage(drawObject.getImage())));
+
+        Dimension size = label.getPreferredSize();
+        label.setBounds(drawObject.getX() + shift.getX(),
+            drawObject.getY() + shift.getY(), size.width, size.height);
+
+        frame.getContentPane().add(label);
+    }
+
+    private static Image toSwingImage(AbstractImage abstractImage)
+    {
+        return ((SwingImage) abstractImage).unwrap();
+    }
+
+    @Override
+    public void setTitle(String title)
+    {
+        frame.setTitle(title);
+    }
+
+    @Override
+    public void setIcon(String path)
+    {
+        ImageIcon icon = new ImageIcon(path);
+        frame.setIconImage(icon.getImage());
+    }
+
+    @Override
+    public void setCloseOperationCallBack(Callback callBack)
+    {
+        this.callback = Maybe.just(callBack);
+    }
+
+    @Override
+    public void close()
+    {/*Nothing to do*/}
 }

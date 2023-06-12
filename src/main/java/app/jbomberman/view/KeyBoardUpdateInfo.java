@@ -2,8 +2,6 @@ package app.jbomberman.view;
 
 import com.google.common.collect.ImmutableSet;
 
-import java.util.Set;
-
 /**
  * KeyBoardUpdateInfo is a class meant to be accessed by the clients/observers
  * to gather information about the keyboard state.
@@ -79,7 +77,7 @@ public class KeyBoardUpdateInfo
      *
      * @return the currently pressed key codes
      */
-    public Set<KeyBoardControllerKeyCode> getCurrentlyPressed()
+    public ImmutableSet<KeyBoardControllerKeyCode> getCurrentlyPressed()
     {
         return currentlyPressed;
     }
