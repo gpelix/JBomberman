@@ -3,18 +3,18 @@ package app.jbomberman.images.swing;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.util.Vector2D;
 
-import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class SwingImage extends AbstractImage
 {
-    private final Image image;
+    private final BufferedImage image;
 
-    public SwingImage(Image image)
+    public SwingImage(BufferedImage image)
     {
         this.image = image;
     }
 
-    public Image unwrap()
+    public BufferedImage unwrap()
     {
         return image;
     }

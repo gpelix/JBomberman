@@ -1,4 +1,3 @@
-
 package app.jbomberman.images.javafx;
 
 import app.jbomberman.images.AbstractImage;

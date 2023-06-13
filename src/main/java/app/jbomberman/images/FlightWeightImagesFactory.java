@@ -82,7 +82,8 @@ public class FlightWeightImagesFactory
         return images.computeIfAbsent(path,
             p -> imageBuilder.unwrapOrThrow(() -> new JBomberManException(
                 "FlightWeightImagesFactory must be initialized before its first use calling initializeImageBuilder")
-            ).getImage(Properties.getInstance().getImagesDirectory() + p));
+            ).getImage(Properties.getInstance().getImagesDirectory() + p)
+        );
     }
 
     /**

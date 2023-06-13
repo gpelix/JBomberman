@@ -1,15 +1,13 @@
 package app.jbomberman.view.graphics.swing;
 
-import app.jbomberman.JBomberManException;
-import app.jbomberman.Properties;
 import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.AbstractImage;
+import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.swing.SwingImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observer;
-import app.jbomberman.util.Resources;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
 
@@ -25,8 +23,6 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Comparator;
 import java.util.Map;
 
@@ -35,7 +31,7 @@ public class SwingView extends View implements Observer
 {
     private final JFrame frame;
 
-    private Maybe<Callback> callback;
+    private Maybe<Callback> callback = Maybe.nothing();
 
     public SwingView()
     {
@@ -115,12 +111,17 @@ public class SwingView extends View implements Observer
     @Override
     public void setIcon(String path)
     {
-        try (InputStream inputStream = Resources.getResourceAsStream(Properties.getInstance().getImagesDirectory() + path)) {
-            ImageIcon icon = new ImageIcon(inputStream.readAllBytes());
-            frame.setIconImage(icon.getImage());
-        } catch (IOException e) {
-            throw new JBomberManException("Unable to open icon");
-        }
+        // Maybe this is not necessary. It seems there's a problem loading images!!!!!
+        // TODO: You should reduce it to the one of JavaFXView
+//        try (InputStream inputStream = Resources.getResourceAsStream(Properties.getInstance().getImagesDirectory() + path)) {
+//            ImageIcon icon = new ImageIcon(inputStream.readAllBytes());
+//            frame.setIconImage(icon.getImage());
+//        } catch (IOException e) {
+//            throw new JBomberManException("Unable to open icon");
+//        }
+        BufferedImage iconBuffered = ((SwingImage) FlightWeightImagesFactory.getInstance().getImage(path)).unwrap();
+        ImageIcon icon = new ImageIcon(iconBuffered);
+        frame.setIconImage(icon.getImage());
     }
 
     @Override

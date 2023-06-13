@@ -49,8 +49,9 @@ public class Controller
         view.getGraphicFactory().getLoopTimer(Model.getInstance()::update).start();
 
         view.setTitle(Properties.getInstance().getApplicationName());
-        view.setIcon(Properties.getInstance().getIconFileName());
         view.setCloseOperationCallBack(Model.getInstance()::close);
+        view.setIcon(Properties.getInstance().getIconFileName());
+        System.out.println("EOIII");
     }
 
     /**
