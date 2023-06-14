@@ -10,25 +10,7 @@
         <Root level="OFF">
             <AppenderRef ref="Console"/>
         </Root>
-        <logger name="app.jbomberman.audio" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="app.jbomberman.model" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="app.jbomberman.audio.AudioHandle" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="app.jbomberman.model.AccountBuilder" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="app.jbomberman.view.graphics.javafx.JavaFXView" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="app.jbomberman.controller.Controller" level="INFO" additivity="false">
-            <AppenderRef ref="Console"/>
-        </logger>
-        <logger name="app.jbomberman.util.Observable" level="INFO" additivity="false">
+        <logger name="app.jbomberman" level="INFO" additivity="false">
             <AppenderRef ref="Console"/>
         </logger>
     </Loggers>

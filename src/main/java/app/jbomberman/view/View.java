@@ -100,9 +100,7 @@ public abstract class View implements Observer
     }
 
     /**
-     * close() is needed to close the view. It might sometimes be needed to close
-     * the view from the controller. In that case, we provide the close() function
-     * that shuts down javafx
+     * close() is needed to close the view and shut down the program
      */
     public abstract void close();
 }

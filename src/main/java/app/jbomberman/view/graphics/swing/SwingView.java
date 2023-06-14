@@ -126,5 +126,7 @@ public class SwingView extends View implements Observer
 
     @Override
     public void close()
-    {/*Nothing to do*/}
+    {
+        System.exit(0);
+    }
 }
