@@ -4,8 +4,8 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
 import app.jbomberman.util.Maybe;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * FlightWeightImagesFactory is a class that can handle Image loading. The idea
@@ -67,7 +67,7 @@ public class FlightWeightImagesFactory
      */
     private FlightWeightImagesFactory()
     {
-        images = new HashMap<>();
+        images = new ConcurrentHashMap<>();
     }
 
     /**

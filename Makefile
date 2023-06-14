@@ -10,4 +10,9 @@ PHONY += clean
 clean:
 	rm -rf build/ .gradle/
 
+PHONY += native
+native:
+	./gradlew customFatJar
+
+
 .PHONY: $(PHONY)
