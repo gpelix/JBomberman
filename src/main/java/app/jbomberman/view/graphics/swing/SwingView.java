@@ -111,14 +111,6 @@ public class SwingView extends View implements Observer
     @Override
     public void setIcon(String path)
     {
-        // Maybe this is not necessary. It seems there's a problem loading images!!!!!
-        // TODO: You should reduce it to the one of JavaFXView
-//        try (InputStream inputStream = Resources.getResourceAsStream(Properties.getInstance().getImagesDirectory() + path)) {
-//            ImageIcon icon = new ImageIcon(inputStream.readAllBytes());
-//            frame.setIconImage(icon.getImage());
-//        } catch (IOException e) {
-//            throw new JBomberManException("Unable to open icon");
-//        }
         BufferedImage iconBuffered = ((SwingImage) FlightWeightImagesFactory.getInstance().getImage(path)).unwrap();
         ImageIcon icon = new ImageIcon(iconBuffered);
         frame.setIconImage(icon.getImage());
