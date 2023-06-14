@@ -23,8 +23,6 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
-import java.util.Comparator;
-import java.util.Map;
 
 // TODO: TODO
 public class SwingView extends View implements Observer
@@ -48,7 +46,6 @@ public class SwingView extends View implements Observer
                 System.exit(0);
             }
         });
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         ((SwingKeyBoardController) getKeyBoardController()).addToComponent(frame);
 
@@ -64,13 +61,15 @@ public class SwingView extends View implements Observer
         frame.getContentPane().setBackground(Color.BLACK);
         frame.setResizable(false);
 
+        frame.setSize(700, 700);
         frame.setVisible(true);
+        frame.setLayout(null);
     }
 
     @Override
     public void draw(Drawing drawing)
     {
-        frame.removeAll();
+        frame.getContentPane().removeAll();
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
         Vector2D sceneCenter = sceneDimensions.div(2);
         Vector2D screenCenter =
@@ -80,11 +79,14 @@ public class SwingView extends View implements Observer
 
         drawing.getDrawObjects().entrySet()
             .stream()
-            .sorted(Comparator.comparingInt(Map.Entry::getKey))
-            .flatMap(entry -> entry.getValue().stream())
-            .forEachOrdered(drawObj -> this.drawDrawObject(drawObj, shamt));
+            // Note here that we reverse the order! swing wants us to draw first the top and then the bottom
+            .sorted((a, b) -> b.getKey() - a.getKey())
+            .forEachOrdered(drawEntry -> drawEntry.getValue().forEach(_draw -> drawDrawObject(_draw, shamt)));
+
+        frame.getContentPane().repaint();
     }
 
+    // Note that Swing draws in reverse
     private void drawDrawObject(DrawObject drawObject, Vector2D shift)
     {
         JLabel label = new JLabel();
@@ -94,7 +96,7 @@ public class SwingView extends View implements Observer
         label.setBounds(drawObject.getX() + shift.getX(),
             drawObject.getY() + shift.getY(), size.width, size.height);
 
-        frame.getContentPane().add(label);
+        frame.add(label);
     }
 
     private static Image toSwingImage(AbstractImage abstractImage)

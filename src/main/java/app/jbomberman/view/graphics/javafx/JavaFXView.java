@@ -103,7 +103,7 @@ public class JavaFXView extends View implements Observer
      *
      * @param drawing the drawing to be displayed
      * @implNote This approach is kind of slow as every time we have to redraw everything.
-     * However, with some benchmarks we saw that the total amount of time needed
+     * However, with some benchmarks, we saw that the total amount of time needed
      * to draw the screen is less than the time that the model needs to update
      * himself. So using this approach is not such a bad choice
      */
