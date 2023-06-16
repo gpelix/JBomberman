@@ -3,8 +3,10 @@ package app.jbomberman.model.game.entity.state;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
+import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.model.game.entity.Explosion;
+import app.jbomberman.model.game.entity.Wall;
 
 public class WallOrEnemyDeadState<T extends Entity & StateFul> extends DeadState
 {
@@ -40,9 +42,14 @@ public class WallOrEnemyDeadState<T extends Entity & StateFul> extends DeadState
         if (getDeathImageManager().hasDoneOneCycle()) {
             GameGrid gameGrid = entity.getGameGrid();
 
-            gameGrid.get(
-                gameGrid.getCenterInGridCoord(entity)
-            ).remove(entity);
+            if (entity instanceof Wall wall)
+                gameGrid.get(
+                    gameGrid.getCenterInGridCoord(entity)
+                ).removeWall(wall);
+            else if (entity instanceof Enemy enemy)
+                gameGrid.get(
+                    gameGrid.getCenterInGridCoord(enemy)
+                ).removeCharacter(enemy);
         }
     }
 

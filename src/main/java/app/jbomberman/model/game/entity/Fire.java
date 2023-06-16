@@ -1,4 +1,3 @@
-
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.drawing.Drawing;
@@ -33,7 +32,7 @@ public class Fire extends Entity
     {
         if (imageManager.hasDoneOneCycle()) {
             FreeCell freeCell = getUnderlyingFreeCell();
-            freeCell.remove(this);
+            freeCell.removeFire(this);
         }
     }
 

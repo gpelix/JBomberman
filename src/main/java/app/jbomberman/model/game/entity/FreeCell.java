@@ -78,30 +78,52 @@ public class FreeCell extends Cell
         entities.add(entity);
     }
 
-    @Deprecated(forRemoval = true)
-    public void remove(Entity entity)
+    public void removeBomb(Bomb entity)
     {
-        if (entity instanceof Powerup) {
-            powerup.isJustOrThrow(() -> new JBomberManException(
-                "Removing a Powerup from a freeCell not containing powerups. " +
-                    "Weird!"));
-            powerup = Maybe.nothing();
-        } else if (entity instanceof Wall) {
-            wall.isJustOrThrow(() -> new JBomberManException(
-                "Removing a Wall from a freeCell not containing walls. " +
-                    "Weird!"));
-            wall = Maybe.nothing();
-        } else if (entity instanceof Bomb) {
-            bomb.isJustOrThrow(() -> new JBomberManException(
-                "Removing a Bomb from a freeCell not containing a bomb. Weired!"
-            ));
-            bomb = Maybe.nothing();
-        } else if (entity instanceof Fire)
-            fire = Maybe.nothing();
-        else if (entity instanceof BomberMan)
-            bomberMan = Maybe.nothing();
+        bomb.isJustOrThrow(() -> new JBomberManException(
+            "Removing a Bomb from a freeCell not containing a bomb. Weired!"
+        ));
+        bomb = Maybe.nothing();
+        entities.remove(entity);
+    }
+
+    public void removeWall(Wall entity)
+    {
+        wall.isJustOrThrow(() -> new JBomberManException(
+            "Removing a Wall from a freeCell not containing walls. " +
+                "Weird!"));
+        wall = Maybe.nothing();
+        entities.remove(entity);
+    }
+
+    public void removeFire(Fire entity)
+    {
+        // Should we do more??
+        fire = Maybe.nothing();
+        entities.remove(entity);
+
+    }
+
+    public void removePowerup(Powerup entity)
+    {
+        powerup.isJustOrThrow(() -> new JBomberManException(
+            "Removing a Powerup from a freeCell not containing powerups. " +
+                "Weird!"));
+        powerup = Maybe.nothing();
 
         entities.remove(entity);
+    }
+
+    public void removeCharacter(GameCharacter character)
+    {
+        if (character instanceof BomberMan)
+            bomberMan = Maybe.nothing();
+        entities.remove(character);
+    }
+
+    @Deprecated(forRemoval = true)
+    public void _remove(Entity entity)
+    {
     }
 
     public boolean contains(Entity entity)

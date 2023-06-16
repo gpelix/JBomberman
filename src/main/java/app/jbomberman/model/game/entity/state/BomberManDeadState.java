@@ -38,7 +38,7 @@ public class BomberManDeadState extends DeadState
             GameGrid gameGrid = bomberMan.getGameGrid();
             gameGrid.get(
                 gameGrid.getCenterInGridCoord(bomberMan)
-            ).remove(bomberMan);
+            ).removeCharacter(bomberMan);
             Model.getInstance().endGame(false);
         }
     }

@@ -28,7 +28,7 @@ public class Powerup extends PickableCell
     @Override
     public boolean notifyExplosion(Explosion explosion)
     {
-        getUnderlyingFreeCell().remove(this);
+        getUnderlyingFreeCell().removePowerup(this);
         return super.notifyExplosion(explosion);
     }
 
@@ -36,7 +36,7 @@ public class Powerup extends PickableCell
     @Override
     public void pick(BomberMan bomberMan)
     {
-        getUnderlyingFreeCell().remove(this);
+        getUnderlyingFreeCell().removePowerup(this);
         AudioPlayer.getInstance().playSound(POWERUP_TAKEN_MUSIC);
         getGameGrid().powerUpTaken(); // Then gameGrid shall forward it to
         // the scene

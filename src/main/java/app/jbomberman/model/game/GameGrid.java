@@ -123,7 +123,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
         if (!get(fromGridCoordinate).contains(gameCharacter))
             throw new GamePlayException("Character not found in fromTopLeft position");
 
-        get(fromGridCoordinate).remove(gameCharacter);
+        get(fromGridCoordinate).removeCharacter(gameCharacter);
         get(toGridCoordinate).addEntity(gameCharacter);
     }
 

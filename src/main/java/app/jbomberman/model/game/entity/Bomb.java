@@ -49,7 +49,7 @@ public abstract class Bomb extends Entity
 
         AudioPlayer.getInstance().playSound(BOMB_DETONATION_SOUND);
         bomberman.bombHasExploded(this);
-        freeCell.remove(this);
+        freeCell.removeBomb(this);
         freeCell.notifyExplosion(new Explosion(bombRange, getCenterInGridCoord()));
     }
 
