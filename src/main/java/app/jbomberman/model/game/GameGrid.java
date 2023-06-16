@@ -3,11 +3,17 @@ package app.jbomberman.model.game;
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.game.entity.Block;
+import app.jbomberman.model.game.entity.Bomb;
+import app.jbomberman.model.game.entity.Door;
 import app.jbomberman.model.game.entity.Enemy;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.model.game.entity.EntityFactory;
+import app.jbomberman.model.game.entity.Fire;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.GameCharacter;
+import app.jbomberman.model.game.entity.Powerup;
+import app.jbomberman.model.game.entity.Wall;
 import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Grid;
 import app.jbomberman.util.Maybe;
@@ -88,12 +94,42 @@ public class GameGrid extends Grid<FreeCell> implements Observable
             numberOfEnemies++;
             deadEnemiesSoundPlayer.reset();
         }
-        addEntityInFreeCell(character, coordinate);
+        addGameCharacterInFreeCell(character, coordinate);
     }
 
-    public void addEntityInFreeCell(Entity entity, Vector2D coordinate)
+    public void addGameCharacterInFreeCell(GameCharacter gameCharacter, Vector2D coordinate)
     {
-        get(coordinate).addEntity(entity);
+        get(coordinate).addGameCharacter(gameCharacter);
+    }
+
+    public void addWall(Wall wall, Vector2D coordinate)
+    {
+        get(coordinate).addWall(wall);
+    }
+
+    public void addPowerup(Powerup powerup, Vector2D coordinate)
+    {
+        get(coordinate).addPowerUp(powerup);
+    }
+
+    public void addDoor(Door door, Vector2D coordinate)
+    {
+        get(coordinate).addDoor(door);
+    }
+
+    public void addBlock(Block block, Vector2D coordinate)
+    {
+        get(coordinate).addBlock(block);
+    }
+
+    public void addFire(Fire fire, Vector2D coordinate)
+    {
+        get(coordinate).addFire(fire);
+    }
+
+    public void addBomb(Bomb bomb, Vector2D coordinate)
+    {
+        get(coordinate).addBomb(bomb);
     }
 
     public MoveManager getMoveManager()
@@ -124,7 +160,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
             throw new GamePlayException("Character not found in fromTopLeft position");
 
         get(fromGridCoordinate).removeCharacter(gameCharacter);
-        get(toGridCoordinate).addEntity(gameCharacter);
+        addGameCharacter(gameCharacter, toGridCoordinate);
     }
 
     public Vector2D getTopLeftCornerModelCoordinate()

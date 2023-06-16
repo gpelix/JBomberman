@@ -238,7 +238,7 @@ public class BomberMan extends GameCharacter implements Observer
 
                             AudioPlayer.getInstance().playSound(BOMB_PLACED_SOUND);
 
-                            gameGrid.addEntityInFreeCell(
+                            gameGrid.addBomb(
                                 newBomb,
                                 currentFreeCellGridCoordinate);
                         }

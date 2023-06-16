@@ -137,7 +137,7 @@ public class EntityFactory
         }
     }
 
-    public Entity buildDoor(Vector2D modelCoordinate, GameGrid gameGrid)
+    public Door buildDoor(Vector2D modelCoordinate, GameGrid gameGrid)
     {
         try {
             JSONObject doorSpec = entitiesSpecification.getJSONObject("door");
@@ -225,8 +225,8 @@ public class EntityFactory
     }
 
 
-    public Entity buildFire(Fire.FireType fireType, Vector2D coordinate,
-                            GameGrid gameGrid)
+    public Fire buildFire(Fire.FireType fireType, Vector2D coordinate,
+                          GameGrid gameGrid)
     {
         try {
             JSONArray fireSpecification =

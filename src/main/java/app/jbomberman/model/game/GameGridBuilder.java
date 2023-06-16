@@ -76,7 +76,7 @@ public class GameGridBuilder
 
     public void addBlock(Vector2D gridCoordinate)
     {
-        getGrid().addEntityInFreeCell(
+        getGrid().addBlock(
             new Block(getGrid().gridCoord2modelCoor(gridCoordinate), getGrid()),
             gridCoordinate
         );
@@ -89,7 +89,7 @@ public class GameGridBuilder
             getGrid()
         );
 
-        getGrid().addEntityInFreeCell(
+        getGrid().addWall(
             wall,
             gridCoordinate
         );
@@ -103,7 +103,7 @@ public class GameGridBuilder
             getGrid()
         );
 
-        getGrid().addEntityInFreeCell(
+        getGrid().addPowerup(
             powerup,
             gridCoordinate
         );
@@ -111,7 +111,7 @@ public class GameGridBuilder
 
     public void addDoor(Vector2D gridCoordinate)
     {
-        getGrid().addEntityInFreeCell(
+        getGrid().addDoor(
             EntityFactory.getInstance().buildDoor(
                 getGameGrid().gridCoord2modelCoor(gridCoordinate),
                 getGameGrid()),

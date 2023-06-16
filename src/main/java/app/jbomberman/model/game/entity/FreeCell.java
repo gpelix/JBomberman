@@ -38,19 +38,11 @@ public class FreeCell extends Cell
         entities = new HashSet<>();
     }
 
-    /**
-     * addEntityInFreeCell adds the entity to entities that are currently on this freecell
-     *
-     * @param entity entity to add
-     */
-    @Deprecated(forRemoval = true)
-    public void addEntity(Entity entity)
+    public void addGameCharacter(GameCharacter gameCharacter)
     {
-        if (entity instanceof Powerup powerupUnwrapped)
-            powerup = Maybe.just(powerupUnwrapped);
-        else if (entity instanceof Wall wallUnwrapped)
-            wall = Maybe.just(wallUnwrapped);
-        else if (entity instanceof BomberMan bomberManU) {
+        if (gameCharacter instanceof Enemy && bomberMan.isJust())
+            bomberMan.fromJust().caughtByEnemy();
+        else if (gameCharacter instanceof BomberMan bomberManU) {
             bomberMan = Maybe.just(bomberManU);
             if (wall.isNothing() || wall.fromJust().isDisappearing()) {
                 if (powerup.isJust())
@@ -60,22 +52,65 @@ public class FreeCell extends Cell
             if (getEntitiesOn().stream()
                 .anyMatch(e -> e instanceof Enemy && !((Enemy) e).isDisappearing()))
                 bomberManU.caughtByEnemy();
-        } else if (entity instanceof Bomb bombU)
-            bomb = Maybe.just(bombU);
-        else if (entity instanceof Door doorU)
-            door = Maybe.just(doorU);
-        else if (entity instanceof Fire fireU)
-            fire = Maybe.just(fireU);
-        else if (entity instanceof Enemy && bomberMan.isJust()) {
-            bomberMan.fromJust().caughtByEnemy();
         }
-
-        // This is just a trick
-        // FIXME:
         if (fire.isJust())
-            entity.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
+            gameCharacter.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
 
-        entities.add(entity);
+        entities.add(gameCharacter);
+    }
+
+    public void addPowerUp(Powerup powerup)
+    {
+        this.powerup = Maybe.just(powerup);
+
+        // This is not possible
+        if (fire.isJust())
+            powerup.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
+
+        entities.add(powerup);
+    }
+
+    public void addWall(Wall wall)
+    {
+        this.wall = Maybe.just(wall);
+        // this is not possible
+        if (fire.isJust())
+            wall.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
+
+        entities.add(wall);
+    }
+
+    public void addBlock(Block block)
+    {
+        entities.add(block);
+    }
+
+    public void addBomb(Bomb bomb)
+    {
+        this.bomb = Maybe.just(bomb);
+
+        if (fire.isJust())
+            bomb.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
+
+        entities.add(bomb);
+    }
+
+    public void addDoor(Door door)
+    {
+        this.door = Maybe.just(door);
+
+        // This is not possible
+        if (fire.isJust())
+            door.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
+
+        entities.add(door);
+    }
+
+    public void addFire(Fire fire)
+    {
+        this.fire = Maybe.just(fire);
+
+        entities.add(fire);
     }
 
     public void removeBomb(Bomb entity)
@@ -197,7 +232,7 @@ public class FreeCell extends Cell
             neighbors.forEach(coordinate -> gameGrid.get(coordinate).notifyExplosion(newExplosion));
 
             // Add center of the explosion
-            gameGrid.addEntityInFreeCell(
+            gameGrid.addFire(
                 EntityFactory.getInstance().buildFire(Fire.FireType.CENTER, this, gameGrid),
                 getCenterInGridCoord()
             );
@@ -226,7 +261,7 @@ public class FreeCell extends Cell
                 };
             }
 
-            gameGrid.addEntityInFreeCell(
+            gameGrid.addFire(
                 EntityFactory.getInstance().buildFire(typeOfFire, this, gameGrid),
                 getCenterInGridCoord()
             );
