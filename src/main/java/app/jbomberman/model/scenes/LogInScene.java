@@ -37,20 +37,20 @@ public class LogInScene extends BomberManScene
 
         Vector2D dimensions = model.getDimensions();
 
-        insertLoginName = new Text("Insert login name...", true,
+        insertLoginName = new Text("Insert login name...", Text.TextColor.Black,
             Vector2D.of(dimensions.getX() / 2, MARGIN));
 
-        loginBox = new TypingBox(Model.getController(), true, Vector2D.of(
+        loginBox = new TypingBox(Model.getController(), Text.TextColor.Black, Vector2D.of(
             dimensions.getX() / 2,
             dimensions.getY() / 2
         ));
 
-        maybeUnableToLogin = new Text(true, Vector2D.of(dimensions.getX() / 2, dimensions.getY() * 2 / 3));
+        maybeUnableToLogin = new Text(Text.TextColor.Black, Vector2D.of(dimensions.getX() / 2, dimensions.getY() * 2 / 3));
 
         menu = new HorizontalMenu(
-            new MenuEntry("go back", true, () ->
+            new MenuEntry("go back", Text.TextColor.Black, () ->
                 doTransition(StartDisplay::new)),
-            new MenuEntry("sign up", true, () -> {
+            new MenuEntry("sign up", Text.TextColor.Black, () -> {
                 String playerName = loginBox.getText();
                 try {
                     AccountBuilder.getInstance().buildPlayer(playerName);
@@ -61,7 +61,7 @@ public class LogInScene extends BomberManScene
                     errorMessageTimer.start();
                 }
             }),
-            new MenuEntry("sign in", true, () -> {
+            new MenuEntry("sign in", Text.TextColor.Black, () -> {
                 String playerName = loginBox.getText();
                 Maybe<Account> player = AccountBuilder.getInstance().retrievePlayer(playerName);
                 if (player.isNothing()) {

@@ -35,7 +35,7 @@ public class WinScene extends SoundyBomberManScene
         AudioPlayer.getInstance().stopAll();
         playIfNeeded(GAME_OVER_SOUND);
 
-        winText = new Text("You have won", true);
+        winText = new Text("You have won", Text.TextColor.Black);
 
         winText.setPosition(
             Model.getInstance().getDimensions().div(2)

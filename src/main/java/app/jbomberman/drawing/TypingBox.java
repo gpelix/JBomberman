@@ -14,9 +14,9 @@ public class TypingBox implements Observer, Drawable
     private final Text text;
     private final Controller controller;
 
-    public TypingBox(Controller controller, boolean black, Vector2D modelCoordinateOfCenter)
+    public TypingBox(Controller controller, Text.TextColor color, Vector2D modelCoordinateOfCenter)
     {
-        text = new Text(black, modelCoordinateOfCenter);
+        text = new Text(color, modelCoordinateOfCenter);
         this.controller = controller;
         controller.attachKeyBoardObserver(this);
     }

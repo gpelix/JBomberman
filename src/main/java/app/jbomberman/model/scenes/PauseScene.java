@@ -4,6 +4,7 @@ import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
+import app.jbomberman.drawing.Text;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
 
@@ -23,11 +24,11 @@ public class PauseScene extends BomberManScene
         AudioPlayer.getInstance().pausePlaying();
 
         menu = new HorizontalMenu(
-            new MenuEntry("resume", true, () -> {
+            new MenuEntry("resume", Text.TextColor.Black, () -> {
                 doTransition(() -> gameScene);
                 gameScene.resume();
             }),
-            new MenuEntry("exit", true, () -> {
+            new MenuEntry("exit", Text.TextColor.Black, () -> {
                 AudioPlayer.getInstance().stopAll();
                 doTransition(StartDisplay::new);
             })

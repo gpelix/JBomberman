@@ -30,10 +30,9 @@ public class Text extends MutableVector2D implements Drawable
     private String text;
 
     /**
-     * black is a boolean value that says if the background color of the
-     * letters is black or not (gray otherwise)
+     * color represents the color of the text
      */
-    private boolean black;
+    private TextColor color;
 
     /**
      * images is the list of images that make up the text
@@ -49,14 +48,14 @@ public class Text extends MutableVector2D implements Drawable
      * Text constructor from string, color, and position
      *
      * @param str                String of text
-     * @param color
+     * @param color              the color of the text
      * @param coordinatePosition a coordinate. The interpretation of that coordinate
      *                           is up to the program in question
      */
-    public Text(String str, boolean black, Vector2D coordinatePosition)
+    public Text(String str, TextColor color, Vector2D coordinatePosition)
     {
         super(coordinatePosition);
-        this.black = black;
+        this.color = color;
         setText(str);
     }
 
@@ -64,16 +63,16 @@ public class Text extends MutableVector2D implements Drawable
      * Text constructor from string, color and default zero position
      *
      * @param str   string of text
-     * @param black boolean
+     * @param color
      */
-    public Text(String str, boolean black)
+    public Text(String str, TextColor color)
     {
-        this(str, black, Vector2D.getIdentity());
+        this(str, color, Vector2D.getIdentity());
     }
 
-    public Text(boolean b, Vector2D coordinatePosition)
+    public Text(TextColor color, Vector2D coordinatePosition)
     {
-        this("", b, coordinatePosition);
+        this("", color, coordinatePosition);
     }
 
     /**
@@ -100,12 +99,14 @@ public class Text extends MutableVector2D implements Drawable
     /**
      * setColor() is a method to set the color of the text
      *
-     * @param black color to set
+     * @param color color to set
      */
-    public void setColor(boolean black)
+    public void setColor(TextColor color)
     {
-        this.black = black;
-        updateImagesAndDrawings();
+        if (color != this.color) {
+            this.color = color;
+            updateImagesAndDrawings();
+        }
     }
 
     private void updateImagesAndDrawings()
@@ -120,7 +121,7 @@ public class Text extends MutableVector2D implements Drawable
 
         images = IntStream.range(0, text.length())
             .boxed()
-            .map(i -> factory.getCharacterImage(text.charAt(i), black))
+            .map(i -> factory.getCharacterImage(text.charAt(i), color))
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
@@ -172,9 +173,9 @@ public class Text extends MutableVector2D implements Drawable
         return "Text[text=" + text + ", place=" + super.toString() + "]";
     }
 
-    public boolean getColor()
+    public TextColor getColor()
     {
-        return black;
+        return color;
     }
 
 }

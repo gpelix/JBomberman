@@ -33,8 +33,8 @@ public class LoadingLevelScene extends SoundyBomberManScene
 
         Vector2D dimensions = model.getDimensions();
 
-        Text stageText = new Text("Stage " + model.getAccount().getLevel(), true, dimensions.div(2));
-        Text loadingText = new Text("Loading...", true,
+        Text stageText = new Text("Stage " + model.getAccount().getLevel(), Text.TextColor.Black, dimensions.div(2));
+        Text loadingText = new Text("Loading...", Text.TextColor.Black,
             dimensions.sub(
                 Vector2D.of(dimensions.getX() / 2,
                     FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)));

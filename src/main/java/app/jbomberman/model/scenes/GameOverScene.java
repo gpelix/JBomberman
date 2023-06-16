@@ -35,7 +35,7 @@ public class GameOverScene extends SoundyBomberManScene
         AudioPlayer.getInstance().stopAll();
         playIfNeeded(GAME_OVER_SOUND);
 
-        gameOverText = Maybe.just(new Text("Game over", true));
+        gameOverText = Maybe.just(new Text("Game over", Text.TextColor.Black));
 
         gameOverText.fromJust().setPosition(
             Model.getInstance().getDimensions().div(2)

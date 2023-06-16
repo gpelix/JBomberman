@@ -6,6 +6,7 @@ import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.MenuEntry;
+import app.jbomberman.drawing.Text;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
@@ -44,11 +45,11 @@ public class StartDisplay extends SoundyBomberManScene
         int height = modelDimensions.getY();
 
         menu = new HorizontalMenu(
-            new MenuEntry("Start", true,
+            new MenuEntry("Start", Text.TextColor.Black,
                 () -> doTransition(LoadingLevelScene::new)),
-            new MenuEntry("Log In", true,
+            new MenuEntry("Log In", Text.TextColor.Black,
                 () -> doTransition(LogInScene::new)),
-            new MenuEntry("Exit", true, model::close)
+            new MenuEntry("Exit", Text.TextColor.Black, model::close)
         );
         menu.setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
         menu.setWidth(width);

@@ -2,6 +2,7 @@ package app.jbomberman.images;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
+import app.jbomberman.drawing.Text;
 import app.jbomberman.util.Maybe;
 
 import java.util.Map;
@@ -92,17 +93,16 @@ public class FlightWeightImagesFactory
      * character.
      *
      * @param c     character whose image we want to load
-     * @param black black is a boolean that specifies whether we want to load
-     *              the black or gray version of the character
+     * @param color
      * @return the loaded image of the character
      */
-    public AbstractImage getCharacterImage(char c, boolean black)
+    public AbstractImage getCharacterImage(char c, Text.TextColor color)
     {
         return getImage(switch (c) {
             case '.' -> "dot";
             case ' ' -> "space";
             case ':' -> "column";
             default -> String.valueOf(c);
-        } + (black ? "" : "_gray") + ".png");
+        } + (color == Text.TextColor.Black ? "" : "_gray") + ".png");
     }
 }

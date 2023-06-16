@@ -78,9 +78,9 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
         GameGridBuilder builder = new GameGridBuilder(
             Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL), this);
 
-        Text lives = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), true);
-        timeEntry = new Text("", true);
-        scoreEntry = new Text("", true);
+        Text lives = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), Text.TextColor.Black);
+        timeEntry = new Text("", Text.TextColor.Black);
+        scoreEntry = new Text("", Text.TextColor.Black);
 
         topPanel = new HorizontalPanel<>(
             timeEntry,

@@ -7,9 +7,9 @@ public class MenuEntry extends Text
 
     private final Callback callback;
 
-    public MenuEntry(String str, boolean black, Callback callback)
+    public MenuEntry(String str, TextColor color, Callback callback)
     {
-        super(str, black);
+        super(str, color);
 
         this.callback = callback;
     }
@@ -28,9 +28,9 @@ public class MenuEntry extends Text
     public void setSelected(boolean isSelected)
     {
         if (isSelected)
-            setColor(false);
+            setColor(TextColor.Gray);
         else
-            setColor(true);
+            setColor(TextColor.Black);
     }
 
     public void callCallback()
