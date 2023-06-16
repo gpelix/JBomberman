@@ -19,6 +19,11 @@ import java.util.stream.IntStream;
  */
 public class Text extends MutableVector2D implements Drawable
 {
+    public enum TextColor
+    {
+        Black, Gray
+    }
+
     /**
      * text is a string representing the text currently displayed
      */
@@ -30,32 +35,45 @@ public class Text extends MutableVector2D implements Drawable
      */
     private boolean black;
 
+    /**
+     * images is the list of images that make up the text
+     */
     private List<AbstractImage> images;
 
+    /**
+     * drawing is the current drawing associated to the list of images
+     */
     private Drawing drawing;
 
     /**
-     * Text constructor
+     * Text constructor from string, color, and position
      *
-     * @param str   String of text
-     * @param black boolean that says if the background color of the
-     *              letters is black or not (gray otherwise)
+     * @param str                String of text
+     * @param color
+     * @param coordinatePosition a coordinate. The interpretation of that coordinate
+     *                           is up to the program in question
      */
-    public Text(String str, boolean black, Vector2D modelCoordinatePosition)
+    public Text(String str, boolean black, Vector2D coordinatePosition)
     {
-        super(modelCoordinatePosition);
+        super(coordinatePosition);
         this.black = black;
         setText(str);
     }
 
+    /**
+     * Text constructor from string, color and default zero position
+     *
+     * @param str   string of text
+     * @param black boolean
+     */
     public Text(String str, boolean black)
     {
-        this(str, black, Vector2D.of(0, 0));
+        this(str, black, Vector2D.getIdentity());
     }
 
-    public Text(boolean b, Vector2D modelCoordinatePosition)
+    public Text(boolean b, Vector2D coordinatePosition)
     {
-        this("", b, modelCoordinatePosition);
+        this("", b, coordinatePosition);
     }
 
     /**
@@ -116,9 +134,9 @@ public class Text extends MutableVector2D implements Drawable
         drawing.setDimensions(Vector2D.of((length() / 2) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
     }
 
-    public void setPosition(Vector2D modelCoordinatePosition)
+    public void setPosition(Vector2D coordinatePosition)
     {
-        getValuesFrom(modelCoordinatePosition);
+        getValuesFrom(coordinatePosition);
         updateDrawings();
     }
 

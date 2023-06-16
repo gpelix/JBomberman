@@ -5,5 +5,6 @@
   "IMAGES_DIRECTORY": "images/",
   "JBOMBERMAN_DATA_DIRECTORY_NAME": "jbomberman",
   "SOUNDS_DIRECTORY": "sounds/",
-  "ICON": "icon.png"
+  "ICON": "icon.png",
+  "GRAPHIC_LIBRARY": "javafx"
 }

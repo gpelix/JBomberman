@@ -11,6 +11,11 @@ import org.json.JSONObject;
  */
 public class Properties
 {
+    public enum GraphicLibrary
+    {
+        JAVAFX, SWING
+    }
+
     /**
      * SCALE_FACTOR is the scaling factor we used to create the images
      */
@@ -22,6 +27,7 @@ public class Properties
     private final String soundsDirectory;
     private final String jbombermanDirectoryDataName;
     private static final String playersFile = "players.json";
+    private final GraphicLibrary graphicLibrary;
     private final String icon;
 
     private static final String SETTINGS_FILE =
@@ -39,6 +45,7 @@ public class Properties
         jbombermanDirectoryDataName = settingsJsonRead.getString("JBOMBERMAN_DATA_DIRECTORY_NAME");
         soundsDirectory = settingsJsonRead.getString("SOUNDS_DIRECTORY");
         icon = settingsJsonRead.getString("ICON");
+        graphicLibrary = settingsJsonRead.getString("GRAPHIC_LIBRARY").equalsIgnoreCase("javafx") ? GraphicLibrary.JAVAFX : GraphicLibrary.SWING;
     }
 
     private static Properties instance;
@@ -49,6 +56,11 @@ public class Properties
             instance = new Properties();
         }
         return instance;
+    }
+
+    public GraphicLibrary getGraphicLibrary()
+    {
+        return graphicLibrary;
     }
 
     public int getMaxFps()

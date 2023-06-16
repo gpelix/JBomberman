@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 /**
  * Controller is the controller class in the MVC pattern on which the program
  * is based. The controller is responsible for the communication between the graphic
- * layer and the model in the application. It also sets up the View
+ * layer and the model in the application. It also sets up the View and the View
  *
  * @author gp
  * @see Model
@@ -34,9 +34,11 @@ public class Controller
     private final Logger logger;
 
     /**
-     * Controller() is the only constructor of the controller
+     * Controller() is the only constructor of the controller. It must not be called
+     * by other classes, as, to do the startup, the static function Controller.launch()
+     * must be called
      */
-    public Controller(View view)
+    private Controller(View view)
     {
         logger = LogManager.getLogger(getClass());
 
@@ -51,7 +53,6 @@ public class Controller
         view.setTitle(Properties.getInstance().getApplicationName());
         view.setCloseOperationCallBack(Model.getInstance()::close);
         view.setIcon(Properties.getInstance().getIconFileName());
-        System.out.println("EOIII");
     }
 
     /**
@@ -94,12 +95,11 @@ public class Controller
 
     /**
      * launch() is the function that must be called during the bootstrap process
-     * The callback passed to the view is the constructor of the controller
-     * itself
+     * to initialize the Graphic library and then initialize the controller
      */
     public static void launch()
     {
-        if (false) {
+        if (Properties.getInstance().getGraphicLibrary() == Properties.GraphicLibrary.JAVAFX) {
             FlightWeightImagesFactory.initializeImageBuilder(new JavaFXImageBuilder());
             JavaFXView.initialize(() -> new Controller(new JavaFXView()));
         } else {
