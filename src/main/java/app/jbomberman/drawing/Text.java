@@ -63,13 +63,19 @@ public class Text extends MutableVector2D implements Drawable
      * Text constructor from string, color and default zero position
      *
      * @param str   string of text
-     * @param color
+     * @param color the color of the text
      */
     public Text(String str, TextColor color)
     {
         this(str, color, Vector2D.getIdentity());
     }
 
+    /**
+     * Text constructor setting empty string, color anda position
+     *
+     * @param color              the color of the text
+     * @param coordinatePosition the coordinate of the text
+     */
     public Text(TextColor color, Vector2D coordinatePosition)
     {
         this("", color, coordinatePosition);
@@ -86,14 +92,22 @@ public class Text extends MutableVector2D implements Drawable
         updateImagesAndDrawings();
     }
 
+    /**
+     * append() appends a string to the end of the current text
+     *
+     * @param text the text to append
+     */
     public void append(String text)
     {
         setText(this.text + text);
     }
 
+    /**
+     * pop() pops a character from the end of the current text
+     */
     public void pop()
     {
-        setText(this.text.substring(0, text.length() - 1));
+        setText(text.substring(0, text.length() - 1));
     }
 
     /**
@@ -109,12 +123,18 @@ public class Text extends MutableVector2D implements Drawable
         }
     }
 
+    /**
+     * updateImagesAndDrawings() is used to update both the images and the drawings
+     */
     private void updateImagesAndDrawings()
     {
         updateImages();
-        updateDrawings();
+        updateDrawing();
     }
 
+    /**
+     * updateImages() reloads all the images that represent the text
+     */
     private void updateImages()
     {
         FlightWeightImagesFactory factory = FlightWeightImagesFactory.getInstance();
@@ -125,7 +145,11 @@ public class Text extends MutableVector2D implements Drawable
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private void updateDrawings()
+    /**
+     * updateDrawing() updates the drawing and must be usually called after having
+     * updated the images
+     */
+    private void updateDrawing()
     {
         // This is the center of the text
         drawing = new Drawing(IntStream.range(0, length()).boxed()
@@ -135,10 +159,15 @@ public class Text extends MutableVector2D implements Drawable
         drawing.setDimensions(Vector2D.of((length() / 2) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
     }
 
+    /**
+     * setPosition() sets the new position and regenerates the drawing
+     *
+     * @param coordinatePosition the coordinate to which the menu will be moved
+     */
     public void setPosition(Vector2D coordinatePosition)
     {
         getValuesFrom(coordinatePosition);
-        updateDrawings();
+        updateDrawing();
     }
 
     /**
@@ -151,28 +180,43 @@ public class Text extends MutableVector2D implements Drawable
         return text.length();
     }
 
-    public int spanLength()
-    {
-        return length() * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL;
-    }
-
+    /**
+     * getDrawing() is used to get the drawing
+     *
+     * @return the drawing representing describing the text
+     */
     @Override
     public Drawing getDrawing()
     {
         return drawing;
     }
 
+    /**
+     * getText() gets the text
+     *
+     * @return the text string
+     */
     public String getText()
     {
         return text;
     }
 
+    /**
+     * utility method used for debugging
+     *
+     * @return a string representing the text
+     */
     @Override
     public String toString()
     {
         return "Text[text=" + text + ", place=" + super.toString() + "]";
     }
 
+    /**
+     * getColor() gets the current color of the text
+     *
+     * @return the color of the text
+     */
     public TextColor getColor()
     {
         return color;

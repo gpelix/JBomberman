@@ -11,12 +11,33 @@ import java.util.Arrays;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+/**
+ * Menu represents a menu. It extends a Panel of MenuEntry's and implements the
+ * Observable interface as it must listen for KeyBoard events to chenge the
+ * currently selected menu entry
+ *
+ * @author gp
+ * @see Panel
+ * @see MenuEntry
+ */
 public abstract class Menu extends Panel<MenuEntry> implements Observer
 {
+    /**
+     * selectedEntry is the selected entry. It's in a Maybe as there might be
+     * no menu entries and no selectedEntry actually
+     */
     private Maybe<Integer> selectedEntry;
 
+    /**
+     * TODO: non so che fa!
+     */
     private Supplier<Drawing> arrangementPolicy;
 
+    /**
+     * Constructor from Stream of MenuEntry's
+     *
+     * @param stream the stream containing the MenuEntry's
+     */
     public Menu(Stream<MenuEntry> stream)
     {
         super(stream);
@@ -25,6 +46,11 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
             selectedEntry = Maybe.just(0);
     }
 
+    /**
+     * Constructor from varargs
+     *
+     * @param menuEntries the list of the MenuEntry's
+     */
     public Menu(MenuEntry... menuEntries)
     {
         this(Arrays.stream(menuEntries));
@@ -35,7 +61,7 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     {
         arrangementPolicy = policy;
     }
-
+    
     @Override
     public final Drawing getDrawing()
     {
@@ -70,10 +96,27 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
         }
     }
 
+    /**
+     * getNextKey() is an abstract function that returns the KeyBoardControllerKeyCode
+     * that must be sent to the menu to select the next entry in the menu
+     *
+     * @return the key that must be sent to the menu to select the next entry
+     */
     protected abstract KeyBoardControllerKeyCode getNextKey();
 
+    /**
+     * getPrevKey() is an abstract function that returns the KeyBoardControllerKeyCode
+     * that must be sent to the menu to select the previous entry in the menu
+     *
+     * @return the key that must be sent to the menu to select the previou entry
+     */
     protected abstract KeyBoardControllerKeyCode getPrevKey();
 
+    /**
+     * getSelectedEntry() returns the currently selected entry
+     *
+     * @return the currently selected entry
+     */
     protected Maybe<Integer> getSelectedEntry()
     {
         return selectedEntry;
