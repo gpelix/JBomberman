@@ -1,5 +1,6 @@
 package app.jbomberman.drawing;
 
+import app.jbomberman.JBomberManException;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
@@ -84,7 +85,7 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
      * update() must listen from keyboard events like the pressing of the arrows
      *
      * @param observable the observable
-     * @throws RuntimeException if the observable is not a KeyBoardController
+     * @throws app.jbomberman.JBomberManException if the observable is not a KeyBoardController
      */
     @Override
     public void update(Observable observable)
@@ -110,7 +111,7 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
                 }
             }
         } else
-            throw new RuntimeException("Receiving an update from an unknown observable `" + observable + "'");
+            throw new JBomberManException("Receiving an update from an unknown observable `" + observable + "'");
     }
 
     /**

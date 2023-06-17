@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 /*~*/abstract class Panel<T extends Text> implements Drawable
 {
     /**
-     * entris is the list of texts that will have to be arranged
+     * entries is the list of texts that will have to be arranged
      */
     private final List<T> entries;
 
