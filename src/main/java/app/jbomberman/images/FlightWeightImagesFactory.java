@@ -93,7 +93,7 @@ public class FlightWeightImagesFactory
      * character.
      *
      * @param c     character whose image we want to load
-     * @param color
+     * @param color the color of the images
      * @return the loaded image of the character
      */
     public AbstractImage getCharacterImage(char c, Text.TextColor color)
