@@ -12,9 +12,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * The Panel class contains some Text's and lays them out texts appropriately
+ * The Panel class contains some Text's and lays them out texts appropriately.
  *
  * @param <T> the type of the text that this panel will be showing
+ * @author gp
+ * @implNote we keep the arrangement policies here because they are not menu-specific
+ * specific
  * @see Text
  */
 /*~*/abstract class Panel<T extends Text> implements Drawable
@@ -81,7 +84,8 @@ import java.util.stream.Stream;
     }
 
     /**
-     * arrangeHorizontally() arranges the texts horizontally
+     * arrangeHorizontally() arranges the texts horizontally. It's one of the
+     * two policies available. You can also add more policies
      *
      * @return the Drawing representing the Panel
      */
@@ -110,7 +114,8 @@ import java.util.stream.Stream;
     }
 
     /**
-     * arrangeVertically() must be called to arrange the texts vertically
+     * arrangeVertically() must be called to arrange the texts vertically. It's
+     * one of the two possible policies
      *
      * @return a drawing representing the texts arranged vertically
      */

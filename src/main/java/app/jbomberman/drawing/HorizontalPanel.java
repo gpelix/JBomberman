@@ -1,5 +1,10 @@
 package app.jbomberman.drawing;
 
+/**
+ * HorizontalPanel is simply a panel with arrangeHorizontally as arrangementPolicy
+ *
+ * @param <T> the type
+ */
 public class HorizontalPanel<T extends Text> extends Panel<T>
 {
     private int width;

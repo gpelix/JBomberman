@@ -29,7 +29,8 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     private Maybe<Integer> selectedEntry;
 
     /**
-     * TODO: non so che fa!
+     * The policy is, at the moment, a function that looks at the underlying panel
+     * and returns the Drawing
      */
     private Supplier<Drawing> arrangementPolicy;
 
@@ -56,12 +57,21 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
         this(Arrays.stream(menuEntries));
     }
 
-    // Call immediately after the call to super in every subclass
+    /**
+     * setArrangementPolicy() sets the function used to draw the Menu
+     *
+     * @param policy the policy to set up
+     */
     protected final void setArrangementPolicy(Supplier<Drawing> policy)
     {
         arrangementPolicy = policy;
     }
-    
+
+    /**
+     * getDrawing() is a function that gets the current drawing
+     *
+     * @return the current drawing depicting the menu
+     */
     @Override
     public final Drawing getDrawing()
     {
@@ -70,6 +80,12 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
         return arrangementPolicy.get();
     }
 
+    /**
+     * update() must listen from keyboard events like the pressing of the arrows
+     *
+     * @param observable the observable
+     * @throws RuntimeException if the observable is not a KeyBoardController
+     */
     @Override
     public void update(Observable observable)
     {
@@ -93,7 +109,8 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
                         entryOffset > 0 ? entryOffset - 1 : entryOffset);
                 }
             }
-        }
+        } else
+            throw new RuntimeException("Receiving an update from an unknown observable `" + observable + "'");
     }
 
     /**
