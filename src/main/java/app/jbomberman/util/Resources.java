@@ -2,6 +2,7 @@ package app.jbomberman.util;
 
 import app.jbomberman.JBomberMan;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class Resources
     {
         InputStream ret;
         try {
-            ret = Objects.requireNonNull(relativeClass.getResourceAsStream(URI));
+            ret = new BufferedInputStream(Objects.requireNonNull(relativeClass.getResourceAsStream(URI)));
         } catch (NullPointerException e) {
             throw new RuntimeException("Failed to acquire resource " + URI);
         }

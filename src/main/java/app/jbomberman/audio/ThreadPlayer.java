@@ -94,20 +94,20 @@ class ThreadPlayer extends Thread
             AudioFormat audioFormat = audioInputStream.getFormat();
             DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
-            try (SourceDataLine sourceDataLine =
-                     (SourceDataLine) AudioSystem.getLine(info))
-            {
+            try (SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info)) {
+                byte[] bufferBytes = new byte[BUFFER_SIZE];
+                int readBytes;
+
                 sourceDataLine.open(audioFormat);
                 sourceDataLine.start();
 
-                byte[] bufferBytes = new byte[BUFFER_SIZE];
-                int readBytes = -1;
                 while (System.currentTimeMillis() - stopAllTime <= WAIT_TIME_MILLS)
                     Threads.sleep(WAIT_TIME_MILLS / 20);
 
-                while ((readBytes = audioInputStream.read(bufferBytes)) != -1) {
+                while ((readBytes = audioInputStream.read(bufferBytes)) != -1 || !isInterrupted()) {
+                    System.out.println(isInterrupted());
                     while (audioPlayer.getPause())
-                        Threads.sleep(200);
+                        Threads.sleep(30);
                     sourceDataLine.write(bufferBytes, 0, readBytes);
                 }
                 sourceDataLine.drain();

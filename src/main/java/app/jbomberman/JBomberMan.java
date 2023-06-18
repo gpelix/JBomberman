@@ -1,7 +1,5 @@
 package app.jbomberman;
 
-import app.jbomberman.controller.Controller;
-
 /**
  * JbomberMan is the Main class of the program. It contains the main
  * method and so that's the entry point.
@@ -18,6 +16,8 @@ public class JBomberMan
      */
     public static void main(String[] args)
     {
+//        AudioManager.getInstance().play(Resources.getResourceAsStream("sounds/01 Title Screen.wav"));
+//        Threads.sleep(10000);
         Controller.launch();
     }
 }
