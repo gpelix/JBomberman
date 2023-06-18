@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -57,6 +59,18 @@ public class JavaFXView extends View implements Observer
      * the variable called scene
      */
     private final Stage stage;
+
+    /**
+     * 7% of time was used by ImageViews' constructor. So we keep a pool
+     * of imageViews
+     */
+    private final List<ImageView> imageViews = new ArrayList<>();
+
+    /**
+     * topOfImageViews is the index that we use to point to the last used
+     * ImageView in imageViews
+     */
+    private int topOfImageViews = 0;
 
     /**
      * a logger for this class
@@ -110,6 +124,7 @@ public class JavaFXView extends View implements Observer
     public void draw(Drawing drawing)
     {
         root.getChildren().clear();
+        topOfImageViews = 0;
 
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
 
@@ -135,8 +150,15 @@ public class JavaFXView extends View implements Observer
      */
     private void drawDrawObject(DrawObject drawObject, Vector2D shift)
     {
-        ImageView imageView =
-            new ImageView(toJavaFXImage(drawObject.getImage()));
+        ImageView imageView;
+        if (topOfImageViews == imageViews.size()) {
+            imageView = new ImageView(toJavaFXImage(drawObject.getImage()));
+            imageViews.add(imageView);
+            topOfImageViews++;
+        } else {
+            imageView = imageViews.get(topOfImageViews++);
+            imageView.setImage(toJavaFXImage(drawObject.getImage()));
+        }
 
         imageView.setX(drawObject.getX() + shift.getX());
         imageView.setY(drawObject.getY() + shift.getY());

@@ -23,6 +23,8 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: TODO
 public class SwingView extends View implements Observer
@@ -30,6 +32,10 @@ public class SwingView extends View implements Observer
     private final JFrame frame;
 
     private Maybe<Callback> callback = Maybe.nothing();
+
+    private List<JLabel> labels = new ArrayList<>();
+
+    private int topOfLabels = 0;
 
     public SwingView()
     {
@@ -70,6 +76,7 @@ public class SwingView extends View implements Observer
     public void draw(Drawing drawing)
     {
         frame.getContentPane().removeAll();
+        topOfLabels = 0;
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
         Vector2D sceneCenter = sceneDimensions.div(2);
         Vector2D screenCenter =
@@ -89,13 +96,22 @@ public class SwingView extends View implements Observer
     // Note that Swing draws in reverse
     private void drawDrawObject(DrawObject drawObject, Vector2D shift)
     {
-        JLabel label = new JLabel();
+        JLabel label;
+        if (topOfLabels == labels.size()) {
+            label = new JLabel();
+            topOfLabels++;
+            labels.add(label);
+        } else {
+            label = labels.get(topOfLabels++);
+            label.removeAll();
+        }
+
         label.setIcon(new ImageIcon(toSwingImage(drawObject.getImage())));
 
         Dimension size = label.getPreferredSize();
         label.setBounds(drawObject.getX() + shift.getX(),
             drawObject.getY() + shift.getY(), size.width, size.height);
-        
+
         frame.add(label);
     }
 
