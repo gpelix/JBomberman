@@ -95,7 +95,7 @@ public class SwingView extends View implements Observer
         Dimension size = label.getPreferredSize();
         label.setBounds(drawObject.getX() + shift.getX(),
             drawObject.getY() + shift.getY(), size.width, size.height);
-
+        
         frame.add(label);
     }
 
