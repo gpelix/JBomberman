@@ -22,9 +22,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * View class plays the role of the View in the MVC pattern we used to build
@@ -111,6 +111,8 @@ public class JavaFXView extends View implements Observer
         stage.show();
     }
 
+    private List<Group> layers = new ArrayList<>();
+
     /**
      * Given a drawing, draw() centers it in the middle of the screen and displays
      * it.
@@ -123,7 +125,7 @@ public class JavaFXView extends View implements Observer
      */
     public void draw(Drawing drawing)
     {
-        root.getChildren().clear();
+//        root.getChildren().clear();
         topOfImageViews = 0;
 
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
@@ -134,11 +136,24 @@ public class JavaFXView extends View implements Observer
 
         Vector2D shamt = screenCenter.sub(sceneCenter);
 
-        drawing.getDrawObjects().entrySet()
-            .stream()
-            .sorted(Comparator.comparingInt(Map.Entry::getKey))
-            .flatMap(entry -> entry.getValue().stream())
-            .forEachOrdered(drawObj -> this.drawDrawObject(drawObj, shamt));
+        assureExistingGroups(drawing.getDrawObjects().keySet());
+
+        layers.forEach(l -> l.getChildren().clear());
+        Map<Integer, List<DrawObject>> drawObjectMap = drawing.getDrawObjects();
+        for (Integer i : drawObjectMap.keySet())
+            for (DrawObject d : drawObjectMap.get(i))
+                drawDrawObject(d, shamt, i);
+    }
+
+    private void assureExistingGroups(Set<Integer> layersNumbers)
+    {
+        layersNumbers.forEach(i -> {
+            while (root.getChildren().size() <= i) {
+                Group group = new Group();
+                layers.add(group);
+                root.getChildren().add(group);
+            }
+        });
     }
 
     /**
@@ -148,7 +163,7 @@ public class JavaFXView extends View implements Observer
      * @param drawObject the drawObject
      * @param shift      the vector by which the object must be shifted towards SE
      */
-    private void drawDrawObject(DrawObject drawObject, Vector2D shift)
+    private void drawDrawObject(DrawObject drawObject, Vector2D shift, Integer layer)
     {
         ImageView imageView;
         if (topOfImageViews == imageViews.size()) {
@@ -162,7 +177,8 @@ public class JavaFXView extends View implements Observer
 
         imageView.setX(drawObject.getX() + shift.getX());
         imageView.setY(drawObject.getY() + shift.getY());
-        root.getChildren().add(imageView);
+        layers.get(layer).getChildren().add(imageView);
+        //root.getChildren().add(imageView);
     }
 
     /**

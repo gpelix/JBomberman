@@ -21,7 +21,7 @@ public class Drawing
 {
     // The outer integer is the layer
     /**
-     * a map containing the draw objects. In the outer map, there are the layers,
+     * a map containing the draw objects. In the outer map, there are the layers (POSITIVE NUMBERS),
      * with the lowest numbers being the objects in the background.
      */
     private final Map<Integer, List<DrawObject>> drawObjects;
