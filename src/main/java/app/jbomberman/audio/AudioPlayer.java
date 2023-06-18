@@ -183,8 +183,7 @@ public class AudioPlayer extends Thread
     public AudioHandle playSound(String path)
     {
         logger.info("Playing " + path);
-        //ThreadPlayer t = new ThreadPlayer(path, stopAllTime, this);
-        ThreadPlayer t = null;
+        ThreadPlayer t = new ThreadPlayer(path, stopAllTime, this);
         t.start();
         players.add(t);
         return new AudioHandle(Maybe.just(t));
@@ -203,8 +202,7 @@ public class AudioPlayer extends Thread
         if (Thread.currentThread() == player)
             throw new JBomberManException("this thread is a player thread and is trying to " +
                 "stop itself");
-        player.interrupt();
-        //player.stop();
+        player.setInterrupted();
     }
 
     /**

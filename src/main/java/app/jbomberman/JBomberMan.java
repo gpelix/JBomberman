@@ -1,5 +1,7 @@
 package app.jbomberman;
 
+import app.jbomberman.controller.Controller;
+
 /**
  * JbomberMan is the Main class of the program. It contains the main
  * method and so that's the entry point.

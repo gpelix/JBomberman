@@ -104,8 +104,7 @@ class ThreadPlayer extends Thread
                 while (System.currentTimeMillis() - stopAllTime <= WAIT_TIME_MILLS)
                     Threads.sleep(WAIT_TIME_MILLS / 20);
 
-                while ((readBytes = audioInputStream.read(bufferBytes)) != -1 || !isInterrupted()) {
-                    System.out.println(isInterrupted());
+                while ((readBytes = audioInputStream.read(bufferBytes)) != -1 && !interruptedFlag) {
                     while (audioPlayer.getPause())
                         Threads.sleep(30);
                     sourceDataLine.write(bufferBytes, 0, readBytes);
@@ -136,5 +135,12 @@ class ThreadPlayer extends Thread
     public String getSoundFileName()
     {
         return soundFile;
+    }
+
+    private boolean interruptedFlag = false;
+
+    public void setInterrupted()
+    {
+        interruptedFlag = true;
     }
 }
