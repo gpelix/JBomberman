@@ -1,6 +1,6 @@
 package app.jbomberman.audio;
 
-import app.jbomberman.util.Maybe;
+import javax.sound.sampled.Clip;
 
 /**
  * AudioHandle is a wrapper around threadPlayer that provides an additional
@@ -15,7 +15,6 @@ import app.jbomberman.util.Maybe;
  * would induce tight coupling between the behavior of the ThreadPlayer and
  * other packages
  * @see AudioPlayer
- * @see ThreadPlayer
  */
 public class AudioHandle
 {
@@ -25,18 +24,21 @@ public class AudioHandle
      * @implNote its type is Maybe because if the AudioPlayer gets shut down,
      * no more ThreadPlayers will be created and this will be Nothing
      */
-    private final Maybe<ThreadPlayer> threadPlayer;
+    private final Clip threadPlayer;
+
+    private final String soundFileName;
 
     /**
-     * Constructor of AudioHandle from a ThreadPlayer
+     * Constructor of AudioHandle from a Clip
      *
-     * @param threadPlayer the optional threadPlayer that this class will wrap
+     * @param clip the clip that this class will wrap
      * @implNote its visibility is default as we only want this package (and
      * more specifically the AudioPlayer) to create AudioHandles
      */
-    AudioHandle(Maybe<ThreadPlayer> threadPlayer)
+    AudioHandle(Clip clip, String soundFileName)
     {
-        this.threadPlayer = threadPlayer;
+        this.threadPlayer = clip;
+        this.soundFileName = soundFileName;
     }
 
     /**
@@ -46,7 +48,7 @@ public class AudioHandle
      */
     public boolean isPlaying()
     {
-        return threadPlayer.compute(true, ThreadPlayer::isPlaying);
+        return threadPlayer.isActive();
     }
 
     /**
@@ -54,9 +56,9 @@ public class AudioHandle
      *
      * @return the name of the file currently playing
      */
-    public Maybe<String> getSoundFileName()
+    public String getSoundFileName()
     {
-        return threadPlayer.maybeCompute(ThreadPlayer::getSoundFileName);
+        return soundFileName;
     }
 
     /**
@@ -64,6 +66,6 @@ public class AudioHandle
      */
     public void stop()
     {
-        threadPlayer.maybeDo(AudioPlayer.getInstance()::stop);
+        threadPlayer.close();
     }
 }

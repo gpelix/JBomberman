@@ -1,7 +1,6 @@
 package app.jbomberman.controller;
 
 import app.jbomberman.Properties;
-import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.javafx.JavaFXImageBuilder;
 import app.jbomberman.images.swing.SwingImageBuilder;
@@ -65,7 +64,6 @@ public class Controller
     public void close()
     {
         logger.info("Closing Controller");
-        AudioPlayer.getInstance().close();
         view.close();
     }
 
