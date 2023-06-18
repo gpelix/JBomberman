@@ -1,12 +1,13 @@
 package app.jbomberman.view.graphics.javafx;
 
-import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.drawing.LayeredDrawObject;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.javafx.JavaFXImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Observer;
+import app.jbomberman.util.Pair;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
 import javafx.application.Platform;
@@ -22,6 +23,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,18 +62,6 @@ public class JavaFXView extends View implements Observer
      * the variable called scene
      */
     private final Stage stage;
-
-    /**
-     * 7% of time was used by ImageViews' constructor. So we keep a pool
-     * of imageViews
-     */
-    private final List<ImageView> imageViews = new ArrayList<>();
-
-    /**
-     * topOfImageViews is the index that we use to point to the last used
-     * ImageView in imageViews
-     */
-    private int topOfImageViews = 0;
 
     /**
      * a logger for this class
@@ -113,6 +104,8 @@ public class JavaFXView extends View implements Observer
 
     private List<Group> layers = new ArrayList<>();
 
+    private Map<LayeredDrawObject, Pair<ImageView, Integer>> drawObjects = new HashMap<>();
+
     /**
      * Given a drawing, draw() centers it in the middle of the screen and displays
      * it.
@@ -125,9 +118,6 @@ public class JavaFXView extends View implements Observer
      */
     public void draw(Drawing drawing)
     {
-//        root.getChildren().clear();
-        topOfImageViews = 0;
-
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
 
         Vector2D sceneCenter = sceneDimensions.div(2);
@@ -136,24 +126,60 @@ public class JavaFXView extends View implements Observer
 
         Vector2D shamt = screenCenter.sub(sceneCenter);
 
-        assureExistingGroups(drawing.getDrawObjects().keySet());
+        drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingGroup(layeredDrawObject.getLayer()));
 
-        layers.forEach(l -> l.getChildren().clear());
-        Map<Integer, List<DrawObject>> drawObjectMap = drawing.getDrawObjects();
-        for (Integer i : drawObjectMap.keySet())
-            for (DrawObject d : drawObjectMap.get(i))
-                drawDrawObject(d, shamt, i);
+        //layers.forEach(l -> l.getChildren().clear());
+
+        Map<LayeredDrawObject, Pair<ImageView, Integer>> toRemoveDrawObjectsMap = new HashMap<>();
+
+        // Draw the new objects
+        for (LayeredDrawObject d : drawing.getDrawObjects()) {
+            if (drawObjects.containsKey(d))
+                continue;
+            //System.out.println(d.getLayer());
+            drawDrawObject(d, shamt);
+            //.println("Drawing new object");
+        }
+
+        Set<LayeredDrawObject> newDrawObjects = new HashSet<>()
+        {
+            {
+                addAll(drawing.getDrawObjects());
+            }
+        };
+
+        // Select objects for removal
+        for (Map.Entry<LayeredDrawObject, Pair<ImageView, Integer>> d : drawObjects.entrySet())
+            if (!newDrawObjects.contains(d.getKey())) {
+                //.println("Selecting for removal on layer " + d.getKey().getLayer());
+//                System.out.println("Removimg from " + d.getKey().getLayer());
+                toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
+            }
+
+        for (Map.Entry<LayeredDrawObject, Pair<ImageView, Integer>> d : toRemoveDrawObjectsMap.entrySet()) {
+            //.println(d.getValue() + " " + layers.get(d.getKey().getLayer()).getChildren());
+            if (layers.get(d.getValue().getY()).getChildren().remove(d.getValue().getX())) {
+            }
+            //throw new RuntimeException("Unable to remove " + d.getValue() + " from layer " + d.getKey().getLayer());
+//            System.out.println("Removimg from " + d.getKey().getLayer());
+            drawObjects.remove(d.getKey());
+        }
+        System.out.println("layerSize " + layers.size());
+
+//        drawObjects.forEach((x, j) -> System.out.println(x.getLayer()));
+//        System.out.println("Printing");
+//        for (int i = 0; i < layers.size(); i++)
+//            System.out.println(i + " " + layers.get(i).getChildren().size());
     }
 
-    private void assureExistingGroups(Set<Integer> layersNumbers)
+    private void assureExistingGroup(int layerNumber)
     {
-        layersNumbers.forEach(i -> {
-            while (root.getChildren().size() <= i) {
-                Group group = new Group();
-                layers.add(group);
-                root.getChildren().add(group);
-            }
-        });
+        //System.out.println("layerNumber" + layerNumber);
+        while (root.getChildren().size() <= layerNumber) {
+            Group group = new Group();
+            layers.add(group);
+            root.getChildren().add(group);
+        }
     }
 
     /**
@@ -163,21 +189,15 @@ public class JavaFXView extends View implements Observer
      * @param drawObject the drawObject
      * @param shift      the vector by which the object must be shifted towards SE
      */
-    private void drawDrawObject(DrawObject drawObject, Vector2D shift, Integer layer)
+    private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
     {
-        ImageView imageView;
-        if (topOfImageViews == imageViews.size()) {
-            imageView = new ImageView(toJavaFXImage(drawObject.getImage()));
-            imageViews.add(imageView);
-            topOfImageViews++;
-        } else {
-            imageView = imageViews.get(topOfImageViews++);
-            imageView.setImage(toJavaFXImage(drawObject.getImage()));
-        }
+        //System.out.println("Printing on " + drawObject.getLayer());
+        ImageView imageView = new ImageView(toJavaFXImage(drawObject.getImage()));
 
         imageView.setX(drawObject.getX() + shift.getX());
         imageView.setY(drawObject.getY() + shift.getY());
-        layers.get(layer).getChildren().add(imageView);
+        layers.get(drawObject.getLayer()).getChildren().add(imageView);
+        drawObjects.put(drawObject, new Pair<>(imageView, drawObject.getLayer()));
         //root.getChildren().add(imageView);
     }
 

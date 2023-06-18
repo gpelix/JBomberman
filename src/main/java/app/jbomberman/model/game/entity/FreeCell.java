@@ -156,11 +156,6 @@ public class FreeCell extends Cell
         entities.remove(character);
     }
 
-    @Deprecated(forRemoval = true)
-    public void _remove(Entity entity)
-    {
-    }
-
     public boolean contains(Entity entity)
     {
         return entities.contains(entity);

@@ -2,9 +2,9 @@ package app.jbomberman.model.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalMenu;
+import app.jbomberman.drawing.LayeredDrawObject;
 import app.jbomberman.drawing.MenuEntry;
 import app.jbomberman.drawing.Text;
 import app.jbomberman.images.AbstractImage;
@@ -29,6 +29,8 @@ public class StartDisplay extends SoundyBomberManScene
     private final AbstractImage startImage;
 
     private HorizontalMenu menu;
+
+    private final LayeredDrawObject backgroundLayeredDrawObject;
 
     /**
      * setup() displays the images, text and sets up callbacks
@@ -55,6 +57,8 @@ public class StartDisplay extends SoundyBomberManScene
         menu.setWidth(width);
 
         Model.getController().attachKeyBoardObserver(menu);
+
+        backgroundLayeredDrawObject = new LayeredDrawObject(Vector2D.of(0, 0), startImage, 0);
     }
 
     @Override
@@ -69,10 +73,13 @@ public class StartDisplay extends SoundyBomberManScene
     {
         playIfNeeded(startDisplaySound);
 
-        Drawing drawing = new Drawing(
-            new DrawObject(Vector2D.of(0, 0), startImage));
+        Drawing drawing = new Drawing(backgroundLayeredDrawObject);
+
+        System.out.println(menu.getDrawing().getMaxLayer());
 
         drawing.merge(menu.getDrawing(), x -> x + 1);
+
+        System.out.println("max layer" + drawing.getMaxLayer());
 
         return drawing;
     }

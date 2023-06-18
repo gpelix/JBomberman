@@ -8,8 +8,6 @@ import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 
-import java.util.List;
-
 /**
  * View class plays the role of the View in the MVC pattern we used to build
  * the application
@@ -90,7 +88,7 @@ public abstract class View implements Observer
     protected Vector2D getDrawingDimensions(Drawing drawing)
     {
         return drawing.getDimensions().orElse(() ->
-            drawing.getDrawObjects().values().stream().flatMap(List::stream)
+            drawing.getDrawObjects().stream()
                 .reduce(
                     Vector2D.getIdentity(),
                     (acc, drawObj) -> acc.elementWiseApply(drawObj.sum(drawObj.getDimensions()),

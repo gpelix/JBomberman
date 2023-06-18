@@ -22,7 +22,7 @@ public class AutoBomb extends Bomb
     public void updateInModel()
     {
         if (--timeToExplosion == 0) {
-            super.commonUpdateInModel();
+            commonUpdateInModel();
         }
     }
 

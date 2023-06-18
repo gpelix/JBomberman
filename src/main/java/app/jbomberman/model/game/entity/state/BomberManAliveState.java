@@ -14,8 +14,6 @@ public class BomberManAliveState extends AliveState
 {
     private final BomberMan bomberMan;
 
-    private final GameCharacterState nextState;
-
     private final MovingImageManager imageManager;
 
     private boolean drawn;
@@ -26,7 +24,6 @@ public class BomberManAliveState extends AliveState
     {
         super(bomberMan, nextState);
         this.bomberMan = bomberMan;
-        this.nextState = nextState;
         this.imageManager = imageManager;
         this.drawn = false;
     }

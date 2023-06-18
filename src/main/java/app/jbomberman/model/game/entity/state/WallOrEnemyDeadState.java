@@ -1,6 +1,7 @@
 package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.images.AbstractImage;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.entity.Enemy;
@@ -31,7 +32,10 @@ public class WallOrEnemyDeadState<T extends Entity & StateFul> extends DeadState
     @Override
     public Drawing getDrawing()
     {
-        return entity.getDrawing(deathImageManager.getNextImage());
+        AbstractImage image = deathImageManager.getNextImage();
+        if (deathImageManager.hasChanged())
+            entity.hasChanged();
+        return entity.getDrawing(image);
     }
 
     @Override

@@ -73,6 +73,8 @@ public class BomberMan extends GameCharacter implements Observer
     @Override
     public void move()
     {
+        hasChanged();
+
         if (directions.isEmpty())
             return;
 
@@ -80,6 +82,8 @@ public class BomberMan extends GameCharacter implements Observer
 
         if (maybeMoveDirection.isNothing())
             return;
+
+        hasChanged();
 
         Direction moveDirection = maybeMoveDirection.fromJust();
 

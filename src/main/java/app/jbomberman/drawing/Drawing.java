@@ -5,9 +5,7 @@ import app.jbomberman.util.Vector2D;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -19,12 +17,7 @@ import java.util.stream.Stream;
  */
 public class Drawing
 {
-    // The outer integer is the layer
-    /**
-     * a map containing the draw objects. In the outer map, there are the layers (POSITIVE NUMBERS),
-     * with the lowest numbers being the objects in the background.
-     */
-    private final Map<Integer, List<DrawObject>> drawObjects;
+    private List<LayeredDrawObject> drawObjects;
 
     /**
      * dimensions are the dimensions of the Drawing. It's a Maybe because it might
@@ -37,7 +30,7 @@ public class Drawing
      */
     public Drawing()
     {
-        drawObjects = new HashMap<>();
+        drawObjects = new ArrayList<>();
     }
 
     /**
@@ -45,7 +38,7 @@ public class Drawing
      *
      * @param drawObjects the list of drawObjects
      */
-    public Drawing(DrawObject... drawObjects)
+    public Drawing(LayeredDrawObject... drawObjects)
     {
         this(Arrays.stream(drawObjects));
     }
@@ -55,10 +48,9 @@ public class Drawing
      *
      * @param stream the stram of drawObjects
      */
-    public Drawing(Stream<DrawObject> stream)
+    public Drawing(Stream<LayeredDrawObject> stream)
     {
-        this();
-        drawObjects.put(0, stream.collect(Collectors.toList()));
+        drawObjects = stream.collect(Collectors.toList());
     }
 
     /**
@@ -77,16 +69,10 @@ public class Drawing
      * add() adds a DrawObject to the specified layer
      *
      * @param drawObject the DrawObject to add
-     * @param layer      the layer to which it must be added
      */
-    public void add(DrawObject drawObject, int layer)
+    public void add(LayeredDrawObject drawObject)
     {
-        drawObjects.computeIfAbsent(layer, ignored -> new ArrayList<>()
-        {
-            {
-                add(drawObject);
-            }
-        });
+        drawObjects.add(drawObject);
     }
 
     /**
@@ -94,7 +80,7 @@ public class Drawing
      *
      * @return the layer to list of drawObjects
      */
-    public Map<Integer, List<DrawObject>> getDrawObjects()
+    public List<LayeredDrawObject> getDrawObjects()
     {
         return drawObjects;
     }
@@ -110,17 +96,22 @@ public class Drawing
     public void merge(Drawing otherDrawing,
                       Function<Integer, Integer> toNewLayerFunction)
     {
-        otherDrawing.drawObjects.forEach((idx, drawObjectsSet) ->
-            drawObjects.merge(
-                toNewLayerFunction.apply(idx),
-                drawObjectsSet,
-                (oldSet, newSet) -> new ArrayList<>()
-                {
-                    {
-                        addAll(oldSet);
-                        addAll(newSet);
-                    }
-                }));
+        otherDrawing.drawObjects.forEach(layeredDrawObject ->
+            new LayeredDrawObject(Vector2D.of(layeredDrawObject.getX(), layeredDrawObject.getY()),
+                layeredDrawObject.getImage(),
+                toNewLayerFunction.apply(layeredDrawObject.getLayer())));
+        drawObjects.addAll(otherDrawing.drawObjects);
+//        otherDrawing.drawObjects.forEach((idx, drawObjectsSet) ->
+//            drawObjects.merge(
+//                toNewLayerFunction.apply(idx),
+//                drawObjectsSet,
+//                (oldSet, newSet) -> new ArrayList<>()
+//                {
+//                    {
+//                        addAll(oldSet);
+//                        addAll(newSet);
+//                    }
+//                }));
     }
 
     /**
@@ -162,6 +153,11 @@ public class Drawing
     @Override
     public String toString()
     {
-        return Arrays.toString(drawObjects.values().toArray());
+        return drawObjects.toString();
+    }
+
+    public int getMaxLayer()
+    {
+        return drawObjects.stream().mapToInt(LayeredDrawObject::getLayer).max().orElse(-1);
     }
 }

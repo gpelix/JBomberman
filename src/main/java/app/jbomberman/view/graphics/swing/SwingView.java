@@ -84,11 +84,13 @@ public class SwingView extends View implements Observer
 
         Vector2D shamt = screenCenter.sub(sceneCenter);
 
-        drawing.getDrawObjects().entrySet()
-            .stream()
-            // Note here that we reverse the order! swing wants us to draw first the top and then the bottom
-            .sorted((a, b) -> b.getKey() - a.getKey())
-            .forEachOrdered(drawEntry -> drawEntry.getValue().forEach(_draw -> drawDrawObject(_draw, shamt)));
+        // TODO::: THis is just to see if the new things that i modifeid worked
+
+//        drawing.getDrawObjects().entrySet()
+//            .stream()
+//            // Note here that we reverse the order! swing wants us to draw first the top and then the bottom
+//            .sorted((a, b) -> b.getKey() - a.getKey())
+//            .forEachOrdered(drawEntry -> drawEntry.getValue().forEach(_draw -> drawDrawObject(_draw, shamt)));
 
         frame.getContentPane().repaint();
     }

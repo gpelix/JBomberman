@@ -291,4 +291,9 @@ public class Maybe<T>
     {
         return (isNothing()) ? "Nothing" : "Just(" + object + ")";
     }
+
+    public T unwrap()
+    {
+        return unwrapOrThrow(() -> new RuntimeException("Error! Unwrapping nothing"));
+    }
 }

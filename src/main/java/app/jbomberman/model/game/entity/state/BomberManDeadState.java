@@ -1,6 +1,7 @@
 package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.images.AbstractImage;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
@@ -46,6 +47,9 @@ public class BomberManDeadState extends DeadState
     @Override
     public Drawing getDrawing()
     {
-        return bomberMan.getDrawing(deathImageManager.getNextImage());
+        AbstractImage image = deathImageManager.getNextImage();
+        if (deathImageManager.hasChanged())
+            bomberMan.hasChanged();
+        return bomberMan.getDrawing(image);
     }
 }

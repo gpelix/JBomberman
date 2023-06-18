@@ -153,9 +153,9 @@ public class Text extends MutableVector2D implements Drawable
     {
         // This is the center of the text
         drawing = new Drawing(IntStream.range(0, length()).boxed()
-            .map(index -> new DrawObject(
+            .map(index -> new LayeredDrawObject(
                 this.sum(Vector2D.of((-length() / 2 + index) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, 0)),
-                images.get(index))
+                images.get(index), 0)
             ));
         drawing.setDimensions(Vector2D.of((length() / 2) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
     }

@@ -30,6 +30,11 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     private Maybe<Integer> selectedEntry;
 
     /**
+     *
+     */
+    private Maybe<Drawing> oldDrawing = Maybe.nothing();
+
+    /**
      * The policy is, at the moment, a function that looks at the underlying panel
      * and returns the Drawing
      */
@@ -76,9 +81,12 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
     @Override
     public final Drawing getDrawing()
     {
+        if (oldDrawing.isJust())
+            return oldDrawing.unwrap();
         getEntries().forEach(e -> e.setSelected(false));
         getSelectedEntry().maybeDo(eIdx -> getEntries().get(eIdx).setSelected(true));
-        return arrangementPolicy.get();
+        oldDrawing = Maybe.just(arrangementPolicy.get());
+        return oldDrawing.unwrap();
     }
 
     /**
@@ -102,6 +110,8 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
             else {
                 KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
 
+                if (keyCode == getNextKey() || keyCode == getPrevKey())
+                    oldDrawing = Maybe.nothing();
                 if (keyCode == getNextKey()) {
                     selectedEntry = selectedEntry.maybeCompute(entryOffset ->
                         entryOffset < getEntries().size() - 1 ? entryOffset + 1 : entryOffset);

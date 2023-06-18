@@ -45,6 +45,11 @@ public class ImageManager
         return ret;
     }
 
+    public boolean hasChanged()
+    {
+        return timeToUpdate == updateInterval;
+    }
+
     public void setCurrentImages(List<AbstractImage> currentImages)
     {
         this.currentImages = currentImages;

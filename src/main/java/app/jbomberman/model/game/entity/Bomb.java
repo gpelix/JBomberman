@@ -40,6 +40,8 @@ public abstract class Bomb extends Entity
     @Override
     public Drawing getDrawing()
     {
+        if (imageManager.hasChanged())
+            hasChanged();
         return getDrawing(imageManager.getNextImage());
     }
 
@@ -53,8 +55,6 @@ public abstract class Bomb extends Entity
         freeCell.notifyExplosion(new Explosion(bombRange, getCenterInGridCoord()));
     }
 
-    // TODO: This won't work Bomb must have a high priority in freecell
-    // FIXED THE PREVIOUS TODO BUT STILL THE CODE IS UGLY
     @Override
     public boolean notifyExplosion(Explosion explosion)
     {

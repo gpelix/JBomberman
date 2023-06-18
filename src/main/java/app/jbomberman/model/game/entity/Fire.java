@@ -12,7 +12,7 @@ public class Fire extends Entity
         CENTER, HORIZONTAL, VERTICAL, NORTH, SOUTH, EAST, WEST
     }
 
-    private ImageManager imageManager;
+    private final ImageManager imageManager;
 
     public Fire(Vector2D coordinate, GameGrid gameGrid, ImageManager imageManager)
     {
@@ -24,6 +24,8 @@ public class Fire extends Entity
     @Override
     public Drawing getDrawing()
     {
+        if (imageManager.hasChanged())
+            hasChanged();
         return getDrawing(imageManager.getNextImage());
     }
 

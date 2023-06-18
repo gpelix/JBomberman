@@ -4,6 +4,8 @@ import app.jbomberman.images.AbstractImage;
 import app.jbomberman.util.MutableVector2D;
 import app.jbomberman.util.Vector2D;
 
+import java.util.Objects;
+
 /**
  * DrawingObject encapsulates an AbstractImage to draw
  *
@@ -48,5 +50,23 @@ public class DrawObject extends MutableVector2D
     public Vector2D getDimensions()
     {
         return image.getDimensions();
+    }
+
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (obj == null || obj.getClass() != getClass())
+            return false;
+
+        LayeredDrawObject other = (LayeredDrawObject) obj;
+
+        return this.getX() == other.getX() && getY() == other.getY() && getImage() == other.getImage();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getX(), getY(), getImage());
     }
 }
