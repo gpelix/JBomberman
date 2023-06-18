@@ -10,15 +10,15 @@ public class EntityHierarchy
     private final Map<Class<? extends Entity>, Integer> drawingHierarchy = new HashMap<>()
     {
         {
-            put(BomberMan.class, 60);
-            put(Enemy.class, 50);
-            put(Bomb.class, 40);
-            put(Wall.class, 40);
-            put(Fire.class, 40);
-            put(Block.class, 30);
-            put(Door.class, 20);
-            put(Powerup.class, 20);
-            put(FreeCell.class, 10);
+            put(BomberMan.class, 6);
+            put(Enemy.class, 5);
+            put(Bomb.class, 4);
+            put(Wall.class, 4);
+            put(Fire.class, 4);
+            put(Block.class, 3);
+            put(Door.class, 2);
+            put(Powerup.class, 2);
+            put(FreeCell.class, 1);
         }
     };
 
