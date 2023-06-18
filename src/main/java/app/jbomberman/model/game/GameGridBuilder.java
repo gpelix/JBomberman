@@ -139,7 +139,6 @@ public class GameGridBuilder
         // Attach observer bomberman to Scene
         // TODO: This is not what we want as we want filtering by gameScene and
         // TODO: will disable it for now!
-        System.out.println("SHHH");
         gameScene.attachObserver(bomberMan);
         // Who will detach it??
 

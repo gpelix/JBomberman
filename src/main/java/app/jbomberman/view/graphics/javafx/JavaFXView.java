@@ -7,7 +7,6 @@ import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.javafx.JavaFXImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Observer;
-import app.jbomberman.util.Pair;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
 import javafx.application.Platform;
@@ -102,9 +101,15 @@ public class JavaFXView extends View implements Observer
         stage.show();
     }
 
-    private List<Group> layers = new ArrayList<>();
+    /**
+     * layers is the list of the available froups
+     */
+    private final List<Group> layers = new ArrayList<>();
 
-    private Map<LayeredDrawObject, Pair<ImageView, Integer>> drawObjects = new HashMap<>();
+    /**
+     * layeredDrawObject is a map from the
+     */
+    private final Map<LayeredDrawObject, ImageView> drawObjects = new HashMap<>();
 
     /**
      * Given a drawing, draw() centers it in the middle of the screen and displays
@@ -130,7 +135,9 @@ public class JavaFXView extends View implements Observer
 
         //layers.forEach(l -> l.getChildren().clear());
 
-        Map<LayeredDrawObject, Pair<ImageView, Integer>> toRemoveDrawObjectsMap = new HashMap<>();
+        Map<LayeredDrawObject, ImageView> toRemoveDrawObjectsMap = new HashMap<>();
+
+        //System.out.println(drawing.numberOfItems() + " " + drawing.hashCode());
 
         // Draw the new objects
         for (LayeredDrawObject d : drawing.getDrawObjects()) {
@@ -149,22 +156,23 @@ public class JavaFXView extends View implements Observer
         };
 
         // Select objects for removal
-        for (Map.Entry<LayeredDrawObject, Pair<ImageView, Integer>> d : drawObjects.entrySet())
+        for (Map.Entry<LayeredDrawObject, ImageView> d : drawObjects.entrySet())
             if (!newDrawObjects.contains(d.getKey())) {
                 //.println("Selecting for removal on layer " + d.getKey().getLayer());
 //                System.out.println("Removimg from " + d.getKey().getLayer());
                 toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
             }
 
-        for (Map.Entry<LayeredDrawObject, Pair<ImageView, Integer>> d : toRemoveDrawObjectsMap.entrySet()) {
-            //.println(d.getValue() + " " + layers.get(d.getKey().getLayer()).getChildren());
-            if (layers.get(d.getValue().getY()).getChildren().remove(d.getValue().getX())) {
+        for (Map.Entry<LayeredDrawObject, ImageView> d : toRemoveDrawObjectsMap.entrySet()) {
+            // System.out.println(d.getValue() + " " + layers.get(d.getKey().getLayer()).getChildren());
+            if (!layers.get(d.getKey().getLayer()).getChildren().remove(d.getValue())) {
+                //System.out.println("Unable to remove from " + d.getKey().getLayer());
+                //throw new RuntimeException("Unable to remove " + d.getValue() + " from layer " + d.getKey().getLayer());
             }
-            //throw new RuntimeException("Unable to remove " + d.getValue() + " from layer " + d.getKey().getLayer());
 //            System.out.println("Removimg from " + d.getKey().getLayer());
             drawObjects.remove(d.getKey());
         }
-        System.out.println("layerSize " + layers.size());
+        // System.out.println("layerSize " + layers.size());
 
 //        drawObjects.forEach((x, j) -> System.out.println(x.getLayer()));
 //        System.out.println("Printing");
@@ -197,7 +205,7 @@ public class JavaFXView extends View implements Observer
         imageView.setX(drawObject.getX() + shift.getX());
         imageView.setY(drawObject.getY() + shift.getY());
         layers.get(drawObject.getLayer()).getChildren().add(imageView);
-        drawObjects.put(drawObject, new Pair<>(imageView, drawObject.getLayer()));
+        drawObjects.put(drawObject, imageView);
         //root.getChildren().add(imageView);
     }
 

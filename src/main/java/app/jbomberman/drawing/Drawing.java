@@ -160,4 +160,9 @@ public class Drawing
     {
         return drawObjects.stream().mapToInt(LayeredDrawObject::getLayer).max().orElse(-1);
     }
+
+    public int numberOfItems()
+    {
+        return drawObjects.size();
+    }
 }

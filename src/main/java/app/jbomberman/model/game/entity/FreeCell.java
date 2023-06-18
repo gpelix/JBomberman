@@ -166,10 +166,12 @@ public class FreeCell extends Cell
         return entities;
     }
 
+    private boolean wasFull = true;
+
     @Override
     public Drawing getDrawing()
     {
-        Drawing ret = super.getDrawing();
+        Drawing ret = new Drawing(super.getDrawing());
 
         entities.forEach(entity -> ret.merge(entity.getDrawing(),
             x -> x + 1));

@@ -74,12 +74,7 @@ public class StartDisplay extends SoundyBomberManScene
         playIfNeeded(startDisplaySound);
 
         Drawing drawing = new Drawing(backgroundLayeredDrawObject);
-
-        System.out.println(menu.getDrawing().getMaxLayer());
-
         drawing.merge(menu.getDrawing(), x -> x + 1);
-
-        System.out.println("max layer" + drawing.getMaxLayer());
 
         return drawing;
     }
