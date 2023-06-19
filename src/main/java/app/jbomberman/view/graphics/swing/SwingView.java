@@ -127,12 +127,10 @@ public class SwingView extends View implements Observer
     private void assureExistingLayer(int layerNumber)
     {
         while (layers.size() <= layerNumber) {
-            System.out.println(layerNumber);
             JPanel panel = new JPanel();
             panel.setBackground(new Color(0, 0, 0, 0));
             frame.add(panel, 0);
             panel.setSize(frame.getWidth(), frame.getHeight());
-            System.out.println(frame.getWidth() + " " + frame.getHeight());
             panel.setVisible(true);
             panel.setLayout(null);
             layers.add(panel);
