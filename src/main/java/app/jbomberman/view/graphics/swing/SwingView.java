@@ -1,12 +1,11 @@
 package app.jbomberman.view.graphics.swing;
 
-import app.jbomberman.drawing.DrawObject;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.drawing.LayeredDrawObject;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.swing.SwingImage;
 import app.jbomberman.util.Callback;
-import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
@@ -17,6 +16,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -26,28 +27,28 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
-// TODO: TODO
+// TODO: TODO javadoc
 public class SwingView extends View implements Observer
 {
     private final JFrame frame;
 
     private Maybe<Callback> callback = Maybe.nothing();
 
-    private List<JLabel> labels = new ArrayList<>();
-
-    private int topOfLabels = 0;
-
-    private JPanel panel;
+//    private final List<JLabel> labels = new ArrayList<>();
+//
+//    private int topOfLabels = 0;
 
     public SwingView()
     {
         super(new SwingGraphicFactory(), new SwingKeyBoardController());
 
         frame = new JFrame();
-
-        panel = new JPanel();
 
         frame.addWindowListener(new WindowAdapter()
         {
@@ -69,7 +70,6 @@ public class SwingView extends View implements Observer
             cursorImg, new Point(0, 0), "blank cursor"
         );
         frame.getContentPane().setCursor(blankCursor);
-        frame.add(panel);
 
         frame.getContentPane().setBackground(Color.BLACK);
         frame.setResizable(false);
@@ -77,56 +77,83 @@ public class SwingView extends View implements Observer
         //frame.setSize(700, 700);
         frame.setVisible(true);
         frame.setLayout(null);
-        panel.setVisible(true);
-        panel.setLayout(null);
-
     }
 
-    private CallbackOnce setPanelSize = new CallbackOnce()
-    {
-        @Override
-        public void run()
-        {
-            panel.setSize(frame.getWidth(), frame.getHeight());
-        }
-    };
+    private final List<JPanel> layers = new ArrayList<>();
+
+    private final Map<LayeredDrawObject, JLabel> drawObjects = new HashMap<>();
 
     @Override
     public void draw(Drawing drawing)
     {
-//        System.out.println(frame.getWidth() + " " + frame.getHeight());
-        setPanelSize.runOnce();
-
-        panel.removeAll();
-        topOfLabels = 0;
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
         Vector2D sceneCenter = sceneDimensions.div(2);
         Vector2D screenCenter =
-            Vector2D.of(panel.getWidth(), panel.getHeight()).div(2);
+            Vector2D.of(frame.getWidth(), frame.getHeight()).div(2);
 
         Vector2D shamt = screenCenter.sub(sceneCenter);
 
-        drawing.getDrawObjects()
-            .stream()
-            // Note here that we reverse the order! swing wants us to draw first the top and then the bottom
-            .sorted((a, b) -> b.getLayer() - a.getLayer())
-            .forEachOrdered(_draw -> drawDrawObject(_draw, shamt));
+        layers.forEach(Container::removeAll);
 
-        panel.repaint();
+        drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingLayer(layeredDrawObject.getLayer()));
+
+        Map<LayeredDrawObject, JLabel> toRemoveDrawObjectsMap = new HashMap<>();
+
+        for (LayeredDrawObject d : drawing.getDrawObjects()) {
+            if (drawObjects.containsKey(d))
+                continue;
+            drawDrawObject(d, shamt);
+        }
+
+        Set<LayeredDrawObject> newDrawObjects = new HashSet<>()
+        {
+            {
+                addAll(drawing.getDrawObjects());
+            }
+        };
+
+        // Select objects for removal
+        for (Map.Entry<LayeredDrawObject, JLabel> d : drawObjects.entrySet())
+            if (!newDrawObjects.contains(d.getKey()))
+                toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
+
+        for (Map.Entry<LayeredDrawObject, JLabel> d : toRemoveDrawObjectsMap.entrySet()) {
+            JLabel label = d.getValue();
+            layers.get(d.getKey().getLayer()).remove(d.getValue());
+            drawObjects.remove(d.getKey());
+        }
+
+//        drawing.getDrawObjects()
+//            .stream()
+//            // Note here that we reverse the order! swing wants us to draw first the top and then the bottom
+//            .sorted((a, b) -> b.getLayer() - a.getLayer())
+//            .forEachOrdered(_draw -> drawDrawObject(_draw, shamt));
+
+        frame.repaint();
+        // This might be not necessary
+        layers.forEach(Component::repaint);
+    }
+
+    private void assureExistingLayer(int layerNumber)
+    {
+        while (layers.size() <= layerNumber) {
+            System.out.println(layerNumber);
+            JPanel panel = new JPanel();
+            panel.setBackground(new Color(0, 0, 0, 0));
+            frame.add(panel);
+            panel.setSize(frame.getWidth(), frame.getHeight());
+            System.out.println(frame.getWidth() + " " + frame.getHeight());
+            panel.setVisible(true);
+            panel.setLayout(null);
+            layers.add(panel);
+        }
     }
 
     // Note that Swing draws in reverse
-    private void drawDrawObject(DrawObject drawObject, Vector2D shift)
+    private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
     {
         JLabel label;
-        if (topOfLabels == labels.size()) {
-            label = new JLabel();
-            topOfLabels++;
-            labels.add(label);
-        } else {
-            label = labels.get(topOfLabels++);
-            label.removeAll();
-        }
+        label = new JLabel();
 
         label.setIcon(new ImageIcon(toSwingImage(drawObject.getImage())));
 
@@ -134,7 +161,9 @@ public class SwingView extends View implements Observer
         label.setBounds(drawObject.getX() + shift.getX(),
             drawObject.getY() + shift.getY(), size.width, size.height);
 
-        panel.add(label);
+        layers.get(drawObject.getLayer()).add(label);
+        drawObjects.put(drawObject, label);
+//        panel.add(label);
     }
 
     private static Image toSwingImage(AbstractImage abstractImage)

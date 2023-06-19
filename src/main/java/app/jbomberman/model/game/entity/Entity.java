@@ -43,6 +43,8 @@ public abstract class Entity extends MutableVector2D
     {
         if (oldDrawing.isJust())
             return oldDrawing.unwrap();
+        if (getClass() == Block.class)
+            System.out.println("Block change");
 
         Drawing newDrawing = new Drawing();
 

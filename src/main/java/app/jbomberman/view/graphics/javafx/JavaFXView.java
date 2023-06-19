@@ -68,6 +68,12 @@ public class JavaFXView extends View implements Observer
     private final Logger logger;
 
     /**
+     *
+     */
+
+    private final List<ImageView> freeImageViewsPool;
+
+    /**
      * View is the public constructor of the View.
      * Once a javafx thread has been spawned calling the initialize static method
      * of this class from the callback passed to the initialize() method, a View
@@ -81,6 +87,7 @@ public class JavaFXView extends View implements Observer
     {
         super(new JavaFXGraphicFactory(), new JavaFXKeyBoardController());
         logger = LogManager.getLogger(getClass());
+        freeImageViewsPool = new ArrayList<>();
 
         root = new Group();
         scene = new Scene(root);
@@ -107,7 +114,7 @@ public class JavaFXView extends View implements Observer
     private final List<Group> layers = new ArrayList<>();
 
     /**
-     * layeredDrawObject is a map from the
+     * drawObjects is a map from the layeredObject to the corresponding imageview
      */
     private final Map<LayeredDrawObject, ImageView> drawObjects = new HashMap<>();
 
@@ -133,7 +140,7 @@ public class JavaFXView extends View implements Observer
 
         drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingGroup(layeredDrawObject.getLayer()));
 
-        //layers.forEach(l -> l.getChildren().clear());
+        layers.forEach(l -> l.getChildren().clear());
 
         Map<LayeredDrawObject, ImageView> toRemoveDrawObjectsMap = new HashMap<>();
 
@@ -159,9 +166,11 @@ public class JavaFXView extends View implements Observer
                 toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
 
         for (Map.Entry<LayeredDrawObject, ImageView> d : toRemoveDrawObjectsMap.entrySet()) {
-            if (!layers.get(d.getKey().getLayer()).getChildren().remove(d.getValue()))
-                logger.error("Removing an Image from a layer that didn't contain it. Weird");
+            ImageView imageView = d.getValue();
+            if (!layers.get(d.getKey().getLayer()).getChildren().remove(imageView)) {
+            }//logger.error("Removing an Image from a layer that didn't contain it. Weird");
             drawObjects.remove(d.getKey());
+            freeImageViewsPool.add(imageView);
         }
     }
 
@@ -183,7 +192,11 @@ public class JavaFXView extends View implements Observer
      */
     private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
     {
-        ImageView imageView = new ImageView(toJavaFXImage(drawObject.getImage()));
+        ImageView imageView =
+            (freeImageViewsPool.size() == 0) ?
+                new ImageView() :
+                freeImageViewsPool.remove(freeImageViewsPool.size() - 1);
+        imageView.setImage(toJavaFXImage(drawObject.getImage()));
 
         imageView.setX(drawObject.getX() + shift.getX());
         imageView.setY(drawObject.getY() + shift.getY());
