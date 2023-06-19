@@ -32,6 +32,12 @@ public class Powerup extends PickableCell
         return super.notifyExplosion(explosion);
     }
 
+    @Override
+    public boolean allowsBombs()
+    {
+        return false;
+    }
+
     // Powerup has been picked by bomberman
     @Override
     public void pick(BomberMan bomberMan)

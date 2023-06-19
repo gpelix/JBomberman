@@ -54,6 +54,8 @@ public class BomberMan extends GameCharacter implements Observer
 
     private Maybe<AudioHandle> soundHandle;
 
+    private boolean hasSteppedOnDoor = false;
+
     public BomberMan(Vector2D modelCoordinate, BomberManCapabilities capabilities,
                      GameGrid gameGrid, MovingImageManager movingImageManager,
                      ImageManager deathImages)
@@ -76,6 +78,11 @@ public class BomberMan extends GameCharacter implements Observer
         hasChanged();
 
         if (directions.isEmpty())
+            return;
+
+        System.out.println("hasStepped On Door " + hasSteppedOnDoor);
+
+        if (hasSteppedOnDoor)
             return;
 
         Maybe<Direction> maybeMoveDirection = CollectionUtils.pick(directions);
@@ -188,7 +195,8 @@ public class BomberMan extends GameCharacter implements Observer
                 finalPlace
             );
 
-            getValuesFrom(finalPlace);
+            if (!hasSteppedOnDoor)
+                getValuesFrom(finalPlace);
         } finally {
             stepSize += getCapabilities().getSpeedInstance();
         }
@@ -220,8 +228,7 @@ public class BomberMan extends GameCharacter implements Observer
                 switch (keyCode) {
                     case SPACE -> {
                         if (bombs.size() != capabilities.getAvailableBombs() &&
-                            !getUnderlyingFreeCell().hasBomb() &&
-                            !getUnderlyingFreeCell().hasWall())
+                            getUnderlyingFreeCell().allowsBombs())
                         {
                             GameGrid gameGrid = getGameGrid();
 
@@ -268,6 +275,12 @@ public class BomberMan extends GameCharacter implements Observer
             }
         );
         super.updateInModel();
+    }
+
+    @Override
+    public boolean allowsBombs()
+    {
+        return true;
     }
 
     @Override
@@ -328,7 +341,7 @@ public class BomberMan extends GameCharacter implements Observer
     public void caughtByEnemy()
     {
         if (getState() instanceof BomberManAliveState aliveState) {
-            aliveState.notifycaughtByenemy();
+            aliveState.notifyCaughtByEnemy();
         }
     }
 
@@ -352,5 +365,16 @@ public class BomberMan extends GameCharacter implements Observer
             case RIGHT -> Maybe.just(EAST);
             default -> Maybe.nothing();
         };
+    }
+
+    public void steppedOnDoor(Door door)
+    {
+        getCapabilities().addLife();
+        stopListening();
+        getValuesFrom(door); // go onto the door
+        hasSteppedOnDoor = true;
+        System.out.println("Door is at " + this.getX() + " " + this.getY());
+        System.out.println("And after getting the values bomberman is at " + getX() + " " + getY());
+        hasChanged();
     }
 }

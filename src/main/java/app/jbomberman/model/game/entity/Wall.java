@@ -35,6 +35,12 @@ public class Wall extends Entity implements StateFul
     }
 
     @Override
+    public boolean allowsBombs()
+    {
+        return !(state instanceof WallAliveState);
+    }
+
+    @Override
     public Drawing getDrawing()
     {
         return state.getDrawing();

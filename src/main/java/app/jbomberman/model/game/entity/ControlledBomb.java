@@ -24,6 +24,12 @@ public class ControlledBomb extends Bomb
     }
 
     @Override
+    public boolean allowsBombs()
+    {
+        return false;
+    }
+
+    @Override
     public void makeExplode()
     {
         doDetonation = true;

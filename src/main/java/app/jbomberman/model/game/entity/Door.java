@@ -21,10 +21,14 @@ public class Door extends PickableCell
     public void pick(BomberMan bomberMan)
     {
         if (getGameGrid().getNumberOfEnemiesStillAlive() == 0) {
-            bomberMan.getCapabilities().addLife();
-            bomberMan.stopListening();
-            bomberMan.getValuesFrom(this); // Attract bomberman
+            bomberMan.steppedOnDoor(this);
             Model.getInstance().endGame(true);
         }
+    }
+
+    @Override
+    public boolean allowsBombs()
+    {
+        return false;
     }
 }

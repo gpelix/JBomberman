@@ -136,4 +136,10 @@ public class Enemy extends GameCharacter
     {
         return deathPoints;
     }
+
+    @Override
+    public boolean allowsBombs()
+    {
+        return true;
+    }
 }

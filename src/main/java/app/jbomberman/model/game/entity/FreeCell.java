@@ -266,6 +266,12 @@ public class FreeCell extends Cell
         return false;
     }
 
+    @Override
+    public boolean allowsBombs()
+    {
+        return entities.stream().allMatch(Entity::allowsBombs);
+    }
+
     public boolean hasBomb()
     {
         return bomb.isJust();
@@ -274,5 +280,10 @@ public class FreeCell extends Cell
     public boolean hasWall()
     {
         return wall.isJust();
+    }
+
+    public boolean hasDoor()
+    {
+        return door.isJust();
     }
 }

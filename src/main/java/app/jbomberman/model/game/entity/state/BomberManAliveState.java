@@ -47,6 +47,7 @@ public class BomberManAliveState extends AliveState
     @Override
     public Drawing getDrawing()
     {
+        System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
         Drawing drawing = bomberMan.getDrawing(imageManager.getNextImage(drawn ?
             CollectionUtils.pick(bomberMan.getDirections()) : Maybe.nothing()));
 
@@ -55,7 +56,7 @@ public class BomberManAliveState extends AliveState
         return drawing;
     }
 
-    public void notifycaughtByenemy()
+    public void notifyCaughtByEnemy()
     {
         BomberManCapabilities cap = bomberMan.getCapabilities();
 

@@ -31,4 +31,10 @@ public class AutoBomb extends Bomb
     {
         return "AutoBomb(" + super.toString() + ")";
     }
+
+    @Override
+    public boolean allowsBombs()
+    {
+        return false;
+    }
 }

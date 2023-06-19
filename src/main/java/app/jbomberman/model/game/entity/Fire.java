@@ -43,4 +43,10 @@ public class Fire extends Entity
     {
         return false;
     }
+
+    @Override
+    public boolean allowsBombs()
+    {
+        return true;
+    }
 }

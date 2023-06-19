@@ -91,4 +91,6 @@ public abstract class Entity extends MutableVector2D
     {
         return gameGrid.getCenterInGridCoord(this);
     }
+
+    public abstract boolean allowsBombs();
 }

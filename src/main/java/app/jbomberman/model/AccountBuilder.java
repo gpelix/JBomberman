@@ -96,7 +96,7 @@ public class AccountBuilder
                 playerStats.getBoolean(GOES_THROUGH_WALLS),
                 playerStats.getBoolean(GOES_THROUGH_BOMBS),
                 playerStats.getBoolean(GOES_THROUGH_FIRE),
-                playerStats.getBoolean(IS_INVINCIBLE),
+                false, // Invincibility cannot be inherited
                 playerStats.getInt(POINTS_EARNED),
                 playerStats.getInt(NO_OF_LIVES)
             )
@@ -110,11 +110,15 @@ public class AccountBuilder
         if (playersJSON.has(playerName))
             throw new PlayerBuilderException(playerName + " already exists. Unable to create again");
 
-        savePlayer(getDefaultAccount(playerName));
+        //savePlayer(getDefaultAccount(playerName)); WHAT WAS THIS FOR?
     }
 
     public void savePlayer(Account account)
     {
+        // If the player is the default one
+        if (account.getPlayerName().equals(""))
+            return;
+
         JSONObject playerJSON = getPlayersJson();
 
         String playerName = account.getPlayerName();

@@ -26,4 +26,10 @@ public class Block extends Cell
     {
         return true; // Just handle it
     }
+
+    @Override
+    public boolean allowsBombs()
+    {
+        return false;
+    }
 }
