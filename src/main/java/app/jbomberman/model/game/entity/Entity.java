@@ -37,14 +37,12 @@ public abstract class Entity extends MutableVector2D
 	 * This function doesn't do anything unless the hasChanged() function is called
 	 *
 	 * @param img ImageView to draw at the coordinates specified by the coordinates
-	 *			of this Entity
+	 *            of this Entity
 	 */
 	public Drawing getDrawing(AbstractImage img)
 	{
 		if (oldDrawing.isJust())
 			return oldDrawing.unwrap();
-		if (getClass() == Block.class)
-			System.out.println("Block change");
 
 		Drawing newDrawing = new Drawing();
 

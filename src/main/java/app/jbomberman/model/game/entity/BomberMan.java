@@ -57,8 +57,8 @@ public class BomberMan extends GameCharacter implements Observer
 	private boolean hasSteppedOnDoor = false;
 
 	public BomberMan(Vector2D modelCoordinate, BomberManCapabilities capabilities,
-					 GameGrid gameGrid, MovingImageManager movingImageManager,
-					 ImageManager deathImages)
+									 GameGrid gameGrid, MovingImageManager movingImageManager,
+									 ImageManager deathImages)
 	{
 		super(modelCoordinate, capabilities, gameGrid);
 
@@ -80,7 +80,7 @@ public class BomberMan extends GameCharacter implements Observer
 		if (directions.isEmpty())
 			return;
 
-		System.out.println("hasStepped On Door " + hasSteppedOnDoor);
+		//System.out.println("hasStepped On Door " + hasSteppedOnDoor);
 
 		if (hasSteppedOnDoor)
 			return;
@@ -258,8 +258,7 @@ public class BomberMan extends GameCharacter implements Observer
 						if (!bombs.isEmpty())
 							bombs.remove().makeExplode();
 					}
-					default ->
-						keyCodeToDirection(keyCode).maybeDo(directions::add);
+					default -> keyCodeToDirection(keyCode).maybeDo(directions::add);
 				}
 			}
 		}
@@ -373,8 +372,8 @@ public class BomberMan extends GameCharacter implements Observer
 		stopListening();
 		getValuesFrom(door); // go onto the door
 		hasSteppedOnDoor = true;
-		System.out.println("Door is at " + this.getX() + " " + this.getY());
-		System.out.println("And after getting the values bomberman is at " + getX() + " " + getY());
+		//System.out.println("Door is at " + this.getX() + " " + this.getY());
+		//System.out.println("And after getting the values bomberman is at " + getX() + " " + getY());
 		hasChanged();
 	}
 }

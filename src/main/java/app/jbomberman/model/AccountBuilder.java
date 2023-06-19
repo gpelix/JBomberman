@@ -109,8 +109,8 @@ public class AccountBuilder
 
 		if (playersJSON.has(playerName))
 			throw new PlayerBuilderException(playerName + " already exists. Unable to create again");
-
-		//savePlayer(getDefaultAccount(playerName)); WHAT WAS THIS FOR?
+		
+		savePlayer(getDefaultAccount(playerName));
 	}
 
 	public void savePlayer(Account account)

@@ -19,8 +19,8 @@ public class BomberManAliveState extends AliveState
 	private boolean drawn;
 
 	public BomberManAliveState(BomberMan bomberMan,
-							   MovingImageManager imageManager,
-							   GameCharacterState nextState)
+														 MovingImageManager imageManager,
+														 GameCharacterState nextState)
 	{
 		super(bomberMan, nextState);
 		this.bomberMan = bomberMan;
@@ -47,7 +47,7 @@ public class BomberManAliveState extends AliveState
 	@Override
 	public Drawing getDrawing()
 	{
-		System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
+		//System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
 		Drawing drawing = bomberMan.getDrawing(imageManager.getNextImage(drawn ?
 			CollectionUtils.pick(bomberMan.getDirections()) : Maybe.nothing()));
 
