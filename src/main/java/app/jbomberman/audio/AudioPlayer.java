@@ -196,7 +196,6 @@ public class AudioPlayer extends Thread
      *
      * @param player the {@link ThreadPlayer} to be stopped
      */
-    @SuppressWarnings("deprecation")
     /*~*/void stop(ThreadPlayer player)
     {
         if (Thread.currentThread() == player)
