@@ -70,7 +70,7 @@ public class AudioPlayer extends Thread
      */
     private volatile boolean pause;
 
-    private Map<String, byte[]> soundPool;
+    private final Map<String, byte[]> soundPool;
 
     /**
      * getInstance() returns the singleton

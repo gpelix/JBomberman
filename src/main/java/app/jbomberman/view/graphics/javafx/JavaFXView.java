@@ -143,9 +143,7 @@ public class JavaFXView extends View implements Observer
         for (LayeredDrawObject d : drawing.getDrawObjects()) {
             if (drawObjects.containsKey(d))
                 continue;
-            //System.out.println(d.getLayer());
             drawDrawObject(d, shamt);
-            //.println("Drawing new object");
         }
 
         Set<LayeredDrawObject> newDrawObjects = new HashSet<>()
@@ -157,32 +155,18 @@ public class JavaFXView extends View implements Observer
 
         // Select objects for removal
         for (Map.Entry<LayeredDrawObject, ImageView> d : drawObjects.entrySet())
-            if (!newDrawObjects.contains(d.getKey())) {
-                //.println("Selecting for removal on layer " + d.getKey().getLayer());
-//                System.out.println("Removimg from " + d.getKey().getLayer());
+            if (!newDrawObjects.contains(d.getKey()))
                 toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
-            }
 
         for (Map.Entry<LayeredDrawObject, ImageView> d : toRemoveDrawObjectsMap.entrySet()) {
-            // System.out.println(d.getValue() + " " + layers.get(d.getKey().getLayer()).getChildren());
-            if (!layers.get(d.getKey().getLayer()).getChildren().remove(d.getValue())) {
-                //System.out.println("Unable to remove from " + d.getKey().getLayer());
-                //throw new RuntimeException("Unable to remove " + d.getValue() + " from layer " + d.getKey().getLayer());
-            }
-//            System.out.println("Removimg from " + d.getKey().getLayer());
+            if (!layers.get(d.getKey().getLayer()).getChildren().remove(d.getValue()))
+                logger.error("Removing an Image from a layer that didn't contain it. Weird");
             drawObjects.remove(d.getKey());
         }
-        // System.out.println("layerSize " + layers.size());
-
-//        drawObjects.forEach((x, j) -> System.out.println(x.getLayer()));
-//        System.out.println("Printing");
-//        for (int i = 0; i < layers.size(); i++)
-//            System.out.println(i + " " + layers.get(i).getChildren().size());
     }
 
     private void assureExistingGroup(int layerNumber)
     {
-        //System.out.println("layerNumber" + layerNumber);
         while (root.getChildren().size() <= layerNumber) {
             Group group = new Group();
             layers.add(group);
@@ -199,14 +183,12 @@ public class JavaFXView extends View implements Observer
      */
     private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
     {
-        //System.out.println("Printing on " + drawObject.getLayer());
         ImageView imageView = new ImageView(toJavaFXImage(drawObject.getImage()));
 
         imageView.setX(drawObject.getX() + shift.getX());
         imageView.setY(drawObject.getY() + shift.getY());
         layers.get(drawObject.getLayer()).getChildren().add(imageView);
         drawObjects.put(drawObject, imageView);
-        //root.getChildren().add(imageView);
     }
 
     /**
