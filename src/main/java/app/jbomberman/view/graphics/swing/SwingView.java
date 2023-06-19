@@ -65,9 +65,9 @@ public class SwingView extends View implements Observer
         Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
             cursorImg, new Point(0, 0), "blank cursor"
         );
-        frame.getContentPane().setCursor(blankCursor);
+        frame.setCursor(blankCursor);
 
-        frame.getContentPane().setBackground(Color.BLACK);
+        frame.setBackground(Color.BLACK);
         frame.setResizable(false);
 
         //frame.setSize(700, 700);
