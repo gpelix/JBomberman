@@ -6,6 +6,7 @@ import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.swing.SwingImage;
 import app.jbomberman.util.Callback;
+import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
@@ -14,6 +15,7 @@ import app.jbomberman.view.View;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
@@ -37,11 +39,15 @@ public class SwingView extends View implements Observer
 
     private int topOfLabels = 0;
 
+    private JPanel panel;
+
     public SwingView()
     {
         super(new SwingGraphicFactory(), new SwingKeyBoardController());
 
         frame = new JFrame();
+
+        panel = new JPanel();
 
         frame.addWindowListener(new WindowAdapter()
         {
@@ -63,28 +69,42 @@ public class SwingView extends View implements Observer
             cursorImg, new Point(0, 0), "blank cursor"
         );
         frame.getContentPane().setCursor(blankCursor);
+        frame.add(panel);
 
         frame.getContentPane().setBackground(Color.BLACK);
         frame.setResizable(false);
 
-        frame.setSize(700, 700);
+        //frame.setSize(700, 700);
         frame.setVisible(true);
         frame.setLayout(null);
+        panel.setVisible(true);
+        panel.setLayout(null);
+
     }
+
+    private CallbackOnce setPanelSize = new CallbackOnce()
+    {
+        @Override
+        public void run()
+        {
+            panel.setSize(frame.getWidth(), frame.getHeight());
+        }
+    };
 
     @Override
     public void draw(Drawing drawing)
     {
-        frame.getContentPane().removeAll();
+//        System.out.println(frame.getWidth() + " " + frame.getHeight());
+        setPanelSize.runOnce();
+
+        panel.removeAll();
         topOfLabels = 0;
         Vector2D sceneDimensions = getDrawingDimensions(drawing);
         Vector2D sceneCenter = sceneDimensions.div(2);
         Vector2D screenCenter =
-            Vector2D.of(frame.getWidth(), frame.getHeight()).div(2);
+            Vector2D.of(panel.getWidth(), panel.getHeight()).div(2);
 
         Vector2D shamt = screenCenter.sub(sceneCenter);
-
-        // TODO::: THis is just to see if the new things that i modifeid worked
 
         drawing.getDrawObjects()
             .stream()
@@ -92,7 +112,7 @@ public class SwingView extends View implements Observer
             .sorted((a, b) -> b.getLayer() - a.getLayer())
             .forEachOrdered(_draw -> drawDrawObject(_draw, shamt));
 
-        frame.getContentPane().repaint();
+        panel.repaint();
     }
 
     // Note that Swing draws in reverse
@@ -114,7 +134,7 @@ public class SwingView extends View implements Observer
         label.setBounds(drawObject.getX() + shift.getX(),
             drawObject.getY() + shift.getY(), size.width, size.height);
 
-        frame.add(label);
+        panel.add(label);
     }
 
     private static Image toSwingImage(AbstractImage abstractImage)

@@ -97,21 +97,9 @@ public class Drawing
                       Function<Integer, Integer> toNewLayerFunction)
     {
         otherDrawing.drawObjects.forEach(layeredDrawObject ->
-            new LayeredDrawObject(Vector2D.of(layeredDrawObject.getX(), layeredDrawObject.getY()),
+            drawObjects.add(new LayeredDrawObject(Vector2D.of(layeredDrawObject.getX(), layeredDrawObject.getY()),
                 layeredDrawObject.getImage(),
-                toNewLayerFunction.apply(layeredDrawObject.getLayer())));
-        drawObjects.addAll(otherDrawing.drawObjects);
-//        otherDrawing.drawObjects.forEach((idx, drawObjectsSet) ->
-//            drawObjects.merge(
-//                toNewLayerFunction.apply(idx),
-//                drawObjectsSet,
-//                (oldSet, newSet) -> new ArrayList<>()
-//                {
-//                    {
-//                        addAll(oldSet);
-//                        addAll(newSet);
-//                    }
-//                }));
+                toNewLayerFunction.apply(layeredDrawObject.getLayer()))));
     }
 
     /**
