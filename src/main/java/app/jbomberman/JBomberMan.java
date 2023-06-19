@@ -18,8 +18,6 @@ public class JBomberMan
      */
     public static void main(String[] args)
     {
-//        AudioManager.getInstance().play(Resources.getResourceAsStream("sounds/01 Title Screen.wav"));
-//        Threads.sleep(10000);
         Controller.launch();
     }
 }
