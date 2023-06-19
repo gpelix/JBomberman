@@ -166,8 +166,6 @@ public class FreeCell extends Cell
         return entities;
     }
 
-    private boolean wasFull = true;
-
     @Override
     public Drawing getDrawing()
     {
