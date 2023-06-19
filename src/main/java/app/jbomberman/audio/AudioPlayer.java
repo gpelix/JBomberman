@@ -11,12 +11,11 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.BufferedInputStream;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -70,7 +69,7 @@ public class AudioPlayer
         logger = LogManager.getLogger(getClass());
     }
 
-    private Map<String, byte[]> cachedSounds = new HashMap<>();
+    private Map<String, Clip> cachedSounds = new HashMap<>();
 
     /**
      * playSound is used to play a new sound
@@ -81,30 +80,33 @@ public class AudioPlayer
      */
     public AudioHandle playSound(String path)
     {
+        joinEndedSounds();
         logger.info("Playing " + path);
-        Clip clip = null;
-        try {
-            clip = AudioSystem.getClip();
-            cachedSounds.computeIfAbsent(path, p -> {
-                try (InputStream in = Resources.getResourceAsStream(p)) {
-                    return in.readAllBytes();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            });
-            clip.open(AudioSystem.getAudioInputStream(new BufferedInputStream(new ByteArrayInputStream(cachedSounds.get(path)))));
-            clip.start();
-            players.add(clip);
-        } catch (LineUnavailableException e) {
-            System.err.println("error while playing " + path);
-	    e.printStackTrace();
-        } catch (UnsupportedAudioFileException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        cachedSounds.computeIfAbsent(path, p -> {
+            try {
+                Clip clip = AudioSystem.getClip();
+                clip.open(AudioSystem.getAudioInputStream(new BufferedInputStream(Resources.getResourceAsStream(path))));
+                return clip;
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            } catch (UnsupportedAudioFileException e) {
+                throw new RuntimeException(e);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        Clip clip = cachedSounds.get(path);
+        clip.setFramePosition(0);
+        clip.start();
+        players.add(clip);
 
         return new AudioHandle(clip, path);
+    }
+
+    private void joinEndedSounds()
+    {
+        List<Clip> clips = players.stream().filter(DataLine::isRunning).toList();
+        clips.forEach(players::remove);
     }
 
     /**
@@ -112,10 +114,8 @@ public class AudioPlayer
      */
     public void stopAll()
     {
-        synchronized (players) {
-            players.forEach(Line::close);
-            players.clear();
-        }
+        players.forEach(Line::close);
+        players.clear();
     }
 
     /**
