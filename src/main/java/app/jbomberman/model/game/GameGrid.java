@@ -160,7 +160,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
             throw new GamePlayException("Character not found in fromTopLeft position");
 
         get(fromGridCoordinate).removeCharacter(gameCharacter);
-        addGameCharacter(gameCharacter, toGridCoordinate);
+        addGameCharacterInFreeCell(gameCharacter, toGridCoordinate);
     }
 
     public Vector2D getTopLeftCornerModelCoordinate()
