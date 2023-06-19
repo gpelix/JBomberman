@@ -1,5 +1,7 @@
 package app.jbomberman.audio;
 
+import app.jbomberman.util.Timer;
+
 import javax.sound.sampled.Clip;
 
 /**
@@ -39,7 +41,12 @@ public class AudioHandle
     {
         this.threadPlayer = clip;
         this.soundFileName = soundFileName;
+        clip.start();
+        timer = new Timer(1000);
+        timer.start();
     }
+
+    private Timer timer;
 
     /**
      * isPlaying() checks whether the threadPlayer is playing something
@@ -48,7 +55,7 @@ public class AudioHandle
      */
     public boolean isPlaying()
     {
-        return threadPlayer.isActive();
+        return threadPlayer.isRunning() || !timer.timeIsUp();
     }
 
     /**

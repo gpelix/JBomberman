@@ -11,7 +11,9 @@ import javax.sound.sampled.Line;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -83,9 +85,9 @@ public class AudioPlayer
         joinEndedSounds();
         logger.info("Playing " + path);
         cachedSounds.computeIfAbsent(path, p -> {
-            try {
+            try (InputStream in = Resources.getResourceAsStream(path)) {
                 Clip clip = AudioSystem.getClip();
-                clip.open(AudioSystem.getAudioInputStream(new BufferedInputStream(Resources.getResourceAsStream(path))));
+                clip.open(AudioSystem.getAudioInputStream(new BufferedInputStream(new ByteArrayInputStream(in.readAllBytes()))));
                 return clip;
             } catch (LineUnavailableException e) {
                 throw new RuntimeException(e);
@@ -105,6 +107,8 @@ public class AudioPlayer
 
     private void joinEndedSounds()
     {
+        if (true)
+            return;
         List<Clip> clips = players.stream().filter(DataLine::isRunning).toList();
         clips.forEach(players::remove);
     }
@@ -123,6 +127,7 @@ public class AudioPlayer
      */
     public void pausePlaying()
     {
+        System.err.println("Pausing");
         setPause(true);
         players.forEach(DataLine::stop);
     }
