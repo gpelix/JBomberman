@@ -2,11 +2,17 @@ package app.jbomberman.audio;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.util.Maybe;
+import app.jbomberman.util.Resources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -64,6 +70,8 @@ public class AudioPlayer extends Thread
      */
     private volatile boolean pause;
 
+    private Map<String, byte[]> soundPool;
+
     /**
      * getInstance() returns the singleton
      *
@@ -91,6 +99,7 @@ public class AudioPlayer extends Thread
         stopAllTime = 0;
         pause = false;
         logger = LogManager.getLogger(getClass());
+        soundPool = new HashMap<>();
     }
 
     /**
@@ -183,7 +192,14 @@ public class AudioPlayer extends Thread
     public AudioHandle playSound(String path)
     {
         logger.info("Playing " + path);
-        ThreadPlayer t = new ThreadPlayer(path, stopAllTime, this);
+        if (!soundPool.containsKey(path)) {
+            try (InputStream in = new BufferedInputStream(Resources.getResourceAsStream(path))) {
+                soundPool.put(path, in.readAllBytes());
+            } catch (IOException e) {
+                logger.fatal("Unable to read file " + path + ". Caught exception " + e.getMessage());
+            }
+        }
+        ThreadPlayer t = new ThreadPlayer(path, soundPool.get(path), stopAllTime, this);
         t.start();
         players.add(t);
         return new AudioHandle(Maybe.just(t));

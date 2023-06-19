@@ -1,7 +1,6 @@
 package app.jbomberman.audio;
 
 import app.jbomberman.JBomberManException;
-import app.jbomberman.util.Resources;
 import app.jbomberman.util.Threads;
 
 import javax.sound.sampled.AudioFormat;
@@ -12,6 +11,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -54,6 +54,8 @@ class ThreadPlayer extends Thread
 
     private final AudioPlayer audioPlayer;
 
+    private final byte[] soundBytes;
+
 
     /**
      * Create a new ThreadPlayer. Its visibility is default as we should only be able
@@ -61,11 +63,12 @@ class ThreadPlayer extends Thread
      *
      * @param soundFile filename that contains the audio to play
      */
-    ThreadPlayer(String soundFile, long stopAllTime, AudioPlayer audioPlayer)
+    ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime, AudioPlayer audioPlayer)
     {
         this.soundFile = soundFile;
         this.stopAllTime = stopAllTime;
         this.audioPlayer = audioPlayer;
+        this.soundBytes = soundBytes;
     }
 
     /**
@@ -87,7 +90,7 @@ class ThreadPlayer extends Thread
     public void run()
     {
         try (InputStream inputStream =
-                 new BufferedInputStream(Resources.getResourceAsStream(soundFile));
+                 new BufferedInputStream(new ByteArrayInputStream(soundBytes));
              AudioInputStream audioInputStream =
                  AudioSystem.getAudioInputStream(inputStream))
         {
