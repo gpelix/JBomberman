@@ -8,30 +8,32 @@ import java.util.List;
 
 public abstract class MovingImageManager extends ImageManager
 {
-    private Maybe<Direction> previousMoveDirection = Maybe.nothing();
+	private Maybe<Direction> previousMoveDirection = Maybe.nothing();
 
-    protected MovingImageManager(List<AbstractImage> currentImages, int idxInImageViews)
-    {
-        super(currentImages, idxInImageViews);
-    }
+	protected MovingImageManager(List<AbstractImage> currentImages, int idxInImageViews)
+	{
+		super(currentImages, idxInImageViews);
+	}
 
-    public AbstractImage getNextImage(Maybe<Direction> currentMoveDirection)
-    {
-        if (currentMoveDirection.isNothing())
-            return getCurrentImage();
+	public AbstractImage getNextImage(Maybe<Direction> currentMoveDirection)
+	{
+		if (currentMoveDirection.isNothing())
+			return getCurrentImage();
 
-        Direction currentMoveDirectionU = currentMoveDirection.fromJust();
+		Direction currentMoveDirectionU = currentMoveDirection.fromJust();
 
-        if (previousMoveDirection.compute(true,
-            x -> !x.equals(currentMoveDirectionU)))
-        {
-            setIdxInImageViews(0);
-            previousMoveDirection = currentMoveDirection;
-            setCurrentImages(getImageSet(currentMoveDirectionU));
-        }
+		if (previousMoveDirection.compute(true,
+			x -> !x.equals(currentMoveDirectionU)))
+		{
+			setIdxInImageViews(0);
+			previousMoveDirection = currentMoveDirection;
+			setCurrentImages(getImageSet(currentMoveDirectionU));
+		}
 
-        return super.getNextImage();
-    }
+		return super.getNextImage();
+	}
 
-    protected abstract List<AbstractImage> getImageSet(Direction currentMoveDirection);
+	protected abstract List<AbstractImage> getImageSet(Direction currentMoveDirection);
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

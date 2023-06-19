@@ -7,12 +7,14 @@ package app.jbomberman.images;
  */
 public abstract class AbstractImageBuilder
 {
-    /**
-     * getImage is the method that must be called to get the image named PATH
-     * that will be located in the images/ folder in the resources
-     *
-     * @param path the path to the image in the images/ folder
-     * @return the AbstractImage built from image/path
-     */
-    public abstract AbstractImage getImage(String path);
+	/**
+	 * getImage is the method that must be called to get the image named PATH
+	 * that will be located in the images/ folder in the resources
+	 *
+	 * @param path the path to the image in the images/ folder
+	 * @return the AbstractImage built from image/path
+	 */
+	public abstract AbstractImage getImage(String path);
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

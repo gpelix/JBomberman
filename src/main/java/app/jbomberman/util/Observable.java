@@ -13,41 +13,43 @@ import java.util.Collection;
  */
 public interface Observable
 {
-    /**
-     * abstract method that is needed by the default methods to get a collection
-     * of observers
-     *
-     * @return the collection containing the observers
-     */
-    Collection<Observer> getObservers();
+	/**
+	 * abstract method that is needed by the default methods to get a collection
+	 * of observers
+	 *
+	 * @return the collection containing the observers
+	 */
+	Collection<Observer> getObservers();
 
-    /**
-     * default method to add an Observer
-     *
-     * @param observer an observer to be added
-     */
-    default void attachObserver(Observer observer)
-    {
-        getObservers().add(observer);
-    }
+	/**
+	 * default method to add an Observer
+	 *
+	 * @param observer an observer to be added
+	 */
+	default void attachObserver(Observer observer)
+	{
+		getObservers().add(observer);
+	}
 
-    /**
-     * default method to detach an Observer
-     *
-     * @param observer the observer to remove
-     */
-    default void detachObserver(Observer observer)
-    {
-        Collection<Observer> observers = getObservers();
+	/**
+	 * default method to detach an Observer
+	 *
+	 * @param observer the observer to remove
+	 */
+	default void detachObserver(Observer observer)
+	{
+		Collection<Observer> observers = getObservers();
 
-        getObservers().remove(observer);
-    }
+		getObservers().remove(observer);
+	}
 
-    /**
-     * default method to update all the observers
-     */
-    default void updateAllObservers()
-    {
-        (new ArrayList<>(getObservers())).forEach(observer -> observer.update(this));
-    }
+	/**
+	 * default method to update all the observers
+	 */
+	default void updateAllObservers()
+	{
+		(new ArrayList<>(getObservers())).forEach(observer -> observer.update(this));
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

@@ -23,130 +23,132 @@ import java.util.stream.Stream;
  */
 public abstract class Menu extends Panel<MenuEntry> implements Observer
 {
-    /**
-     * selectedEntry is the selected entry. It's in a Maybe as there might be
-     * no menu entries and no selectedEntry actually
-     */
-    private Maybe<Integer> selectedEntry;
+	/**
+	 * selectedEntry is the selected entry. It's in a Maybe as there might be
+	 * no menu entries and no selectedEntry actually
+	 */
+	private Maybe<Integer> selectedEntry;
 
-    /**
-     *
-     */
-    private Maybe<Drawing> oldDrawing = Maybe.nothing();
+	/**
+	 *
+	 */
+	private Maybe<Drawing> oldDrawing = Maybe.nothing();
 
-    /**
-     * The policy is, at the moment, a function that looks at the underlying panel
-     * and returns the Drawing
-     */
-    private Supplier<Drawing> arrangementPolicy;
+	/**
+	 * The policy is, at the moment, a function that looks at the underlying panel
+	 * and returns the Drawing
+	 */
+	private Supplier<Drawing> arrangementPolicy;
 
-    /**
-     * Constructor from Stream of MenuEntry's
-     *
-     * @param stream the stream containing the MenuEntry's
-     */
-    public Menu(Stream<MenuEntry> stream)
-    {
-        super(stream);
+	/**
+	 * Constructor from Stream of MenuEntry's
+	 *
+	 * @param stream the stream containing the MenuEntry's
+	 */
+	public Menu(Stream<MenuEntry> stream)
+	{
+		super(stream);
 
-        if (!getEntries().isEmpty())
-            selectedEntry = Maybe.just(0);
-    }
+		if (!getEntries().isEmpty())
+			selectedEntry = Maybe.just(0);
+	}
 
-    /**
-     * Constructor from varargs
-     *
-     * @param menuEntries the list of the MenuEntry's
-     */
-    public Menu(MenuEntry... menuEntries)
-    {
-        this(Arrays.stream(menuEntries));
-    }
+	/**
+	 * Constructor from varargs
+	 *
+	 * @param menuEntries the list of the MenuEntry's
+	 */
+	public Menu(MenuEntry... menuEntries)
+	{
+		this(Arrays.stream(menuEntries));
+	}
 
-    /**
-     * setArrangementPolicy() sets the function used to draw the Menu
-     *
-     * @param policy the policy to set up
-     */
-    protected final void setArrangementPolicy(Supplier<Drawing> policy)
-    {
-        arrangementPolicy = policy;
-    }
+	/**
+	 * setArrangementPolicy() sets the function used to draw the Menu
+	 *
+	 * @param policy the policy to set up
+	 */
+	protected final void setArrangementPolicy(Supplier<Drawing> policy)
+	{
+		arrangementPolicy = policy;
+	}
 
-    /**
-     * getDrawing() is a function that gets the current drawing
-     *
-     * @return the current drawing depicting the menu
-     */
-    @Override
-    public final Drawing getDrawing()
-    {
-        if (oldDrawing.isJust())
-            return oldDrawing.unwrap();
-        getEntries().forEach(e -> e.setSelected(false));
-        getSelectedEntry().maybeDo(eIdx -> getEntries().get(eIdx).setSelected(true));
-        oldDrawing = Maybe.just(arrangementPolicy.get());
-        return oldDrawing.unwrap();
-    }
+	/**
+	 * getDrawing() is a function that gets the current drawing
+	 *
+	 * @return the current drawing depicting the menu
+	 */
+	@Override
+	public final Drawing getDrawing()
+	{
+		if (oldDrawing.isJust())
+			return oldDrawing.unwrap();
+		getEntries().forEach(e -> e.setSelected(false));
+		getSelectedEntry().maybeDo(eIdx -> getEntries().get(eIdx).setSelected(true));
+		oldDrawing = Maybe.just(arrangementPolicy.get());
+		return oldDrawing.unwrap();
+	}
 
-    /**
-     * update() must listen from keyboard events like the pressing of the arrows
-     *
-     * @param observable the observable
-     * @throws app.jbomberman.JBomberManException if the observable is not a KeyBoardController
-     */
-    @Override
-    public void update(Observable observable)
-    {
-        if (observable instanceof KeyBoardController keyBoardController) {
-            KeyBoardUpdateInfo updateInfo =
-                keyBoardController.getUpdateInfo();
+	/**
+	 * update() must listen from keyboard events like the pressing of the arrows
+	 *
+	 * @param observable the observable
+	 * @throws app.jbomberman.JBomberManException if the observable is not a KeyBoardController
+	 */
+	@Override
+	public void update(Observable observable)
+	{
+		if (observable instanceof KeyBoardController keyBoardController) {
+			KeyBoardUpdateInfo updateInfo =
+				keyBoardController.getUpdateInfo();
 
-            if (updateInfo.getKeyBoardEventType() == KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED)
-                return;
+			if (updateInfo.getKeyBoardEventType() == KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED)
+				return;
 
-            if (updateInfo.getKeyCode() == KeyBoardControllerKeyCode.ENTER)
-                selectedEntry.maybeDo(currentEntryIdx -> getEntries().get(currentEntryIdx).callCallback());
-            else {
-                KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
+			if (updateInfo.getKeyCode() == KeyBoardControllerKeyCode.ENTER)
+				selectedEntry.maybeDo(currentEntryIdx -> getEntries().get(currentEntryIdx).callCallback());
+			else {
+				KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
 
-                if (keyCode == getNextKey() || keyCode == getPrevKey())
-                    oldDrawing = Maybe.nothing();
-                if (keyCode == getNextKey()) {
-                    selectedEntry = selectedEntry.maybeCompute(entryOffset ->
-                        entryOffset < getEntries().size() - 1 ? entryOffset + 1 : entryOffset);
-                } else if (keyCode == getPrevKey()) {
-                    selectedEntry = selectedEntry.maybeCompute(entryOffset ->
-                        entryOffset > 0 ? entryOffset - 1 : entryOffset);
-                }
-            }
-        } else
-            throw new JBomberManException("Receiving an update from an unknown observable `" + observable + "'");
-    }
+				if (keyCode == getNextKey() || keyCode == getPrevKey())
+					oldDrawing = Maybe.nothing();
+				if (keyCode == getNextKey()) {
+					selectedEntry = selectedEntry.maybeCompute(entryOffset ->
+						entryOffset < getEntries().size() - 1 ? entryOffset + 1 : entryOffset);
+				} else if (keyCode == getPrevKey()) {
+					selectedEntry = selectedEntry.maybeCompute(entryOffset ->
+						entryOffset > 0 ? entryOffset - 1 : entryOffset);
+				}
+			}
+		} else
+			throw new JBomberManException("Receiving an update from an unknown observable `" + observable + "'");
+	}
 
-    /**
-     * getNextKey() is an abstract function that returns the KeyBoardControllerKeyCode
-     * that must be sent to the menu to select the next entry in the menu
-     *
-     * @return the key that must be sent to the menu to select the next entry
-     */
-    protected abstract KeyBoardControllerKeyCode getNextKey();
+	/**
+	 * getNextKey() is an abstract function that returns the KeyBoardControllerKeyCode
+	 * that must be sent to the menu to select the next entry in the menu
+	 *
+	 * @return the key that must be sent to the menu to select the next entry
+	 */
+	protected abstract KeyBoardControllerKeyCode getNextKey();
 
-    /**
-     * getPrevKey() is an abstract function that returns the KeyBoardControllerKeyCode
-     * that must be sent to the menu to select the previous entry in the menu
-     *
-     * @return the key that must be sent to the menu to select the previou entry
-     */
-    protected abstract KeyBoardControllerKeyCode getPrevKey();
+	/**
+	 * getPrevKey() is an abstract function that returns the KeyBoardControllerKeyCode
+	 * that must be sent to the menu to select the previous entry in the menu
+	 *
+	 * @return the key that must be sent to the menu to select the previou entry
+	 */
+	protected abstract KeyBoardControllerKeyCode getPrevKey();
 
-    /**
-     * getSelectedEntry() returns the currently selected entry
-     *
-     * @return the currently selected entry
-     */
-    protected Maybe<Integer> getSelectedEntry()
-    {
-        return selectedEntry;
-    }
+	/**
+	 * getSelectedEntry() returns the currently selected entry
+	 *
+	 * @return the currently selected entry
+	 */
+	protected Maybe<Integer> getSelectedEntry()
+	{
+		return selectedEntry;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

@@ -6,23 +6,25 @@ import javafx.animation.AnimationTimer;
 
 public class JavaFXLoopTimer extends LoopTimer
 {
-    private final AnimationTimer timer;
+	private final AnimationTimer timer;
 
-    public JavaFXLoopTimer(Callback callback)
-    {
-        timer = new AnimationTimer()
-        {
-            @Override
-            public void handle(long ignored)
-            {
-                callback.run();
-            }
-        };
-    }
+	public JavaFXLoopTimer(Callback callback)
+	{
+		timer = new AnimationTimer()
+		{
+			@Override
+			public void handle(long ignored)
+			{
+				callback.run();
+			}
+		};
+	}
 
-    @Override
-    public void start()
-    {
-        timer.start();
-    }
+	@Override
+	public void start()
+	{
+		timer.start();
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

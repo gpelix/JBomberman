@@ -10,46 +10,48 @@ import app.jbomberman.model.game.entity.Explosion;
 
 public class BomberManDeadState extends DeadState
 {
-    private final BomberMan bomberMan;
+	private final BomberMan bomberMan;
 
-    private final ImageManager deathImageManager;
+	private final ImageManager deathImageManager;
 
-    public BomberManDeadState(BomberMan bomberMan,
-                              ImageManager deathImageManager)
-    {
-        super(bomberMan);
-        this.bomberMan = bomberMan;
-        this.deathImageManager = deathImageManager;
-    }
+	public BomberManDeadState(BomberMan bomberMan,
+							  ImageManager deathImageManager)
+	{
+		super(bomberMan);
+		this.bomberMan = bomberMan;
+		this.deathImageManager = deathImageManager;
+	}
 
-    @Override
-    public boolean notifyExplosion(Explosion explosion)
-    {
-        return false; // Just ignore
-    }
+	@Override
+	public boolean notifyExplosion(Explosion explosion)
+	{
+		return false; // Just ignore
+	}
 
-    @Override
-    public void updateInModel()
-    {
-        if (bomberMan.getSoundHandle().fromJust().getSoundFileName()
-            .compute(false,
-                sound -> sound.equals(BomberMan.getBombermanDeathSound())) &&
-            deathImageManager.hasDoneOneCycle())
-        {
-            GameGrid gameGrid = bomberMan.getGameGrid();
-            gameGrid.get(
-                gameGrid.getCenterInGridCoord(bomberMan)
-            ).removeCharacter(bomberMan);
-            Model.getInstance().endGame(false);
-        }
-    }
+	@Override
+	public void updateInModel()
+	{
+		if (bomberMan.getSoundHandle().fromJust().getSoundFileName()
+			.compute(false,
+				sound -> sound.equals(BomberMan.getBombermanDeathSound())) &&
+			deathImageManager.hasDoneOneCycle())
+		{
+			GameGrid gameGrid = bomberMan.getGameGrid();
+			gameGrid.get(
+				gameGrid.getCenterInGridCoord(bomberMan)
+			).removeCharacter(bomberMan);
+			Model.getInstance().endGame(false);
+		}
+	}
 
-    @Override
-    public Drawing getDrawing()
-    {
-        AbstractImage image = deathImageManager.getNextImage();
-        if (deathImageManager.hasChanged())
-            bomberMan.hasChanged();
-        return bomberMan.getDrawing(image);
-    }
+	@Override
+	public Drawing getDrawing()
+	{
+		AbstractImage image = deathImageManager.getNextImage();
+		if (deathImageManager.hasChanged())
+			bomberMan.hasChanged();
+		return bomberMan.getDrawing(image);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

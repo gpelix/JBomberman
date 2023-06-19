@@ -9,36 +9,38 @@ import app.jbomberman.util.Maybe;
 
 public class GameOverScene extends SoundyBomberManScene
 {
-    private Maybe<Text> gameOverText = Maybe.nothing();
+	private Maybe<Text> gameOverText = Maybe.nothing();
 
-    private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("10 Game Over.wav");
+	private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("10 Game Over.wav");
 
-    @Override
-    public Drawing update()
-    {
-        if (!isPlayingSomething()) {
-            Model.getInstance().getAccount().setLevel(1);
-            doTransition(StartDisplay::new);
-        }
+	@Override
+	public Drawing update()
+	{
+		if (!isPlayingSomething()) {
+			Model.getInstance().getAccount().setLevel(1);
+			doTransition(StartDisplay::new);
+		}
 
-        return gameOverText.fromJust().getDrawing();
-    }
+		return gameOverText.fromJust().getDrawing();
+	}
 
-    @Override
-    public void cleanup()
-    {
-        // Do nothing
-    }
+	@Override
+	public void cleanup()
+	{
+		// Do nothing
+	}
 
-    public GameOverScene()
-    {
-        AudioPlayer.getInstance().stopAll();
-        playIfNeeded(GAME_OVER_SOUND);
+	public GameOverScene()
+	{
+		AudioPlayer.getInstance().stopAll();
+		playIfNeeded(GAME_OVER_SOUND);
 
-        gameOverText = Maybe.just(new Text("Game over", Text.TextColor.Black));
+		gameOverText = Maybe.just(new Text("Game over", Text.TextColor.Black));
 
-        gameOverText.fromJust().setPosition(
-            Model.getInstance().getDimensions().div(2)
-        );
-    }
+		gameOverText.fromJust().setPosition(
+			Model.getInstance().getDimensions().div(2)
+		);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

@@ -2,23 +2,25 @@ package app.jbomberman.model.game.entity.state;
 
 public abstract class AliveState extends GameCharacterState
 {
-    private final GameCharacterState deathState;
+	private final GameCharacterState deathState;
 
-    protected AliveState(StateFul character, GameCharacterState deathState)
-    {
-        super(character);
+	protected AliveState(StateFul character, GameCharacterState deathState)
+	{
+		super(character);
 
-        this.deathState = deathState;
-    }
+		this.deathState = deathState;
+	}
 
-    @Override
-    public boolean isDisappearing()
-    {
-        return false;
-    }
+	@Override
+	public boolean isDisappearing()
+	{
+		return false;
+	}
 
-    protected void die()
-    {
-        getCharacter().setState(deathState);
-    }
+	protected void die()
+	{
+		getCharacter().setState(deathState);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

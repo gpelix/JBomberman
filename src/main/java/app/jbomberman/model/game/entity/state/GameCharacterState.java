@@ -5,23 +5,25 @@ import app.jbomberman.model.game.entity.Explosion;
 
 public abstract class GameCharacterState
 {
-    private final StateFul character;
+	private final StateFul character;
 
-    protected GameCharacterState(StateFul character)
-    {
-        this.character = character;
-    }
+	protected GameCharacterState(StateFul character)
+	{
+		this.character = character;
+	}
 
-    protected StateFul getCharacter()
-    {
-        return character;
-    }
+	protected StateFul getCharacter()
+	{
+		return character;
+	}
 
-    public abstract boolean notifyExplosion(Explosion explosion);
+	public abstract boolean notifyExplosion(Explosion explosion);
 
-    public abstract void updateInModel();
+	public abstract void updateInModel();
 
-    public abstract Drawing getDrawing();
+	public abstract Drawing getDrawing();
 
-    public abstract boolean isDisappearing();
+	public abstract boolean isDisappearing();
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

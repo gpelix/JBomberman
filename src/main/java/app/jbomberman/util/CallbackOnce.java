@@ -11,25 +11,27 @@ package app.jbomberman.util;
  */
 public abstract class CallbackOnce implements Callback
 {
-    /**
-     * hasRun is a boolean that is true if and only if the runOnce method
-     * has been run once
-     */
-    private boolean hasRun = false;
+	/**
+	 * hasRun is a boolean that is true if and only if the runOnce method
+	 * has been run once
+	 */
+	private boolean hasRun = false;
 
-    /**
-     * runOnce calls run if and only if it has not called before
-     */
-    public void runOnce()
-    {
-        if (!hasRun) {
-            run();
-            hasRun = true;
-        }
-    }
+	/**
+	 * runOnce calls run if and only if it has not called before
+	 */
+	public void runOnce()
+	{
+		if (!hasRun) {
+			run();
+			hasRun = true;
+		}
+	}
 
-    public void reset()
-    {
-        hasRun = false;
-    }
+	public void reset()
+	{
+		hasRun = false;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

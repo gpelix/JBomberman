@@ -19,63 +19,65 @@ import app.jbomberman.util.Vector2D;
  */
 public class StartDisplay extends SoundyBomberManScene
 {
-    /**
-     * startDisplaySound is the soundtrack to play during the scene
-     */
-    private static final String startDisplaySound = Properties.getInstance().getSoundPath("01 Title Screen.wav");
+	/**
+	 * startDisplaySound is the soundtrack to play during the scene
+	 */
+	private static final String startDisplaySound = Properties.getInstance().getSoundPath("01 Title Screen.wav");
 
-    private static final double MENU_POSITION = 21. / 32;
+	private static final double MENU_POSITION = 21. / 32;
 
-    private final AbstractImage startImage;
+	private final AbstractImage startImage;
 
-    private HorizontalMenu menu;
+	private HorizontalMenu menu;
 
-    private final LayeredDrawObject backgroundLayeredDrawObject;
+	private final LayeredDrawObject backgroundLayeredDrawObject;
 
-    /**
-     * setup() displays the images, text and sets up callbacks
-     */
-    public StartDisplay()
-    {
-        startImage = FlightWeightImagesFactory.getInstance().getImage(
-            "StartDisplay.png");
+	/**
+	 * setup() displays the images, text and sets up callbacks
+	 */
+	public StartDisplay()
+	{
+		startImage = FlightWeightImagesFactory.getInstance().getImage(
+			"StartDisplay.png");
 
-        Model model = Model.getInstance();
-        Vector2D modelDimensions = model.getDimensions();
+		Model model = Model.getInstance();
+		Vector2D modelDimensions = model.getDimensions();
 
-        int width = modelDimensions.getX();
-        int height = modelDimensions.getY();
+		int width = modelDimensions.getX();
+		int height = modelDimensions.getY();
 
-        menu = new HorizontalMenu(
-            new MenuEntry("Start", Text.TextColor.Black,
-                () -> doTransition(LoadingLevelScene::new)),
-            new MenuEntry("Log In", Text.TextColor.Black,
-                () -> doTransition(LogInScene::new)),
-            new MenuEntry("Exit", Text.TextColor.Black, model::close)
-        );
-        menu.setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
-        menu.setWidth(width);
+		menu = new HorizontalMenu(
+			new MenuEntry("Start", Text.TextColor.Black,
+				() -> doTransition(LoadingLevelScene::new)),
+			new MenuEntry("Log In", Text.TextColor.Black,
+				() -> doTransition(LogInScene::new)),
+			new MenuEntry("Exit", Text.TextColor.Black, model::close)
+		);
+		menu.setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
+		menu.setWidth(width);
 
-        Model.getController().attachKeyBoardObserver(menu);
+		Model.getController().attachKeyBoardObserver(menu);
 
-        backgroundLayeredDrawObject = new LayeredDrawObject(Vector2D.of(0, 0), startImage, 0);
-    }
+		backgroundLayeredDrawObject = new LayeredDrawObject(Vector2D.of(0, 0), startImage, 0);
+	}
 
-    @Override
-    public void cleanup()
-    {
-        Model.getController().detachKeyBoardObserver(menu);
-        AudioPlayer.getInstance().stopAll();
-    }
+	@Override
+	public void cleanup()
+	{
+		Model.getController().detachKeyBoardObserver(menu);
+		AudioPlayer.getInstance().stopAll();
+	}
 
-    @Override
-    public Drawing update()
-    {
-        playIfNeeded(startDisplaySound);
+	@Override
+	public Drawing update()
+	{
+		playIfNeeded(startDisplaySound);
 
-        Drawing drawing = new Drawing(backgroundLayeredDrawObject);
-        drawing.merge(menu.getDrawing(), x -> x + 1);
+		Drawing drawing = new Drawing(backgroundLayeredDrawObject);
+		drawing.merge(menu.getDrawing(), x -> x + 1);
 
-        return drawing;
-    }
+		return drawing;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

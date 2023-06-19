@@ -11,59 +11,61 @@ import app.jbomberman.model.game.entity.Wall;
 
 public class WallOrEnemyDeadState<T extends Entity & StateFul> extends DeadState
 {
-    private final T entity;
+	private final T entity;
 
-    private final ImageManager deathImageManager;
+	private final ImageManager deathImageManager;
 
-    public WallOrEnemyDeadState(T entity,
-                                ImageManager deathImageManager)
-    {
-        super(entity);
-        this.entity = entity;
-        this.deathImageManager = deathImageManager;
-    }
+	public WallOrEnemyDeadState(T entity,
+								ImageManager deathImageManager)
+	{
+		super(entity);
+		this.entity = entity;
+		this.deathImageManager = deathImageManager;
+	}
 
-    @Override
-    public boolean notifyExplosion(Explosion explosion)
-    {
-        return false; // Simply ignore
-    }
+	@Override
+	public boolean notifyExplosion(Explosion explosion)
+	{
+		return false; // Simply ignore
+	}
 
-    @Override
-    public Drawing getDrawing()
-    {
-        AbstractImage image = deathImageManager.getNextImage();
-        if (deathImageManager.hasChanged())
-            entity.hasChanged();
-        return entity.getDrawing(image);
-    }
+	@Override
+	public Drawing getDrawing()
+	{
+		AbstractImage image = deathImageManager.getNextImage();
+		if (deathImageManager.hasChanged())
+			entity.hasChanged();
+		return entity.getDrawing(image);
+	}
 
-    @Override
-    public void updateInModel()
-    {
-        Entity entity = getEntity();
+	@Override
+	public void updateInModel()
+	{
+		Entity entity = getEntity();
 
-        if (getDeathImageManager().hasDoneOneCycle()) {
-            GameGrid gameGrid = entity.getGameGrid();
+		if (getDeathImageManager().hasDoneOneCycle()) {
+			GameGrid gameGrid = entity.getGameGrid();
 
-            if (entity instanceof Wall wall)
-                gameGrid.get(
-                    gameGrid.getCenterInGridCoord(entity)
-                ).removeWall(wall);
-            else if (entity instanceof Enemy enemy)
-                gameGrid.get(
-                    gameGrid.getCenterInGridCoord(enemy)
-                ).removeCharacter(enemy);
-        }
-    }
+			if (entity instanceof Wall wall)
+				gameGrid.get(
+					gameGrid.getCenterInGridCoord(entity)
+				).removeWall(wall);
+			else if (entity instanceof Enemy enemy)
+				gameGrid.get(
+					gameGrid.getCenterInGridCoord(enemy)
+				).removeCharacter(enemy);
+		}
+	}
 
-    protected Entity getEntity()
-    {
-        return entity;
-    }
+	protected Entity getEntity()
+	{
+		return entity;
+	}
 
-    protected ImageManager getDeathImageManager()
-    {
-        return deathImageManager;
-    }
+	protected ImageManager getDeathImageManager()
+	{
+		return deathImageManager;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

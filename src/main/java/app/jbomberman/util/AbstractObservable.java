@@ -16,22 +16,24 @@ import java.util.Set;
  */
 public abstract class AbstractObservable implements Observable
 {
-    /**
-     * the set of Observers
-     */
-    private final Set<Observer> observers;
+	/**
+	 * the set of Observers
+	 */
+	private final Set<Observer> observers;
 
-    /**
-     * Constructor to create the set of observers
-     */
-    protected AbstractObservable()
-    {
-        observers = new HashSet<>();
-    }
+	/**
+	 * Constructor to create the set of observers
+	 */
+	protected AbstractObservable()
+	{
+		observers = new HashSet<>();
+	}
 
-    @Override
-    public Collection<Observer> getObservers()
-    {
-        return observers;
-    }
+	@Override
+	public Collection<Observer> getObservers()
+	{
+		return observers;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

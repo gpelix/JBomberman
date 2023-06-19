@@ -13,40 +13,42 @@ import java.awt.image.BufferedImage;
  */
 public class SwingImage extends AbstractImage
 {
-    /**
-     * the image that this image encapsulates
-     */
-    private final BufferedImage image;
+	/**
+	 * the image that this image encapsulates
+	 */
+	private final BufferedImage image;
 
-    /**
-     * build the SwingImage from a BufferedImage
-     *
-     * @param image the BufferedImage that must be encapsulated
-     */
-    public SwingImage(BufferedImage image)
-    {
-        this.image = image;
-    }
+	/**
+	 * build the SwingImage from a BufferedImage
+	 *
+	 * @param image the BufferedImage that must be encapsulated
+	 */
+	public SwingImage(BufferedImage image)
+	{
+		this.image = image;
+	}
 
-    /**
-     * unwrap() must be called to get the underlying image
-     *
-     * @return the underlying image
-     */
-    public BufferedImage unwrap()
-    {
-        return image;
-    }
+	/**
+	 * unwrap() must be called to get the underlying image
+	 *
+	 * @return the underlying image
+	 */
+	public BufferedImage unwrap()
+	{
+		return image;
+	}
 
-    /**
-     * getDimensions() gets the dimensions of the image
-     *
-     * @return the dimensions of the image
-     */
-    @Override
-    public Vector2D getDimensions()
-    {
-        return Vector2D.of(image.getWidth(null), image.getHeight(null));
-    }
+	/**
+	 * getDimensions() gets the dimensions of the image
+	 *
+	 * @return the dimensions of the image
+	 */
+	@Override
+	public Vector2D getDimensions()
+	{
+		return Vector2D.of(image.getWidth(null), image.getHeight(null));
+	}
 
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

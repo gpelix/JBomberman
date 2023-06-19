@@ -8,11 +8,13 @@ package app.jbomberman.drawing;
  */
 public interface Drawable
 {
-    /**
-     * getDrawing is the method that must be called to get the drawing of the
-     * Drawable
-     *
-     * @return a drawing describing the Drawable
-     */
-    Drawing getDrawing();
+	/**
+	 * getDrawing is the method that must be called to get the drawing of the
+	 * Drawable
+	 *
+	 * @return a drawing describing the Drawable
+	 */
+	Drawing getDrawing();
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

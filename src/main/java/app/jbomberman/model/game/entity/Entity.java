@@ -18,79 +18,81 @@ import app.jbomberman.util.Vector2D;
  */
 public abstract class Entity extends MutableVector2D
 {
-    public static final int SIZE_IN_MODEL = 16 * Properties.getInstance().getScaleFactor();
+	public static final int SIZE_IN_MODEL = 16 * Properties.getInstance().getScaleFactor();
 
-    private final GameGrid gameGrid;
+	private final GameGrid gameGrid;
 
-    private Maybe<Drawing> oldDrawing;
+	private Maybe<Drawing> oldDrawing;
 
 
-    public Entity(Vector2D coordinate, GameGrid gameGrid)
-    {
-        super(coordinate);
-        this.gameGrid = gameGrid;
-        oldDrawing = Maybe.nothing();
-    }
+	public Entity(Vector2D coordinate, GameGrid gameGrid)
+	{
+		super(coordinate);
+		this.gameGrid = gameGrid;
+		oldDrawing = Maybe.nothing();
+	}
 
-    /**
-     * Utility function meant to be used by subclasses to draw a specific image.
-     * This function doesn't do anything unless the hasChanged() function is called
-     *
-     * @param img ImageView to draw at the coordinates specified by the coordinates
-     *            of this Entity
-     */
-    public Drawing getDrawing(AbstractImage img)
-    {
-        if (oldDrawing.isJust())
-            return oldDrawing.unwrap();
-        if (getClass() == Block.class)
-            System.out.println("Block change");
+	/**
+	 * Utility function meant to be used by subclasses to draw a specific image.
+	 * This function doesn't do anything unless the hasChanged() function is called
+	 *
+	 * @param img ImageView to draw at the coordinates specified by the coordinates
+	 *			of this Entity
+	 */
+	public Drawing getDrawing(AbstractImage img)
+	{
+		if (oldDrawing.isJust())
+			return oldDrawing.unwrap();
+		if (getClass() == Block.class)
+			System.out.println("Block change");
 
-        Drawing newDrawing = new Drawing();
+		Drawing newDrawing = new Drawing();
 
-        newDrawing.add(new LayeredDrawObject(this, img, EntityHierarchy.getInstance().getDrawLevelFor(this).unwrapOrThrow(() ->
-            new JBomberManException("Don't know where to place " + this.getClass().getName()))));
+		newDrawing.add(new LayeredDrawObject(this, img, EntityHierarchy.getInstance().getDrawLevelFor(this).unwrapOrThrow(() ->
+			new JBomberManException("Don't know where to place " + this.getClass().getName()))));
 
-        oldDrawing = Maybe.just(newDrawing);
+		oldDrawing = Maybe.just(newDrawing);
 
-        return newDrawing;
-    }
+		return newDrawing;
+	}
 
-    public void hasChanged()
-    {
-        oldDrawing = Maybe.nothing();
-    }
+	public void hasChanged()
+	{
+		oldDrawing = Maybe.nothing();
+	}
 
-    /**
-     * draw should be used to decide which image to print
-     */
-    public abstract Drawing getDrawing();
+	/**
+	 * draw should be used to decide which image to print
+	 */
+	public abstract Drawing getDrawing();
 
-    public abstract void updateInModel();
+	public abstract void updateInModel();
 
-    // boolean is because we need to know if the explosion was stopped
-    public abstract boolean notifyExplosion(Explosion explosion);
+	// boolean is because we need to know if the explosion was stopped
+	public abstract boolean notifyExplosion(Explosion explosion);
 
-    @Override
-    public String toString()
-    {
-        return "Entity(MutableVector2D=" + super.toString() + ")";
-    }
+	@Override
+	public String toString()
+	{
+		return "Entity(MutableVector2D=" + super.toString() + ")";
+	}
 
-    public final GameGrid getGameGrid()
-    {
-        return gameGrid;
-    }
+	public final GameGrid getGameGrid()
+	{
+		return gameGrid;
+	}
 
-    public final FreeCell getUnderlyingFreeCell()
-    {
-        return gameGrid.get(getCenterInGridCoord());
-    }
+	public final FreeCell getUnderlyingFreeCell()
+	{
+		return gameGrid.get(getCenterInGridCoord());
+	}
 
-    public final Vector2D getCenterInGridCoord()
-    {
-        return gameGrid.getCenterInGridCoord(this);
-    }
+	public final Vector2D getCenterInGridCoord()
+	{
+		return gameGrid.getCenterInGridCoord(this);
+	}
 
-    public abstract boolean allowsBombs();
+	public abstract boolean allowsBombs();
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

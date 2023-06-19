@@ -19,71 +19,73 @@ import java.util.function.Supplier;
 public abstract class GameCharacter extends Entity implements StateFul
 {
 
-    private GameCharacterCapabilities capabilities;
+	private GameCharacterCapabilities capabilities;
 
-    private Maybe<GameCharacterState> state = Maybe.nothing(); // This must
-    // be initialized rightly after having called the constructor
+	private Maybe<GameCharacterState> state = Maybe.nothing(); // This must
+	// be initialized rightly after having called the constructor
 
-    protected GameCharacter(Vector2D coordinate,
-                            GameCharacterCapabilities capabilities,
-                            GameGrid gameGrid)
-    {
-        super(coordinate, gameGrid);
-        this.capabilities = capabilities;
-    }
+	protected GameCharacter(Vector2D coordinate,
+							GameCharacterCapabilities capabilities,
+							GameGrid gameGrid)
+	{
+		super(coordinate, gameGrid);
+		this.capabilities = capabilities;
+	}
 
-    /**
-     * move() method is responsible for moving a character. It must
-     * determine where it would like to go to, and then it should ask
-     * permission to do so to the MoveManager
-     */
-    public abstract void move();
+	/**
+	 * move() method is responsible for moving a character. It must
+	 * determine where it would like to go to, and then it should ask
+	 * permission to do so to the MoveManager
+	 */
+	public abstract void move();
 
-    public GameCharacterCapabilities getCapabilities()
-    {
-        return capabilities;
-    }
+	public GameCharacterCapabilities getCapabilities()
+	{
+		return capabilities;
+	}
 
-    public void setCapabilities(GameCharacterCapabilities capabilities)
-    {
-        this.capabilities = capabilities;
-    }
+	public void setCapabilities(GameCharacterCapabilities capabilities)
+	{
+		this.capabilities = capabilities;
+	}
 
-    public void setState(GameCharacterState state)
-    {
-        this.state = Maybe.just(state);
-    }
+	public void setState(GameCharacterState state)
+	{
+		this.state = Maybe.just(state);
+	}
 
-    Supplier<JBomberManException> stateIsNothingError =
-        () -> new JBomberManException(
-            "State should be set right after calling the constructor");
+	Supplier<JBomberManException> stateIsNothingError =
+		() -> new JBomberManException(
+			"State should be set right after calling the constructor");
 
-    @Override
-    public void updateInModel()
-    {
-        state.unwrapOrThrow(stateIsNothingError).updateInModel();
-    }
+	@Override
+	public void updateInModel()
+	{
+		state.unwrapOrThrow(stateIsNothingError).updateInModel();
+	}
 
 
-    @Override
-    public Drawing getDrawing()
-    {
-        return state.unwrapOrThrow(stateIsNothingError).getDrawing();
-    }
+	@Override
+	public Drawing getDrawing()
+	{
+		return state.unwrapOrThrow(stateIsNothingError).getDrawing();
+	}
 
-    @Override
-    public boolean notifyExplosion(Explosion explosion)
-    {
-        return state.unwrapOrThrow(stateIsNothingError).notifyExplosion(explosion);
-    }
+	@Override
+	public boolean notifyExplosion(Explosion explosion)
+	{
+		return state.unwrapOrThrow(stateIsNothingError).notifyExplosion(explosion);
+	}
 
-    public boolean isDisappearing()
-    {
-        return state.unwrapOrThrow(stateIsNothingError).isDisappearing();
-    }
+	public boolean isDisappearing()
+	{
+		return state.unwrapOrThrow(stateIsNothingError).isDisappearing();
+	}
 
-    public GameCharacterState getState()
-    {
-        return state.fromJust();
-    }
+	public GameCharacterState getState()
+	{
+		return state.fromJust();
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

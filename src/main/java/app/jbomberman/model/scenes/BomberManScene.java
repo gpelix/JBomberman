@@ -13,30 +13,32 @@ import java.util.function.Supplier;
  */
 public abstract class BomberManScene
 {
-    /**
-     * update() should be called regularly by a timer like AnimationTimer in javafx
-     * package. It should be used to update what gets displayed on the screen
-     */
-    public abstract Drawing update();
+	/**
+	 * update() should be called regularly by a timer like AnimationTimer in javafx
+	 * package. It should be used to update what gets displayed on the screen
+	 */
+	public abstract Drawing update();
 
-    /**
-     * cleanup() must be called before transition to a new scene
-     */
-    public abstract void cleanup();
+	/**
+	 * cleanup() must be called before transition to a new scene
+	 */
+	public abstract void cleanup();
 
 
-    /**
-     * doTransition allows subclasses to make smooth painless uniform transitions
-     * from one scene to another one
-     *
-     * @param nextSceneSupplier a supplier of a new scene
-     * @implNote we pass a supplier in almost all the cases we want to defer
-     * the creation and initialization of the new scene up to the moment after
-     * which we did the cleanup of the previous scene
-     */
-    protected void doTransition(Supplier<BomberManScene> nextSceneSupplier)
-    {
-        cleanup();
-        Model.getInstance().setScene(nextSceneSupplier.get());
-    }
+	/**
+	 * doTransition allows subclasses to make smooth painless uniform transitions
+	 * from one scene to another one
+	 *
+	 * @param nextSceneSupplier a supplier of a new scene
+	 * @implNote we pass a supplier in almost all the cases we want to defer
+	 * the creation and initialization of the new scene up to the moment after
+	 * which we did the cleanup of the previous scene
+	 */
+	protected void doTransition(Supplier<BomberManScene> nextSceneSupplier)
+	{
+		cleanup();
+		Model.getInstance().setScene(nextSceneSupplier.get());
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

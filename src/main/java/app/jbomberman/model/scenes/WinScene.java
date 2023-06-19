@@ -8,37 +8,39 @@ import app.jbomberman.model.Model;
 
 public class WinScene extends SoundyBomberManScene
 {
-    private final Text winText;
+	private final Text winText;
 
-    private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("08 Ending.wav");
+	private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("08 Ending.wav");
 
-    @Override
-    public Drawing update()
-    {
-        if (!isPlayingSomething())
-            doTransition(StartDisplay::new);
+	@Override
+	public Drawing update()
+	{
+		if (!isPlayingSomething())
+			doTransition(StartDisplay::new);
 
-        Drawing a = winText.getDrawing();
-        a.setDimensions(Model.getInstance().getDimensions());
+		Drawing a = winText.getDrawing();
+		a.setDimensions(Model.getInstance().getDimensions());
 
-        return a;
-    }
+		return a;
+	}
 
-    @Override
-    public void cleanup()
-    {
-        // Do nothing
-    }
+	@Override
+	public void cleanup()
+	{
+		// Do nothing
+	}
 
-    public WinScene()
-    {
-        AudioPlayer.getInstance().stopAll();
-        playIfNeeded(GAME_OVER_SOUND);
+	public WinScene()
+	{
+		AudioPlayer.getInstance().stopAll();
+		playIfNeeded(GAME_OVER_SOUND);
 
-        winText = new Text("You have won", Text.TextColor.Black);
+		winText = new Text("You have won", Text.TextColor.Black);
 
-        winText.setPosition(
-            Model.getInstance().getDimensions().div(2)
-        );
-    }
+		winText.setPosition(
+			Model.getInstance().getDimensions().div(2)
+		);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

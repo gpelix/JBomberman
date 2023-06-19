@@ -4,5 +4,7 @@ import app.jbomberman.util.Callback;
 
 public abstract class GraphicFactory
 {
-    public abstract LoopTimer getLoopTimer(Callback callback);
+	public abstract LoopTimer getLoopTimer(Callback callback);
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

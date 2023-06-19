@@ -6,20 +6,22 @@ import app.jbomberman.model.game.entity.Enemy;
 
 public class EnemyDeadState extends WallOrEnemyDeadState<Enemy>
 {
-    public EnemyDeadState(Enemy enemy, ImageManager deathImageManager)
-    {
-        super(enemy, deathImageManager);
-    }
+	public EnemyDeadState(Enemy enemy, ImageManager deathImageManager)
+	{
+		super(enemy, deathImageManager);
+	}
 
-    @Override
-    public void updateInModel()
-    {
-        super.updateInModel();
+	@Override
+	public void updateInModel()
+	{
+		super.updateInModel();
 
-        if (getDeathImageManager().hasDoneOneCycle()) {
-            GameGrid gameGrid = getEntity().getGameGrid();
+		if (getDeathImageManager().hasDoneOneCycle()) {
+			GameGrid gameGrid = getEntity().getGameGrid();
 
-            gameGrid.enemyIsDead();
-        }
-    }
+			gameGrid.enemyIsDead();
+		}
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

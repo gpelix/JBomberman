@@ -27,123 +27,125 @@ import java.io.InputStream;
  */
 class ThreadPlayer extends Thread
 {
-    /**
-     * BUFFER_SIZE indicates the chunk size in bytes
-     * for efficient loading of audio files
-     */
-    private static final int BUFFER_SIZE = 4096;
+	/**
+	 * BUFFER_SIZE indicates the chunk size in bytes
+	 * for efficient loading of audio files
+	 */
+	private static final int BUFFER_SIZE = 4096;
 
-    /**
-     * After having stopped all the sounds, there is still a short period of time
-     * over which you can still here a bit of noise. So WAIT_TIME_MILLIS is the
-     * time in milliseconds for which any player will wait before playing a
-     * new sound
-     */
-    private static final int WAIT_TIME_MILLS = 800;
+	/**
+	 * After having stopped all the sounds, there is still a short period of time
+	 * over which you can still here a bit of noise. So WAIT_TIME_MILLIS is the
+	 * time in milliseconds for which any player will wait before playing a
+	 * new sound
+	 */
+	private static final int WAIT_TIME_MILLS = 800;
 
-    /**
-     * Store the filename in which there is the audio to play
-     */
-    private final String soundFile;
+	/**
+	 * Store the filename in which there is the audio to play
+	 */
+	private final String soundFile;
 
-    /**
-     * stopAllTime contains the timestamp of the last stopAll call that the
-     * {@link AudioPlayer} received
-     */
-    private final long stopAllTime;
+	/**
+	 * stopAllTime contains the timestamp of the last stopAll call that the
+	 * {@link AudioPlayer} received
+	 */
+	private final long stopAllTime;
 
-    private final AudioPlayer audioPlayer;
+	private final AudioPlayer audioPlayer;
 
-    private final byte[] soundBytes;
+	private final byte[] soundBytes;
 
 
-    /**
-     * Create a new ThreadPlayer. Its visibility is default as we should only be able
-     * to initialize ThreadPlayer's from the {@link AudioPlayer} class
-     *
-     * @param soundFile filename that contains the audio to play
-     */
-    ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime, AudioPlayer audioPlayer)
-    {
-        this.soundFile = soundFile;
-        this.stopAllTime = stopAllTime;
-        this.audioPlayer = audioPlayer;
-        this.soundBytes = soundBytes;
-    }
+	/**
+	 * Create a new ThreadPlayer. Its visibility is default as we should only be able
+	 * to initialize ThreadPlayer's from the {@link AudioPlayer} class
+	 *
+	 * @param soundFile filename that contains the audio to play
+	 */
+	ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime, AudioPlayer audioPlayer)
+	{
+		this.soundFile = soundFile;
+		this.stopAllTime = stopAllTime;
+		this.audioPlayer = audioPlayer;
+		this.soundBytes = soundBytes;
+	}
 
-    /**
-     * isPlaying returns if the thread isAlive(); that is if the thread is playing
-     * a sound
-     *
-     * @return whether the thread is playing an audio
-     */
-    public boolean isPlaying()
-    {
-        return isAlive();
-    }
+	/**
+	 * isPlaying returns if the thread isAlive(); that is if the thread is playing
+	 * a sound
+	 *
+	 * @return whether the thread is playing an audio
+	 */
+	public boolean isPlaying()
+	{
+		return isAlive();
+	}
 
-    /**
-     * run() is meant to be called by start() method and contains the main routine
-     * to play an audio file
-     */
-    @Override
-    public void run()
-    {
-        try (InputStream inputStream =
-                 new BufferedInputStream(new ByteArrayInputStream(soundBytes));
-             AudioInputStream audioInputStream =
-                 AudioSystem.getAudioInputStream(inputStream))
-        {
-            AudioFormat audioFormat = audioInputStream.getFormat();
-            DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
+	/**
+	 * run() is meant to be called by start() method and contains the main routine
+	 * to play an audio file
+	 */
+	@Override
+	public void run()
+	{
+		try (InputStream inputStream =
+				 new BufferedInputStream(new ByteArrayInputStream(soundBytes));
+			 AudioInputStream audioInputStream =
+				 AudioSystem.getAudioInputStream(inputStream))
+		{
+			AudioFormat audioFormat = audioInputStream.getFormat();
+			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
 
-            try (SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info)) {
-                byte[] bufferBytes = new byte[BUFFER_SIZE];
-                int readBytes;
+			try (SourceDataLine sourceDataLine = (SourceDataLine) AudioSystem.getLine(info)) {
+				byte[] bufferBytes = new byte[BUFFER_SIZE];
+				int readBytes;
 
-                sourceDataLine.open(audioFormat);
-                sourceDataLine.start();
+				sourceDataLine.open(audioFormat);
+				sourceDataLine.start();
 
-                while (System.currentTimeMillis() - stopAllTime <= WAIT_TIME_MILLS)
-                    Threads.sleep(WAIT_TIME_MILLS / 20);
+				while (System.currentTimeMillis() - stopAllTime <= WAIT_TIME_MILLS)
+					Threads.sleep(WAIT_TIME_MILLS / 20);
 
-                while ((readBytes = audioInputStream.read(bufferBytes)) != -1 && !interruptedFlag) {
-                    while (audioPlayer.getPause())
-                        Threads.sleep(30);
-                    sourceDataLine.write(bufferBytes, 0, readBytes);
-                }
-                sourceDataLine.drain();
-            }
-        } catch (IOException e) {
-            throw new JBomberManException(
-                "Unable to read file `" + soundFile + "'");
-        } catch (UnsupportedAudioFileException e) {
-            throw new JBomberManException(
-                "Unsupported AudioFileException for file `" + soundFile + "'");
-        } catch (LineUnavailableException e) {
-            throw new JBomberManException(
-                "Line is unavailable for `" + soundFile + "'");
-        } catch (IllegalArgumentException e) {
-            throw new JBomberManException(
-                "Probably there was an error while decoding " + soundFile);
-        }
-    }
+				while ((readBytes = audioInputStream.read(bufferBytes)) != -1 && !interruptedFlag) {
+					while (audioPlayer.getPause())
+						Threads.sleep(30);
+					sourceDataLine.write(bufferBytes, 0, readBytes);
+				}
+				sourceDataLine.drain();
+			}
+		} catch (IOException e) {
+			throw new JBomberManException(
+				"Unable to read file `" + soundFile + "'");
+		} catch (UnsupportedAudioFileException e) {
+			throw new JBomberManException(
+				"Unsupported AudioFileException for file `" + soundFile + "'");
+		} catch (LineUnavailableException e) {
+			throw new JBomberManException(
+				"Line is unavailable for `" + soundFile + "'");
+		} catch (IllegalArgumentException e) {
+			throw new JBomberManException(
+				"Probably there was an error while decoding " + soundFile);
+		}
+	}
 
-    /**
-     * getSoundFileName() returns the name of the file containing the sound that
-     * this thread is playing
-     *
-     * @return the name of the file containing the sound that this thread is playing
-     */
-    public String getSoundFileName()
-    {
-        return soundFile;
-    }
+	/**
+	 * getSoundFileName() returns the name of the file containing the sound that
+	 * this thread is playing
+	 *
+	 * @return the name of the file containing the sound that this thread is playing
+	 */
+	public String getSoundFileName()
+	{
+		return soundFile;
+	}
 
-    private boolean interruptedFlag = false;
+	private boolean interruptedFlag = false;
 
-    public void setInterrupted()
-    {
-        interruptedFlag = true;
-    }
+	public void setInterrupted()
+	{
+		interruptedFlag = true;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

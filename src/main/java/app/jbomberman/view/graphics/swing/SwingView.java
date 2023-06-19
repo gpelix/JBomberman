@@ -34,155 +34,157 @@ import java.util.Set;
 // TODO: TODO javadoc
 public class SwingView extends View implements Observer
 {
-    private final JFrame frame;
+	private final JFrame frame;
 
-    private Maybe<Callback> callback = Maybe.nothing();
+	private Maybe<Callback> callback = Maybe.nothing();
 
-    private final List<JLabel> labelPool = new ArrayList<>();
+	private final List<JLabel> labelPool = new ArrayList<>();
 
-    public SwingView()
-    {
-        super(new SwingGraphicFactory(), new SwingKeyBoardController());
+	public SwingView()
+	{
+		super(new SwingGraphicFactory(), new SwingKeyBoardController());
 
-        frame = new JFrame();
+		frame = new JFrame();
 
-        frame.addWindowListener(new WindowAdapter()
-        {
-            @Override
-            public void windowClosing(WindowEvent e)
-            {
-                callback.maybeDo(Callback::run);
-                System.exit(0);
-            }
-        });
+		frame.addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
+				callback.maybeDo(Callback::run);
+				System.exit(0);
+			}
+		});
 
-        ((SwingKeyBoardController) getKeyBoardController()).addToComponent(frame);
+		((SwingKeyBoardController) getKeyBoardController()).addToComponent(frame);
 
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-        frame.setUndecorated(true);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+		frame.setUndecorated(true);
 
-        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
-        Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
-            cursorImg, new Point(0, 0), "blank cursor"
-        );
-        frame.setCursor(blankCursor);
+		BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+		Cursor blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(
+			cursorImg, new Point(0, 0), "blank cursor"
+		);
+		frame.setCursor(blankCursor);
 
-        frame.setBackground(Color.BLACK);
-        frame.setResizable(false);
+		frame.setBackground(Color.BLACK);
+		frame.setResizable(false);
 
-        //frame.setSize(700, 700);
-        frame.setVisible(true);
-        frame.setLayout(null);
-    }
+		//frame.setSize(700, 700);
+		frame.setVisible(true);
+		frame.setLayout(null);
+	}
 
-    private final List<JPanel> layers = new ArrayList<>();
+	private final List<JPanel> layers = new ArrayList<>();
 
-    private final Map<LayeredDrawObject, JLabel> drawObjects = new HashMap<>();
+	private final Map<LayeredDrawObject, JLabel> drawObjects = new HashMap<>();
 
-    @Override
-    public void draw(Drawing drawing)
-    {
-        Vector2D sceneDimensions = getDrawingDimensions(drawing);
-        Vector2D sceneCenter = sceneDimensions.div(2);
-        Vector2D screenCenter =
-            Vector2D.of(frame.getWidth(), frame.getHeight()).div(2);
+	@Override
+	public void draw(Drawing drawing)
+	{
+		Vector2D sceneDimensions = getDrawingDimensions(drawing);
+		Vector2D sceneCenter = sceneDimensions.div(2);
+		Vector2D screenCenter =
+			Vector2D.of(frame.getWidth(), frame.getHeight()).div(2);
 
-        Vector2D shamt = screenCenter.sub(sceneCenter);
+		Vector2D shamt = screenCenter.sub(sceneCenter);
 
-        //layers.forEach(Container::removeAll);
+		//layers.forEach(Container::removeAll);
 
-        drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingLayer(layeredDrawObject.getLayer()));
+		drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingLayer(layeredDrawObject.getLayer()));
 
-        Map<LayeredDrawObject, JLabel> toRemoveDrawObjectsMap = new HashMap<>();
+		Map<LayeredDrawObject, JLabel> toRemoveDrawObjectsMap = new HashMap<>();
 
-        for (LayeredDrawObject d : drawing.getDrawObjects()) {
-            if (drawObjects.containsKey(d))
-                continue;
-            drawDrawObject(d, shamt);
-        }
+		for (LayeredDrawObject d : drawing.getDrawObjects()) {
+			if (drawObjects.containsKey(d))
+				continue;
+			drawDrawObject(d, shamt);
+		}
 
-        Set<LayeredDrawObject> newDrawObjects = new HashSet<>()
-        {
-            {
-                addAll(drawing.getDrawObjects());
-            }
-        };
+		Set<LayeredDrawObject> newDrawObjects = new HashSet<>()
+		{
+			{
+				addAll(drawing.getDrawObjects());
+			}
+		};
 
-        // Select objects for removal
-        for (Map.Entry<LayeredDrawObject, JLabel> d : drawObjects.entrySet())
-            if (!newDrawObjects.contains(d.getKey()))
-                toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
+		// Select objects for removal
+		for (Map.Entry<LayeredDrawObject, JLabel> d : drawObjects.entrySet())
+			if (!newDrawObjects.contains(d.getKey()))
+				toRemoveDrawObjectsMap.put(d.getKey(), d.getValue());
 
-        for (Map.Entry<LayeredDrawObject, JLabel> d : toRemoveDrawObjectsMap.entrySet()) {
-            JLabel label = d.getValue();
-            layers.get(d.getKey().getLayer()).remove(label);
-            drawObjects.remove(d.getKey());
-            labelPool.add(label);
-        }
+		for (Map.Entry<LayeredDrawObject, JLabel> d : toRemoveDrawObjectsMap.entrySet()) {
+			JLabel label = d.getValue();
+			layers.get(d.getKey().getLayer()).remove(label);
+			drawObjects.remove(d.getKey());
+			labelPool.add(label);
+		}
 
 
-        frame.repaint();
-    }
+		frame.repaint();
+	}
 
-    private void assureExistingLayer(int layerNumber)
-    {
-        while (layers.size() <= layerNumber) {
-            JPanel panel = new JPanel();
-            panel.setBackground(new Color(0, 0, 0, 0));
-            frame.add(panel, 0);
-            panel.setSize(frame.getWidth(), frame.getHeight());
-            panel.setVisible(true);
-            panel.setLayout(null);
-            layers.add(panel);
-        }
-    }
+	private void assureExistingLayer(int layerNumber)
+	{
+		while (layers.size() <= layerNumber) {
+			JPanel panel = new JPanel();
+			panel.setBackground(new Color(0, 0, 0, 0));
+			frame.add(panel, 0);
+			panel.setSize(frame.getWidth(), frame.getHeight());
+			panel.setVisible(true);
+			panel.setLayout(null);
+			layers.add(panel);
+		}
+	}
 
-    // Note that Swing draws in reverse
-    private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
-    {
-        JLabel label = (labelPool.size() == 0) ?
-            new JLabel() :
-            labelPool.remove(labelPool.size() - 1);
+	// Note that Swing draws in reverse
+	private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
+	{
+		JLabel label = (labelPool.size() == 0) ?
+			new JLabel() :
+			labelPool.remove(labelPool.size() - 1);
 
-        label.setIcon(new ImageIcon(toSwingImage(drawObject.getImage())));
+		label.setIcon(new ImageIcon(toSwingImage(drawObject.getImage())));
 
-        Dimension size = label.getPreferredSize();
-        label.setBounds(drawObject.getX() + shift.getX(),
-            drawObject.getY() + shift.getY(), size.width, size.height);
+		Dimension size = label.getPreferredSize();
+		label.setBounds(drawObject.getX() + shift.getX(),
+			drawObject.getY() + shift.getY(), size.width, size.height);
 
-        layers.get(drawObject.getLayer()).add(label);
-        drawObjects.put(drawObject, label);
-//        panel.add(label);
-    }
+		layers.get(drawObject.getLayer()).add(label);
+		drawObjects.put(drawObject, label);
+//		panel.add(label);
+	}
 
-    private static Image toSwingImage(AbstractImage abstractImage)
-    {
-        return ((SwingImage) abstractImage).unwrap();
-    }
+	private static Image toSwingImage(AbstractImage abstractImage)
+	{
+		return ((SwingImage) abstractImage).unwrap();
+	}
 
-    @Override
-    public void setTitle(String title)
-    {
-        frame.setTitle(title);
-    }
+	@Override
+	public void setTitle(String title)
+	{
+		frame.setTitle(title);
+	}
 
-    @Override
-    public void setIcon(String path)
-    {
-        BufferedImage iconBuffered = ((SwingImage) FlightWeightImagesFactory.getInstance().getImage(path)).unwrap();
-        ImageIcon icon = new ImageIcon(iconBuffered);
-        frame.setIconImage(icon.getImage());
-    }
+	@Override
+	public void setIcon(String path)
+	{
+		BufferedImage iconBuffered = ((SwingImage) FlightWeightImagesFactory.getInstance().getImage(path)).unwrap();
+		ImageIcon icon = new ImageIcon(iconBuffered);
+		frame.setIconImage(icon.getImage());
+	}
 
-    @Override
-    public void setCloseOperationCallBack(Callback callBack)
-    {
-        this.callback = Maybe.just(callBack);
-    }
+	@Override
+	public void setCloseOperationCallBack(Callback callBack)
+	{
+		this.callback = Maybe.just(callBack);
+	}
 
-    @Override
-    public void close()
-    {
-        System.exit(0);
-    }
+	@Override
+	public void close()
+	{
+		System.exit(0);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

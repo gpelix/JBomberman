@@ -20,54 +20,56 @@ import java.util.Set;
 public abstract class KeyBoardController extends AbstractObservable
 {
 
-    /**
-     * Set of KeyCodes currently pressed
-     */
-    private final Set<KeyBoardControllerKeyCode> pressedKeyCodes = new HashSet<>();
+	/**
+	 * Set of KeyCodes currently pressed
+	 */
+	private final Set<KeyBoardControllerKeyCode> pressedKeyCodes = new HashSet<>();
 
-    /**
-     * updateInfo contains a reference to the most recent keyboard event
-     */
-    private Maybe<KeyBoardUpdateInfo> updateInfo = Maybe.nothing();
+	/**
+	 * updateInfo contains a reference to the most recent keyboard event
+	 */
+	private Maybe<KeyBoardUpdateInfo> updateInfo = Maybe.nothing();
 
-    /**
-     * getUpdateInfo() must be called by the observer upon notification to get
-     * information about the event that triggered the notification
-     *
-     * @return the KeyBoardUpdateInfo represent the event
-     */
-    public KeyBoardUpdateInfo getUpdateInfo()
-    {
-        return updateInfo.unwrapOrThrow(() -> new JBomberManException(
-            "Called update but there are no update info"));
-    }
+	/**
+	 * getUpdateInfo() must be called by the observer upon notification to get
+	 * information about the event that triggered the notification
+	 *
+	 * @return the KeyBoardUpdateInfo represent the event
+	 */
+	public KeyBoardUpdateInfo getUpdateInfo()
+	{
+		return updateInfo.unwrapOrThrow(() -> new JBomberManException(
+			"Called update but there are no update info"));
+	}
 
-    protected void onPressed(KeyBoardControllerKeyCode keyCode)
-    {
-        pressedKeyCodes.add(keyCode);
+	protected void onPressed(KeyBoardControllerKeyCode keyCode)
+	{
+		pressedKeyCodes.add(keyCode);
 
-        setUpdateInfo(new KeyBoardUpdateInfo(
-            KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED,
-            keyCode,
-            ImmutableSet.copyOf(pressedKeyCodes.iterator())));
+		setUpdateInfo(new KeyBoardUpdateInfo(
+			KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED,
+			keyCode,
+			ImmutableSet.copyOf(pressedKeyCodes.iterator())));
 
-        updateAllObservers();
-    }
+		updateAllObservers();
+	}
 
-    protected void onReleased(KeyBoardControllerKeyCode keyCode)
-    {
-        pressedKeyCodes.remove(keyCode);
+	protected void onReleased(KeyBoardControllerKeyCode keyCode)
+	{
+		pressedKeyCodes.remove(keyCode);
 
-        setUpdateInfo(new KeyBoardUpdateInfo(
-            KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED,
-            keyCode,
-            ImmutableSet.copyOf(pressedKeyCodes.iterator())));
+		setUpdateInfo(new KeyBoardUpdateInfo(
+			KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED,
+			keyCode,
+			ImmutableSet.copyOf(pressedKeyCodes.iterator())));
 
-        updateAllObservers();
-    }
+		updateAllObservers();
+	}
 
-    protected void setUpdateInfo(KeyBoardUpdateInfo info)
-    {
-        updateInfo = Maybe.just(info);
-    }
+	protected void setUpdateInfo(KeyBoardUpdateInfo info)
+	{
+		updateInfo = Maybe.just(info);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

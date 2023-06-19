@@ -81,81 +81,83 @@ import static java.awt.event.KeyEvent.VK_Z;
 
 public class SwingKeyBoardController extends KeyBoardController
 {
-    private final KeyListener keyListener;
+	private final KeyListener keyListener;
 
 
-    public SwingKeyBoardController()
-    {
-        keyListener = new KeyListener()
-        {
-            @Override
-            public void keyTyped(KeyEvent e)
-            {/*do nothing*/}
+	public SwingKeyBoardController()
+	{
+		keyListener = new KeyListener()
+		{
+			@Override
+			public void keyTyped(KeyEvent e)
+			{/*do nothing*/}
 
-            @Override
-            public void keyPressed(KeyEvent e)
-            {
-                onPressed(fromSwingKeyCode(e.getKeyCode()));
-            }
+			@Override
+			public void keyPressed(KeyEvent e)
+			{
+				onPressed(fromSwingKeyCode(e.getKeyCode()));
+			}
 
-            @Override
-            public void keyReleased(KeyEvent e)
-            {
-                onReleased(fromSwingKeyCode(e.getKeyCode()));
-            }
-        };
-    }
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				onReleased(fromSwingKeyCode(e.getKeyCode()));
+			}
+		};
+	}
 
-    public void addToComponent(Component component)
-    {
-        component.addKeyListener(keyListener);
-    }
+	public void addToComponent(Component component)
+	{
+		component.addKeyListener(keyListener);
+	}
 
-    public void removeFromComponent(Component component)
-    {
-        component.removeKeyListener(keyListener);
-    }
+	public void removeFromComponent(Component component)
+	{
+		component.removeKeyListener(keyListener);
+	}
 
-    private static KeyBoardControllerKeyCode fromSwingKeyCode(int keyCode)
-    {
-        return switch (keyCode) {
-            case VK_DOWN -> DOWN;
-            case VK_UP -> UP;
-            case VK_LEFT -> LEFT;
-            case VK_RIGHT -> RIGHT;
-            case VK_ESCAPE -> ESC;
-            case VK_ENTER -> ENTER;
-            case VK_SPACE -> SPACE;
-            case VK_BACK_SPACE -> BACK_SPACE;
-            case VK_DELETE -> DEL;
-            case VK_A -> A;
-            case VK_B -> B;
-            case VK_C -> C;
-            case VK_D -> D;
-            case VK_E -> E;
-            case VK_F -> F;
-            case VK_G -> G;
-            case VK_H -> H;
-            case VK_I -> I;
-            case VK_J -> J;
-            case VK_K -> K;
-            case VK_L -> L;
-            case VK_M -> M;
-            case VK_N -> N;
-            case VK_O -> O;
-            case VK_P -> P;
-            case VK_Q -> Q;
-            case VK_R -> R;
-            case VK_S -> S;
-            case VK_T -> T;
-            case VK_U -> U;
-            case VK_V -> V;
-            case VK_W -> W;
-            case VK_X -> X;
-            case VK_Y -> Y;
-            case VK_Z -> Z;
-            default -> OTHER;
+	private static KeyBoardControllerKeyCode fromSwingKeyCode(int keyCode)
+	{
+		return switch (keyCode) {
+			case VK_DOWN -> DOWN;
+			case VK_UP -> UP;
+			case VK_LEFT -> LEFT;
+			case VK_RIGHT -> RIGHT;
+			case VK_ESCAPE -> ESC;
+			case VK_ENTER -> ENTER;
+			case VK_SPACE -> SPACE;
+			case VK_BACK_SPACE -> BACK_SPACE;
+			case VK_DELETE -> DEL;
+			case VK_A -> A;
+			case VK_B -> B;
+			case VK_C -> C;
+			case VK_D -> D;
+			case VK_E -> E;
+			case VK_F -> F;
+			case VK_G -> G;
+			case VK_H -> H;
+			case VK_I -> I;
+			case VK_J -> J;
+			case VK_K -> K;
+			case VK_L -> L;
+			case VK_M -> M;
+			case VK_N -> N;
+			case VK_O -> O;
+			case VK_P -> P;
+			case VK_Q -> Q;
+			case VK_R -> R;
+			case VK_S -> S;
+			case VK_T -> T;
+			case VK_U -> U;
+			case VK_V -> V;
+			case VK_W -> W;
+			case VK_X -> X;
+			case VK_Y -> Y;
+			case VK_Z -> Z;
+			default -> OTHER;
 
-        };
-    }
+		};
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

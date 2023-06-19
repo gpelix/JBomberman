@@ -9,26 +9,28 @@ import java.util.function.Supplier;
 
 public class Door extends PickableCell
 {
-    public Door(Vector2D coordinate, AbstractImage image, GameGrid gameGrid,
-                Supplier<Enemy> enemySupplier)
-    {
-        super(coordinate, gameGrid,
-            image,
-            enemySupplier);
-    }
+	public Door(Vector2D coordinate, AbstractImage image, GameGrid gameGrid,
+				Supplier<Enemy> enemySupplier)
+	{
+		super(coordinate, gameGrid,
+			image,
+			enemySupplier);
+	}
 
-    @Override
-    public void pick(BomberMan bomberMan)
-    {
-        if (getGameGrid().getNumberOfEnemiesStillAlive() == 0) {
-            bomberMan.steppedOnDoor(this);
-            Model.getInstance().endGame(true);
-        }
-    }
+	@Override
+	public void pick(BomberMan bomberMan)
+	{
+		if (getGameGrid().getNumberOfEnemiesStillAlive() == 0) {
+			bomberMan.steppedOnDoor(this);
+			Model.getInstance().endGame(true);
+		}
+	}
 
-    @Override
-    public boolean allowsBombs()
-    {
-        return false;
-    }
+	@Override
+	public boolean allowsBombs()
+	{
+		return false;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

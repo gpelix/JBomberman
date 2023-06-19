@@ -8,8 +8,10 @@ package app.jbomberman.util;
 @FunctionalInterface
 public interface Callback
 {
-    /**
-     * run() is the single abstract method
-     */
-    void run();
+	/**
+	 * run() is the single abstract method
+	 */
+	void run();
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

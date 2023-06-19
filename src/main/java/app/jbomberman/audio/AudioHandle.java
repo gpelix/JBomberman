@@ -19,51 +19,53 @@ import app.jbomberman.util.Maybe;
  */
 public class AudioHandle
 {
-    /**
-     * threadPlayer is the threadPlayer that this class wraps
-     *
-     * @implNote its type is Maybe because if the AudioPlayer gets shut down,
-     * no more ThreadPlayers will be created and this will be Nothing
-     */
-    private final Maybe<ThreadPlayer> threadPlayer;
+	/**
+	 * threadPlayer is the threadPlayer that this class wraps
+	 *
+	 * @implNote its type is Maybe because if the AudioPlayer gets shut down,
+	 * no more ThreadPlayers will be created and this will be Nothing
+	 */
+	private final Maybe<ThreadPlayer> threadPlayer;
 
-    /**
-     * Constructor of AudioHandle from a ThreadPlayer
-     *
-     * @param threadPlayer the optional threadPlayer that this class will wrap
-     * @implNote its visibility is default as we only want this package (and
-     * more specifically the AudioPlayer) to create AudioHandles
-     */
-    AudioHandle(Maybe<ThreadPlayer> threadPlayer)
-    {
-        this.threadPlayer = threadPlayer;
-    }
+	/**
+	 * Constructor of AudioHandle from a ThreadPlayer
+	 *
+	 * @param threadPlayer the optional threadPlayer that this class will wrap
+	 * @implNote its visibility is default as we only want this package (and
+	 * more specifically the AudioPlayer) to create AudioHandles
+	 */
+	AudioHandle(Maybe<ThreadPlayer> threadPlayer)
+	{
+		this.threadPlayer = threadPlayer;
+	}
 
-    /**
-     * isPlaying() checks whether the threadPlayer is playing something
-     *
-     * @return whether the threadPlayer is playing something
-     */
-    public boolean isPlaying()
-    {
-        return threadPlayer.compute(true, ThreadPlayer::isPlaying);
-    }
+	/**
+	 * isPlaying() checks whether the threadPlayer is playing something
+	 *
+	 * @return whether the threadPlayer is playing something
+	 */
+	public boolean isPlaying()
+	{
+		return threadPlayer.compute(true, ThreadPlayer::isPlaying);
+	}
 
-    /**
-     * getSoundFileName() gets the name of the file currently playing
-     *
-     * @return the name of the file currently playing
-     */
-    public Maybe<String> getSoundFileName()
-    {
-        return threadPlayer.maybeCompute(ThreadPlayer::getSoundFileName);
-    }
+	/**
+	 * getSoundFileName() gets the name of the file currently playing
+	 *
+	 * @return the name of the file currently playing
+	 */
+	public Maybe<String> getSoundFileName()
+	{
+		return threadPlayer.maybeCompute(ThreadPlayer::getSoundFileName);
+	}
 
-    /**
-     * stop() stops the playing of the sound
-     */
-    public void stop()
-    {
-        threadPlayer.maybeDo(AudioPlayer.getInstance()::stop);
-    }
+	/**
+	 * stop() stops the playing of the sound
+	 */
+	public void stop()
+	{
+		threadPlayer.maybeDo(AudioPlayer.getInstance()::stop);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

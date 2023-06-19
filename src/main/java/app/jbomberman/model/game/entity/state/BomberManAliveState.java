@@ -12,66 +12,68 @@ import app.jbomberman.util.Maybe;
 
 public class BomberManAliveState extends AliveState
 {
-    private final BomberMan bomberMan;
+	private final BomberMan bomberMan;
 
-    private final MovingImageManager imageManager;
+	private final MovingImageManager imageManager;
 
-    private boolean drawn;
+	private boolean drawn;
 
-    public BomberManAliveState(BomberMan bomberMan,
-                               MovingImageManager imageManager,
-                               GameCharacterState nextState)
-    {
-        super(bomberMan, nextState);
-        this.bomberMan = bomberMan;
-        this.imageManager = imageManager;
-        this.drawn = false;
-    }
+	public BomberManAliveState(BomberMan bomberMan,
+							   MovingImageManager imageManager,
+							   GameCharacterState nextState)
+	{
+		super(bomberMan, nextState);
+		this.bomberMan = bomberMan;
+		this.imageManager = imageManager;
+		this.drawn = false;
+	}
 
-    @Override
-    public boolean notifyExplosion(Explosion explosion)
-    {
-        BomberManCapabilities capabilities = bomberMan.getCapabilities();
-        if (!capabilities.goesThroughFire() && !capabilities.isInvincible())
-            die();
+	@Override
+	public boolean notifyExplosion(Explosion explosion)
+	{
+		BomberManCapabilities capabilities = bomberMan.getCapabilities();
+		if (!capabilities.goesThroughFire() && !capabilities.isInvincible())
+			die();
 
-        return false;
-    }
+		return false;
+	}
 
-    @Override
-    public void updateInModel()
-    {
-        bomberMan.move();
-    }
+	@Override
+	public void updateInModel()
+	{
+		bomberMan.move();
+	}
 
-    @Override
-    public Drawing getDrawing()
-    {
-        System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
-        Drawing drawing = bomberMan.getDrawing(imageManager.getNextImage(drawn ?
-            CollectionUtils.pick(bomberMan.getDirections()) : Maybe.nothing()));
+	@Override
+	public Drawing getDrawing()
+	{
+		System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
+		Drawing drawing = bomberMan.getDrawing(imageManager.getNextImage(drawn ?
+			CollectionUtils.pick(bomberMan.getDirections()) : Maybe.nothing()));
 
-        drawn = true;
+		drawn = true;
 
-        return drawing;
-    }
+		return drawing;
+	}
 
-    public void notifyCaughtByEnemy()
-    {
-        BomberManCapabilities cap = bomberMan.getCapabilities();
+	public void notifyCaughtByEnemy()
+	{
+		BomberManCapabilities cap = bomberMan.getCapabilities();
 
-        if (!cap.isInvincible())
-            die();
-    }
+		if (!cap.isInvincible())
+			die();
+	}
 
-    @Override
-    protected void die()
-    {
-        super.die();
+	@Override
+	protected void die()
+	{
+		super.die();
 
-        Model.getInstance().getAccount().getCapabilities().removeLife();
+		Model.getInstance().getAccount().getCapabilities().removeLife();
 
-        bomberMan.setSoundHandle(
-            Maybe.just(AudioPlayer.getInstance().playSound(BomberMan.getBombermanDeathSound())));
-    }
+		bomberMan.setSoundHandle(
+			Maybe.just(AudioPlayer.getInstance().playSound(BomberMan.getBombermanDeathSound())));
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

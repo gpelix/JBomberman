@@ -15,17 +15,19 @@ import java.io.IOException;
  */
 public class SwingImageBuilder extends AbstractImageBuilder
 {
-    /**
-     * @param path the path to the image in the images/ folder
-     * @return the SwingImage loaded
-     */
-    @Override
-    public SwingImage getImage(String path)
-    {
-        try {
-            return new SwingImage(ImageIO.read(Resources.getResourceAsStream(path)));
-        } catch (IOException e) {
-            throw new JBomberManException("Unable to load " + path);
-        }
-    }
+	/**
+	 * @param path the path to the image in the images/ folder
+	 * @return the SwingImage loaded
+	 */
+	@Override
+	public SwingImage getImage(String path)
+	{
+		try {
+			return new SwingImage(ImageIO.read(Resources.getResourceAsStream(path)));
+		} catch (IOException e) {
+			throw new JBomberManException("Unable to load " + path);
+		}
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

@@ -12,18 +12,20 @@ import java.util.Random;
  */
 public class RandomNumberGenerator
 {
-    /**
-     * rng is the unique random number generator
-     */
-    private static Random rng;
+	/**
+	 * rng is the unique random number generator
+	 */
+	private static Random rng;
 
-    /**
-     * @return the unique instance of java.util.random
-     */
-    public static Random getInstance()
-    {
-        if (rng == null)
-            rng = new Random();
-        return rng;
-    }
+	/**
+	 * @return the unique instance of java.util.random
+	 */
+	public static Random getInstance()
+	{
+		if (rng == null)
+			rng = new Random();
+		return rng;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

@@ -7,16 +7,18 @@ import javax.swing.Timer;
 
 public class SwingLoopTimer extends LoopTimer
 {
-    private final Timer timer;
+	private final Timer timer;
 
-    public SwingLoopTimer(Callback callback)
-    {
-        timer = new Timer(1000 / 60, e -> callback.run());
-    }
+	public SwingLoopTimer(Callback callback)
+	{
+		timer = new Timer(1000 / 60, e -> callback.run());
+	}
 
-    @Override
-    public void start()
-    {
-        timer.start();
-    }
+	@Override
+	public void start()
+	{
+		timer.start();
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

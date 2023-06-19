@@ -7,34 +7,36 @@ import app.jbomberman.util.Vector2D;
 
 public class AutoBomb extends Bomb
 {
-    private static final int BOMB_EXPLOSION_INTERVAL = Properties.getInstance().getMaxFps() * 2;
+	private static final int BOMB_EXPLOSION_INTERVAL = Properties.getInstance().getMaxFps() * 2;
 
-    private int timeToExplosion = BOMB_EXPLOSION_INTERVAL;
+	private int timeToExplosion = BOMB_EXPLOSION_INTERVAL;
 
-    public AutoBomb(Vector2D coordinate, int bombRange,
-                    BomberMan bomberMan, ImageManager imageManager,
-                    GameGrid gameGrid)
-    {
-        super(coordinate, bombRange, bomberMan, imageManager, gameGrid);
-    }
+	public AutoBomb(Vector2D coordinate, int bombRange,
+					BomberMan bomberMan, ImageManager imageManager,
+					GameGrid gameGrid)
+	{
+		super(coordinate, bombRange, bomberMan, imageManager, gameGrid);
+	}
 
-    @Override
-    public void updateInModel()
-    {
-        if (--timeToExplosion == 0) {
-            commonUpdateInModel();
-        }
-    }
+	@Override
+	public void updateInModel()
+	{
+		if (--timeToExplosion == 0) {
+			commonUpdateInModel();
+		}
+	}
 
-    @Override
-    public String toString()
-    {
-        return "AutoBomb(" + super.toString() + ")";
-    }
+	@Override
+	public String toString()
+	{
+		return "AutoBomb(" + super.toString() + ")";
+	}
 
-    @Override
-    public boolean allowsBombs()
-    {
-        return false;
-    }
+	@Override
+	public boolean allowsBombs()
+	{
+		return false;
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

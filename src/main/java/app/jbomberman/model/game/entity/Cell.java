@@ -7,18 +7,20 @@ import app.jbomberman.util.Vector2D;
 
 public abstract class Cell extends Entity
 {
-    public Cell(Vector2D coordinate, AbstractImage img, GameGrid gameGrid)
-    {
-        super(coordinate, gameGrid);
-        this.img = img;
-    }
+	public Cell(Vector2D coordinate, AbstractImage img, GameGrid gameGrid)
+	{
+		super(coordinate, gameGrid);
+		this.img = img;
+	}
 
-    private final AbstractImage img;
+	private final AbstractImage img;
 
 
-    @Override
-    public Drawing getDrawing()
-    {
-        return getDrawing(img);
-    }
+	@Override
+	public Drawing getDrawing()
+	{
+		return getDrawing(img);
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

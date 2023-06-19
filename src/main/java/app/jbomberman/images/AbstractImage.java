@@ -10,10 +10,12 @@ import app.jbomberman.util.Vector2D;
  */
 public abstract class AbstractImage
 {
-    /**
-     * getDimensions() is used to get the dimensions of the AbstractImage
-     *
-     * @return the dimensions of the image
-     */
-    public abstract Vector2D getDimensions();
+	/**
+	 * getDimensions() is used to get the dimensions of the AbstractImage
+	 *
+	 * @return the dimensions of the image
+	 */
+	public abstract Vector2D getDimensions();
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

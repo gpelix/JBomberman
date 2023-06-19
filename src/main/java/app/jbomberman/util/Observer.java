@@ -14,10 +14,12 @@ package app.jbomberman.util;
  */
 public interface Observer
 {
-    /**
-     * The method that must be called to cause an update of the observer.
-     *
-     * @param observable the observable that called the method update.
-     */
-    void update(Observable observable);
+	/**
+	 * The method that must be called to cause an update of the observer.
+	 *
+	 * @param observable the observable that called the method update.
+	 */
+	void update(Observable observable);
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

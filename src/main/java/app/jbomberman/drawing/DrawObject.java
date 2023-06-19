@@ -14,59 +14,61 @@ import java.util.Objects;
  */
 public class DrawObject extends MutableVector2D
 {
-    /**
-     * image is the AbstractImage of the DrawObject
-     */
-    private final AbstractImage image;
+	/**
+	 * image is the AbstractImage of the DrawObject
+	 */
+	private final AbstractImage image;
 
-    /**
-     * construct a DrawObject
-     *
-     * @param topLeftCorner the top left corner
-     * @param image         the image to be encapsulated
-     */
-    public DrawObject(Vector2D topLeftCorner, AbstractImage image)
-    {
-        super(topLeftCorner);
+	/**
+	 * construct a DrawObject
+	 *
+	 * @param topLeftCorner the top left corner
+	 * @param image		 the image to be encapsulated
+	 */
+	public DrawObject(Vector2D topLeftCorner, AbstractImage image)
+	{
+		super(topLeftCorner);
 
-        this.image = image;
-    }
+		this.image = image;
+	}
 
-    /**
-     * getImage() gets the encapsulated image
-     *
-     * @return the incapsulated image
-     */
-    public AbstractImage getImage()
-    {
-        return image;
-    }
+	/**
+	 * getImage() gets the encapsulated image
+	 *
+	 * @return the incapsulated image
+	 */
+	public AbstractImage getImage()
+	{
+		return image;
+	}
 
-    /**
-     * getDimensions() gets the dimensions of the underlying image
-     *
-     * @return the dimensions of the underlying image
-     */
-    public Vector2D getDimensions()
-    {
-        return image.getDimensions();
-    }
+	/**
+	 * getDimensions() gets the dimensions of the underlying image
+	 *
+	 * @return the dimensions of the underlying image
+	 */
+	public Vector2D getDimensions()
+	{
+		return image.getDimensions();
+	}
 
 
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (obj == null || obj.getClass() != getClass())
-            return false;
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == null || obj.getClass() != getClass())
+			return false;
 
-        LayeredDrawObject other = (LayeredDrawObject) obj;
+		LayeredDrawObject other = (LayeredDrawObject) obj;
 
-        return Objects.equals(this.getX(), other.getX()) && Objects.equals(getY(), other.getY()) && getImage() == other.getImage();
-    }
+		return Objects.equals(this.getX(), other.getX()) && Objects.equals(getY(), other.getY()) && getImage() == other.getImage();
+	}
 
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(getX(), getY(), getImage());
-    }
+	@Override
+	public int hashCode()
+	{
+		return Objects.hash(getX(), getY(), getImage());
+	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/
