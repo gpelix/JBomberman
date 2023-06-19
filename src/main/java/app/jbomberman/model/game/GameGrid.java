@@ -81,16 +81,10 @@ public class GameGrid extends Grid<FreeCell> implements Observable
         Spliterator<FreeCell> spliterator =
             Spliterators.spliteratorUnknownSize(iterator(), 0);
 
-        Drawing ret = new Drawing(
+        return new Drawing(
             StreamSupport.stream(spliterator, false)
-                .map(x -> {
-                    Drawing r = x.getDrawing();
-//                    System.out.println("inside" + r.numberOfItems());
-                    return r;
-                })
+                .map(FreeCell::getDrawing)
                 .toArray(Drawing[]::new));
-        //System.out.println("in game grid " + ret.numberOfItems());
-        return ret;
     }
 
     public void addGameCharacter(GameCharacter character,
