@@ -16,8 +16,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.Container;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -40,9 +38,7 @@ public class SwingView extends View implements Observer
 
     private Maybe<Callback> callback = Maybe.nothing();
 
-//    private final List<JLabel> labels = new ArrayList<>();
-//
-//    private int topOfLabels = 0;
+    private final List<JLabel> labelPool = new ArrayList<>();
 
     public SwingView()
     {
@@ -93,7 +89,7 @@ public class SwingView extends View implements Observer
 
         Vector2D shamt = screenCenter.sub(sceneCenter);
 
-        layers.forEach(Container::removeAll);
+        //layers.forEach(Container::removeAll);
 
         drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingLayer(layeredDrawObject.getLayer()));
 
@@ -119,19 +115,13 @@ public class SwingView extends View implements Observer
 
         for (Map.Entry<LayeredDrawObject, JLabel> d : toRemoveDrawObjectsMap.entrySet()) {
             JLabel label = d.getValue();
-            layers.get(d.getKey().getLayer()).remove(d.getValue());
+            layers.get(d.getKey().getLayer()).remove(label);
             drawObjects.remove(d.getKey());
+            labelPool.add(label);
         }
 
-//        drawing.getDrawObjects()
-//            .stream()
-//            // Note here that we reverse the order! swing wants us to draw first the top and then the bottom
-//            .sorted((a, b) -> b.getLayer() - a.getLayer())
-//            .forEachOrdered(_draw -> drawDrawObject(_draw, shamt));
 
         frame.repaint();
-        // This might be not necessary
-        layers.forEach(Component::repaint);
     }
 
     private void assureExistingLayer(int layerNumber)
@@ -140,7 +130,7 @@ public class SwingView extends View implements Observer
             System.out.println(layerNumber);
             JPanel panel = new JPanel();
             panel.setBackground(new Color(0, 0, 0, 0));
-            frame.add(panel);
+            frame.add(panel, 0);
             panel.setSize(frame.getWidth(), frame.getHeight());
             System.out.println(frame.getWidth() + " " + frame.getHeight());
             panel.setVisible(true);
@@ -152,8 +142,9 @@ public class SwingView extends View implements Observer
     // Note that Swing draws in reverse
     private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
     {
-        JLabel label;
-        label = new JLabel();
+        JLabel label = (labelPool.size() == 0) ?
+            new JLabel() :
+            labelPool.remove(labelPool.size() - 1);
 
         label.setIcon(new ImageIcon(toSwingImage(drawObject.getImage())));
 
