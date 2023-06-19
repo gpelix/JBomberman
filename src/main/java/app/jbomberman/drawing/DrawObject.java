@@ -61,7 +61,7 @@ public class DrawObject extends MutableVector2D
 
         LayeredDrawObject other = (LayeredDrawObject) obj;
 
-        return this.getX() == other.getX() && getY() == other.getY() && getImage() == other.getImage();
+        return Objects.equals(this.getX(), other.getX()) && Objects.equals(getY(), other.getY()) && getImage() == other.getImage();
     }
 
     @Override
