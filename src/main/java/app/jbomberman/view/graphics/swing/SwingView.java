@@ -34,15 +34,30 @@ import java.util.Set;
 // TODO: TODO javadoc
 public class SwingView extends View implements Observer
 {
+	/**
+	 * frame is the JFrame to which JPanels must be added to
+	 */
 	private final JFrame frame;
 
 	private Maybe<Callback> callback = Maybe.nothing();
 
+	/**
+	 * labelPool is a pool of freeLabels
+	 * <p>
+	 * A lot of time was getting wasted on creating new JLabels. So, instead of
+	 * letting the GC deallocate the JLabels, we put the unused JLabels in this
+	 * labelPool
+	 */
 	private final List<JLabel> labelPool = new ArrayList<>();
 
+	/**
+	 * SwingView is the public constructor of the SwingView.
+	 * <p>
+	 * It creates a ready-to-use window
+	 */
 	public SwingView()
 	{
-		super(new SwingGraphicFactory(), new SwingKeyBoardController());
+		super(new SwingGraphicFactory());
 
 		frame = new JFrame();
 
@@ -70,15 +85,26 @@ public class SwingView extends View implements Observer
 		frame.setBackground(Color.BLACK);
 		frame.setResizable(false);
 
-		//frame.setSize(700, 700);
 		frame.setVisible(true);
 		frame.setLayout(null);
 	}
 
+	/**
+	 * layers is the List of layers. Layer number n is in position n in the list
+	 */
 	private final List<JPanel> layers = new ArrayList<>();
 
+	/**
+	 * drawObjects maps a drawObject to the corresponding displayed label
+	 */
 	private final Map<LayeredDrawObject, JLabel> drawObjects = new HashMap<>();
 
+	/**
+	 * Given a drawing, draw() centers it in the middle of the screen and displays
+	 * it.
+	 *
+	 * @param drawing the drawing to be displayed
+	 */
 	@Override
 	public void draw(Drawing drawing)
 	{
@@ -124,6 +150,12 @@ public class SwingView extends View implements Observer
 		frame.repaint();
 	}
 
+	/**
+	 * assureExistingLayers adds as many empty layers as needed to be able to accomodate
+	 * layer numbered layerNumber
+	 *
+	 * @param layerNumber the layer whose number we want to be available
+	 */
 	private void assureExistingLayer(int layerNumber)
 	{
 		while (layers.size() <= layerNumber) {
@@ -137,7 +169,12 @@ public class SwingView extends View implements Observer
 		}
 	}
 
-	// Note that Swing draws in reverse
+	/**
+	 * drawDrawObject() adds a LayeredDrawObject to the View
+	 *
+	 * @param drawObject the drawObject to draw
+	 * @param shift      vector to sum to coordinates due to the centering of drawObjects
+	 */
 	private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
 	{
 		JLabel label = (labelPool.size() == 0) ?
@@ -152,20 +189,36 @@ public class SwingView extends View implements Observer
 
 		layers.get(drawObject.getLayer()).add(label);
 		drawObjects.put(drawObject, label);
-//		panel.add(label);
 	}
 
+	/**
+	 * toSwingImage is a simple method to be called internally by SwingView to unwrap
+	 * an AbstractImage
+	 *
+	 * @param abstractImage the AbstractImage to unwrap
+	 * @return the Image wrapped in abstractImage
+	 */
 	private static Image toSwingImage(AbstractImage abstractImage)
 	{
 		return ((SwingImage) abstractImage).unwrap();
 	}
 
+	/**
+	 * setTitle() sets the title to the window
+	 *
+	 * @param title the title that we want to set to the window
+	 */
 	@Override
 	public void setTitle(String title)
 	{
 		frame.setTitle(title);
 	}
 
+	/**
+	 * setIcon() sets the icon to be displayed for this application
+	 *
+	 * @param path the path of the icon to display
+	 */
 	@Override
 	public void setIcon(String path)
 	{
@@ -174,12 +227,21 @@ public class SwingView extends View implements Observer
 		frame.setIconImage(icon.getImage());
 	}
 
+	/**
+	 * setCloseOperationCallBack() is needed if we want to add a callback to be
+	 * called when the application gets closed by the user
+	 *
+	 * @param callBack the callback to call when the window gets closed
+	 */
 	@Override
 	public void setCloseOperationCallBack(Callback callBack)
 	{
 		this.callback = Maybe.just(callBack);
 	}
 
+	/**
+	 * close() function just exits the program returning success
+	 */
 	@Override
 	public void close()
 	{

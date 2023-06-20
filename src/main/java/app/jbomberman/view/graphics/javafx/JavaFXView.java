@@ -68,24 +68,21 @@ public class JavaFXView extends View implements Observer
 	private final Logger logger;
 
 	/**
-	 *
+	 * freeImageViewsPool is the pool of ImageViews. About 7% of time was lost
+	 * creating ImageViews. So we keep a pool of ImageView's to avoid initializing
+	 * ImageViews repeatedly
 	 */
-
 	private final List<ImageView> freeImageViewsPool;
 
 	/**
-	 * View is the public constructor of the View.
+	 * View is the public constructor of the JavaFXView.
 	 * Once a javafx thread has been spawned calling the initialize static method
 	 * of this class from the callback passed to the initialize() method, a View
 	 * can be finally created.
-	 *
-	 * @implNote this startup method is not optional but mandatory. We don't
-	 * want the view to subclass javafx.Application as we want to be able to
-	 * build an object of type view from the controller as a normal class
 	 */
 	public JavaFXView()
 	{
-		super(new JavaFXGraphicFactory(), new JavaFXKeyBoardController());
+		super(new JavaFXGraphicFactory());
 		logger = LogManager.getLogger(getClass());
 		freeImageViewsPool = new ArrayList<>();
 
@@ -168,12 +165,19 @@ public class JavaFXView extends View implements Observer
 		for (Map.Entry<LayeredDrawObject, ImageView> d : toRemoveDrawObjectsMap.entrySet()) {
 			ImageView imageView = d.getValue();
 			if (!layers.get(d.getKey().getLayer()).getChildren().remove(imageView)) {
-			}//logger.error("Removing an Image from a layer that didn't contain it. Weird");
+				logger.error("Removing an Image from a layer that didn't contain it. Weird");
+			}
 			drawObjects.remove(d.getKey());
 			freeImageViewsPool.add(imageView);
 		}
 	}
 
+	/**
+	 * assureExistingLayers adds as many empty layers as needed to be able to accomodate
+	 * layer numbered layerNumber
+	 *
+	 * @param layerNumber the layer whose number we want to be available
+	 */
 	private void assureExistingGroup(int layerNumber)
 	{
 		while (root.getChildren().size() <= layerNumber) {
@@ -188,7 +192,7 @@ public class JavaFXView extends View implements Observer
 	 * depending on the value of the shift Vector2D
 	 *
 	 * @param drawObject the drawObject
-	 * @param shift	  the vector by which the object must be shifted towards SE
+	 * @param shift      the vector by which the object must be shifted towards SE
 	 */
 	private void drawDrawObject(LayeredDrawObject drawObject, Vector2D shift)
 	{

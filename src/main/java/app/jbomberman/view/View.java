@@ -31,20 +31,29 @@ public abstract class View implements Observer
 	/**
 	 * public constructor that initializes a View from a GraphicFactory and keyBoardController
 	 *
-	 * @param factory            the abstract components factory
-	 * @param keyBoardController the keyboard Controller
+	 * @param factory the abstract components factory
 	 */
-	protected View(GraphicFactory factory, KeyBoardController keyBoardController)
+	protected View(GraphicFactory factory)
 	{
 		this.factory = factory;
-		this.keyBoardController = keyBoardController;
+		this.keyBoardController = factory.getKeyBoardController();
 	}
 
+	/**
+	 * getGraphicFactory returns the graphic factory
+	 *
+	 * @return the graphic factory
+	 */
 	public GraphicFactory getGraphicFactory()
 	{
 		return factory;
 	}
 
+	/**
+	 * getKeyBoardController gets the keyBoardController
+	 *
+	 * @return the keyboard controller
+	 */
 	public KeyBoardController getKeyBoardController()
 	{
 		return keyBoardController;
@@ -55,10 +64,6 @@ public abstract class View implements Observer
 	 * it.
 	 *
 	 * @param drawing the drawing to be displayed
-	 * @implNote This approach is kind of slow as every time we have to redraw everything.
-	 * However, with some benchmarks we saw that the total amount of time needed
-	 * to draw the screen is less than the time that the model needs to update
-	 * himself. So using this approach is not such a bad choice
 	 */
 	public abstract void draw(Drawing drawing);
 
@@ -80,7 +85,7 @@ public abstract class View implements Observer
 	 * setCloseOperationCallBack() is needed if we want to add a callback to be
 	 * called when the application gets closed by the user
 	 *
-	 * @param callBack the callback to call on close of the window
+	 * @param callBack the callback to call when the window gets closed
 	 */
 	public abstract void setCloseOperationCallBack(Callback callBack);
 
@@ -99,6 +104,13 @@ public abstract class View implements Observer
 			throw new JBomberManException("not implemented");
 	}
 
+	/**
+	 * getDrawingDimensions() must be called by classes inheriting View, to get the
+	 * dimensions of a drawing
+	 *
+	 * @param drawing the drawing whose dimensions must be calculated
+	 * @return the dimensions of the drawing
+	 */
 	protected Vector2D getDrawingDimensions(Drawing drawing)
 	{
 		return drawing.getDimensions().orElse(() ->

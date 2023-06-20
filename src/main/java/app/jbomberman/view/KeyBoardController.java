@@ -42,6 +42,11 @@ public abstract class KeyBoardController extends AbstractObservable
 			"Called update but there are no update info"));
 	}
 
+	/**
+	 * function to be called when a key pressed notification gets received
+	 *
+	 * @param keyCode the key code received
+	 */
 	protected void onPressed(KeyBoardControllerKeyCode keyCode)
 	{
 		pressedKeyCodes.add(keyCode);
@@ -54,6 +59,11 @@ public abstract class KeyBoardController extends AbstractObservable
 		updateAllObservers();
 	}
 
+	/**
+	 * function to be called when a key released notification gets received
+	 *
+	 * @param keyCode the key code received
+	 */
 	protected void onReleased(KeyBoardControllerKeyCode keyCode)
 	{
 		pressedKeyCodes.remove(keyCode);
@@ -66,6 +76,13 @@ public abstract class KeyBoardController extends AbstractObservable
 		updateAllObservers();
 	}
 
+	/**
+	 * setUpdateInfo sets the current update info.
+	 * <p>
+	 * It's meant to be called by subclasses to set the update infos
+	 *
+	 * @param info the info that must be set
+	 */
 	protected void setUpdateInfo(KeyBoardUpdateInfo info)
 	{
 		updateInfo = Maybe.just(info);

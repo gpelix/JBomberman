@@ -79,8 +79,17 @@ import static java.awt.event.KeyEvent.VK_X;
 import static java.awt.event.KeyEvent.VK_Y;
 import static java.awt.event.KeyEvent.VK_Z;
 
+/**
+ * SwingKeyBoardController is the concrete implementation of KeyBoardController
+ * for java swing
+ *
+ * @author gp
+ */
 public class SwingKeyBoardController extends KeyBoardController
 {
+	/**
+	 * keyListener is the way we use to interface with java swing
+	 */
 	private final KeyListener keyListener;
 
 
@@ -88,16 +97,31 @@ public class SwingKeyBoardController extends KeyBoardController
 	{
 		keyListener = new KeyListener()
 		{
+			/**
+			 * We ignore the typed event
+			 *
+			 * @param e the event to be processed
+			 */
 			@Override
 			public void keyTyped(KeyEvent e)
 			{/*do nothing*/}
 
+			/**
+			 * keyPressed is the handler of pressed events
+			 *
+			 * @param e the event to be processed
+			 */
 			@Override
 			public void keyPressed(KeyEvent e)
 			{
 				onPressed(fromSwingKeyCode(e.getKeyCode()));
 			}
 
+			/**
+			 * keyReleased is the handler of released events
+			 *
+			 * @param e the event to be processed
+			 */
 			@Override
 			public void keyReleased(KeyEvent e)
 			{
@@ -106,16 +130,33 @@ public class SwingKeyBoardController extends KeyBoardController
 		};
 	}
 
+	/**
+	 * addToComponent() adds the listener to a certain swing component
+	 *
+	 * @param component the component to which the listener must be added
+	 */
 	public void addToComponent(Component component)
 	{
 		component.addKeyListener(keyListener);
 	}
 
+	/**
+	 * removeFromComponent() detaches the listener from a wsing component
+	 *
+	 * @param component the component to which the listener must be removed
+	 */
 	public void removeFromComponent(Component component)
 	{
 		component.removeKeyListener(keyListener);
 	}
 
+	/**
+	 * fromSwingKeyCode() is a private function that converts a swing keyCode to
+	 * a KeyBoardControllerKeyCode
+	 *
+	 * @param keyCode the int representing the swing key
+	 * @return the corresponding KeyBoardControllerKeyCode
+	 */
 	private static KeyBoardControllerKeyCode fromSwingKeyCode(int keyCode)
 	{
 		return switch (keyCode) {
