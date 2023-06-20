@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+@Deprecated(forRemoval = true)
 public class AudioManager
 {
 	private static AudioManager instance;

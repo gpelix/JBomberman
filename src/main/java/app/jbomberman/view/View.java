@@ -10,16 +10,30 @@ import app.jbomberman.util.Vector2D;
 
 /**
  * View class plays the role of the View in the MVC pattern we used to build
- * the application
+ * the application.
  *
  * @author gp
  */
 public abstract class View implements Observer
 {
+	/**
+	 * GraphicFactory is the factory of abstract graphical components
+	 */
 	private final GraphicFactory factory;
 
+	/**
+	 * keyBoardController is the keyboard controller that must be listening for
+	 * keyboard events and notify observers. There is just one keyBoardController
+	 * as there is just one window at the moment
+	 */
 	private final KeyBoardController keyBoardController;
 
+	/**
+	 * public constructor that initializes a View from a GraphicFactory and keyBoardController
+	 *
+	 * @param factory            the abstract components factory
+	 * @param keyBoardController the keyboard Controller
+	 */
 	protected View(GraphicFactory factory, KeyBoardController keyBoardController)
 	{
 		this.factory = factory;
