@@ -17,6 +17,9 @@ import java.util.stream.Stream;
  */
 public class Drawing
 {
+	/**
+	 * drawObjects is the list of DrawObjects in the Drawing
+	 */
 	private List<LayeredDrawObject> drawObjects;
 
 	/**
@@ -89,12 +92,12 @@ public class Drawing
 	 * merge() merges a drawing into this. Before adding the drawObject to their
 	 * layer, it applies the function toNewLayerFunction
 	 *
-	 * @param otherDrawing	   the drawing that will be merged in this
+	 * @param otherDrawing       the drawing that will be merged in this
 	 * @param toNewLayerFunction the function that must be used to remap the
-	 *						   layers of otherDrawing to their new layer
+	 *                           layers of otherDrawing to their new layer
 	 */
 	public void merge(Drawing otherDrawing,
-					  Function<Integer, Integer> toNewLayerFunction)
+										Function<Integer, Integer> toNewLayerFunction)
 	{
 		otherDrawing.drawObjects.forEach(layeredDrawObject ->
 			drawObjects.add(new LayeredDrawObject(Vector2D.of(layeredDrawObject.getX(), layeredDrawObject.getY()),
@@ -144,11 +147,21 @@ public class Drawing
 		return drawObjects.toString();
 	}
 
+	/**
+	 * getMaxLayer() gets the maximum layer
+	 *
+	 * @return the maximum layer in the Drawing
+	 */
 	public int getMaxLayer()
 	{
 		return drawObjects.stream().mapToInt(LayeredDrawObject::getLayer).max().orElse(-1);
 	}
 
+	/**
+	 * numberOfItems() gets the number of drawObjects in the Drawing
+	 *
+	 * @return the number of DrawObjects in the Drawing
+	 */
 	public int numberOfItems()
 	{
 		return drawObjects.size();

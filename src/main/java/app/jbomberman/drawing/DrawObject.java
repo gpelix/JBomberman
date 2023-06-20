@@ -23,7 +23,7 @@ public class DrawObject extends MutableVector2D
 	 * construct a DrawObject
 	 *
 	 * @param topLeftCorner the top left corner
-	 * @param image		 the image to be encapsulated
+	 * @param image         the image to be encapsulated
 	 */
 	public DrawObject(Vector2D topLeftCorner, AbstractImage image)
 	{
@@ -52,7 +52,13 @@ public class DrawObject extends MutableVector2D
 		return image.getDimensions();
 	}
 
-
+	/**
+	 * two DrawObjects are the same only if the images are the same and they
+	 * must be placed in the same place
+	 *
+	 * @param obj the other object
+	 * @return true if they obj and this are equal
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -64,6 +70,12 @@ public class DrawObject extends MutableVector2D
 		return Objects.equals(this.getX(), other.getX()) && Objects.equals(getY(), other.getY()) && getImage() == other.getImage();
 	}
 
+	/**
+	 * hashCode() must be overwritten to use Map and Set appropriately
+	 *
+	 * @return the hashCoe that is the combination of the hashCodes of the image
+	 * and the coordinates
+	 */
 	@Override
 	public int hashCode()
 	{

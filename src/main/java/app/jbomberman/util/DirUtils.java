@@ -17,7 +17,7 @@ public class DirUtils
 	 * while on the other *NIX's ~/.config/
 	 *
 	 * @return the appdata directory
-	 * @// TODO: 5/24/23 It's untested on MAC and windows
+	 * @// TODO: 5/24/23 It's untested on MAC
 	 */
 	public static String getAppData()
 	{

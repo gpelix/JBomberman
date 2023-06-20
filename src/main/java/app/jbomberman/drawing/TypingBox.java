@@ -9,14 +9,12 @@ import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
 
-// Observe the KeyBoardController
-
 /**
  * TypingBox is a box that will display the text typed
  *
  * @author gp
  * @implNote TypingBox implements the observer interface as it has to listen for
- * key-pressed events
+ * key-pressed events. So it listens to the KeyBoardController
  */
 public class TypingBox implements Observer, Drawable
 {
@@ -34,8 +32,8 @@ public class TypingBox implements Observer, Drawable
 	/**
 	 * construct a TypingBox
 	 *
-	 * @param controller		 the controller that handles forwards the keyboar event
-	 * @param color			  the color of the TypingBox
+	 * @param controller         the controller that handles forwards the keyboar event
+	 * @param color              the color of the TypingBox
 	 * @param coordinateOfCenter the center of the TypingBox
 	 */
 	public TypingBox(Controller controller, Text.TextColor color, Vector2D coordinateOfCenter)

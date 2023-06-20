@@ -19,6 +19,11 @@ import java.util.stream.IntStream;
  */
 public class Text extends MutableVector2D implements Drawable
 {
+	/**
+	 * TextColor is the color of the text
+	 *
+	 * @author gp
+	 */
 	public enum TextColor
 	{
 		Black, Gray
@@ -47,10 +52,10 @@ public class Text extends MutableVector2D implements Drawable
 	/**
 	 * Text constructor from string, color, and position
 	 *
-	 * @param str				String of text
-	 * @param color			  the color of the text
+	 * @param str                String of text
+	 * @param color              the color of the text
 	 * @param coordinatePosition a coordinate. The interpretation of that coordinate
-	 *						   is up to the program in question
+	 *                           is up to the program in question
 	 */
 	public Text(String str, TextColor color, Vector2D coordinatePosition)
 	{
@@ -73,7 +78,7 @@ public class Text extends MutableVector2D implements Drawable
 	/**
 	 * Text constructor setting empty string, color anda position
 	 *
-	 * @param color			  the color of the text
+	 * @param color              the color of the text
 	 * @param coordinatePosition the coordinate of the text
 	 */
 	public Text(TextColor color, Vector2D coordinatePosition)

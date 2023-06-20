@@ -20,8 +20,8 @@ public class MenuEntry extends Text
 	 * MenuEntry is a public constructor that takes the text, color, and the
 	 * callback to be called when chosen
 	 *
-	 * @param str	  the text to be shown on the entry
-	 * @param color	the color of the entry
+	 * @param str      the text to be shown on the entry
+	 * @param color    the color of the entry
 	 * @param callback the callback to be called when this entry is chosen
 	 */
 	public MenuEntry(String str, TextColor color, Callback callback)
@@ -35,7 +35,7 @@ public class MenuEntry extends Text
 	 * Constructor that takes the text to set and a callback. The color will be the
 	 * one of the text
 	 *
-	 * @param text	 the Text from which the text and the color must be taken
+	 * @param text     the Text from which the text and the color must be taken
 	 * @param callback the callback to be called when this entry is chosen
 	 */
 	public MenuEntry(Text text, Callback callback)
@@ -49,11 +49,10 @@ public class MenuEntry extends Text
 	 *
 	 * @return the text without the first fake character
 	 */
-	// TODO: ADD BETTER MENUS
 	@Override
 	public String getText()
 	{
-		return super.getText().substring(1); // WHAT THE HELL. Why substring?? TODO:
+		return super.getText().substring(1);
 	}
 
 	/**
