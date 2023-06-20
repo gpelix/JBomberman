@@ -52,9 +52,17 @@ class ThreadPlayer extends Thread
 	 */
 	private final long stopAllTime;
 
-	private final AudioPlayer audioPlayer;
-
+	/**
+	 * soundBytes keeps the bytes of the sound to play
+	 */
 	private final byte[] soundBytes;
+
+	/**
+	 * interruptedFlag is a flag that must be set to interrupt the current
+	 * thread player. From the player's thread, there must be periodical checks
+	 * to see whether this flag is set
+	 */
+	private volatile boolean interruptedFlag = false;
 
 
 	/**
@@ -63,11 +71,10 @@ class ThreadPlayer extends Thread
 	 *
 	 * @param soundFile filename that contains the audio to play
 	 */
-	ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime, AudioPlayer audioPlayer)
+	ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime)
 	{
 		this.soundFile = soundFile;
 		this.stopAllTime = stopAllTime;
-		this.audioPlayer = audioPlayer;
 		this.soundBytes = soundBytes;
 	}
 
@@ -90,9 +97,9 @@ class ThreadPlayer extends Thread
 	public void run()
 	{
 		try (InputStream inputStream =
-				 new BufferedInputStream(new ByteArrayInputStream(soundBytes));
-			 AudioInputStream audioInputStream =
-				 AudioSystem.getAudioInputStream(inputStream))
+					 new BufferedInputStream(new ByteArrayInputStream(soundBytes));
+				 AudioInputStream audioInputStream =
+					 AudioSystem.getAudioInputStream(inputStream))
 		{
 			AudioFormat audioFormat = audioInputStream.getFormat();
 			DataLine.Info info = new DataLine.Info(SourceDataLine.class, audioFormat);
@@ -108,7 +115,7 @@ class ThreadPlayer extends Thread
 					Threads.sleep(WAIT_TIME_MILLS / 20);
 
 				while ((readBytes = audioInputStream.read(bufferBytes)) != -1 && !interruptedFlag) {
-					while (audioPlayer.getPause())
+					while (AudioPlayer.getInstance().getPause())
 						Threads.sleep(30);
 					sourceDataLine.write(bufferBytes, 0, readBytes);
 				}
@@ -140,8 +147,9 @@ class ThreadPlayer extends Thread
 		return soundFile;
 	}
 
-	private boolean interruptedFlag = false;
-
+	/**
+	 * setInterrupted must be called to set the interruptedFlag
+	 */
 	public void setInterrupted()
 	{
 		interruptedFlag = true;

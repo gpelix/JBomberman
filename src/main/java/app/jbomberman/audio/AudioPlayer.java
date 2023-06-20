@@ -23,6 +23,7 @@ import java.util.Set;
  * @author gp
  * @implNote It extends Thread as it needs to be able to
  * run simultaneously with the main thread
+ * @see ThreadPlayer
  */
 public class AudioPlayer extends Thread
 {
@@ -66,10 +67,16 @@ public class AudioPlayer extends Thread
 	private static final long MAX_JOINLOOP_INTERVAL_IN_MILLIS = 10_000;
 
 	/**
-	 * pause is a boolean that represents whether the AudioPlayer has been paused
+	 * pause is a boolean that represents whether the AudioPlayer has been paused.
+	 * It's meant to be kept in order to know the state of the audioPlayer and
+	 * {@link ThreadPlayer}'s must periodically check whether this flag is set
 	 */
 	private volatile boolean pause;
 
+	/**
+	 * soundPoll is a map Path->sound read in byte[], and it's used to avoid opening
+	 * and reading many files many times. It's a way of caching sounds
+	 */
 	private final Map<String, byte[]> soundPool;
 
 	/**
@@ -87,6 +94,9 @@ public class AudioPlayer extends Thread
 		return audioPlayer;
 	}
 
+	/**
+	 * logger
+	 */
 	private final Logger logger;
 
 	/**
@@ -169,7 +179,6 @@ public class AudioPlayer extends Thread
 			}
 		}
 
-
 		if (joined > SUFFERENCE_LEVEL_IN_THREADS) {
 			long newThreadJoinloopInterval =
 				threadJoinloopIntervalMillis / (int) Math.pow(2, (double) (joined / SUFFERENCE_LEVEL_IN_THREADS));
@@ -186,8 +195,8 @@ public class AudioPlayer extends Thread
 	 * playSound is used to play a new sound
 	 *
 	 * @param path Path to the file containing the audio
-	 * @return ThreadPlayer that is in charge of playing the sound. It's only meant
-	 * to be passed back to AudioPlayer's stop() method as argument
+	 * @return the audio handle that is in charge of playing the sound.
+	 * @see AudioHandle
 	 */
 	public AudioHandle playSound(String path)
 	{
@@ -199,7 +208,7 @@ public class AudioPlayer extends Thread
 				logger.fatal("Unable to read file " + path + ". Caught exception " + e.getMessage());
 			}
 		}
-		ThreadPlayer t = new ThreadPlayer(path, soundPool.get(path), stopAllTime, this);
+		ThreadPlayer t = new ThreadPlayer(path, soundPool.get(path), stopAllTime);
 		t.start();
 		players.add(t);
 		return new AudioHandle(Maybe.just(t));
@@ -258,7 +267,7 @@ public class AudioPlayer extends Thread
 	}
 
 	/**
-	 * setPause() sets the pause flag
+	 * setPause() sets the pause flag. It's
 	 *
 	 * @param pause the flag to assign to pause
 	 */
@@ -278,6 +287,5 @@ public class AudioPlayer extends Thread
 		return pause;
 	}
 }
-
 
 /* vim: set ts=2 sw=2 tw=0 noet :*/
