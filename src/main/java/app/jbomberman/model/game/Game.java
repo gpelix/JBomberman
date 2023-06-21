@@ -78,9 +78,16 @@ public class Game
 		return null;
 	}
 
-	public void endGame(boolean successFlag)
+	public void endGame(boolean victory)
 	{
-		//((GameScene) currentBomberManScene).endGame(b);
+//		if (victory) {
+//			replace(WIN_SOUND);
+//			Model.getInstance().getAccount().incrementLevel();
+//		} else {
+//			replace(GAME_OVER_SOUND);
+//		}
+//
+//		exiting = true;
 	}
 }
 

@@ -193,18 +193,6 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		} else
 			throw new JBomberManException("Unsupported " + observable);
 	}
-
-	public void endGame(boolean victory)
-	{
-		if (victory) {
-			replace(WIN_SOUND);
-			Model.getInstance().getAccount().incrementLevel();
-		} else {
-			replace(GAME_OVER_SOUND);
-		}
-
-		exiting = true;
-	}
 }
 
 /* vim: set ts=2 sw=2 tw=0 noet :*/
