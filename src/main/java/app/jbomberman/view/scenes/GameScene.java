@@ -70,13 +70,14 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		super(view);
 
 		Model model = Model.getInstance();
+		model.resetGame();
 
 		int levelNumber = model.getAccount().getLevel();
 
 		currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
 
 		GameGridBuilder builder = new GameGridBuilder(
-			Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL), this);
+			Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
 
 		Text lives = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), Text.TextColor.Black);
 		timeEntry = new Text("", Text.TextColor.Black);

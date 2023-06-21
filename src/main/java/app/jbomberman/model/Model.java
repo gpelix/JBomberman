@@ -27,7 +27,7 @@ public class Model extends AbstractObservable implements Drawable
 
 	private final Timer frameTimer;
 
-	private final Maybe<Game> game = Maybe.nothing();
+	private Maybe<Game> game = Maybe.nothing();
 
 	private static final int FPS = Properties.getInstance().getMaxFps();
 
@@ -46,6 +46,11 @@ public class Model extends AbstractObservable implements Drawable
 	{
 		return game.unwrapOrThrow(
 			() -> new JBomberManException("Getting unset game"));
+	}
+
+	public void resetGame()
+	{
+		game = Maybe.just(new Game());
 	}
 
 	public static void setController(Controller controller)

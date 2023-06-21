@@ -10,7 +10,6 @@ import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.Wall;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
-import app.jbomberman.view.scenes.GameScene;
 
 /**
  * GameGridBuilder is responsible for building the grid. It must
@@ -31,14 +30,10 @@ public class GameGridBuilder
 	 */
 	private final Vector2D topLeft;
 
-	private final GameScene gameScene;
-
-
-	public GameGridBuilder(Vector2D topLeft, GameScene gameScene)
+	public GameGridBuilder(Vector2D topLeft)
 	{
 		grid = Maybe.nothing();
 		this.topLeft = topLeft;
-		this.gameScene = gameScene;
 	}
 
 	public void setup(Vector2D dimensions)
