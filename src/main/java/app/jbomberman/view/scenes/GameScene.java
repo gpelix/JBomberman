@@ -116,6 +116,8 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	@Override
 	public Drawing update()
 	{
+		Model.getInstance().update();
+		
 		if (!timer.hasStarted())
 			timer.start();
 		else if (timer.timeIsUp())
@@ -172,7 +174,6 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	{
 		Controller.controller.detachKeyBoardObserver(this);
 	}
-
 
 	@Override
 	public void update(Observable observable)

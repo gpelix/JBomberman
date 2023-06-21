@@ -54,7 +54,8 @@ public class Controller
 		view.setup();
 
 		view.getGraphicFactory().getLoopTimer(() -> {
-			Model.getInstance().update();
+//			Model.getInstance().update(); The view must update the model as we don't know
+			// to which extent it must be called Model.getInstance().update()
 			view.update();
 		}).start();
 
