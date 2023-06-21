@@ -5,18 +5,14 @@ import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.util.AbstractObservable;
 import app.jbomberman.util.Maybe;
-import app.jbomberman.util.Observable;
-import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashSet;
-import java.util.Set;
-
-public class Model implements Observable, Drawable
+public class Model extends AbstractObservable implements Drawable
 {
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
@@ -55,14 +51,6 @@ public class Model implements Observable, Drawable
 
 		return controller;
 
-	}
-
-	private final Set<Observer> observers = new HashSet<>();
-
-	@Override
-	public Set<Observer> getObservers()
-	{
-		return observers;
 	}
 
 	@Override

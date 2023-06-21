@@ -56,8 +56,12 @@ public class LogInScene extends BomberManScene
 			new MenuEntry("sign up", Text.TextColor.Black, () -> {
 				String playerName = loginBox.getText();
 				try {
-					AccountBuilder.getInstance().buildPlayer(playerName);
-					maybeUnableToLogin.setText("Successful sign up. You can now sign in");
+					if (playerName.matches("[\\W]*")) {
+						maybeUnableToLogin.setText("Specify a valid username");
+					} else {
+						AccountBuilder.getInstance().buildPlayer(playerName);
+						maybeUnableToLogin.setText("Successful sign up. You can now sign in");
+					}
 				} catch (PlayerBuilderException e) {
 					maybeUnableToLogin.setText(e.getMessage());
 				} finally {
