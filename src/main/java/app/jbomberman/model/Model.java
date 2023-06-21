@@ -74,12 +74,12 @@ public class Model extends AbstractObservable implements Drawable
 			new JBomberManException("Drawing is nothing"));
 	}
 
-	public void update()
+	public Drawing update()
 	{
 //		if (!frameTimer.timeIsUp())
 //			return;
 //		currentDraw = Maybe.just(currentBomberManScene.update());
-//		updateAllObservers(); // tell the whole world that we are ready to give them a Drawing
+		return getGame().update();
 	}
 
 	public void setAccount(Account account)

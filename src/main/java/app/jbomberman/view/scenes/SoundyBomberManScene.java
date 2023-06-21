@@ -47,7 +47,6 @@ public abstract class SoundyBomberManScene extends BomberManScene
 	private void play(String file)
 	{
 		audioHandle = Maybe.just(AudioPlayer.getInstance().playSound(file));
-
 	}
 }
 
