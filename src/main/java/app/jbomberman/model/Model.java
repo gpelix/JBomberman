@@ -114,6 +114,14 @@ public class Model extends AbstractObservable implements Drawable
 		return keyBoardUpdateInfo;
 	}
 
+	/**
+	 * keyBoardEvent must be called by the View to propagate a keyboard event to
+	 * the Model
+	 *
+	 * @param updateInfo the keyboard update info
+	 * @implNote We don't want the mode to directly observe the KeyBoardController
+	 * as we must allow the View to filter the keyboardevents
+	 */
 	public void keyBoardEvent(KeyBoardUpdateInfo updateInfo)
 	{
 		keyBoardUpdateInfo = Maybe.just(updateInfo);
