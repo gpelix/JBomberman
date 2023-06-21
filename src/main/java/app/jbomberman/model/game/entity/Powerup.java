@@ -3,6 +3,7 @@ package app.jbomberman.model.game.entity;
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.images.AbstractImage;
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.util.Vector2D;
 
@@ -17,8 +18,8 @@ public class Powerup extends PickableCell
 	 *
 	 */
 	public Powerup(Vector2D coordinate, GameGrid gameGrid,
-				   AbstractImage image, Enemy enemyToSpawn,
-				   BomberManCapabilities deltaCapabilities)
+								 AbstractImage image, Enemy enemyToSpawn,
+								 BomberManCapabilities deltaCapabilities)
 	{
 		super(coordinate, gameGrid, image, () -> enemyToSpawn);
 
@@ -44,8 +45,7 @@ public class Powerup extends PickableCell
 	{
 		getUnderlyingFreeCell().removePowerup(this);
 		AudioPlayer.getInstance().playSound(POWERUP_TAKEN_MUSIC);
-		getGameGrid().powerUpTaken(); // Then gameGrid shall forward it to
-		// the scene
+		Model.powerUpTaken();
 	}
 
 	public BomberManCapabilities getDeltaCapabilities()

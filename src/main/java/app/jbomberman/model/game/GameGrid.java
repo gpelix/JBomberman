@@ -17,19 +17,14 @@ import app.jbomberman.model.game.entity.Wall;
 import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Grid;
 import app.jbomberman.util.Maybe;
-import app.jbomberman.util.Observable;
-import app.jbomberman.util.Observer;
 import app.jbomberman.util.RandomNumberGenerator;
 import app.jbomberman.util.Vector2D;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
 
-public class GameGrid extends Grid<FreeCell> implements Observable
+public class GameGrid extends Grid<FreeCell>
 {
 	private int numberOfEnemies = 0;
 
@@ -88,7 +83,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	}
 
 	public void addGameCharacter(GameCharacter character,
-								 Vector2D coordinate)
+															 Vector2D coordinate)
 	{
 		if (character instanceof Enemy) {
 			numberOfEnemies++;
@@ -144,7 +139,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	 * that contain entities in the grid
 	 *
 	 * @param gameCharacter gameCharacter that must be moved. This parameter is mandatory in the case
-	 *					  there are more entities on the fromTopLeft coordinate
+	 *                      there are more entities on the fromTopLeft coordinate
 	 * @param fromTopLeft
 	 * @param toTopLeft
 	 */
@@ -200,19 +195,6 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	public Vector2D getCenterInGridCoord(Vector2D topLeftCorner)
 	{
 		return this.modelCoord2GridCoord(getCenter(topLeftCorner));
-	}
-
-	public void powerUpTaken()
-	{
-		updateAllObservers(); // Tell the gameScene that a powerup has been picked
-	}
-
-	private final Set<Observer> observers = new HashSet<>();
-
-	@Override
-	public Collection<Observer> getObservers()
-	{
-		return observers;
 	}
 
 	public int getNumberOfEnemiesStillAlive()

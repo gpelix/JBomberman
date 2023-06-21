@@ -1,6 +1,8 @@
 package app.jbomberman.view.scenes;
 
+import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
+import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalPanel;
 import app.jbomberman.drawing.Text;
@@ -12,7 +14,6 @@ import app.jbomberman.model.game.GameGridBuilderDirector;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.util.CallbackOnce;
-import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
@@ -99,8 +100,6 @@ public class GameScene extends SoundyBomberManScene implements Observer
 
 		timer = new Timer(TIME);
 
-		gameGrid.attachObserver(this);
-
 		initialize();
 	}
 
@@ -170,11 +169,8 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	@Override
 	public void cleanup()
 	{
-		Model.getController().detachKeyBoardObserver(this);
+		Controller.controller.detachKeyBoardObserver(this);
 	}
-
-	private Maybe<KeyBoardUpdateInfo> keyBoardUpdateInfo =
-		Maybe.nothing();
 
 
 	@Override
@@ -193,16 +189,8 @@ public class GameScene extends SoundyBomberManScene implements Observer
 					// Forward it to the Model that will forward it to bomberman
 					Model.getInstance().keyBoardEvent(keyBoardUpdateInfo);
 			}
-		} else if (observable instanceof GameGrid) { // That's telling me a powerup has been taken
-			replace(POWERUP_TAKEN_BACKGROUND_NOISE);
-			currentlyPlayingBackgroundNoiseName = POWERUP_TAKEN_BACKGROUND_NOISE;
-		}
-	}
-
-	// Called by bomberman or whatever
-	public Maybe<KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
-	{
-		return keyBoardUpdateInfo;
+		} else
+			throw new JBomberManException("Unsupported " + observable);
 	}
 
 	public void endGame(boolean victory)

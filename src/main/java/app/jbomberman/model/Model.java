@@ -54,6 +54,13 @@ public class Model extends AbstractObservable implements Drawable
 
 	}
 
+	public static void powerUpTaken()
+	{
+		// Should now do what the TODO:
+//		replace(POWERUP_TAKEN_BACKGROUND_NOISE);
+//		currentlyPlayingBackgroundNoiseName = POWERUP_TAKEN_BACKGROUND_NOISE;
+	}
+
 	@Override
 	public Drawing getDrawing()
 	{

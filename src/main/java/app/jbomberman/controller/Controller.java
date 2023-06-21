@@ -33,6 +33,8 @@ public class Controller
 	 */
 	private final Logger logger;
 
+	public static Controller controller; // Kind o horror TODO:
+
 	/**
 	 * Controller() is the only constructor of the controller. It must not be called
 	 * by other classes, as, to do the startup, the static function Controller.launch()
@@ -40,6 +42,8 @@ public class Controller
 	 */
 	private Controller(View view)
 	{
+		controller = this;
+
 		logger = LogManager.getLogger(getClass());
 
 		this.view = view;
