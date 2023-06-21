@@ -1,7 +1,9 @@
-package app.jbomberman.drawing;
+package app.jbomberman.view.widgets;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.controller.Controller;
+import app.jbomberman.drawing.Drawable;
+import app.jbomberman.drawing.Drawing;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;

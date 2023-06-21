@@ -12,7 +12,7 @@ public class WallAliveState extends AliveState
 	private final ImageManager imageManager;
 
 	public WallAliveState(Wall wall, GameCharacterState nextState,
-						  ImageManager imageManager)
+												ImageManager imageManager)
 	{
 		super(wall, nextState);
 		this.wall = wall;

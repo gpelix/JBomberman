@@ -2,12 +2,12 @@ package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.drawing.HorizontalMenu;
-import app.jbomberman.drawing.MenuEntry;
-import app.jbomberman.drawing.Text;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
+import app.jbomberman.view.widgets.HorizontalMenu;
+import app.jbomberman.view.widgets.MenuEntry;
+import app.jbomberman.view.widgets.Text;
 
 public class PauseScene extends BomberManScene
 {
@@ -16,7 +16,7 @@ public class PauseScene extends BomberManScene
 	public PauseScene(View view, GameScene gameScene)
 	{
 		super(view);
-		
+
 		AudioPlayer.getInstance().pausePlaying();
 
 		menu = new HorizontalMenu(

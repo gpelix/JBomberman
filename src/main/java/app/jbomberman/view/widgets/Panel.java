@@ -1,6 +1,8 @@
-package app.jbomberman.drawing;
+package app.jbomberman.view.widgets;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.drawing.Drawable;
+import app.jbomberman.drawing.Drawing;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 import com.google.common.collect.ImmutableList;

@@ -1,6 +1,7 @@
-package app.jbomberman.drawing;
+package app.jbomberman.view.widgets;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.drawing.Drawing;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;

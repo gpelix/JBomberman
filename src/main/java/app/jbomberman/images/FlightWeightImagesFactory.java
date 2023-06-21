@@ -2,8 +2,8 @@ package app.jbomberman.images;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
-import app.jbomberman.drawing.Text;
 import app.jbomberman.util.Maybe;
+import app.jbomberman.view.widgets.Text;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -92,7 +92,7 @@ public class FlightWeightImagesFactory
 	 * of a filename. This function loads the image associated with the
 	 * character.
 	 *
-	 * @param c	 character whose image we want to load
+	 * @param c     character whose image we want to load
 	 * @param color the color of the images
 	 * @return the loaded image of the character
 	 */

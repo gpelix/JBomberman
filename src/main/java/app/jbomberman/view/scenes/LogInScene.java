@@ -2,10 +2,6 @@ package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.drawing.HorizontalMenu;
-import app.jbomberman.drawing.MenuEntry;
-import app.jbomberman.drawing.Text;
-import app.jbomberman.drawing.TypingBox;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Account;
 import app.jbomberman.model.AccountBuilder;
@@ -15,6 +11,10 @@ import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
+import app.jbomberman.view.widgets.HorizontalMenu;
+import app.jbomberman.view.widgets.MenuEntry;
+import app.jbomberman.view.widgets.Text;
+import app.jbomberman.view.widgets.TypingBox;
 
 import java.util.stream.Stream;
 

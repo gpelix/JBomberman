@@ -14,7 +14,7 @@ public class Wall extends Entity implements StateFul
 	private GameCharacterState state;
 
 	public Wall(Vector2D coordinate, GameGrid gameGrid,
-				ImageManager aliveImages, ImageManager deathImages)
+							ImageManager aliveImages, ImageManager deathImages)
 	{
 		super(coordinate, gameGrid);
 

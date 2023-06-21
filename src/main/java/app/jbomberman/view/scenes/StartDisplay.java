@@ -3,15 +3,15 @@ package app.jbomberman.view.scenes;
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.drawing.HorizontalMenu;
 import app.jbomberman.drawing.LayeredDrawObject;
-import app.jbomberman.drawing.MenuEntry;
-import app.jbomberman.drawing.Text;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
+import app.jbomberman.view.widgets.HorizontalMenu;
+import app.jbomberman.view.widgets.MenuEntry;
+import app.jbomberman.view.widgets.Text;
 
 /**
  * StartDisplay is the first scene of the Application.

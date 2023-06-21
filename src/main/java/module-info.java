@@ -21,6 +21,7 @@ module app.jbomberman {
 	exports app.jbomberman.view;
 	exports app.jbomberman.view.graphics.javafx;
 	opens app.jbomberman.view.graphics.javafx to javafx.graphics;
+	exports app.jbomberman.view.widgets;
 }
 
 /* vim: set ts=2 sw=2 tw=0 noet :*/

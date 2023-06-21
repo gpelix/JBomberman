@@ -4,8 +4,6 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.drawing.HorizontalPanel;
-import app.jbomberman.drawing.Text;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
@@ -22,6 +20,8 @@ import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
 import app.jbomberman.view.View;
+import app.jbomberman.view.widgets.HorizontalPanel;
+import app.jbomberman.view.widgets.Text;
 
 /**
  * GameScene represents a game

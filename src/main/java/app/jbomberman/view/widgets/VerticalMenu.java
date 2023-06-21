@@ -1,4 +1,4 @@
-package app.jbomberman.drawing;
+package app.jbomberman.view.widgets;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.util.Maybe;

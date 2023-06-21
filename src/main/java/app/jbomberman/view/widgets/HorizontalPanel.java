@@ -1,4 +1,6 @@
-package app.jbomberman.drawing;
+package app.jbomberman.view.widgets;
+
+import app.jbomberman.drawing.Drawing;
 
 /**
  * HorizontalPanel is simply a panel with arrangeHorizontally as arrangementPolicy

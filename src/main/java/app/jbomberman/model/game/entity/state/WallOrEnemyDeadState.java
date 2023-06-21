@@ -16,7 +16,7 @@ public class WallOrEnemyDeadState<T extends Entity & StateFul> extends DeadState
 	private final ImageManager deathImageManager;
 
 	public WallOrEnemyDeadState(T entity,
-								ImageManager deathImageManager)
+															ImageManager deathImageManager)
 	{
 		super(entity);
 		this.entity = entity;

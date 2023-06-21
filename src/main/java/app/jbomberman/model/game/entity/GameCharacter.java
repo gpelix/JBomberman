@@ -25,8 +25,8 @@ public abstract class GameCharacter extends Entity implements StateFul
 	// be initialized rightly after having called the constructor
 
 	protected GameCharacter(Vector2D coordinate,
-							GameCharacterCapabilities capabilities,
-							GameGrid gameGrid)
+													GameCharacterCapabilities capabilities,
+													GameGrid gameGrid)
 	{
 		super(coordinate, gameGrid);
 		this.capabilities = capabilities;

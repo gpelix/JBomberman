@@ -14,7 +14,7 @@ public abstract class Bomb extends Entity
 	public interface BombConstructor<T>
 	{
 		T construct(Vector2D coordinate, int bombRange, BomberMan bomberMan,
-					ImageManager imageManager, GameGrid gameGrid);
+								ImageManager imageManager, GameGrid gameGrid);
 	}
 
 	private static final String BOMB_DETONATION_SOUND =
@@ -27,7 +27,7 @@ public abstract class Bomb extends Entity
 
 
 	public Bomb(Vector2D coordinate, int bombRange,
-				BomberMan bomberMan, ImageManager imageManager, GameGrid gameGrid)
+							BomberMan bomberMan, ImageManager imageManager, GameGrid gameGrid)
 	{
 		super(coordinate, gameGrid);
 
