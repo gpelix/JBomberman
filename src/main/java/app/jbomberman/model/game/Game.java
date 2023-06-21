@@ -1,10 +1,12 @@
 package app.jbomberman.model.game;
 
 import app.jbomberman.Properties;
+import app.jbomberman.audio.MaybeAudioHandle;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
+import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 
@@ -36,13 +38,20 @@ public class Game
 	 */
 	private final GameGrid gameGrid;
 	private boolean exiting = false;
+	private final MaybeAudioHandle handle;
 
+	public static int getLastLevel()
+	{
+		return LAST_LEVEL;
+	}
 
 	private final Timer timer;
 
 	public Game()
 	{
 		Model model = Model.getInstance();
+
+		handle = new MaybeAudioHandle();
 
 		int levelNumber = model.getAccount().getLevel();
 
@@ -73,21 +82,75 @@ public class Game
 //		currentlyPlayingBackgroundNoiseName = POWERUP_TAKEN_BACKGROUND_NOISE;
 	}
 
+	private final CallbackOnce func = new CallbackOnce()
+	{
+		@Override
+		public void run()
+		{
+			gameGrid.timeHasEnded();
+		}
+	};
+
 	public Drawing update()
 	{
-		return null;
+		if (!timer.hasStarted())
+			timer.start();
+		else if (timer.timeIsUp())
+			func.runOnce();
+
+		gameGrid.update();
+
+		if (!exiting)
+			handle.playIfNeeded(currentlyPlayingBackgroundNoiseName);
+		// To be moved back to the gameScene
+//		} else {
+//			Model model = Model.getInstance();
+//			if (!handle.isPlayingSomething()) {
+//				if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
+//					if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
+//						doTransition(WinScene::new);
+//						model.getAccount().setLevel(1);
+//					} else
+//						doTransition(LoadingLevelScene::new);
+//				} else
+//					doTransition(GameOverScene::new);
+//			}
+//		}
+
+		return gameGrid.getDrawing();
+	}
+
+	public long secsToEnd()
+	{
+		System.out.println(timer.millisToEnd());
+		return timer.millisToEnd() / 1000;
+	}
+
+	public boolean exited()
+	{
+		return exiting() && !handle.isPlayingSomething();
+	}
+
+	public boolean exiting()
+	{
+		return exiting;
 	}
 
 	public void endGame(boolean victory)
 	{
-//		if (victory) {
-//			replace(WIN_SOUND);
-//			Model.getInstance().getAccount().incrementLevel();
-//		} else {
-//			replace(GAME_OVER_SOUND);
-//		}
-//
-//		exiting = true;
+		if (victory) {
+			handle.replace(WIN_SOUND);
+			Model.getInstance().getAccount().incrementLevel();
+		} else {
+			handle.replace(GAME_OVER_SOUND);
+		}
+
+		exiting = true;
+	}
+
+	public Vector2D getDimensions()
+	{
+		return gameGrid.getDimensions();
 	}
 }
 
