@@ -7,9 +7,9 @@ import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.FreeCell;
 import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.Wall;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.scenes.GameScene;
 
 /**
  * GameGridBuilder is responsible for building the grid. It must
@@ -129,7 +129,7 @@ public class GameGridBuilder
 
 	// Here gameScene acts as a bridge that routes LEFT RIGHT ... to BomberMan
 	public void addBomberMan(Vector2D gridCoordinate,
-							 BomberManCapabilities capabilities)
+													 BomberManCapabilities capabilities)
 	{
 		BomberMan bomberMan = EntityFactory.getInstance().buildBomberMan(
 			getGrid().gridCoord2modelCoor(gridCoordinate),

@@ -45,10 +45,14 @@ public class Controller
 		this.view = view;
 
 		Model.setController(this);
-		Model.getInstance().setup();
 		Model.getInstance().attachObserver(view);
 
-		view.getGraphicFactory().getLoopTimer(Model.getInstance()::update).start();
+		view.setup();
+
+		view.getGraphicFactory().getLoopTimer(() -> {
+			Model.getInstance().update();
+			view.update();
+		}).start();
 
 		view.setTitle(Properties.getInstance().getApplicationName());
 		view.setCloseOperationCallBack(Model.getInstance()::close);

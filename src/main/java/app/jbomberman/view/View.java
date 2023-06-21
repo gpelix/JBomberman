@@ -7,6 +7,8 @@ import app.jbomberman.util.Callback;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.scenes.BomberManScene;
+import app.jbomberman.view.scenes.StartDisplay;
 
 /**
  * View class plays the role of the View in the MVC pattern we used to build
@@ -16,6 +18,19 @@ import app.jbomberman.util.Vector2D;
  */
 public abstract class View implements Observer
 {
+	private BomberManScene currentBomberManScene;
+
+	public void setup()
+	{
+		currentBomberManScene = new StartDisplay(this);
+	}
+
+	public void setScene(BomberManScene newScene)
+	{
+		currentBomberManScene = newScene;
+	}
+
+
 	/**
 	 * GraphicFactory is the factory of abstract graphical components
 	 */
@@ -93,7 +108,7 @@ public abstract class View implements Observer
 	 * update() listens for update requests by the model. In that case, it draws
 	 * the drawing
 	 *
-	 * @param observable the observable that called the method update.
+	 * @param observable the {@link Observable} that called the method update.
 	 */
 	@Override
 	public void update(Observable observable)
@@ -127,6 +142,11 @@ public abstract class View implements Observer
 	 * close() is needed to close the view and shut down the program
 	 */
 	public abstract void close();
+
+	public void update()
+	{
+		/*TODO: Update should update the scenes*/
+	}
 }
 
 /* vim: set ts=2 sw=2 tw=0 noet :*/

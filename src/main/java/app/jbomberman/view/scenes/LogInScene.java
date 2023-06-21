@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
@@ -14,6 +14,7 @@ import app.jbomberman.model.PlayerBuilderException;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.View;
 
 import java.util.stream.Stream;
 
@@ -27,8 +28,10 @@ public class LogInScene extends BomberManScene
 
 	private static final int MARGIN = 10;
 
-	public LogInScene()
+	public LogInScene(View view)
 	{
+		super(view);
+
 		AudioPlayer.getInstance().pausePlaying();
 
 		errorMessageTimer = new Timer(10_000);

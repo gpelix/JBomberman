@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
@@ -11,6 +11,7 @@ import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.View;
 
 /**
  * StartDisplay is the first scene of the Application.
@@ -35,8 +36,10 @@ public class StartDisplay extends SoundyBomberManScene
 	/**
 	 * setup() displays the images, text and sets up callbacks
 	 */
-	public StartDisplay()
+	public StartDisplay(View view)
 	{
+		super(view);
+
 		startImage = FlightWeightImagesFactory.getInstance().getImage(
 			"StartDisplay.png");
 

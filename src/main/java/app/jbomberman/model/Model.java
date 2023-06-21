@@ -5,14 +5,12 @@ import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.model.scenes.BomberManScene;
-import app.jbomberman.model.scenes.GameScene;
-import app.jbomberman.model.scenes.StartDisplay;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.scenes.GameScene;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,8 +19,6 @@ import java.util.Set;
 
 public class Model implements Observable, Drawable
 {
-	private BomberManScene currentBomberManScene;
-
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
 	private Maybe<Drawing> currentDraw;
@@ -47,10 +43,6 @@ public class Model implements Observable, Drawable
 		frameTimer.start();
 	}
 
-	public void setup()
-	{
-		currentBomberManScene = new StartDisplay();
-	}
 
 	public static void setController(Controller controller)
 	{
@@ -86,12 +78,7 @@ public class Model implements Observable, Drawable
 		if (!frameTimer.timeIsUp())
 			return;
 		currentDraw = Maybe.just(currentBomberManScene.update());
-		updateAllObservers();
-	}
-
-	public void setScene(BomberManScene newScene)
-	{
-		currentBomberManScene = newScene;
+		updateAllObservers(); // tell the whole world that we are ready to give them a Drawing
 	}
 
 	public void setAccount(Account account)

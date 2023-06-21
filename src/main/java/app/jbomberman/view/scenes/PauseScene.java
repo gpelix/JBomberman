@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
@@ -7,20 +7,16 @@ import app.jbomberman.drawing.MenuEntry;
 import app.jbomberman.drawing.Text;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.View;
 
 public class PauseScene extends BomberManScene
 {
-	/**
-	 * gameNode is the group that contains the game that has been interrupted
-	 */
-	private final GameScene gameScene;
-
 	private final HorizontalMenu menu;
 
-	public PauseScene(GameScene gameScene)
+	public PauseScene(View view, GameScene gameScene)
 	{
-		this.gameScene = gameScene;
-
+		super(view);
+		
 		AudioPlayer.getInstance().pausePlaying();
 
 		menu = new HorizontalMenu(

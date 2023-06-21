@@ -10,7 +10,6 @@ import app.jbomberman.model.game.MoveManager;
 import app.jbomberman.model.game.MovingImageManager;
 import app.jbomberman.model.game.entity.state.BomberManAliveState;
 import app.jbomberman.model.game.entity.state.BomberManDeadState;
-import app.jbomberman.model.scenes.GameScene;
 import app.jbomberman.util.CollectionUtils;
 import app.jbomberman.util.Direction;
 import app.jbomberman.util.Maybe;
@@ -20,6 +19,7 @@ import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
+import app.jbomberman.view.scenes.GameScene;
 
 import java.util.HashSet;
 import java.util.LinkedList;

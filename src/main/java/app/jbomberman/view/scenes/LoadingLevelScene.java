@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
@@ -7,6 +7,7 @@ import app.jbomberman.drawing.Text;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.View;
 
 /**
  * LoadingLevelScene is the scene loaded before starting the gameplay
@@ -25,8 +26,10 @@ public class LoadingLevelScene extends SoundyBomberManScene
 
 	private final Drawing drawing;
 
-	public LoadingLevelScene()
+	public LoadingLevelScene(View view)
 	{
+		super(view);
+
 		AudioPlayer.getInstance().stopAll();
 
 		Model model = Model.getInstance();

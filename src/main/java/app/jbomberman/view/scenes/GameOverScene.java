@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
@@ -6,6 +6,7 @@ import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.Text;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Maybe;
+import app.jbomberman.view.View;
 
 public class GameOverScene extends SoundyBomberManScene
 {
@@ -30,8 +31,10 @@ public class GameOverScene extends SoundyBomberManScene
 		// Do nothing
 	}
 
-	public GameOverScene()
+	public GameOverScene(View view)
 	{
+		super(view);
+
 		AudioPlayer.getInstance().stopAll();
 		playIfNeeded(GAME_OVER_SOUND);
 

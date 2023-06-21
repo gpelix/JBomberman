@@ -1,4 +1,4 @@
-package app.jbomberman.model.scenes;
+package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.drawing.Drawing;
@@ -20,6 +20,7 @@ import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
+import app.jbomberman.view.View;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -67,8 +68,10 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
 	private final Timer timer;
 
-	public GameScene()
+	public GameScene(View view)
 	{
+		super(view);
+
 		Model model = Model.getInstance();
 
 		int levelNumber = model.getAccount().getLevel();
@@ -188,7 +191,7 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 			if (keyBoardUpdateInfo.getKeyBoardEventType() == KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED
 				&& keyBoardUpdateInfo.getKeyCode() == KeyBoardControllerKeyCode.ESC)
 			{
-				doTransition(() -> new PauseScene(this));
+				doTransition(() -> new PauseScene(getView(), this));
 			} else {
 				if (!exiting) {
 					// Forward it to bomberman

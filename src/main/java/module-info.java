@@ -6,7 +6,7 @@ module app.jbomberman {
 	requires com.google.common;
 
 	exports app.jbomberman;
-	exports app.jbomberman.model.scenes;
+	exports app.jbomberman.view.scenes;
 	exports app.jbomberman.util;
 	exports app.jbomberman.model.game.entity;
 	exports app.jbomberman.model.game;
