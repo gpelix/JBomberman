@@ -6,7 +6,6 @@ import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.javafx.JavaFXImage;
 import app.jbomberman.util.Callback;
-import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
 import javafx.application.Platform;
@@ -34,7 +33,7 @@ import java.util.Set;
  *
  * @author gp
  */
-public class JavaFXView extends View implements Observer
+public class JavaFXView extends View
 {
 	/**
 	 * initialize() must be called to initialize the view.

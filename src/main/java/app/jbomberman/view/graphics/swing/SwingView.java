@@ -7,7 +7,6 @@ import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.images.swing.SwingImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Maybe;
-import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.View;
 
@@ -32,7 +31,7 @@ import java.util.Map;
 import java.util.Set;
 
 // TODO: TODO javadoc
-public class SwingView extends View implements Observer
+public class SwingView extends View
 {
 	/**
 	 * frame is the JFrame to which JPanels must be added to

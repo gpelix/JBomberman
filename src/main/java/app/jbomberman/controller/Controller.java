@@ -45,7 +45,7 @@ public class Controller
 		this.view = view;
 
 		Model.setController(this);
-		Model.getInstance().attachObserver(view);
+//		Model.getInstance().attachObserver(view);
 
 		view.setup();
 

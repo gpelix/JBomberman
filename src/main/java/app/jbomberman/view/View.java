@@ -1,11 +1,8 @@
 package app.jbomberman.view;
 
-import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.model.Model;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Observable;
-import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.scenes.BomberManScene;
 import app.jbomberman.view.scenes.StartDisplay;
@@ -16,7 +13,7 @@ import app.jbomberman.view.scenes.StartDisplay;
  *
  * @author gp
  */
-public abstract class View implements Observer
+public abstract class View //implements Observer
 {
 	private BomberManScene currentBomberManScene;
 
@@ -110,14 +107,15 @@ public abstract class View implements Observer
 	 *
 	 * @param observable the {@link Observable} that called the method update.
 	 */
-	@Override
-	public void update(Observable observable)
-	{
-		if (observable instanceof Model model)
-			draw(model.getDrawing());
-		else
-			throw new JBomberManException("not implemented");
-	}
+	// TODO: Should this really be disabled
+//	@Override
+//	public void update(Observable observable)
+//	{
+//		if (observable instanceof Model model)
+//			draw(model.getDrawing());
+//		else
+//			throw new JBomberManException("not implemented");
+//	}
 
 	/**
 	 * getDrawingDimensions() must be called by classes inheriting View, to get the
@@ -145,7 +143,7 @@ public abstract class View implements Observer
 
 	public void update()
 	{
-		/*TODO: Update should update the scenes*/
+		draw(currentBomberManScene.update());
 	}
 }
 

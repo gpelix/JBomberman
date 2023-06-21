@@ -10,7 +10,6 @@ import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
-import app.jbomberman.view.scenes.GameScene;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -75,10 +74,10 @@ public class Model implements Observable, Drawable
 
 	public void update()
 	{
-		if (!frameTimer.timeIsUp())
-			return;
-		currentDraw = Maybe.just(currentBomberManScene.update());
-		updateAllObservers(); // tell the whole world that we are ready to give them a Drawing
+//		if (!frameTimer.timeIsUp())
+//			return;
+//		currentDraw = Maybe.just(currentBomberManScene.update());
+//		updateAllObservers(); // tell the whole world that we are ready to give them a Drawing
 	}
 
 	public void setAccount(Account account)
@@ -116,7 +115,7 @@ public class Model implements Observable, Drawable
 
 	public void endGame(boolean b)
 	{
-		((GameScene) currentBomberManScene).endGame(b);
+		//((GameScene) currentBomberManScene).endGame(b);
 	}
 }
 
