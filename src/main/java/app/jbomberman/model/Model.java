@@ -9,6 +9,7 @@ import app.jbomberman.util.AbstractObservable;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.KeyBoardUpdateInfo;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -104,6 +105,19 @@ public class Model extends AbstractObservable implements Drawable
 	public void endGame(boolean b)
 	{
 		//((GameScene) currentBomberManScene).endGame(b);
+	}
+
+	private Maybe<KeyBoardUpdateInfo> keyBoardUpdateInfo = Maybe.nothing();
+
+	public Maybe<KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
+	{
+		return keyBoardUpdateInfo;
+	}
+
+	public void keyBoardEvent(KeyBoardUpdateInfo updateInfo)
+	{
+		keyBoardUpdateInfo = Maybe.just(updateInfo);
+		updateAllObservers();
 	}
 }
 

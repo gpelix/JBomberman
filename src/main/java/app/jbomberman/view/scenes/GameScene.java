@@ -22,16 +22,12 @@ import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
 import app.jbomberman.view.View;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 /**
  * GameScene represents a game
  *
  * @author gp
  */
-public class GameScene extends SoundyBomberManScene implements Observable, Observer
+public class GameScene extends SoundyBomberManScene implements Observer
 {
 	/**
 	 * normalBackgroundSound is the filename that contains the sound to be played
@@ -193,11 +189,9 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 			{
 				doTransition(() -> new PauseScene(getView(), this));
 			} else {
-				if (!exiting) {
-					// Forward it to bomberman
-					this.keyBoardUpdateInfo = Maybe.just(keyBoardUpdateInfo);
-					updateAllObservers();
-				}
+				if (!exiting)
+					// Forward it to the Model that will forward it to bomberman
+					Model.getInstance().keyBoardEvent(keyBoardUpdateInfo);
 			}
 		} else if (observable instanceof GameGrid) { // That's telling me a powerup has been taken
 			replace(POWERUP_TAKEN_BACKGROUND_NOISE);
@@ -209,16 +203,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 	public Maybe<KeyBoardUpdateInfo> getKeyBoardUpdateInfo()
 	{
 		return keyBoardUpdateInfo;
-	}
-
-	// Just BomberMan character for now. Why the hell is this. I'd say we move
-	// the observation to bomberman directly
-	private final List<Observer> observers = new ArrayList<>();
-
-	@Override
-	public Collection<Observer> getObservers()
-	{
-		return observers;
 	}
 
 	public void endGame(boolean victory)

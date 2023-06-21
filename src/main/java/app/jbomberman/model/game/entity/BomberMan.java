@@ -4,6 +4,7 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioHandle;
 import app.jbomberman.audio.AudioPlayer;
+import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.MoveManager;
@@ -19,7 +20,6 @@ import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
 import app.jbomberman.view.KeyBoardUpdateInfo;
-import app.jbomberman.view.scenes.GameScene;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -31,6 +31,9 @@ import static app.jbomberman.util.Direction.NORTH;
 import static app.jbomberman.util.Direction.SOUTH;
 import static app.jbomberman.util.Direction.WEST;
 
+/**
+ * Observer of the Model ready to receive keyBoardUpdateInfo
+ */
 public class BomberMan extends GameCharacter implements Observer
 {
 	private final Set<Direction> directions;
@@ -285,8 +288,8 @@ public class BomberMan extends GameCharacter implements Observer
 	@Override
 	public void update(Observable observable)
 	{
-		if (observable instanceof GameScene gameScene)
-			update(gameScene.getKeyBoardUpdateInfo().unwrapOrThrow(() ->
+		if (observable instanceof Model)
+			update(Model.getInstance().getKeyBoardUpdateInfo().unwrapOrThrow(() ->
 				new JBomberManException("No updateInfo available")));
 	}
 
