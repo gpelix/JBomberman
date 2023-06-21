@@ -1,21 +1,16 @@
 package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
+import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalPanel;
 import app.jbomberman.drawing.Text;
-import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
-import app.jbomberman.model.game.GameGridBuilder;
-import app.jbomberman.model.game.GameGridBuilderDirector;
-import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
-import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
-import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
@@ -57,7 +52,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 	/**
 	 * GameGrid is the gameGrid built by the builder
 	 */
-	private final GameGrid gameGrid;
 	private boolean exiting = false;
 
 	private final HorizontalPanel<Text> topPanel;
@@ -66,20 +60,12 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
 	private final Text scoreEntry;
 
-	private final Timer timer;
-
 	public GameScene(View view)
 	{
 		super(view);
 
 		Model model = Model.getInstance();
-
-		int levelNumber = model.getAccount().getLevel();
-
-		currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
-
-		GameGridBuilder builder = new GameGridBuilder(
-			Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL), this);
+		model.reset();
 
 		Text lives = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), Text.TextColor.Black);
 		timeEntry = new Text("", Text.TextColor.Black);
@@ -90,63 +76,14 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 			scoreEntry,
 			lives);
 
-		if (model.getAccount().getCapabilities().getNumberOfLives() < 0)
-			model.getAccount().setCapabilities(BomberManCapabilities.defaultCapabilities);
-
-		GameGridBuilderDirector director =
-			new GameGridBuilderDirector(builder, levelNumber,
-				model.getAccount().getCapabilities());
-
-		director.construct();
-
-		gameGrid = builder.getResult();
-
-		timer = new Timer(TIME);
-
-		gameGrid.attachObserver(this);
-
 		initialize();
 	}
-
-	private final CallbackOnce func = new CallbackOnce()
-	{
-		@Override
-		public void run()
-		{
-			gameGrid.timeHasEnded();
-		}
-	};
 
 	@Override
 	public Drawing update()
 	{
-		if (!timer.hasStarted())
-			timer.start();
-		else if (timer.timeIsUp())
-			func.runOnce();
-
-		gameGrid.update();
-
-		scoreEntry.setText(String.valueOf(Model.getInstance().getAccount().getCapabilities().getPointsEarned()));
-
-		if (!exiting) {
-			playIfNeeded(currentlyPlayingBackgroundNoiseName);
-		} else {
-			Model model = Model.getInstance();
-			if (!isPlayingSomething()) {
-				if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
-					if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
-						doTransition(WinScene::new);
-						model.getAccount().setLevel(1);
-					} else
-						doTransition(LoadingLevelScene::new);
-				} else
-					doTransition(GameOverScene::new);
-			}
-		}
-
-		Drawing drawing = gameGrid.getDrawing();
-		timeEntry.setText("time  " + Math.max(0, timer.millisToEnd() / 1000));
+		Drawing drawing = Model.getInstance().getDrawing();
+		timeEntry.setText("time  " + Math.max(0, Model.getSecondsToEnd()));
 		drawing.merge(topPanel.getDrawing());
 		return drawing;
 	}
@@ -165,10 +102,10 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 	 */
 	private void initialize()
 	{
-		Model.getController().attachKeyBoardObserver(this); // Listen for ESC
+		Controller.controller.attachKeyBoardObserver(this); // Listen for ESC
 
 		topPanel.setTopLeft(Vector2D.of(0, 0));
-		topPanel.setWidth(gameGrid.getDimensions().multiply(Entity.SIZE_IN_MODEL).getX());
+		topPanel.setWidth(Model.getInstance().getDimensions().multiply(Entity.SIZE_IN_MODEL).getX());
 	}
 
 	@Override

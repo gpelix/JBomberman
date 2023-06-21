@@ -5,22 +5,140 @@ import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.model.game.Game;
+import app.jbomberman.model.game.GameGrid;
+import app.jbomberman.model.game.GameGridBuilder;
+import app.jbomberman.model.game.GameGridBuilderDirector;
+import app.jbomberman.model.game.entity.BomberMan;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
+import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.KeyBoardUpdateInfo;
+import app.jbomberman.view.scenes.GameOverScene;
+import app.jbomberman.view.scenes.LoadingLevelScene;
+import app.jbomberman.view.scenes.WinScene;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * it's Observable by the View
+ */
 public class Model implements Observable, Drawable
 {
+	/**
+	 * normalBackgroundSound is the filename that contains the sound to be played
+	 * during the game before any powerup is picked
+	 */
+	private static final String NORMAL_BACKGROUND_NOISE =
+		Properties.getInstance().getSoundPath("03 Main BGM.wav");
+
+	private static final long TIME = 200_000;
+
+	private static final String POWERUP_TAKEN_BACKGROUND_NOISE =
+		Properties.getInstance().getSoundPath("04 Power-Up Get.wav");
+
+	private static final String GAME_OVER_SOUND =
+		Properties.getInstance().getSoundPath("09 Miss.wav");
+
+	private static final String WIN_SOUND =
+		Properties.getInstance().getSoundPath("05 Stage Clear.wav");
+	private static final int LAST_LEVEL = 50;
+
+	private String currentlyPlayingBackgroundNoiseName;
+
+	/**
+	 * GameGrid is the gameGrid built by the builder
+	 */
+	private final GameGrid gameGrid;
+	private boolean exiting = false;
+
+
+	private final Timer timer;
+
+	public Game(Account account)
+	{
+		currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
+
+		GameGridBuilder builder = new GameGridBuilder(
+			Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL), this);
+
+		if (account.getCapabilities().getNumberOfLives() < 0)
+			account.setCapabilities(BomberManCapabilities.defaultCapabilities);
+
+		GameGridBuilderDirector director = new GameGridBuilderDirector(
+			builder, account.getLevel(), account.getCapabilities());
+
+		director.construct();
+
+		gameGrid = builder.getResult();
+
+		timer = new Timer(TIME);
+
+		// TODO:
+		//gameGrid.attachObserver(this);
+	}
+
+	private Maybe<BomberMan> bomberMan = Maybe.nothing();
+
+	public void heresBomberman(BomberMan bomberMan)
+	{
+		this.bomberMan = Maybe.just(bomberMan);
+	}
+
+	private final CallbackOnce func = new CallbackOnce()
+	{
+		@Override
+		public void run()
+		{
+			gameGrid.timeHasEnded();
+		}
+	};
+
+	public Drawing update()
+	{
+		if (!timer.hasStarted())
+			timer.start();
+		else if (timer.timeIsUp())
+			func.runOnce();
+
+		gameGrid.update();
+
+		scoreEntry.setText(String.valueOf(Model.getInstance().getAccount().getCapabilities().getPointsEarned()));
+
+		if (!exiting) {
+			playIfNeeded(currentlyPlayingBackgroundNoiseName);
+		} else {
+			Model model = Model.getInstance();
+			if (!isPlayingSomething()) {
+				if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
+					if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
+						doTransition(WinScene::new);
+						model.getAccount().setLevel(1);
+					} else
+						doTransition(LoadingLevelScene::new);
+				} else
+					doTransition(GameOverScene::new);
+			}
+		}
+
+		Drawing drawing = gameGrid.getDrawing();
+		timeEntry.setText("time  " + Math.max(0, timer.millisToEnd() / 1000));
+		drawing.merge(topPanel.getDrawing());
+		return drawing;
+	}
+
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
 	private Maybe<Drawing> currentDraw;
+	private Maybe<Game> game;
 	private Account account;
 	private boolean isDefaultAccount = true;
 
@@ -80,6 +198,11 @@ public class Model implements Observable, Drawable
 //		updateAllObservers(); // tell the whole world that we are ready to give them a Drawing
 	}
 
+	public void reset()
+	{
+		game = Maybe.just(new Game(getAccount()));
+	}
+
 	public void setAccount(Account account)
 	{
 		this.account = account;
@@ -116,6 +239,11 @@ public class Model implements Observable, Drawable
 	public void endGame(boolean b)
 	{
 		//((GameScene) currentBomberManScene).endGame(b);
+	}
+
+	public void reeciveKeyBoardUpdateInfo(KeyBoardUpdateInfo info)
+	{
+		/* do something with this TODO: */
 	}
 }
 

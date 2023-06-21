@@ -88,7 +88,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	}
 
 	public void addGameCharacter(GameCharacter character,
-								 Vector2D coordinate)
+															 Vector2D coordinate)
 	{
 		if (character instanceof Enemy) {
 			numberOfEnemies++;
@@ -144,7 +144,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	 * that contain entities in the grid
 	 *
 	 * @param gameCharacter gameCharacter that must be moved. This parameter is mandatory in the case
-	 *					  there are more entities on the fromTopLeft coordinate
+	 *                      there are more entities on the fromTopLeft coordinate
 	 * @param fromTopLeft
 	 * @param toTopLeft
 	 */

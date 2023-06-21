@@ -9,7 +9,6 @@ import app.jbomberman.model.game.entity.Powerup;
 import app.jbomberman.model.game.entity.Wall;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
-import app.jbomberman.view.scenes.GameScene;
 
 /**
  * GameGridBuilder is responsible for building the grid. It must
@@ -30,14 +29,13 @@ public class GameGridBuilder
 	 */
 	private final Vector2D topLeft;
 
-	private final GameScene gameScene;
+	private Game game;
 
-
-	public GameGridBuilder(Vector2D topLeft, GameScene gameScene)
+	public GameGridBuilder(Vector2D topLeft, Game game)
 	{
-		grid = Maybe.nothing();
 		this.topLeft = topLeft;
-		this.gameScene = gameScene;
+		grid = Maybe.nothing();
+		this.game = game;
 	}
 
 	public void setup(Vector2D dimensions)
@@ -139,7 +137,8 @@ public class GameGridBuilder
 		// Attach observer bomberman to Scene
 		// TODO: This is not what we want as we want filtering by gameScene and
 		// TODO: will disable it for now!
-		gameScene.attachObserver(bomberMan);
+		game.heresBomberman(bomberMan);
+		//gameScene.attachObserver(bomberMan);
 		// Who will detach it??
 
 		getGrid().addGameCharacter(bomberMan, gridCoordinate);
