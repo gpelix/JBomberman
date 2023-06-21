@@ -117,7 +117,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	public Drawing update()
 	{
 		Model.getInstance().update();
-		
+
 		if (!timer.hasStarted())
 			timer.start();
 		else if (timer.timeIsUp())
@@ -128,10 +128,10 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		scoreEntry.setText(String.valueOf(Model.getInstance().getAccount().getCapabilities().getPointsEarned()));
 
 		if (!exiting) {
-			playIfNeeded(currentlyPlayingBackgroundNoiseName);
+			getAudioHandle().playIfNeeded(currentlyPlayingBackgroundNoiseName);
 		} else {
 			Model model = Model.getInstance();
-			if (!isPlayingSomething()) {
+			if (!getAudioHandle().isPlayingSomething()) {
 				if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
 					if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
 						doTransition(WinScene::new);

@@ -74,7 +74,7 @@ public class StartDisplay extends SoundyBomberManScene
 	@Override
 	public Drawing update()
 	{
-		playIfNeeded(startDisplaySound);
+		getAudioHandle().playIfNeeded(startDisplaySound);
 
 		Drawing drawing = new Drawing(backgroundLayeredDrawObject);
 		drawing.merge(menu.getDrawing(), x -> x + 1);

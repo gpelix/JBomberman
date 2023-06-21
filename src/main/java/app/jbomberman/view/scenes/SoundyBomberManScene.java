@@ -1,52 +1,22 @@
 package app.jbomberman.view.scenes;
 
-import app.jbomberman.audio.AudioHandle;
-import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.util.Maybe;
+import app.jbomberman.audio.MaybeAudioHandle;
 import app.jbomberman.view.View;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public abstract class SoundyBomberManScene extends BomberManScene
 {
 
-	private Maybe<AudioHandle> audioHandle;
-
-	private final Logger logger;
+	private MaybeAudioHandle audioHandle;
 
 	protected SoundyBomberManScene(View view)
 	{
 		super(view);
-		audioHandle = Maybe.nothing();
-		logger = LogManager.getLogger(getClass());
+		audioHandle = new MaybeAudioHandle();
 	}
 
-	public boolean isPlayingSomething()
+	public MaybeAudioHandle getAudioHandle()
 	{
-		return audioHandle.compute(false, AudioHandle::isPlaying);
-	}
-
-	public void stopSound()
-	{
-		audioHandle.doOrDo(AudioHandle::stop, () -> logger.warn(
-			"Stopping threadPlayer with no sound in it"));
-	}
-
-	public void replace(String replacement)
-	{
-		stopSound();
-		play(replacement);
-	}
-
-	public void playIfNeeded(String file)
-	{
-		if (!isPlayingSomething())
-			play(file);
-	}
-
-	private void play(String file)
-	{
-		audioHandle = Maybe.just(AudioPlayer.getInstance().playSound(file));
+		return audioHandle;
 	}
 }
 

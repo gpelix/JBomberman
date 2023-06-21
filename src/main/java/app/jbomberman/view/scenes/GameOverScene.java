@@ -17,7 +17,7 @@ public class GameOverScene extends SoundyBomberManScene
 	@Override
 	public Drawing update()
 	{
-		if (!isPlayingSomething()) {
+		if (!getAudioHandle().isPlayingSomething()) {
 			Model.getInstance().getAccount().setLevel(1);
 			doTransition(StartDisplay::new);
 		}
@@ -36,7 +36,7 @@ public class GameOverScene extends SoundyBomberManScene
 		super(view);
 
 		AudioPlayer.getInstance().stopAll();
-		playIfNeeded(GAME_OVER_SOUND);
+		getAudioHandle().playIfNeeded(GAME_OVER_SOUND);
 
 		gameOverText = Maybe.just(new Text("Game over", Text.TextColor.Black));
 

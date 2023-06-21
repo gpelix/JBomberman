@@ -46,14 +46,14 @@ public class LoadingLevelScene extends SoundyBomberManScene
 		drawing = new Drawing(loadingText.getDrawing(), stageText.getDrawing());
 		drawing.setDimensions(dimensions);
 
-		playIfNeeded(LOADING_LEVEL_SCENE_SOUND);
+		getAudioHandle().playIfNeeded(LOADING_LEVEL_SCENE_SOUND);
 	}
 
 
 	@Override
 	public Drawing update()
 	{
-		if (!isPlayingSomething())
+		if (!getAudioHandle().isPlayingSomething())
 			doTransition(GameScene::new);
 
 		return drawing;

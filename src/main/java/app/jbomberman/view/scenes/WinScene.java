@@ -16,7 +16,7 @@ public class WinScene extends SoundyBomberManScene
 	@Override
 	public Drawing update()
 	{
-		if (!isPlayingSomething())
+		if (!getAudioHandle().isPlayingSomething())
 			doTransition(StartDisplay::new);
 
 		Drawing a = winText.getDrawing();
@@ -36,7 +36,7 @@ public class WinScene extends SoundyBomberManScene
 		super(view);
 
 		AudioPlayer.getInstance().stopAll();
-		playIfNeeded(GAME_OVER_SOUND);
+		getAudioHandle().playIfNeeded(GAME_OVER_SOUND);
 
 		winText = new Text("You have won", Text.TextColor.Black);
 
