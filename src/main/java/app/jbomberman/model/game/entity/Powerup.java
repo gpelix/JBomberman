@@ -45,7 +45,7 @@ public class Powerup extends PickableCell
 	{
 		getUnderlyingFreeCell().removePowerup(this);
 		AudioPlayer.getInstance().playSound(POWERUP_TAKEN_MUSIC);
-		Model.powerUpTaken();
+		Model.getInstance().getGame().powerUpTaken();
 	}
 
 	public BomberManCapabilities getDeltaCapabilities()

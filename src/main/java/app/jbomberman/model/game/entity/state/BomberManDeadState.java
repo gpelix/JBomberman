@@ -15,7 +15,7 @@ public class BomberManDeadState extends DeadState
 	private final ImageManager deathImageManager;
 
 	public BomberManDeadState(BomberMan bomberMan,
-							  ImageManager deathImageManager)
+														ImageManager deathImageManager)
 	{
 		super(bomberMan);
 		this.bomberMan = bomberMan;
@@ -40,7 +40,7 @@ public class BomberManDeadState extends DeadState
 			gameGrid.get(
 				gameGrid.getCenterInGridCoord(bomberMan)
 			).removeCharacter(bomberMan);
-			Model.getInstance().endGame(false);
+			Model.getInstance().getGame().endGame(false);
 		}
 	}
 

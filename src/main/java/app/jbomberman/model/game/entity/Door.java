@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 public class Door extends PickableCell
 {
 	public Door(Vector2D coordinate, AbstractImage image, GameGrid gameGrid,
-				Supplier<Enemy> enemySupplier)
+							Supplier<Enemy> enemySupplier)
 	{
 		super(coordinate, gameGrid,
 			image,
@@ -22,7 +22,7 @@ public class Door extends PickableCell
 	{
 		if (getGameGrid().getNumberOfEnemiesStillAlive() == 0) {
 			bomberMan.steppedOnDoor(this);
-			Model.getInstance().endGame(true);
+			Model.getInstance().getGame().endGame(true);
 		}
 	}
 

@@ -5,6 +5,7 @@ import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.game.Game;
 import app.jbomberman.util.AbstractObservable;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Timer;
@@ -26,6 +27,8 @@ public class Model extends AbstractObservable implements Drawable
 
 	private final Timer frameTimer;
 
+	private final Maybe<Game> game = Maybe.nothing();
+
 	private static final int FPS = Properties.getInstance().getMaxFps();
 
 	private Model()
@@ -39,6 +42,11 @@ public class Model extends AbstractObservable implements Drawable
 		frameTimer.start();
 	}
 
+	public Game getGame()
+	{
+		return game.unwrapOrThrow(
+			() -> new JBomberManException("Getting unset game"));
+	}
 
 	public static void setController(Controller controller)
 	{
@@ -52,13 +60,6 @@ public class Model extends AbstractObservable implements Drawable
 
 		return controller;
 
-	}
-
-	public static void powerUpTaken()
-	{
-		// Should now do what the TODO:
-//		replace(POWERUP_TAKEN_BACKGROUND_NOISE);
-//		currentlyPlayingBackgroundNoiseName = POWERUP_TAKEN_BACKGROUND_NOISE;
 	}
 
 	@Override
@@ -107,11 +108,6 @@ public class Model extends AbstractObservable implements Drawable
 		if (instance == null)
 			instance = new Model();
 		return instance;
-	}
-
-	public void endGame(boolean b)
-	{
-		//((GameScene) currentBomberManScene).endGame(b);
 	}
 
 	private Maybe<KeyBoardUpdateInfo> keyBoardUpdateInfo = Maybe.nothing();
