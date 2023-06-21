@@ -20,6 +20,7 @@ import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.RandomNumberGenerator;
+import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 
 import java.util.Collection;
@@ -39,6 +40,32 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 		Properties.getInstance().getSoundPath("Bomberman SFX enemies are dead.wav");
 
 	/**
+	 * normalBackgroundSound is the filename that contains the sound to be played
+	 * during the game before any powerup is picked
+	 */
+	private static final String NORMAL_BACKGROUND_NOISE =
+		Properties.getInstance().getSoundPath("03 Main BGM.wav");
+
+	private static final long TIME = 200_000;
+
+	private static final String POWERUP_TAKEN_BACKGROUND_NOISE =
+		Properties.getInstance().getSoundPath("04 Power-Up Get.wav");
+
+	private static final String GAME_OVER_SOUND =
+		Properties.getInstance().getSoundPath("09 Miss.wav");
+
+	private static final String WIN_SOUND =
+		Properties.getInstance().getSoundPath("05 Stage Clear.wav");
+	private static final int LAST_LEVEL = 50;
+
+	private String currentlyPlayingBackgroundNoiseName;
+
+	private boolean exiting = false;
+
+
+	private final Timer timer;
+
+	/**
 	 * coordinate of the top left corner of the grid
 	 */
 	private final Vector2D topLeftCorner;
@@ -48,6 +75,9 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	public GameGrid(Vector2D dimensions, Vector2D topLeftCorner, GameGridBuilder gameGridBuilder)
 	{
 		super(dimensions);
+
+		currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
+
 		moveManager = new MoveManager(this);
 		this.topLeftCorner = topLeftCorner;
 		this.gameGridBuilder = gameGridBuilder;
@@ -88,7 +118,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	}
 
 	public void addGameCharacter(GameCharacter character,
-								 Vector2D coordinate)
+															 Vector2D coordinate)
 	{
 		if (character instanceof Enemy) {
 			numberOfEnemies++;
@@ -144,7 +174,7 @@ public class GameGrid extends Grid<FreeCell> implements Observable
 	 * that contain entities in the grid
 	 *
 	 * @param gameCharacter gameCharacter that must be moved. This parameter is mandatory in the case
-	 *					  there are more entities on the fromTopLeft coordinate
+	 *                      there are more entities on the fromTopLeft coordinate
 	 * @param fromTopLeft
 	 * @param toTopLeft
 	 */

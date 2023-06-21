@@ -1,6 +1,5 @@
 package app.jbomberman.view.scenes;
 
-import app.jbomberman.Properties;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.HorizontalPanel;
 import app.jbomberman.drawing.Text;
@@ -8,14 +7,11 @@ import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.GameGridBuilder;
-import app.jbomberman.model.game.GameGridBuilderDirector;
-import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
-import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.KeyBoardControllerKeyCode;
@@ -33,40 +29,11 @@ import java.util.List;
  */
 public class GameScene extends SoundyBomberManScene implements Observable, Observer
 {
-	/**
-	 * normalBackgroundSound is the filename that contains the sound to be played
-	 * during the game before any powerup is picked
-	 */
-	private static final String NORMAL_BACKGROUND_NOISE =
-		Properties.getInstance().getSoundPath("03 Main BGM.wav");
-
-	private static final long TIME = 200_000;
-
-	private static final String POWERUP_TAKEN_BACKGROUND_NOISE =
-		Properties.getInstance().getSoundPath("04 Power-Up Get.wav");
-
-	private static final String GAME_OVER_SOUND =
-		Properties.getInstance().getSoundPath("09 Miss.wav");
-
-	private static final String WIN_SOUND =
-		Properties.getInstance().getSoundPath("05 Stage Clear.wav");
-	private static final int LAST_LEVEL = 50;
-
-	private String currentlyPlayingBackgroundNoiseName;
-
-	/**
-	 * GameGrid is the gameGrid built by the builder
-	 */
-	private final GameGrid gameGrid;
-	private boolean exiting = false;
-
 	private final HorizontalPanel<Text> topPanel;
 
 	private final Text timeEntry;
 
 	private final Text scoreEntry;
-
-	private final Timer timer;
 
 	public GameScene(View view)
 	{
@@ -76,7 +43,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 
 		int levelNumber = model.getAccount().getLevel();
 
-		currentlyPlayingBackgroundNoiseName = NORMAL_BACKGROUND_NOISE;
 
 		GameGridBuilder builder = new GameGridBuilder(
 			Vector2D.of(0, 2 * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL), this);
@@ -89,21 +55,6 @@ public class GameScene extends SoundyBomberManScene implements Observable, Obser
 			timeEntry,
 			scoreEntry,
 			lives);
-
-		if (model.getAccount().getCapabilities().getNumberOfLives() < 0)
-			model.getAccount().setCapabilities(BomberManCapabilities.defaultCapabilities);
-
-		GameGridBuilderDirector director =
-			new GameGridBuilderDirector(builder, levelNumber,
-				model.getAccount().getCapabilities());
-
-		director.construct();
-
-		gameGrid = builder.getResult();
-
-		timer = new Timer(TIME);
-
-		gameGrid.attachObserver(this);
 
 		initialize();
 	}

@@ -5,6 +5,9 @@ import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.model.game.GameGrid;
+import app.jbomberman.model.game.GameGridBuilderDirector;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
@@ -19,6 +22,12 @@ import java.util.Set;
 
 public class Model implements Observable, Drawable
 {
+
+	/**
+	 * GameGrid is the gameGrid built by the builder
+	 */
+	private Maybe<GameGrid> gameGrid = Maybe.nothing();
+
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
 	private Maybe<Drawing> currentDraw;
@@ -41,6 +50,22 @@ public class Model implements Observable, Drawable
 
 		frameTimer = new Timer(1000 / FPS);
 		frameTimer.start();
+
+
+		if (model.getAccount().getCapabilities().getNumberOfLives() < 0)
+			model.getAccount().setCapabilities(BomberManCapabilities.defaultCapabilities);
+
+		GameGridBuilderDirector director =
+			new GameGridBuilderDirector(builder, levelNumber,
+				model.getAccount().getCapabilities());
+
+		director.construct();
+
+		gameGrid = builder.getResult();
+
+		timer = new Timer(TIME);
+
+		gameGrid.attachObserver(this);
 	}
 
 
