@@ -18,16 +18,53 @@ import app.jbomberman.view.widgets.TypingBox;
 
 import java.util.stream.Stream;
 
+/**
+ * LogInScene is the scene to display when a user wants to log in to an account
+ *
+ * @author gp
+ */
 public class LogInScene extends BomberManScene
 {
+	/**
+	 * menu is the bottom menu where there are the buttons to login or get back
+	 * to the StartScene
+	 */
 	private final HorizontalMenu menu;
+
+	/**
+	 * loginBox is the TypingBox where there will be displayed the typing
+	 */
 	private final TypingBox loginBox;
+
+	/**
+	 * insertLoginName is the text at the top of the window
+	 */
 	private final Text insertLoginName;
+
+	/**
+	 * maybeUnableToLogin is a text possibly empty that will contain an error
+	 * message if there was an error while logging in with an account or a
+	 * problem while creating one
+	 */
 	private final Text maybeUnableToLogin;
+
+	/**
+	 * the errorMessageTimer as a timer used to clear the maybeUnableToLogin text
+	 * after a certain amount of time
+	 */
 	private final Timer errorMessageTimer;
 
+	/**
+	 * MARGIN is the amount of margin that will be used when placing the text
+	 * of insertLoginName
+	 */
 	private static final int MARGIN = 10;
 
+	/**
+	 * public constructor builds a LoginScene from a View
+	 *
+	 * @param view the View
+	 */
 	public LogInScene(View view)
 	{
 		super(view);
@@ -89,6 +126,10 @@ public class LogInScene extends BomberManScene
 
 	}
 
+	/**
+	 * update() should be called regularly by a timer like AnimationTimer in javafx
+	 * package. It should be used to update what gets displayed on the screen
+	 */
 	@Override
 	public Drawing update()
 	{
@@ -104,6 +145,11 @@ public class LogInScene extends BomberManScene
 		return drawing;
 	}
 
+	/**
+	 * cleanup() must be called before transition to a new scene
+	 *
+	 * @implNote resume playing and destruct the loginBoard and the menu
+	 */
 	@Override
 	public void cleanup()
 	{

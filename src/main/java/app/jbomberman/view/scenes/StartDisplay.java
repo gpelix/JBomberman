@@ -2,6 +2,7 @@ package app.jbomberman.view.scenes;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
+import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.LayeredDrawObject;
 import app.jbomberman.images.AbstractImage;
@@ -25,22 +26,32 @@ public class StartDisplay extends SoundyBomberManScene
 	 */
 	private static final String startDisplaySound = Properties.getInstance().getSoundPath("01 Title Screen.wav");
 
+	/**
+	 * MENU_POSITION is the position of the menu relative to the background image
+	 */
 	private static final double MENU_POSITION = 21. / 32;
 
-	private final AbstractImage startImage;
+	/**
+	 * menu will keep the Menu to start a game, log in or exit
+	 */
+	private final HorizontalMenu menu;
 
-	private HorizontalMenu menu;
-
+	/**
+	 * backgroundLayeredDrawObject is the LayeredObject that will keep the underlying
+	 * image
+	 */
 	private final LayeredDrawObject backgroundLayeredDrawObject;
 
 	/**
-	 * setup() displays the images, text and sets up callbacks
+	 * public constructor builds a StartDisplay from a View
+	 *
+	 * @param view the View
 	 */
 	public StartDisplay(View view)
 	{
 		super(view);
 
-		startImage = FlightWeightImagesFactory.getInstance().getImage(
+		AbstractImage startImage = FlightWeightImagesFactory.getInstance().getImage(
 			"StartDisplay.png");
 
 		Model model = Model.getInstance();
@@ -64,13 +75,25 @@ public class StartDisplay extends SoundyBomberManScene
 		backgroundLayeredDrawObject = new LayeredDrawObject(Vector2D.of(0, 0), startImage, 0);
 	}
 
+	/**
+	 * cleanup() must be called before transition to a new scene
+	 *
+	 * @implNote detach the menu from the controller and stop every sound
+	 */
 	@Override
 	public void cleanup()
 	{
-		Model.getController().detachKeyBoardObserver(menu);
+		Controller.controller.detachKeyBoardObserver(menu);
 		AudioPlayer.getInstance().stopAll();
 	}
 
+	/**
+	 * update() should be called regularly by a timer like AnimationTimer in javafx
+	 * package. It should be used to update what gets displayed on the screen
+	 *
+	 * @implNote It loops and, if the audioHandle is not playing something, it plays
+	 * the startDisplaySound
+	 */
 	@Override
 	public Drawing update()
 	{

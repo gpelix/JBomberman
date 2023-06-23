@@ -172,10 +172,9 @@ public class AudioPlayer extends Thread
 					joined++;
 					nextThread.join();
 					i.remove();
-				} else {
+				} else
 					logger.info(nextThread.getSoundFileName() + " is still " +
 						"playing");
-				}
 			}
 		}
 

@@ -24,8 +24,16 @@ public class LoadingLevelScene extends SoundyBomberManScene
 	private static final String LOADING_LEVEL_SCENE_SOUND =
 		Properties.getInstance().getSoundPath("02 Stage Start.wav");
 
+	/**
+	 * drawing is the Drawing of the LoadingLevelScene
+	 */
 	private final Drawing drawing;
 
+	/**
+	 * public constructor builds a LoadingLevelScene from a View
+	 *
+	 * @param view the View
+	 */
 	public LoadingLevelScene(View view)
 	{
 		super(view);
@@ -49,7 +57,12 @@ public class LoadingLevelScene extends SoundyBomberManScene
 		getAudioHandle().playIfNeeded(LOADING_LEVEL_SCENE_SOUND);
 	}
 
-
+	/**
+	 * update() should be called regularly by a timer like AnimationTimer in javafx
+	 * package. It should be used to update what gets displayed on the screen
+	 *
+	 * @implNote if the handle is playing nothing, it transitions to a new GameScene
+	 */
 	@Override
 	public Drawing update()
 	{
@@ -59,6 +72,11 @@ public class LoadingLevelScene extends SoundyBomberManScene
 		return drawing;
 	}
 
+	/**
+	 * cleanup() must be called before transition to a new scene
+	 *
+	 * @implNote stop all sounds
+	 */
 	@Override
 	public void cleanup()
 	{

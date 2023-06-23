@@ -1,14 +1,12 @@
 package app.jbomberman.model;
 
 import app.jbomberman.JBomberManException;
-import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.Game;
 import app.jbomberman.util.AbstractObservable;
 import app.jbomberman.util.Maybe;
-import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 import app.jbomberman.view.KeyBoardUpdateInfo;
 import org.apache.logging.log4j.LogManager;
@@ -18,18 +16,14 @@ public class Model extends AbstractObservable implements Drawable
 {
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
-	private Maybe<Drawing> currentDraw;
+	private final Maybe<Drawing> currentDraw;
 	private Account account;
 	private boolean isDefaultAccount = true;
 
 	private final Logger logger;
 	private static Controller controller;
 
-	private final Timer frameTimer;
-
 	private Maybe<Game> game = Maybe.nothing();
-
-	private static final int FPS = Properties.getInstance().getMaxFps();
 
 	private Model()
 	{
@@ -37,9 +31,6 @@ public class Model extends AbstractObservable implements Drawable
 		account = AccountBuilder.getInstance().getDefaultAccount("Unknown");
 
 		logger = LogManager.getLogger(getClass());
-
-		frameTimer = new Timer(1000 / FPS);
-		frameTimer.start();
 	}
 
 	public Game getGame()
@@ -76,9 +67,6 @@ public class Model extends AbstractObservable implements Drawable
 
 	public Drawing update()
 	{
-//		if (!frameTimer.timeIsUp())
-//			return;
-//		currentDraw = Maybe.just(currentBomberManScene.update());
 		return getGame().update();
 	}
 

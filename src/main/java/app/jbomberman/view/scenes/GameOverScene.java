@@ -8,12 +8,30 @@ import app.jbomberman.util.Maybe;
 import app.jbomberman.view.View;
 import app.jbomberman.view.widgets.Text;
 
+/**
+ * GameOverScene is the scene to display when there is a GameOver
+ *
+ * @author gp
+ */
 public class GameOverScene extends SoundyBomberManScene
 {
-	private Maybe<Text> gameOverText = Maybe.nothing();
+	/**
+	 * gameOverText is the text to display when there is a gameOver
+	 */
+	private final Maybe<Text> gameOverText;
 
+	/**
+	 * GAME_OVER_SOUND is the sound to play during the GameOverScene
+	 */
 	private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("10 Game Over.wav");
 
+	/**
+	 * update() should be called regularly by a timer like AnimationTimer in javafx
+	 * package. It should be used to update what gets displayed on the screen
+	 *
+	 * @implNote We check if the audioHandle is playing something and, if not,
+	 * we go onto another scene (StartDisplay)
+	 */
 	@Override
 	public Drawing update()
 	{
@@ -25,12 +43,22 @@ public class GameOverScene extends SoundyBomberManScene
 		return gameOverText.fromJust().getDrawing();
 	}
 
+	/**
+	 * cleanup() must be called before transition to a new scene
+	 *
+	 * @implNote does nothing
+	 */
 	@Override
 	public void cleanup()
 	{
 		// Do nothing
 	}
 
+	/**
+	 * public constructor builds a GameOverScene from a View
+	 *
+	 * @param view the View
+	 */
 	public GameOverScene(View view)
 	{
 		super(view);

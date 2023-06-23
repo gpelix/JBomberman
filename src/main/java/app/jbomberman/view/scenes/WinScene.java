@@ -7,12 +7,30 @@ import app.jbomberman.model.Model;
 import app.jbomberman.view.View;
 import app.jbomberman.view.widgets.Text;
 
+/**
+ * WinScene is the scene to display when there is a Victory
+ *
+ * @author gp
+ */
 public class WinScene extends SoundyBomberManScene
 {
+	/**
+	 * winText is the text to display during this scene
+	 */
 	private final Text winText;
 
-	private static final String GAME_OVER_SOUND = Properties.getInstance().getSoundPath("08 Ending.wav");
+	/**
+	 * VICTORY_SOUND is the sound to play during the WinScene
+	 */
+	private static final String VICTORY_SOUND = Properties.getInstance().getSoundPath("08 Ending.wav");
 
+	/**
+	 * update() should be called regularly by a timer like AnimationTimer in javafx
+	 * package. It should be used to update what gets displayed on the screen
+	 *
+	 * @implNote It checks if the audioHandle is palying something. In that case,
+	 * it does a transition to StartDisplay scene.
+	 */
 	@Override
 	public Drawing update()
 	{
@@ -25,18 +43,28 @@ public class WinScene extends SoundyBomberManScene
 		return a;
 	}
 
+	/**
+	 * cleanup() must be called before transition to a new scene
+	 *
+	 * @implNote does nothing
+	 */
 	@Override
 	public void cleanup()
 	{
 		// Do nothing
 	}
 
+	/**
+	 * public constructor builds a WinScene from a View
+	 *
+	 * @param view the View
+	 */
 	public WinScene(View view)
 	{
 		super(view);
 
 		AudioPlayer.getInstance().stopAll();
-		getAudioHandle().playIfNeeded(GAME_OVER_SOUND);
+		getAudioHandle().playIfNeeded(VICTORY_SOUND);
 
 		winText = new Text("You have won", Text.TextColor.Black);
 
