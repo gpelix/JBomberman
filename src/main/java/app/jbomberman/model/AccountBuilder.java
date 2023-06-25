@@ -5,8 +5,6 @@ import app.jbomberman.Properties;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.DirUtils;
 import app.jbomberman.util.Maybe;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -14,26 +12,89 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+/**
+ * AccountBuilder is a class that is in charge of building the Account with some
+ * defaults.
+ * <p>
+ * We use the singleton pattern as we have no interest in creating more
+ * instances of an AccountBuilder
+ *
+ * @author gp
+ */
 public class AccountBuilder
 {
+	/**
+	 * instance is the only unique instance of the AccountBuilder
+	 */
 	private static AccountBuilder instance;
 
+	/**
+	 * LEVEL is the string that will be mapped to the level number in the json
+	 * file
+	 */
 	private static final String LEVEL = "level",
-		POINTS_EARNED = "pointEarned",
-		SPEED = "speed",
-		BOMB_POWER = "bomberPower",
-		AVAILABLE_BOMS = "availableBombs",
-		REMOTE_CONTROL = "removeControl",
-		GOES_THROUGH_WALLS = "goesThroughWalls",
-		GOES_THROUGH_BOMBS = "goesThroughBombs",
-		GOES_THROUGH_FIRE = "goesThroughfire",
-		IS_INVINCIBLE = "isInvincible",
-		NO_OF_LIVES = "numberOfLives";
+	/**
+	 * POINTS_EARNED is the string that will be mapped to the points earned in the
+	 * json file
+	 */
+	POINTS_EARNED = "pointEarned",
+	/**
+	 * SPEED is the string that will be mapped to the speed in the json file
+	 */
+	SPEED = "speed",
+	/**
+	 * BOMB_POWER is the string that will be mapped to the bomb power of the
+	 * account in the json file
+	 */
+	BOMB_POWER = "bomberPower",
+	/**
+	 * AVAILABLE_BOMBS is the string that will be mapped to the available bombs of
+	 * the account in the json file
+	 */
+	AVAILABLE_BOMBS = "availableBombs",
+	/**
+	 * REMOTE_CONTROL is the string that will be mapped to the boolean
+	 * representing whether the bomberman will be able to use remote control in
+	 * the account in the json file
+	 */
+	REMOTE_CONTROL = "removeControl",
+	/**
+	 * GOES_THROUGH_WALLS is the string that will be mapped to the boolean
+	 * representing whether the bomberman will be able to pass through walls in
+	 * the account in the json file
+	 */
+	GOES_THROUGH_WALLS = "goesThroughWalls",
+	/**
+	 * GOES_THROUGH_BOMBS is the string that will be mapped to a boolean that
+	 * represents whether the bomberman can go through bombs in the json file
+	 */
+	GOES_THROUGH_BOMBS = "goesThroughBombs",
+	/**
+	 * GOES_THROUGH_FIRE is the string that will be mapped to a boolean that
+	 * represents whether the bomberman can go through fire in the json file
+	 */
+	GOES_THROUGH_FIRE = "goesThroughfire",
+	/**
+	 * IS_INVINCIBLE is the string that will be mapped to a boolean representing
+	 * whether the account is invincible in the json file
+	 */
+	IS_INVINCIBLE = "isInvincible",
+	/**
+	 * NO_OF_LIVES is the string that will be mapped to the number of lives of
+	 * the account in the json file
+	 */
+	NO_OF_LIVES = "numberOfLives";
 
+	/**
+	 * START_LEVEL is the start level = 1
+	 */
 	private static final int START_LEVEL = 1;
 
-	private Logger logger;
-
+	/**
+	 * getInstance() gets the single instance of the AccountBuilder
+	 *
+	 * @return the single instance of the AccountBuilder
+	 */
 	public static AccountBuilder getInstance()
 	{
 		if (instance == null)
@@ -41,16 +102,31 @@ public class AccountBuilder
 		return instance;
 	}
 
+	/**
+	 * private empty constructor to avoid the creation of other AccountBuilder
+	 * instances
+	 */
 	private AccountBuilder()
 	{
-		logger = LogManager.getLogger(getClass());
 	}
 
+	/**
+	 * getFilePath() gets the path of the settings file
+	 *
+	 * @return the path of the settings file
+	 */
 	private Path getFilePath()
 	{
 		return Path.of(DirUtils.getAppData(), Properties.getInstance().getJbombermanDirectoryDataName(), Properties.getInstance().getPlayersFile());
 	}
 
+	/**
+	 * getPlayersJson() gets the JSONObject that has been created from the read
+	 * settings file
+	 *
+	 * @return the JSONObject that has been created from the read settings
+	 * file
+	 */
 	private JSONObject getPlayersJson()
 	{
 		try {
@@ -74,6 +150,13 @@ public class AccountBuilder
 		}
 	}
 
+	/**
+	 * retrievePlayer() gets the player from the JSON Object loaded from the
+	 * settings file
+	 *
+	 * @param playerName the name of the player
+	 * @return the account
+	 */
 	public Maybe<Account> retrievePlayer(String playerName)
 	{
 		JSONObject jsonPlayers;
@@ -91,7 +174,7 @@ public class AccountBuilder
 			new BomberManCapabilities(
 				playerStats.getDouble(SPEED),
 				playerStats.getInt(BOMB_POWER),
-				playerStats.getInt(AVAILABLE_BOMS),
+				playerStats.getInt(AVAILABLE_BOMBS),
 				playerStats.getBoolean(REMOTE_CONTROL),
 				playerStats.getBoolean(GOES_THROUGH_WALLS),
 				playerStats.getBoolean(GOES_THROUGH_BOMBS),
@@ -103,16 +186,28 @@ public class AccountBuilder
 		));
 	}
 
+	/**
+	 * buildPlayer() creates a player with the default settings and writes it
+	 * to the file
+	 *
+	 * @param playerName the name of the player to be built
+	 */
 	public void buildPlayer(String playerName)
 	{
 		JSONObject playersJSON = getPlayersJson();
 
 		if (playersJSON.has(playerName))
 			throw new PlayerBuilderException(playerName + " already exists. Unable to create again");
-		
+
 		savePlayer(getDefaultAccount(playerName));
 	}
 
+	/**
+	 * savePlayer() encodes the account to a JSONObject structure and writes it
+	 * to the settings-file
+	 *
+	 * @param account the account to be saved
+	 */
 	public void savePlayer(Account account)
 	{
 		// If the player is the default one
@@ -139,7 +234,7 @@ public class AccountBuilder
 		player.put(NO_OF_LIVES, cap.getNumberOfLives());
 		player.put(SPEED, cap.getSpeed());
 		player.put(BOMB_POWER, cap.getBombPower());
-		player.put(AVAILABLE_BOMS, cap.getAvailableBombs());
+		player.put(AVAILABLE_BOMBS, cap.getAvailableBombs());
 		player.put(REMOTE_CONTROL, cap.hasRemoveControl());
 		player.put(GOES_THROUGH_WALLS, cap.goesThroughWalls());
 		player.put(GOES_THROUGH_BOMBS, cap.goesThroughBombs());
@@ -149,6 +244,12 @@ public class AccountBuilder
 		saveFile(playerJSON);
 	}
 
+	/**
+	 * saveFile() must be called internally to write the JSONObject provided in
+	 * input to the settings file
+	 *
+	 * @param obj the JSONObject to write to the settings-file
+	 */
 	private void saveFile(JSONObject obj)
 	{
 		try {
@@ -159,6 +260,12 @@ public class AccountBuilder
 		}
 	}
 
+	/**
+	 * getDefaultAccount() creates a default empty account
+	 *
+	 * @param playerName the name of the Account
+	 * @return the built account
+	 */
 	public Account getDefaultAccount(String playerName)
 	{
 		return new Account(

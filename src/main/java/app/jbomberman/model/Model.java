@@ -31,11 +31,6 @@ public class Model extends AbstractObservable
 	private Account account;
 
 	/**
-	 * isDefaultAccount is a boolean that is set to false if a log in has been done
-	 */
-	private boolean isDefaultAccount = true;
-
-	/**
 	 * logger is the logger for the Model
 	 */
 	private final Logger logger;
@@ -57,7 +52,7 @@ public class Model extends AbstractObservable
 	 */
 	private Model()
 	{
-		account = AccountBuilder.getInstance().getDefaultAccount("Unknown");
+		account = AccountBuilder.getInstance().getDefaultAccount("");
 
 		logger = LogManager.getLogger(getClass());
 	}
@@ -111,7 +106,6 @@ public class Model extends AbstractObservable
 	public void setAccount(Account account)
 	{
 		this.account = account;
-		isDefaultAccount = false;
 	}
 
 	/**
@@ -139,8 +133,7 @@ public class Model extends AbstractObservable
 	 */
 	public void close()
 	{
-		if (!isDefaultAccount)
-			AccountBuilder.getInstance().savePlayer(account);
+		AccountBuilder.getInstance().savePlayer(account);
 		logger.info("Closing model");
 		controller.close();
 	}
