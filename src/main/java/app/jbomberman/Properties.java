@@ -29,6 +29,8 @@ public class Properties
 	private static final String playersFile = "players.json";
 	private final GraphicLibrary graphicLibrary;
 	private final String icon;
+	private final int numberOfPowerUps;
+	private final int lastLevel;
 
 	private static final String SETTINGS_FILE =
 		JSON_DIRECTORY + "settings.json";
@@ -39,12 +41,14 @@ public class Properties
 		JSONObject settingsJsonRead =
 			new JSONObject(Resources.readResource(SETTINGS_FILE));
 		scaleFactor = settingsJsonRead.getInt("SCALE_FACTOR");
+		lastLevel = settingsJsonRead.getInt("LAST_LEVEL");
 		maxFps = settingsJsonRead.getInt("MAX_FPS");
 		applicationName = settingsJsonRead.getString("APPLICATION_NAME");
 		imagesDirectory = settingsJsonRead.getString("IMAGES_DIRECTORY");
 		jbombermanDirectoryDataName = settingsJsonRead.getString("JBOMBERMAN_DATA_DIRECTORY_NAME");
 		soundsDirectory = settingsJsonRead.getString("SOUNDS_DIRECTORY");
 		icon = settingsJsonRead.getString("ICON");
+		numberOfPowerUps = settingsJsonRead.getInt("NUMBER_OF_POWERUPS");
 		graphicLibrary = settingsJsonRead.getString("GRAPHIC_LIBRARY").equalsIgnoreCase("javafx") ? GraphicLibrary.JAVAFX : GraphicLibrary.SWING;
 	}
 
@@ -106,6 +110,17 @@ public class Properties
 	public String getSoundsDirectory()
 	{
 		return soundsDirectory;
+	}
+
+	public int getNumberOfPowerUps()
+	{
+		return numberOfPowerUps;
+	}
+
+
+	public int getLastLevel()
+	{
+		return lastLevel;
 	}
 
 	public String getSoundPath(String filename)

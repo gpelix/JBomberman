@@ -35,7 +35,7 @@ public class WallAliveState extends AliveState
 	@Override
 	public Drawing getDrawing()
 	{
-		return wall.getDrawing(imageManager.getNextImage());
+		return wall.getDrawing(imageManager.getImage());
 	}
 }
 

@@ -1,6 +1,7 @@
 package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
+import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Vector2D;
@@ -48,7 +49,7 @@ public class PauseScene extends BomberManScene
 		menu.setWidth(modelDims.getX());
 		menu.setTopLeft(Vector2D.of(0, 0));
 
-		Model.getController().attachKeyBoardObserver(menu);
+		Controller.controller.attachKeyBoardObserver(menu);
 	}
 
 	/**
@@ -60,7 +61,7 @@ public class PauseScene extends BomberManScene
 	public void cleanup()
 	{
 		AudioPlayer.getInstance().resumePlaying();
-		Model.getController().detachKeyBoardObserver(menu);
+		Controller.controller.detachKeyBoardObserver(menu);
 	}
 
 	/**

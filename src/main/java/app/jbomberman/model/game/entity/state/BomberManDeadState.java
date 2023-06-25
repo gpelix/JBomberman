@@ -47,7 +47,7 @@ public class BomberManDeadState extends DeadState
 	@Override
 	public Drawing getDrawing()
 	{
-		AbstractImage image = deathImageManager.getNextImage();
+		AbstractImage image = deathImageManager.getImage();
 		if (deathImageManager.hasChanged())
 			bomberMan.hasChanged();
 		return bomberMan.getDrawing(image);

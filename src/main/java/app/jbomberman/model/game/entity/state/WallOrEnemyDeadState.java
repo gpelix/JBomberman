@@ -32,7 +32,7 @@ public class WallOrEnemyDeadState<T extends Entity & StateFul> extends DeadState
 	@Override
 	public Drawing getDrawing()
 	{
-		AbstractImage image = deathImageManager.getNextImage();
+		AbstractImage image = deathImageManager.getImage();
 		if (deathImageManager.hasChanged())
 			entity.hasChanged();
 		return entity.getDrawing(image);

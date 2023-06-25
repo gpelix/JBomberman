@@ -10,6 +10,12 @@ import app.jbomberman.util.CallbackOnce;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 
+/**
+ * Game is the class representing a game. Its duties are creating an instance
+ * of GameGrid using the builder and then start the game
+ *
+ * @author gp
+ */
 public class Game
 {
 	/**
@@ -19,34 +25,66 @@ public class Game
 	private static final String NORMAL_BACKGROUND_NOISE =
 		Properties.getInstance().getSoundPath("03 Main BGM.wav");
 
+	/**
+	 * TIME is the time that a game will last in milliseconds
+	 */
 	private static final long TIME = 200_000;
 
+	/**
+	 * POWERUP_TAKEN_BACKGROUND_NOISE is the sound that will be played as soon
+	 * as a powerup gets taken by bomberman
+	 */
 	private static final String POWERUP_TAKEN_BACKGROUND_NOISE =
 		Properties.getInstance().getSoundPath("04 Power-Up Get.wav");
 
+	/**
+	 * GAME_OVER_SOUND is the sound to be played when there is a game over
+	 */
 	private static final String GAME_OVER_SOUND =
 		Properties.getInstance().getSoundPath("09 Miss.wav");
 
+	/**
+	 * WIN_SOUND is the sound to be played when the player has won
+	 */
 	private static final String WIN_SOUND =
 		Properties.getInstance().getSoundPath("05 Stage Clear.wav");
-	private static final int LAST_LEVEL = 50;
 
+	/**
+	 * currentlyPlayingBackgroundNoiseName is the name of the background sound that
+	 * is currently playing. This variable is needed as we first play the
+	 * NORMAL_BACKGROUND_SOUND and then if a powerup gets taken, we switch to the
+	 * POWERUP_TAKEN_BACKGROUND_NOISE.
+	 * So we keep the name of the file containing the background sound currently
+	 * playing in this String
+	 */
 	private String currentlyPlayingBackgroundNoiseName;
 
 	/**
 	 * GameGrid is the gameGrid built by the builder
 	 */
 	private final GameGrid gameGrid;
+
+	/**
+	 * exiting is a flag that is set to true only if bomberman has won or has been
+	 * distroyed somehow (or by an enemy or hit by an explosion)
+	 */
 	private boolean exiting = false;
+
+	/**
+	 * handle is the MaybeAudioHandle that will be responsible for playing the
+	 * background noise sound
+	 */
 	private final MaybeAudioHandle handle;
 
-	public static int getLastLevel()
-	{
-		return LAST_LEVEL;
-	}
-
+	/**
+	 * timer is the timer that will ring at the end of the game
+	 */
 	private final Timer timer;
 
+	/**
+	 * public constructor that should be called by the Model when a new game
+	 * gets requested
+	 */
 	public Game()
 	{
 		Model model = Model.getInstance();
@@ -70,27 +108,39 @@ public class Game
 
 		director.construct();
 
-		gameGrid = builder.getResult();
+		gameGrid = builder.getGrid();
 
 		timer = new Timer(TIME);
 	}
 
+	/**
+	 * powerUpTaken is a function meant to be called by a Powerup when it has
+	 * been taken
+	 */
 	public void powerUpTaken()
 	{
-		// Should now do what the TODO:
-//		replace(POWERUP_TAKEN_BACKGROUND_NOISE);
-//		currentlyPlayingBackgroundNoiseName = POWERUP_TAKEN_BACKGROUND_NOISE;
+		handle.replace(POWERUP_TAKEN_BACKGROUND_NOISE);
+		currentlyPlayingBackgroundNoiseName = POWERUP_TAKEN_BACKGROUND_NOISE;
 	}
 
+	/**
+	 * Callback to call when time is up, but just one time
+	 */
 	private final CallbackOnce func = new CallbackOnce()
 	{
 		@Override
 		public void run()
 		{
-			gameGrid.timeHasEnded();
+			gameGrid.doWhenTimeHasEnded();
 		}
 	};
 
+	/**
+	 * update is the method that must be called to update the game and get a
+	 * drawing of it
+	 *
+	 * @return the drawing of the game
+	 */
 	public Drawing update()
 	{
 		if (!timer.hasStarted())
@@ -102,40 +152,49 @@ public class Game
 
 		if (!exiting)
 			handle.playIfNeeded(currentlyPlayingBackgroundNoiseName);
-		// To be moved back to the gameScene
-//		} else {
-//			Model model = Model.getInstance();
-//			if (!handle.isPlayingSomething()) {
-//				if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
-//					if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
-//						doTransition(WinScene::new);
-//						model.getAccount().setLevel(1);
-//					} else
-//						doTransition(LoadingLevelScene::new);
-//				} else
-//					doTransition(GameOverScene::new);
-//			}
-//		}
 
 		return gameGrid.getDrawing();
 	}
 
+	/**
+	 * secsToEnd() returns the number of seconds to the end of the game
+	 *
+	 * @return the seconds to the end of the game
+	 */
 	public long secsToEnd()
 	{
-		System.out.println(timer.millisToEnd());
 		return timer.millisToEnd() / 1000;
 	}
 
+	/**
+	 * exited() returns true if and only is the game has ended (so we are in the
+	 * exiting state) and the playing of the shutdown music has ended
+	 *
+	 * @return whether the game has ended (so we are in the
+	 * exiting state) and the playing of the shutdown music has ended
+	 */
 	public boolean exited()
 	{
 		return exiting() && !handle.isPlayingSomething();
 	}
 
+	/**
+	 * exiting() returns the exiting flag
+	 *
+	 * @return the exiting flag
+	 */
 	public boolean exiting()
 	{
 		return exiting;
 	}
 
+	/**
+	 * endGame() must be called by entities to start the shutdown process of the
+	 * game
+	 *
+	 * @param victory it must be set to true if there was a victory or false
+	 *                otherwise
+	 */
 	public void endGame(boolean victory)
 	{
 		if (victory) {
@@ -148,6 +207,12 @@ public class Game
 		exiting = true;
 	}
 
+	/**
+	 * getDimensions() returns the dimensions of the underlying gameGrid in model
+	 * coordinates
+	 *
+	 * @return the dimension of the underlying gameGrid
+	 */
 	public Vector2D getDimensions()
 	{
 		return gameGrid.getDimensions();

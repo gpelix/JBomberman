@@ -70,7 +70,7 @@ public class StartDisplay extends SoundyBomberManScene
 		menu.setTopLeft(Vector2D.of(0, (int) (height * MENU_POSITION)));
 		menu.setWidth(width);
 
-		Model.getController().attachKeyBoardObserver(menu);
+		Controller.controller.attachKeyBoardObserver(menu);
 
 		backgroundLayeredDrawObject = new LayeredDrawObject(Vector2D.of(0, 0), startImage, 0);
 	}

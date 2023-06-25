@@ -30,29 +30,36 @@ public class GameGridBuilder
 	 */
 	private final Vector2D topLeft;
 
+	/**
+	 * public constructor from a Vector2D specifying the position of the top-left
+	 * corner of the grid in Model coordinates
+	 *
+	 * @param topLeft the top-left corner of the GameGrid
+	 */
 	public GameGridBuilder(Vector2D topLeft)
 	{
 		grid = Maybe.nothing();
 		this.topLeft = topLeft;
 	}
 
+	/**
+	 * When the GameGridBuilder gets created, it's still unknown what the dimensions
+	 * of the Grid will be. In fact, the GameGridBuilder must be created before the
+	 * GameGridDirector gets going
+	 *
+	 * @param dimensions the dimensions of the grid
+	 */
 	public void setup(Vector2D dimensions)
 	{
 		grid = Maybe.just(new GameGrid(dimensions, topLeft, this));
 	}
 
-	// PLEASE USE ONLY FROM THE DIRECTOR
-	public GameGrid getGameGrid()
-	{
-		return getGrid();
-	}
-
-	public GameGrid getResult()
-	{
-		return getGrid();
-	}
-
-	private GameGrid getGrid()
+	/**
+	 * getGameGrid() gets the GameGrid
+	 *
+	 * @return the constructed GameGrid
+	 */
+	public GameGrid getGrid()
 	{
 		return grid.unwrapOrThrow(() -> new RuntimeException("Grid not " +
 			"build" +
@@ -60,7 +67,14 @@ public class GameGridBuilder
 			"director.construct()?"));
 	}
 
-
+	/**
+	 * addEnemy() adds an enemy to the grid in the place specified by
+	 * gridCoordinate.
+	 *
+	 * @param gridCoordinate the coordinate in the grid to which the enemy must be
+	 *                       added
+	 * @param enemyNumber    the number of the enemy specifying its type
+	 */
 	public void addEnemy(Vector2D gridCoordinate, int enemyNumber)
 	{
 		getGrid().addGameCharacter(EntityFactory.getInstance().buildEnemy(
@@ -70,6 +84,13 @@ public class GameGridBuilder
 			gridCoordinate);
 	}
 
+	/**
+	 * addBlock() creates a black and adds it to the coordinate specified by
+	 * gridCoordinate
+	 *
+	 * @param gridCoordinate the coordinate of the cell on which the block will
+	 *                       have to be placed
+	 */
 	public void addBlock(Vector2D gridCoordinate)
 	{
 		getGrid().addBlock(
@@ -78,6 +99,13 @@ public class GameGridBuilder
 		);
 	}
 
+	/**
+	 * addWall() creates a wall and adds it to the coordinate specified by
+	 * gridCoordinate
+	 *
+	 * @param gridCoordinate the coordinate of the cell on which the wall will
+	 *                       have to be placed
+	 */
 	public void addWall(Vector2D gridCoordinate)
 	{
 		Wall wall = EntityFactory.getInstance().buildWall(
@@ -91,6 +119,14 @@ public class GameGridBuilder
 		);
 	}
 
+	/**
+	 * addPowerUp() adds a powerup to the grid in the place specified by
+	 * gridCoordinate.
+	 *
+	 * @param gridCoordinate the coordinate in the grid to which the powerup
+	 *                       must be added
+	 * @param powerUpNumber  the number of the powerup specifying its type
+	 */
 	public void addPowerUp(Vector2D gridCoordinate, int powerUpNumber)
 	{
 		Powerup powerup = EntityFactory.getInstance().buildPowerUp(
@@ -105,16 +141,30 @@ public class GameGridBuilder
 		);
 	}
 
+	/**
+	 * addDoor() creates a door and adds it to the coordinate specified by
+	 * gridCoordinate
+	 *
+	 * @param gridCoordinate the coordinate of the cell on which the door will
+	 *                       have to be placed
+	 */
 	public void addDoor(Vector2D gridCoordinate)
 	{
 		getGrid().addDoor(
 			EntityFactory.getInstance().buildDoor(
-				getGameGrid().gridCoord2modelCoor(gridCoordinate),
-				getGameGrid()),
+				getGrid().gridCoord2modelCoor(gridCoordinate),
+				getGrid()),
 			gridCoordinate
 		);
 	}
 
+	/**
+	 * addFreeCell() creates a freeCell and adds it to the coordinate specified by
+	 * gridCoordinate
+	 *
+	 * @param gridCoordinate the coordinate of the grid to which the FreeCell will
+	 *                       be placed
+	 */
 	public void addFreeCell(Vector2D gridCoordinate)
 	{
 		getGrid().set(
@@ -123,7 +173,14 @@ public class GameGridBuilder
 		);
 	}
 
-	// Here gameScene acts as a bridge that routes LEFT RIGHT ... to BomberMan
+	/**
+	 * addBomberMan() adds bomberman to the freeCell in gridCoordinate with the
+	 * capabilities specified in capabilities
+	 *
+	 * @param gridCoordinate the coordinate of the freecell to which bomberman
+	 *                       will be added
+	 * @param capabilities   the capabilities bomberman will have
+	 */
 	public void addBomberMan(Vector2D gridCoordinate,
 													 BomberManCapabilities capabilities)
 	{
@@ -132,11 +189,8 @@ public class GameGridBuilder
 			capabilities,
 			getGrid());
 
-		// Attach observer bomberman to Scene
-		// TODO: This is not what we want as we want filtering by gameScene and
-		// TODO: will disable it for now!
+		// bomberman will be detached when a new level is loaded
 		Model.getInstance().attachObserver(bomberMan);
-		// Who will detach it??
 
 		getGrid().addGameCharacter(bomberMan, gridCoordinate);
 	}

@@ -8,6 +8,12 @@ package app.jbomberman.model;
  */
 public class PlayerBuilderException extends IllegalArgumentException
 {
+	/**
+	 * public constructor that receives a String and will be used to initialize
+	 * the superclass
+	 *
+	 * @param str the message to be displayed on error
+	 */
 	public PlayerBuilderException(String str)
 	{
 		super(str);

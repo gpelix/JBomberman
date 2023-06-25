@@ -40,7 +40,7 @@ public class EnemyAliveState extends AliveState
 	public Drawing getDrawing()
 	{
 		enemy.hasChanged();
-		return enemy.getDrawing(imageManager.getNextImage(enemy.getPreviousMoveDirection().orElseWrapped(Direction.NORTH)));
+		return enemy.getDrawing(imageManager.getImage(enemy.getPreviousMoveDirection().orElseWrapped(Direction.NORTH)));
 	}
 }
 

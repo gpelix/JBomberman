@@ -1,6 +1,7 @@
 package app.jbomberman.model.game;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.Properties;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.EntityFactory;
 import app.jbomberman.model.game.entity.GameCharacterCapabilities;
@@ -20,12 +21,28 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+/**
+ * GameGridBuilderDirector is the Director in the Builder pattern as described in
+ * the Gang of Four Book
+ *
+ * @author gp
+ */
 public class GameGridBuilderDirector
 {
+	/**
+	 * LEVEL_JSON_FILE is a string containing the path to the file containing the
+	 * levels' specifications
+	 */
 	private static final String LEVEL_JSON_FILE = "json/levels.json";
 
-	private static final int NUMBER_OF_POWERUPS = 8;
+	/**
+	 * NUMBER_OF_POWERUPS is the number of powerups in th
+	 */
+	private static final int NUMBER_OF_POWERUPS = Properties.getInstance().getNumberOfPowerUps();
 
+	/**
+	 * builder is a reference to the builder
+	 */
 	private final GameGridBuilder builder;
 
 	/**
@@ -37,27 +54,46 @@ public class GameGridBuilderDirector
 	 */
 	private static final int gridHeight = 15;
 
+	/**
+	 * levelNumber contains a number describing the level we want to construct
+	 */
 	private final int levelNumber;
 
-	private final BomberManCapabilities account;
+	/**
+	 * capabilities is an instance of BomberManCapabilities that will be needed
+	 * when bomberman will be constructed
+	 */
+	private final BomberManCapabilities capabilities;
 
+	/**
+	 * game-grid coordinate describing the entry point of bomberman on the grid
+	 */
 	private static final Vector2D bombermanEntryPointGridRelative =
 		Vector2D.of(1, 1);
 
+	/**
+	 * public constructor of the Director from a GameGridBuild that will be used
+	 * for the construction of the Grid, the number of the level we are building,
+	 * and the capabilities bomberman will have
+	 *
+	 * @param builder      the builder that will be used to build the entities
+	 * @param levelNumber  the number of the level that must be created
+	 * @param capabilities the capabilities bomberman will have
+	 */
 	public GameGridBuilderDirector(GameGridBuilder builder,
-								   int levelNumber,
-								   BomberManCapabilities capabilities)
+																 int levelNumber,
+																 BomberManCapabilities capabilities)
 	{
 		this.builder = builder;
 		this.levelNumber = levelNumber;
-		this.account = capabilities;
+		this.capabilities = capabilities;
 	}
 
 	/**
-	 * levelAgnosticConstruction is the first fase of the construction of the
+	 * levelAgnosticConstruction is the first phase of the construction of the
 	 * gameGrid which does not depend on the specific level we are building
 	 */
-	public void levelAgnosticConstruction()
+	private void levelAgnosticConstruction()
 	{
 		builder.setup(Vector2D.of(gridWidth, gridHeight));
 
@@ -82,6 +118,9 @@ public class GameGridBuilderDirector
 					builder.addBlock(Vector2D.of(i, j));
 	}
 
+	/**
+	 * construct() builds the grid using calling the API of the Builder
+	 */
 	public void construct()
 	{
 		levelAgnosticConstruction();
@@ -142,7 +181,7 @@ public class GameGridBuilderDirector
 
 			// We need this as we can determine whether it's ok to place an
 			// enemy in a certain place
-			GameGrid gameGrid = builder.getGameGrid();
+			GameGrid gameGrid = builder.getGrid();
 			MoveManager moveManager = gameGrid.getMoveManager();
 
 
@@ -179,11 +218,15 @@ public class GameGridBuilderDirector
 				"`" + LEVEL_JSON_FILE + "'. " + e.getMessage());
 		}
 
-		builder.addBomberMan(bombermanEntryPointGridRelative, account);
+		builder.addBomberMan(bombermanEntryPointGridRelative, capabilities);
 	}
 
-
-	public Stream<Vector2D> allGridCoordinates()
+	/**
+	 * allGridCoordinates() generates all the coordinates of the underlying grid
+	 *
+	 * @return a Stream containing the Vector2D of the coordinates of the grid
+	 */
+	private Stream<Vector2D> allGridCoordinates()
 	{
 		return IntStream.range(0, gridHeight * gridWidth - 1)
 			.boxed()
@@ -193,6 +236,13 @@ public class GameGridBuilderDirector
 			);
 	}
 
+	/**
+	 * allCoordinatesButBlocks() returns the same stream as allGridCoordinates() but
+	 * without the ones that will have a block on them
+	 *
+	 * @return the same stream as allGridCoordinates() but without the ones that
+	 * will have a block on them
+	 */
 	public Stream<Vector2D> allCoordinatesButBlocks()
 	{
 		Set<Vector2D> coordinateForBombermanFreedom = new HashSet<>()

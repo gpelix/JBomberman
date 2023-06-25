@@ -1,6 +1,7 @@
 package app.jbomberman.util;
 
 import java.util.Iterator;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 /**
@@ -119,7 +120,7 @@ public class Grid<T> implements Iterable<T>
 	 * of element from the grid given a coordinate
 	 *
 	 * @param coordinate coordinate specifying the position of the element to
-	 *				   return
+	 *                   return
 	 * @return the element at the position specified by coordinate
 	 */
 	@SuppressWarnings("unchecked")
@@ -132,7 +133,7 @@ public class Grid<T> implements Iterable<T>
 	/**
 	 * set() must be used to insert an element into the grid
 	 *
-	 * @param obj		the object to insert
+	 * @param obj        the object to insert
 	 * @param coordinate the coordinate at which the object must be inserted
 	 */
 	public void set(T obj, Vector2D coordinate)
@@ -234,6 +235,22 @@ public class Grid<T> implements Iterable<T>
 				coordinate.sum(Vector2D.of(1, 0)),
 				coordinate.sum(Vector2D.of(-1, 0)))
 			.filter(this::isWithinBoundaries);
+	}
+
+	/**
+	 * allCoordinates() returns a stream containing all the coordinates of the
+	 * Grid
+	 *
+	 * @return a stream containing all the coordinates of the grid
+	 */
+	private Stream<Vector2D> allCoordinates()
+	{
+		return IntStream.range(0, getHeight() * getWidth() - 1)
+			.boxed()
+			.map(place -> Vector2D.of(
+				place % getWidth(),
+				place / getHeight())
+			);
 	}
 }
 

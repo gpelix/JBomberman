@@ -42,7 +42,7 @@ public abstract class Bomb extends Entity
 	{
 		if (imageManager.hasChanged())
 			hasChanged();
-		return getDrawing(imageManager.getNextImage());
+		return getDrawing(imageManager.getImage());
 	}
 
 	public void commonUpdateInModel()

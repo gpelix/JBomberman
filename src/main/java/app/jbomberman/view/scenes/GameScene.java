@@ -1,10 +1,10 @@
 package app.jbomberman.view.scenes;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.Model;
-import app.jbomberman.model.game.Game;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
 import app.jbomberman.util.Observable;
@@ -44,6 +44,11 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	 * livesEntry is the entry in the topPanel that will show the available lives
 	 */
 	private final Text livesEntry;
+
+	/**
+	 * LAST_LEVEL is the number of the last level
+	 */
+	private static final int LAST_LEVEL = Properties.getInstance().getLastLevel();
 
 	/**
 	 * public constructor builds a GameScene from a View
@@ -91,7 +96,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 
 		if (model.getGame().exited()) {
 			if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
-				if (model.getAccount().getLevel() == Game.getLastLevel() + 1) {
+				if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
 					doTransition(WinScene::new);
 					model.getAccount().setLevel(1);
 				} else
@@ -119,7 +124,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	 */
 	private void initialize()
 	{
-		Model.getController().attachKeyBoardObserver(this); // Listen for ESC
+		Controller.controller.attachKeyBoardObserver(this); // Listen for ESC
 
 		topPanel.setTopLeft(Vector2D.of(0, 0));
 		topPanel.setWidth(Model.getInstance().getGame().getDimensions().multiply(Entity.SIZE_IN_MODEL).getX());

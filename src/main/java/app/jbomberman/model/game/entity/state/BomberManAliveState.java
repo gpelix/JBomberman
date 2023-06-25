@@ -48,7 +48,7 @@ public class BomberManAliveState extends AliveState
 	public Drawing getDrawing()
 	{
 		//System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
-		Drawing drawing = bomberMan.getDrawing(imageManager.getNextImage(drawn ?
+		Drawing drawing = bomberMan.getDrawing(imageManager.getImage(drawn ?
 			CollectionUtils.pick(bomberMan.getDirections()) : Maybe.nothing()));
 
 		drawn = true;

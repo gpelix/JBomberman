@@ -1,6 +1,7 @@
 package app.jbomberman.view.scenes;
 
 import app.jbomberman.audio.AudioPlayer;
+import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Account;
@@ -80,7 +81,7 @@ public class LogInScene extends BomberManScene
 		insertLoginName = new Text("Insert login name...", Text.TextColor.Black,
 			Vector2D.of(dimensions.getX() / 2, MARGIN));
 
-		loginBox = new TypingBox(Model.getController(), Text.TextColor.Black, Vector2D.of(
+		loginBox = new TypingBox(Controller.controller, Text.TextColor.Black, Vector2D.of(
 			dimensions.getX() / 2,
 			dimensions.getY() / 2
 		));
@@ -122,7 +123,7 @@ public class LogInScene extends BomberManScene
 			Vector2D.of(0, dimensions.getY() - FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)
 		);
 
-		Model.getController().attachKeyBoardObserver(menu);
+		Controller.controller.attachKeyBoardObserver(menu);
 
 	}
 
@@ -155,7 +156,7 @@ public class LogInScene extends BomberManScene
 	{
 		AudioPlayer.getInstance().resumePlaying();
 		loginBox.destruct(); // Detach from controller
-		Model.getController().detachKeyBoardObserver(menu);
+		Controller.controller.detachKeyBoardObserver(menu);
 	}
 }
 

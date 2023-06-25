@@ -4,40 +4,84 @@ import app.jbomberman.images.AbstractImage;
 
 import java.util.List;
 
+/**
+ * ImageManager is a class that will be used to manage a set of images.
+ *
+ * @author gp
+ */
 public class ImageManager
 {
-	private static final int DEFAULT_UPDATE_INTERVAL = 10; // 60 means 1 change per sec
+	/**
+	 * DEFAULT_UPDATE_INTERVAL is the default number of times the image is requested
+	 * before going to the next image
+	 */
+	private static final int DEFAULT_UPDATE_INTERVAL = 10; // 10 means: ten requests, 1 change
 
+	/**
+	 * updateInterval is the number of times the image is requested before going
+	 * to the next image
+	 */
 	private int updateInterval;
 
+	/**
+	 * timeToUpdate is the remaining retrievals before the current image is
+	 * changed
+	 */
 	private int timeToUpdate = 0;
 
-	private int idxInImageViews;
+	/**
+	 * idxInImages is the index of the current image in the list of images
+	 */
+	private int idxInImages;
 
+	/**
+	 * hasDoneOneCycle is a boolean that is true if and only if all the images
+	 * have been displayed at least one time
+	 */
 	private boolean hasDoneOneCycle;
 
-	private List<AbstractImage> currentImages;
+	/**
+	 * images is the list of images
+	 */
+	private List<AbstractImage> images;
 
-	public ImageManager(List<AbstractImage> currentImages, int idxInImageViews)
+	/**
+	 * public constructor of ImageManager from a list of Images
+	 *
+	 * @param images      the list of images
+	 * @param idxInImages the index in the image list of the current image
+	 */
+	public ImageManager(List<AbstractImage> images, int idxInImages)
 	{
-		this.currentImages = currentImages;
-		this.idxInImageViews = idxInImageViews;
+		this.images = images;
+		this.idxInImages = idxInImages;
 		this.hasDoneOneCycle = false;
 		updateInterval = DEFAULT_UPDATE_INTERVAL;
 	}
 
+	/**
+	 * setUpdateInterval() sets the updateInterval
+	 *
+	 * @param updateInterval the updateInterval to be set
+	 */
 	public void setUpdateInterval(int updateInterval)
 	{
 		this.updateInterval = updateInterval;
 	}
 
-	public AbstractImage getNextImage()
+	/**
+	 * getImage() gets the current image or the next one depending on the number
+	 * of times the current image has been retrieved
+	 *
+	 * @return the current image after eventually been updated
+	 */
+	public AbstractImage getImage()
 	{
 		AbstractImage ret = getCurrentImage();
 		if (--timeToUpdate < 0) {
-			if (++idxInImageViews == currentImages.size()) {
+			if (++idxInImages == images.size()) {
 				hasDoneOneCycle = true;
-				idxInImageViews = 0;
+				idxInImages = 0;
 			}
 			timeToUpdate = updateInterval;
 		}
@@ -45,36 +89,59 @@ public class ImageManager
 		return ret;
 	}
 
+	/**
+	 * hasChanged() returns true if and only if, at the previous call of
+	 * getImage(), an update was done
+	 *
+	 * @return true if and only if, at the previous call of getImage(), an update
+	 * was done
+	 */
 	public boolean hasChanged()
 	{
 		return timeToUpdate == updateInterval;
 	}
 
-	public void setCurrentImages(List<AbstractImage> currentImages)
+	/**
+	 * setImages sets the list of images and resets the state of the ImageManager
+	 *
+	 * @param images the list of images to be set
+	 */
+	public void setImages(List<AbstractImage> images)
 	{
-		this.currentImages = currentImages;
+		timeToUpdate = updateInterval;
+		idxInImages = 0;
+		this.images = images;
 	}
 
-	public void setIdxInImageViews(int idxInImageViews)
+	/**
+	 * setIdxInImages() sets the index of the current image in the image list
+	 *
+	 * @param idxInImages the index of the current image in images
+	 */
+	public void setIdxInImages(int idxInImages)
 	{
-		this.idxInImageViews = idxInImageViews;
+		if (idxInImages >= images.size())
+			throw new GamePlayException("Index " + idxInImages +
+				" out of Bound in images of size " + images.size());
+		this.idxInImages = idxInImages;
 	}
 
-	public int getIdxInImageViews()
-	{
-		return idxInImageViews;
-	}
-
-	public List<AbstractImage> getCurrentImages()
-	{
-		return currentImages;
-	}
-
+	/**
+	 * getCurrentImage() must be called to get the current image without doing any
+	 * update at all
+	 *
+	 * @return the current image
+	 */
 	public AbstractImage getCurrentImage()
 	{
-		return currentImages.get(idxInImageViews);
+		return images.get(idxInImages);
 	}
 
+	/**
+	 * hasDoneOneCycle() returns the hasDoneOneCycle flag
+	 *
+	 * @return the hasDoneOneCycle flag
+	 */
 	public boolean hasDoneOneCycle()
 	{
 		return hasDoneOneCycle;

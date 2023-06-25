@@ -375,8 +375,6 @@ public class BomberMan extends GameCharacter implements Observer
 		stopListening();
 		getValuesFrom(door); // go onto the door
 		hasSteppedOnDoor = true;
-		//System.out.println("Door is at " + this.getX() + " " + this.getY());
-		//System.out.println("And after getting the values bomberman is at " + getX() + " " + getY());
 		hasChanged();
 	}
 }

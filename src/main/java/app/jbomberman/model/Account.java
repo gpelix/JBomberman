@@ -9,7 +9,7 @@ public class Account
 	private BomberManCapabilities capabilities;
 
 	public Account(String name, int level,
-				   BomberManCapabilities hisCapabilities)
+								 BomberManCapabilities hisCapabilities)
 	{
 		this.playerName = name;
 		this.level = level;

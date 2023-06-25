@@ -38,8 +38,6 @@ public interface Observable
 	 */
 	default void detachObserver(Observer observer)
 	{
-		Collection<Observer> observers = getObservers();
-
 		getObservers().remove(observer);
 	}
 
@@ -49,6 +47,14 @@ public interface Observable
 	default void updateAllObservers()
 	{
 		(new ArrayList<>(getObservers())).forEach(observer -> observer.update(this));
+	}
+
+	/**
+	 * default method to clear the collection of observers
+	 */
+	default void detachAllObservers()
+	{
+		getObservers().clear();
 	}
 }
 

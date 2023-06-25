@@ -19,17 +19,37 @@ import app.jbomberman.util.Grid;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.RandomNumberGenerator;
 import app.jbomberman.util.Vector2D;
+import org.apache.logging.log4j.LogManager;
 
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.StreamSupport;
 
+/**
+ * GameGrid represents the grid of the game. It contains FreeCells, that must
+ * contain the other Entities
+ *
+ * @author gp
+ */
 public class GameGrid extends Grid<FreeCell>
 {
+	/**
+	 * numberOfEnemies is a variable that keeps the number of enemies in the grid
+	 * When the count reaches zero the ALL_ENEMIES_ARE_DEAD_SOUND sound must be
+	 * played
+	 */
 	private int numberOfEnemies = 0;
 
+	/**
+	 * MoveManager is the moveManager responsible for the movement of
+	 * GameCharacters on the grid
+	 */
 	private final MoveManager moveManager;
 
+	/**
+	 * ALL_ENEMIES_ARE_DEAD_SOUND is the sound to be played when the
+	 * numberOfEnemies counter reaches zero
+	 */
 	private static final String ALL_ENEMIES_ARE_DEAD_SOUND =
 		Properties.getInstance().getSoundPath("Bomberman SFX enemies are dead.wav");
 
@@ -38,8 +58,23 @@ public class GameGrid extends Grid<FreeCell>
 	 */
 	private final Vector2D topLeftCorner;
 
+	/**
+	 * GameGridBuilder is a reference to the builder. The builder builds the GameGrid,
+	 * but it also must be used if new enemies must be spawned (like when a
+	 * powerup gets destroyed by a bomb)
+	 */
 	private final GameGridBuilder gameGridBuilder;
 
+	/**
+	 * public constructor of the GameGrid from a vector of dimensions, a vector
+	 * specifying the position of the top-left corner of the grid relative to the
+	 * Model
+	 *
+	 * @param dimensions      the dimensions of the grid to be used to initialize
+	 *                        the superclass Grid
+	 * @param topLeftCorner   the topLeftCorner in model coordinates
+	 * @param gameGridBuilder the gameGridBuilder
+	 */
 	public GameGrid(Vector2D dimensions, Vector2D topLeftCorner, GameGridBuilder gameGridBuilder)
 	{
 		super(dimensions);
@@ -48,7 +83,10 @@ public class GameGrid extends Grid<FreeCell>
 		this.gameGridBuilder = gameGridBuilder;
 	}
 
-
+	/**
+	 * deadEnemiesSoundPlayer is a CallbackOnce that must be called when the
+	 * numberOfEnemies variable gets to zero
+	 */
 	private final CallbackOnce deadEnemiesSoundPlayer = new CallbackOnce()
 	{
 		@Override
@@ -58,6 +96,10 @@ public class GameGrid extends Grid<FreeCell>
 		}
 	};
 
+	/**
+	 * update() must be called to update the GameGrid. It recursively calls
+	 * update() on every freeCell in the GameGrid
+	 */
 	public void update()
 	{
 		if (numberOfEnemies == 0)
@@ -66,11 +108,19 @@ public class GameGrid extends Grid<FreeCell>
 		this.forEach(Entity::updateInModel);
 	}
 
+	/**
+	 * enemyIsDead() must be called by the enemies whenever an enemy dies
+	 */
 	public void enemyIsDead()
 	{
 		numberOfEnemies--;
 	}
 
+	/**
+	 * getDrawing() gets the drawing of the GameGrid
+	 *
+	 * @return the drawing of the GameGrid
+	 */
 	public Drawing getDrawing()
 	{
 		Spliterator<FreeCell> spliterator =
@@ -82,6 +132,13 @@ public class GameGrid extends Grid<FreeCell>
 				.toArray(Drawing[]::new));
 	}
 
+	/**
+	 * addGameCharacter() is a function that adds a character to a certain
+	 * Freecell
+	 *
+	 * @param character  the GameCharacter to add to the GameGrid
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addGameCharacter(GameCharacter character,
 															 Vector2D coordinate)
 	{
@@ -97,36 +154,77 @@ public class GameGrid extends Grid<FreeCell>
 		get(coordinate).addGameCharacter(gameCharacter);
 	}
 
+	/**
+	 * addWall() adds a Wall to the FreeCell specified by the coordinate
+	 *
+	 * @param wall       the Wall to add
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addWall(Wall wall, Vector2D coordinate)
 	{
 		get(coordinate).addWall(wall);
 	}
 
+	/**
+	 * addPowerup() adds a Powerup to the FreeCell specified by the coordinate
+	 *
+	 * @param powerup    the Powerup to add
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addPowerup(Powerup powerup, Vector2D coordinate)
 	{
 		get(coordinate).addPowerUp(powerup);
 	}
 
+	/**
+	 * addDoor() adds a Door to the FreeCell specified by the coordinate
+	 *
+	 * @param door       the Door to add
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addDoor(Door door, Vector2D coordinate)
 	{
 		get(coordinate).addDoor(door);
 	}
 
+	/**
+	 * addBlock() adds a Block to the FreeCell specified by the coordinate
+	 *
+	 * @param block      the Block to add
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addBlock(Block block, Vector2D coordinate)
 	{
 		get(coordinate).addBlock(block);
 	}
 
+	/**
+	 * addFire() adds a Fire to the FreeCell specified by the coordinate
+	 *
+	 * @param fire       the Fire to add
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addFire(Fire fire, Vector2D coordinate)
 	{
 		get(coordinate).addFire(fire);
 	}
 
+	/**
+	 * add#() adds a Bomb to the FreeCell specified by the coordinate
+	 *
+	 * @param bomb       the Bomb to add
+	 * @param coordinate the coordinate of the FreeCell to which it must be added
+	 */
 	public void addBomb(Bomb bomb, Vector2D coordinate)
 	{
 		get(coordinate).addBomb(bomb);
 	}
 
+	/**
+	 * getMoveManager() gets the move manager
+	 *
+	 * @return the move manager
+	 */
 	public MoveManager getMoveManager()
 	{
 		return moveManager;
@@ -197,12 +295,22 @@ public class GameGrid extends Grid<FreeCell>
 		return this.modelCoord2GridCoord(getCenter(topLeftCorner));
 	}
 
+	/**
+	 * getNumberOfEnemiesStillAlive() must be called by the Door to check if it
+	 * must enable itself or not
+	 *
+	 * @return the numberOfEnemies currently on the grid
+	 */
 	public int getNumberOfEnemiesStillAlive()
 	{
 		return numberOfEnemies;
 	}
 
-	public void timeHasEnded()
+	/**
+	 * doWhenTimeHasEnded() spawns ten new Enemies that will probably cause a lot
+	 * of pain to bomberman
+	 */
+	public void doWhenTimeHasEnded()
 	{
 		// Spawn 10 random enemies
 		for (int i = 0; i < 10; i++) {
@@ -218,6 +326,21 @@ public class GameGrid extends Grid<FreeCell>
 			));
 			gameGridBuilder.addEnemy(Vector2D.of(x, y), 8);
 		}
+	}
+
+	/**
+	 * This function might be removed.
+	 *
+	 * <p>However, as long as java during development, it's good to see if
+	 * there are dangling references that prevent deallocation</p>
+	 */
+	@Override
+	public void finalize()
+	{
+		LogManager.getLogger(getClass()).info(
+			"BomberMan has been GC'ed. Good to know that there are no observer/observable" +
+				"problems that prevent deallocation!"
+		);
 	}
 }
 

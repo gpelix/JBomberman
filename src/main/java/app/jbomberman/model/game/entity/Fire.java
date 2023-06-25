@@ -26,7 +26,7 @@ public class Fire extends Entity
 	{
 		if (imageManager.hasChanged())
 			hasChanged();
-		return getDrawing(imageManager.getNextImage());
+		return getDrawing(imageManager.getImage());
 	}
 
 	@Override

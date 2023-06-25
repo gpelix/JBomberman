@@ -13,27 +13,62 @@ import app.jbomberman.util.Vector2D;
 
 import java.util.stream.Stream;
 
+/**
+ * MoveManager is the class responsible for the movement of Entities on the
+ * GameGrid
+ *
+ * @author gp
+ */
 public class MoveManager
 {
+	/**
+	 * GameGrid is the gameGrid to which the MoveManager is associated
+	 */
 	private final GameGrid gameGrid;
 
+	/**
+	 * public constructor of the MoveManager from the GameGrid
+	 *
+	 * @param gameGrid the gameGrid to which the MoveManager must be associated
+	 */
 	public MoveManager(GameGrid gameGrid)
 	{
 		this.gameGrid = gameGrid;
 	}
 
+	/**
+	 * getTopRight() returns the topRight coordinate of from a simple
+	 * ModelCoordinate of topLeft
+	 *
+	 * @param coordinate the topLeft coordinate of the Entity
+	 * @return the topRightCoordinate of the Entity
+	 */
 	public Vector2D getTopRight(Vector2D coordinate)
 	{
 		return Vector2D.of(coordinate.getX() + Entity.SIZE_IN_MODEL - 1,
 			coordinate.getY());
 	}
 
+	/**
+	 * getBottomRight() returns the bottomRight coordinate of from a simple
+	 * ModelCoordinate of topLeft
+	 *
+	 * @param coordinate the topLeft coordinate of the Entity
+	 * @return the BottomRightCoordinate of the Entity
+	 */
 	public Vector2D getBottomRight(Vector2D coordinate)
 	{
 		return Vector2D.of(coordinate.getX() + Entity.SIZE_IN_MODEL - 1,
 			coordinate.getY() + Entity.SIZE_IN_MODEL - 1);
 	}
 
+	/**
+	 * getBottomLeft() returns the bottomLeft coordinate of from a simple
+	 * ModelCoordinate of topLeft
+	 *
+	 * @param coordinate the topLeft coordinate of the Entity
+	 * @return the bottomLeftCoordinate of the Entity
+	 */
 	public Vector2D getBottomLeft(Vector2D coordinate)
 	{
 		return Vector2D.of(coordinate.getX(),
@@ -41,14 +76,20 @@ public class MoveManager
 	}
 
 	/**
-	 * @param finalPlaceTopLeft gameCharacter's top left coordinate where it
-	 *						  wants to go
-	 * @return a boolean that says if the gameCharacter can be moved to (x, y) or not
+	 * canAccessForCommonSizeEntity() must be used to check if the move is valid
+	 * for enemies and other automated moving entities
+	 *
+	 * @param capabilities                    the capabilities of the Entity
+	 * @param finalPlaceTopLeft               final place to which bomberman wants
+	 *                                        to move
+	 * @param currentEntityGameGridCoordinate the current model coordinate of the entity
+	 * @param moveDirection                   the direction of the movement
+	 * @return true if and only if the move is valid
 	 */
 	public boolean canAccessForCommonSizeEntity(GameCharacterCapabilities capabilities,
-												Vector2D finalPlaceTopLeft,
-												Vector2D currentEntityGameGridCoordinate,
-												Maybe<Direction> moveDirection)
+																							Vector2D finalPlaceTopLeft,
+																							Vector2D currentEntityGameGridCoordinate,
+																							Maybe<Direction> moveDirection)
 	{
 		return generalCanAccess(Stream.of(getBottomRight(finalPlaceTopLeft),
 				getTopRight(finalPlaceTopLeft),
@@ -56,22 +97,36 @@ public class MoveManager
 			capabilities, currentEntityGameGridCoordinate, moveDirection);
 	}
 
+	/**
+	 * canAccessForSmallEntity() must be called to check if a movement is ok for
+	 * bomberman.
+	 * <p>
+	 * BomberMan needs more flexibility than Enemies. We don't want to be too strict, and
+	 * so we make BomberMan's icon smaller to get more freedom
+	 *
+	 * @param capabilities                    the capabilities of the Entity
+	 * @param finalPlaceTopLeft               final place to which bomberman wants
+	 *                                        to move
+	 * @param currentEntityGameGridCoordinate the current model coordinate of the entity
+	 * @param moveDirection                   the direction of the movement
+	 * @return true if and only if the move is valid
+	 */
 	public boolean canAccessForSmallEntity(BomberManCapabilities capabilities,
-										   Vector2D finalPlaceTopLeft,
-										   Vector2D currentEntityGameGridCoordinate,
-										   Direction moveDirection)
+																				 Vector2D finalPlaceTopLeft,
+																				 Vector2D currentEntityGameGridCoordinate,
+																				 Direction moveDirection)
 	{
 		Stream<Vector2D> coordinates = moveDirection.isHorizontal() ?
 			Stream.of(
-				getBottomLeft(finalPlaceTopLeft).sum(Vector2D.of(0, -PIXEL_OFFSET)),
-				getBottomRight(finalPlaceTopLeft).sum(Vector2D.of(0, -PIXEL_OFFSET)),
-				finalPlaceTopLeft.sum(Vector2D.of(0, PIXEL_OFFSET)),
-				getTopRight(finalPlaceTopLeft).sum(Vector2D.of(0, PIXEL_OFFSET))
+				getBottomLeft(finalPlaceTopLeft).sum(Vector2D.of(0, -MODEL_SQUARE_OFFSET)),
+				getBottomRight(finalPlaceTopLeft).sum(Vector2D.of(0, -MODEL_SQUARE_OFFSET)),
+				finalPlaceTopLeft.sum(Vector2D.of(0, MODEL_SQUARE_OFFSET)),
+				getTopRight(finalPlaceTopLeft).sum(Vector2D.of(0, MODEL_SQUARE_OFFSET))
 			) : Stream.of(
-			getBottomLeft(finalPlaceTopLeft).sum(Vector2D.of(PIXEL_OFFSET, 0)),
-			getBottomRight(finalPlaceTopLeft).sum(Vector2D.of(-PIXEL_OFFSET, 0)),
-			finalPlaceTopLeft.sum(Vector2D.of(PIXEL_OFFSET, 0)),
-			getTopRight(finalPlaceTopLeft).sum(Vector2D.of(-PIXEL_OFFSET, 0))
+			getBottomLeft(finalPlaceTopLeft).sum(Vector2D.of(MODEL_SQUARE_OFFSET, 0)),
+			getBottomRight(finalPlaceTopLeft).sum(Vector2D.of(-MODEL_SQUARE_OFFSET, 0)),
+			finalPlaceTopLeft.sum(Vector2D.of(MODEL_SQUARE_OFFSET, 0)),
+			getTopRight(finalPlaceTopLeft).sum(Vector2D.of(-MODEL_SQUARE_OFFSET, 0))
 		);
 
 		return generalCanAccess(
@@ -80,21 +135,44 @@ public class MoveManager
 			Maybe.just(moveDirection));
 	}
 
+	/**
+	 * generalCanAccess() must be called internally to check if a move is valid or
+	 * not
+	 *
+	 * @param coordinatesToCheck              a Stream of coordinates that must be
+	 *                                        checked
+	 * @param capabilities                    the capabilities of the Entity
+	 * @param currentEntityGameGridCoordinate the current model coordinate of the entity
+	 * @param moveDirection                   the direction of the movement
+	 * @return true if and only if the move is valid
+	 */
 	private boolean generalCanAccess(Stream<Vector2D> coordinatesToCheck,
-									 GameCharacterCapabilities capabilities,
-									 Vector2D currentEntityGameGridCoordinate,
-									 Maybe<Direction> moveDirection)
+																	 GameCharacterCapabilities capabilities,
+																	 Vector2D currentEntityGameGridCoordinate,
+																	 Maybe<Direction> moveDirection)
 	{
 		return coordinatesToCheck.allMatch(c ->
 			checkCoordinate(c, capabilities, currentEntityGameGridCoordinate, moveDirection));
 	}
 
-	public boolean checkCoordinate(Vector2D coordinate,
-								   GameCharacterCapabilities capabilities,
-								   Vector2D currentEntityGameGridCoordinate,
-								   Maybe<Direction> moveDirection)
+	/**
+	 * checkCoordinate() checks whether the entity with the
+	 * GameCharacterCapabilities specified in capabilities can move to
+	 * finalCoordinate model coordinate
+	 *
+	 * @param finalCoordinate                 the final coordinate to which the entity wants to
+	 *                                        go
+	 * @param capabilities                    the capabilities of the Entity
+	 * @param currentEntityGameGridCoordinate the current model coordinate of the entity
+	 * @param moveDirection                   the direction of the movement
+	 * @return true if and only if the move is valid
+	 */
+	public boolean checkCoordinate(Vector2D finalCoordinate,
+																 GameCharacterCapabilities capabilities,
+																 Vector2D currentEntityGameGridCoordinate,
+																 Maybe<Direction> moveDirection)
 	{
-		Vector2D gridCoordinate = gameGrid.modelCoord2GridCoord(coordinate);
+		Vector2D gridCoordinate = gameGrid.modelCoord2GridCoord(finalCoordinate);
 
 		if (isOnAliveWall(gridCoordinate) && !capabilities.goesThroughWalls())
 			return false;
@@ -120,9 +198,18 @@ public class MoveManager
 		return true;
 	}
 
-	private static final int PIXEL_OFFSET = 15;
+	/**
+	 * MODEL_SQUARE_OFFSET is the size of a square in model coordinates
+	 */
+	private static final int MODEL_SQUARE_OFFSET = 15;
 
-
+	/**
+	 * isOnBlock() check whether the gridCoordinate is a FreeCell containing a
+	 * Block
+	 *
+	 * @param gridCoordinate the gridCoordinate of the FreeCell to check
+	 * @return true if and only if the FreeCell at gridCoordinate contains a Block
+	 */
 	public boolean isOnBlock(Vector2D gridCoordinate)
 	{
 		return gameGrid.get(gridCoordinate)
@@ -131,6 +218,13 @@ public class MoveManager
 			.anyMatch(entity -> entity instanceof Block);
 	}
 
+	/**
+	 * isOnBomb() check whether the gridCoordinate is a FreeCell containing a
+	 * Bomb
+	 *
+	 * @param gridCoordinate the gridCoordinate of the FreeCell to check
+	 * @return true if and only if the FreeCell at gridCoordinate contains a Bomb
+	 */
 	public boolean isOnBomb(Vector2D gridCoordinate)
 	{
 		return gameGrid.get(gridCoordinate)
@@ -139,6 +233,14 @@ public class MoveManager
 			.anyMatch(entity -> entity instanceof Bomb);
 	}
 
+	/**
+	 * isOnAliveWall() check whether the gridCoordinate is a FreeCell containing a
+	 * Wall
+	 *
+	 * @param gridCoordinate the gridCoordinate of the FreeCell to check
+	 * @return true if and only if the FreeCell at gridCoordinate contains an
+	 * Alive Wall
+	 */
 	public boolean isOnAliveWall(Vector2D gridCoordinate)
 	{
 		return gameGrid.get(gridCoordinate)
@@ -147,6 +249,13 @@ public class MoveManager
 			.anyMatch(entity -> entity instanceof Wall && !((Wall) entity).isDisappearing());
 	}
 
+	/**
+	 * isOnPowerUp() check whether the gridCoordinate is a FreeCell containing a
+	 * PowerUp
+	 *
+	 * @param gridCoordinate the gridCoordinate of the FreeCell to check
+	 * @return true if and only if the FreeCell at gridCoordinate contains a PowerUp
+	 */
 	private boolean isOnPowerUp(Vector2D gridCoordinate)
 	{
 		return gameGrid.get(gridCoordinate)
@@ -156,8 +265,12 @@ public class MoveManager
 	}
 
 	/**
+	 * isAtCrossroad() returns true if and only if the topLeft modelCoordinate
+	 * is aligned to the grid pattern and a GameCharacter placed at topLeft could move
+	 * in 4/3/2 directions
+	 *
 	 * @param topLeft topLeftCoordinate of a GameCharacter
-	 * @return true if the bomberManCharacter could move relatively to blocks
+	 * @return true if the GameCharacter could move relatively to blocks
 	 * in at least 3 directions
 	 */
 	public boolean isAtCrossroad(Vector2D topLeft)

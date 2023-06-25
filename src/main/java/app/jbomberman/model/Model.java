@@ -78,6 +78,7 @@ public class Model extends AbstractObservable
 	 */
 	public void resetGame()
 	{
+		detachAllObservers();
 		game = Maybe.just(new Game());
 	}
 
