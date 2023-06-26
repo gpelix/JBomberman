@@ -3,11 +3,11 @@ package app.jbomberman.model.game.entity.state;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.entity.Explosion;
 
-public abstract class GameCharacterState
+public abstract class AbstractState
 {
 	private final StateFul character;
 
-	protected GameCharacterState(StateFul character)
+	protected AbstractState(StateFul character)
 	{
 		this.character = character;
 	}

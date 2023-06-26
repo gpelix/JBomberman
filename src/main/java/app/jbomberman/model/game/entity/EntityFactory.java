@@ -64,7 +64,7 @@ public class EntityFactory
 	}
 
 	public Enemy buildEnemy(int enemyNumber, Vector2D screenCoordinate,
-							GameGrid gameGrid)
+													GameGrid gameGrid)
 	{
 		try {
 			JSONObject enemySpecificationObject =
@@ -97,7 +97,7 @@ public class EntityFactory
 	}
 
 	public Powerup buildPowerUp(int powerupNumber, Vector2D modelCoordinate,
-								GameGrid gameGrid)
+															GameGrid gameGrid)
 	{
 		try {
 			JSONObject powerupSpecification =
@@ -182,8 +182,8 @@ public class EntityFactory
 	}
 
 	public BomberMan buildBomberMan(Vector2D screenCoordinate,
-									BomberManCapabilities capabilities,
-									GameGrid gameGrid)
+																	BomberManCapabilities capabilities,
+																	GameGrid gameGrid)
 	{
 		try {
 			JSONObject bomberManSpecification =
@@ -206,10 +206,10 @@ public class EntityFactory
 	}
 
 	public Bomb buildBomb(Vector2D coordinate,
-						  int bombRange,
-						  BomberMan bomberMan,
-						  GameGrid gameGrid,
-						  Bomb.BombConstructor<? extends Bomb> constructor)
+												int bombRange,
+												BomberMan bomberMan,
+												GameGrid gameGrid,
+												Bomb.BombConstructor constructor)
 	{
 		try {
 			JSONArray bombSpecification =
@@ -226,7 +226,7 @@ public class EntityFactory
 
 
 	public Fire buildFire(Fire.FireType fireType, Vector2D coordinate,
-						  GameGrid gameGrid)
+												GameGrid gameGrid)
 	{
 		try {
 			JSONArray fireSpecification =

@@ -20,7 +20,7 @@ public class BomberManAliveState extends AliveState
 
 	public BomberManAliveState(BomberMan bomberMan,
 														 MovingImageManager imageManager,
-														 GameCharacterState nextState)
+														 AbstractState nextState)
 	{
 		super(bomberMan, nextState);
 		this.bomberMan = bomberMan;

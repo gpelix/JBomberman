@@ -6,6 +6,7 @@ import app.jbomberman.audio.AudioHandle;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
+import app.jbomberman.model.game.GamePlayException;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.MoveManager;
 import app.jbomberman.model.game.MovingImageManager;
@@ -32,33 +33,84 @@ import static app.jbomberman.util.Direction.SOUTH;
 import static app.jbomberman.util.Direction.WEST;
 
 /**
- * Observer of the Model ready to receive keyBoardUpdateInfo
+ * BomberMan is the class represents bomberman
+ * <p>
+ * It implements the Observer interface as it has to Observer the Model to
+ * know when there are KeyBoardEvents. The Model doesn't have an instance of
+ * BomberMan, so this must be the only way possible
+ *
+ * @author gp
  */
 public class BomberMan extends GameCharacter implements Observer
 {
+	/**
+	 * directions contain the Set of directions in which the BomberMan is moving.
+	 * It's a Set as there might be more user input that we keep track of
+	 */
 	private final Set<Direction> directions;
 
+	/**
+	 * HORIZONTAL_MOVE_SOUND_FILE is the String containing the path of the
+	 * audio file to play when the BomberMan is moving horizontally
+	 */
 	private static final String HORIZONTAL_MOVE_SOUND_FILE =
 		Properties.getInstance().getSoundPath("Bomberman SFX horizontal.wav");
 
+	/**
+	 * BOMB_PLACED_SOUND is the String containing the path of the audio file to
+	 * play when a Bomb gets placed
+	 */
 	private static final String BOMB_PLACED_SOUND =
 		Properties.getInstance().getSoundPath("Bomberman SFX bomb in place.wav");
 
+	/**
+	 * BOMBERMAN_DEATH_SOUND is the String containing the path of the audio file
+	 * to play when bomberman dies
+	 */
 	private static final String BOMBERMAN_DEATH_SOUND =
 		Properties.getInstance().getSoundPath("Bomberman SFX bomberman death sound.wav");
 
-	private static final long INVINCIBILITY_DURATION_IN_MILLIS =
-		30_000;
+	/**
+	 * INVINCIBILITY_DURATION_IN_MILLIS is the duration of the invincibility period
+	 */
+	private static final long INVINCIBILITY_DURATION_IN_MILLIS = 30_000;
 
+	/**
+	 * invincibilityTimer is a timer used to keep track of whether the
+	 * invincibility period has ended
+	 */
 	private static Maybe<Timer> invincibilityTimer =
 		Maybe.nothing();
 
+	/**
+	 * bombs is Queue of Bombs to which newly created bombs must be added
+	 */
 	private final Queue<Bomb> bombs = new LinkedList<>();
 
+	/**
+	 * soundHandle is an AudioHandle that manages the sounds emitted by Bomberman
+	 * It's a Maybe as there might also be no sound at all
+	 */
 	private Maybe<AudioHandle> soundHandle;
 
+	/**
+	 * hasSteppedOnDoor is a flag that keeps track of whether the BomberMan has
+	 * stepped on a Door
+	 */
 	private boolean hasSteppedOnDoor = false;
 
+	/**
+	 * public constructor of BomberMan
+	 *
+	 * @param modelCoordinate    the model-coordinate to which the bomberman must
+	 *                           be placed
+	 * @param capabilities       the capabilities bomberman will have
+	 * @param gameGrid           the GameGrid to which the BomberMan is attached
+	 * @param movingImageManager the ImageManager that will be used when bomberman
+	 *                           is Alive
+	 * @param deathImages        the ImagerManager that will be used during when
+	 *                           the BomberMan goes into death state
+	 */
 	public BomberMan(Vector2D modelCoordinate, BomberManCapabilities capabilities,
 									 GameGrid gameGrid, MovingImageManager movingImageManager,
 									 ImageManager deathImages)
@@ -73,8 +125,15 @@ public class BomberMan extends GameCharacter implements Observer
 		soundHandle = Maybe.nothing();
 	}
 
+	/**
+	 * deathPoints are the points that will be awarded to bomberman if the Enemy
+	 * gets killed
+	 */
 	private double stepSize = 0;
 
+	/**
+	 * move() moves that BomberMan if possible
+	 */
 	@Override
 	public void move()
 	{
@@ -82,8 +141,6 @@ public class BomberMan extends GameCharacter implements Observer
 
 		if (directions.isEmpty())
 			return;
-
-		//System.out.println("hasStepped On Door " + hasSteppedOnDoor);
 
 		if (hasSteppedOnDoor)
 			return;
@@ -112,14 +169,13 @@ public class BomberMan extends GameCharacter implements Observer
 			if (stepSize < 1)
 				return;
 
-			// Realligning
+			// Realigning
 			Vector2D topLeft = finalPlace;
 			Vector2D topRight = moveManager.getTopRight(finalPlace);
 			Vector2D bottomLeft = moveManager.getBottomLeft(finalPlace);
 			Vector2D bottomRight = moveManager.getBottomRight(finalPlace);
 
 			Direction pushDir = moveDirection.opposite();
-
 
 			switch (moveDirection) {
 				case EAST: // FALLTHROUGH
@@ -210,6 +266,16 @@ public class BomberMan extends GameCharacter implements Observer
 				AudioPlayer.getInstance().playSound(HORIZONTAL_MOVE_SOUND_FILE));
 	}
 
+	/**
+	 * checkCoordinateAccess() must be called to check if a model-coordinate is
+	 * within the boundaries of the tracks in the GameGrid
+	 *
+	 * @param modelCoordinate the model-coordinate to that we must check
+	 * @param dir             the direction to which the bomberman is moving
+	 *                        if any
+	 * @return whether the model-coordinate is within the boundaries of the tracks
+	 * in the GameGrid
+	 */
 	private boolean checkCoordinateAccess(Vector2D modelCoordinate, Maybe<Direction> dir)
 	{
 		return getGameGrid().getMoveManager().checkCoordinate(
@@ -220,7 +286,12 @@ public class BomberMan extends GameCharacter implements Observer
 		);
 	}
 
-	public void update(KeyBoardUpdateInfo updateInfo)
+	/**
+	 * update() must be called internally to handle a new KeyBoardEvent
+	 *
+	 * @param updateInfo the KeyBoardUpdateInfo produced by the keyboard event
+	 */
+	private void update(KeyBoardUpdateInfo updateInfo)
 	{
 		KeyBoardControllerKeyCode keyCode = updateInfo.getKeyCode();
 		switch (updateInfo.getKeyBoardEventType()) {
@@ -244,7 +315,7 @@ public class BomberMan extends GameCharacter implements Observer
 								getCapabilities().getBombPower(),
 								this,
 								gameGrid,
-								(capabilities.hasRemoveControl()) ? ControlledBomb::new :
+								(capabilities.hasRemoteControl()) ? ControlledBomb::new :
 									AutoBomb::new
 							);
 
@@ -267,6 +338,10 @@ public class BomberMan extends GameCharacter implements Observer
 		}
 	}
 
+	/**
+	 * updateInModel() resets invincibilityFlag in bomberman's capabilities if
+	 * invincibilityTimer is up and gets the drawing
+	 */
 	@Override
 	public void updateInModel()
 	{
@@ -285,61 +360,110 @@ public class BomberMan extends GameCharacter implements Observer
 		return true;
 	}
 
+	/**
+	 * update() must handle an update from the Model. In that case
+	 *
+	 * @param observable the observable that called the method update.
+	 */
 	@Override
 	public void update(Observable observable)
 	{
 		if (observable instanceof Model)
 			update(Model.getInstance().getKeyBoardUpdateInfo().unwrapOrThrow(() ->
 				new JBomberManException("No updateInfo available")));
+		else
+			throw new GamePlayException("Observable not supported");
 	}
 
+	/**
+	 * takePowerup() must be used to pick the powerup
+	 *
+	 * @param powerup the powerup to pick
+	 */
 	public void takePowerup(Powerup powerup)
 	{
-		BomberManCapabilities capabilities = getCapabilities();
+		powerup.pick(this);
 
-		capabilities.addDelta(powerup.getDeltaCapabilities());
-
-		if (capabilities.isInvincible()) {
+		if (getCapabilities().isInvincible()) {
 			Timer timer = new Timer(INVINCIBILITY_DURATION_IN_MILLIS);
 			timer.start();
 			invincibilityTimer = Maybe.just(timer);
 		}
-
-		powerup.pick(this);
 	}
 
-
+	/**
+	 * getSoundHandle() returns the soundHandle that manages the playing of
+	 * BomberMan's sounds.
+	 * It's meant to be used by the BomberManStates
+	 *
+	 * @return the soundHandle that manages the playing of BomberMan's sounds
+	 */
 	public Maybe<AudioHandle> getSoundHandle()
 	{
 		return soundHandle;
 	}
 
+	/**
+	 * setSoundHandle() sets the soundHandle that manages the playing of
+	 * BomberMan's sounds.
+	 * It's meant to be used by the BomberManStates
+	 *
+	 * @param soundHandle the soundHandle that manages the playing of BomberMan's
+	 *                    sounds to set
+	 */
 	public void setSoundHandle(Maybe<AudioHandle> soundHandle)
 	{
 		this.soundHandle = soundHandle;
 	}
 
+	/**
+	 * getBombermanDeathSound() must be used to get the death sound from the
+	 * BomberManStates
+	 *
+	 * @return the death sound
+	 */
 	public static String getBombermanDeathSound()
 	{
 		return BOMBERMAN_DEATH_SOUND;
 	}
 
+	/**
+	 * getDirections() gets the Set of directions currently pressed
+	 *
+	 * @return the Set of directions currently pressed
+	 */
 	public Set<Direction> getDirections()
 	{
 		return directions;
 	}
 
+	/**
+	 * bombHasExploded() notifies bomberman that one of his bombs has exploded and
+	 * now it can spawn again new bombs
+	 *
+	 * @param bomb the exploded bomb
+	 */
 	public void bombHasExploded(Bomb bomb)
 	{
 		bombs.remove(bomb);
 	}
 
+	/**
+	 * getCapabilities() overrides the getCapabilities() as defined in
+	 * GameCharacter to return a GameCharacterCapabilities after a cast to
+	 * BomberManCapabilities
+	 *
+	 * @return the capabilities bomberman has
+	 */
 	@Override
 	public BomberManCapabilities getCapabilities()
 	{
 		return (BomberManCapabilities) super.getCapabilities();
 	}
 
+	/**
+	 * caughtByEnemy() must be called when BomberMan gets caught
+	 */
 	public void caughtByEnemy()
 	{
 		if (getState() instanceof BomberManAliveState aliveState) {
@@ -347,17 +471,34 @@ public class BomberMan extends GameCharacter implements Observer
 		}
 	}
 
+	/**
+	 * setCapabilities() must not be allowed on BomberManCapabilities on it throws
+	 * an exception if called
+	 *
+	 * @param capabilities the new capabilities for the GameCharacter
+	 * @throws JBomberManException is always thrown if this method is called
+	 */
 	@Override
 	public void setCapabilities(GameCharacterCapabilities capabilities)
 	{
 		throw new JBomberManException("This must not be used. The capabilities bomberman has directly map to the ones of the account and must not be substituted");
 	}
 
+	/**
+	 * stopListening() clear the directions and stops the BomberMan
+	 */
 	public void stopListening()
 	{
 		directions.clear();
 	}
 
+	/**
+	 * keyCodeToDirection() translates a KeyBoardControllerKeyCode to a
+	 * Maybe Direction
+	 *
+	 * @param keyCode the key code to convert to a direction
+	 * @return the Direction after translation from KeyBoardControllerKeyCode
+	 */
 	public Maybe<Direction> keyCodeToDirection(KeyBoardControllerKeyCode keyCode)
 	{
 		return switch (keyCode) {
@@ -369,6 +510,12 @@ public class BomberMan extends GameCharacter implements Observer
 		};
 	}
 
+	/**
+	 * steppedOnDoor() must be called by the Door to trigger the final movement
+	 * of the BomberMan
+	 *
+	 * @param door the door on which the BomberMan has stepped on
+	 */
 	public void steppedOnDoor(Door door)
 	{
 		getCapabilities().addLife();

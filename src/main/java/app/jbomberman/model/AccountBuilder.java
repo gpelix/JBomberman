@@ -235,7 +235,7 @@ public class AccountBuilder
 		player.put(SPEED, cap.getSpeed());
 		player.put(BOMB_POWER, cap.getBombPower());
 		player.put(AVAILABLE_BOMBS, cap.getAvailableBombs());
-		player.put(REMOTE_CONTROL, cap.hasRemoveControl());
+		player.put(REMOTE_CONTROL, cap.hasRemoteControl());
 		player.put(GOES_THROUGH_WALLS, cap.goesThroughWalls());
 		player.put(GOES_THROUGH_BOMBS, cap.goesThroughBombs());
 		player.put(GOES_THROUGH_FIRE, cap.goesThroughFire());

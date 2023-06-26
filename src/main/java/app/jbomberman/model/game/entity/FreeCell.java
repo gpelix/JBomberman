@@ -13,6 +13,9 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * TODO:
+ */
 public class FreeCell extends Cell
 {
 	private static final String GREEN_BACKGROUND = "GreenBackground.png";

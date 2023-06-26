@@ -17,15 +17,58 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
+/**
+ * Enemy is a class modeling an enemy extending a GameCharacter
+ *
+ * @author gp
+ */
 public class Enemy extends GameCharacter
 {
+	/**
+	 * previousModeDirection is a maybe containing a reference to the previous
+	 * move direction of the Enemy if any
+	 */
 	private Maybe<Direction> previousMoveDirection = Maybe.nothing();
+
+	/**
+	 * streak is the number of model-coordinates that the Enemy must walk before
+	 * changing a direction
+	 */
 	private int streak = 0;
+
+	/**
+	 * MEAN_STREAK is the mean streak that will be set to streak when there is a
+	 * change in direction.
+	 */
 	private static final int MEAN_STREAK = 75;
+
+	/**
+	 * stepSize is a buffer of model-coordinate still to go
+	 */
 	private double stepSize = 0;
+
+	/**
+	 * deathPoints are the points that will be awarded to bomberman if the Enemy
+	 * gets killed
+	 */
 	private final int deathPoints;
 
-
+	/**
+	 * public constructor of the Enemy
+	 *
+	 * @param coordinate         the model-coordinate to which the Enemy must
+	 *                           be placed
+	 * @param speed              the speed of the enemy
+	 * @param goesThroughWalls   boolean that is set to true if the Enemy goes
+	 *                           through walls
+	 * @param gameGrid           the GameGrid to which the Enemy is attached
+	 * @param movingImageManager the ImageManager that will be used when the Enemy
+	 *                           is Alive
+	 * @param deathImages        the ImagerManager that will be used during when
+	 *                           the Enemy goes into death state
+	 * @param points             the points that will be awarded to bomberman if
+	 *                           the enemy gets killed
+	 */
 	public Enemy(Vector2D coordinate, double speed,
 							 boolean goesThroughWalls,
 							 GameGrid gameGrid, MovingImageManager movingImageManager,
@@ -39,6 +82,9 @@ public class Enemy extends GameCharacter
 		deathPoints = points;
 	}
 
+	/**
+	 * move() moves that Enemy if possible
+	 */
 	@Override
 	public void move()
 	{
@@ -115,6 +161,11 @@ public class Enemy extends GameCharacter
 		getValuesFrom(finalPlace);
 	}
 
+	/**
+	 * getNextStreak() gets the next streak, randomly built, centered in MEAN_STREAK
+	 *
+	 * @return the next streak, randomly built, centered in MEAN_STREAK
+	 */
 	private int getNextStreak()
 	{
 		int pstreak;
@@ -127,11 +178,23 @@ public class Enemy extends GameCharacter
 		return pstreak;
 	}
 
+	/**
+	 * getPreviousMoveDirection() gets the previous move of the Enemy if any
+	 *
+	 * @return the previous move of the Enemy if any
+	 */
 	public Maybe<Direction> getPreviousMoveDirection()
 	{
 		return previousMoveDirection;
 	}
 
+	/**
+	 * getDeathPoints() gets the number of points that will be awarded to
+	 * bomberman when killing this enemy
+	 *
+	 * @return the number of points that will be awarded to bomberman when killing
+	 * this enemy
+	 */
 	public int getDeathPoints()
 	{
 		return deathPoints;
