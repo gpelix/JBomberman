@@ -7,6 +7,8 @@ import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.CallbackOnce;
+import app.jbomberman.util.Maybe;
+import app.jbomberman.util.Pair;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
 
@@ -77,9 +79,20 @@ public class Game
 	private final MaybeAudioHandle handle;
 
 	/**
-	 * timer is the timer that will ring at the end of the game
+	 * timerToEOG is the timerToEOG that will ring at the end of the game
 	 */
-	private final Timer timer;
+	private final Timer timerToEOG;
+
+	/**
+	 * lastUpdate is the time from epoch of the last update and also has the old
+	 * drawing of the Game
+	 */
+	private Maybe<Pair<Long, Drawing>> lastUpdate;
+
+	/**
+	 * UPDATE_FREQ is the frequency at which we update the Game
+	 */
+	private final static int UPDATE_FREQ = 1000 / 60; // 60Hz
 
 	/**
 	 * public constructor that should be called by the Model when a new game
@@ -90,6 +103,8 @@ public class Game
 		Model model = Model.getInstance();
 
 		handle = new MaybeAudioHandle();
+
+		lastUpdate = Maybe.nothing();
 
 		int levelNumber = model.getAccount().getLevel();
 
@@ -110,7 +125,7 @@ public class Game
 
 		gameGrid = builder.getGrid();
 
-		timer = new Timer(TIME);
+		timerToEOG = new Timer(TIME);
 	}
 
 	/**
@@ -143,17 +158,41 @@ public class Game
 	 */
 	public Drawing update()
 	{
-		if (!timer.hasStarted())
-			timer.start();
-		else if (timer.timeIsUp())
-			func.runOnce();
-
-		gameGrid.update();
-
 		if (!exiting)
 			handle.playIfNeeded(currentlyPlayingBackgroundNoiseName);
 
-		return gameGrid.getDrawing();
+		long now = System.currentTimeMillis();
+		if (lastUpdate.isJust() && now - lastUpdate.fromJust().getX() < UPDATE_FREQ) {
+//			LogManager.getLogger(getClass()).info("Dropping frame");
+			return lastUpdate.fromJust().getY();
+		}
+
+		if (!timerToEOG.hasStarted())
+			timerToEOG.start();
+		else if (timerToEOG.timeIsUp())
+			func.runOnce();
+
+		if (lastUpdate.isJust()) {
+			long lastUpdateTime = lastUpdate.fromJust().getX();
+			// The View might be calling update infrequently, and so we must be sure
+			// the game remains consistent. So we call many times update on the GameGrid
+			// to recover the time lost
+//			if (now - lastUpdateTime >= UPDATE_FREQ * 2)
+//				System.out.println("Updating many times");
+			while (lastUpdateTime <= now) {
+				gameGrid.update();
+				lastUpdateTime += UPDATE_FREQ;
+			}
+			lastUpdate = Maybe.just(
+				new Pair<>(lastUpdateTime - UPDATE_FREQ, gameGrid.getDrawing())
+			);
+		} else {
+			// If it's the first time we run the update() function, simply update
+			gameGrid.update();
+			lastUpdate = Maybe.just(new Pair<>(now, gameGrid.getDrawing()));
+		}
+
+		return lastUpdate.fromJust().getY();
 	}
 
 	/**
@@ -163,7 +202,7 @@ public class Game
 	 */
 	public long secsToEnd()
 	{
-		return timer.millisToEnd() / 1000;
+		return timerToEOG.millisToEnd() / 1000;
 	}
 
 	/**

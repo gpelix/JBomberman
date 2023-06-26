@@ -27,9 +27,9 @@ public class Enemy extends GameCharacter
 
 
 	public Enemy(Vector2D coordinate, double speed,
-				 boolean goesThroughWalls,
-				 GameGrid gameGrid, MovingImageManager movingImageManager,
-				 ImageManager deathImages, int points)
+							 boolean goesThroughWalls,
+							 GameGrid gameGrid, MovingImageManager movingImageManager,
+							 ImageManager deathImages, int points)
 	{
 		super(coordinate, new GameCharacterCapabilities(goesThroughWalls, speed), gameGrid);
 

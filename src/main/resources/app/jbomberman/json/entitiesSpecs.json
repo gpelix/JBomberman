@@ -18,7 +18,7 @@
       "Enemy1_11.png"
     ],
     "points": 100,
-    "speed": 0.7,
+    "speed": 0.35,
     "goesThroughWalls": false
   },
   "Enemy2": {
@@ -41,7 +41,7 @@
       "Enemy5_11.png"
     ],
     "points": 200,
-    "speed": 1,
+    "speed": 0.5,
     "goesThroughWalls": false
   },
   "Enemy3": {
@@ -63,7 +63,7 @@
       "Enemy3_11.png"
     ],
     "points": 400,
-    "speed": 1.3,
+    "speed": 0.65,
     "goesThroughWalls": false
   },
   "Enemy4": {
@@ -86,7 +86,7 @@
       "Enemy1_11.png"
     ],
     "points": 800,
-    "speed": 1.5,
+    "speed": 0.75,
     "goesThroughWalls": false
   },
   "Enemy5": {
@@ -108,7 +108,7 @@
       "Enemy5_11.png"
     ],
     "points": 1000,
-    "speed": 0.5,
+    "speed": 0.25,
     "goesThroughWalls": true
   },
   "Enemy6": {
@@ -131,7 +131,7 @@
       "Enemy3_11.png"
     ],
     "points": 2000,
-    "speed": 1.3,
+    "speed": 0.65,
     "goesThroughWalls": true
   },
   "Enemy7": {
@@ -154,7 +154,7 @@
       "Enemy1_11.png"
     ],
     "points": 4000,
-    "speed": 1.5,
+    "speed": 0.75,
     "goesThroughWalls": false
   },
   "Enemy8": {
@@ -179,7 +179,7 @@
       "Enemy1_11.png"
     ],
     "points": 8000,
-    "speed": 2.0,
+    "speed": 1.0,
     "goesThroughWalls": true
   },
   "bomberMan": {
@@ -267,7 +267,7 @@
     "addedCapabilities": {
       "availableBombs": 0,
       "bombRange": 0,
-      "speed": 0.2,
+      "speed": 0.1,
       "remoteControl": false,
       "goesThroughWalls": false,
       "goesThroughBombs": false,

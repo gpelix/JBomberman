@@ -13,7 +13,7 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 
 	public static final BomberManCapabilities defaultCapabilities =
 		new BomberManCapabilities(
-			1.5,
+			0.6,
 			2,
 			1,
 			false,

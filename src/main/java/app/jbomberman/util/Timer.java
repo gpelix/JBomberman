@@ -75,7 +75,8 @@ public class Timer
 	}
 
 	/**
-	 * reset() must be used to reset the timer but its duration
+	 * reset() must be used to reset the timer but its duration.
+	 * Note that, after reset, start() must be called to start it again
 	 */
 	public void reset()
 	{

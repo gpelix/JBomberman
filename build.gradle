@@ -23,7 +23,7 @@ ext {
 sourceCompatibility = '17'
 targetCompatibility = '17'
 
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
@@ -37,7 +37,7 @@ javafx {
     modules = ['javafx.controls']
 }
 
-task customFatJar(type: Jar) {
+tasks.register('customFatJar', Jar) {
     manifest {
         attributes 'Main-Class': 'app.jbomberman.JBomberMan'
     }

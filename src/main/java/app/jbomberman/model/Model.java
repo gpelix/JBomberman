@@ -98,7 +98,13 @@ public class Model extends AbstractObservable
 	 */
 	public Drawing update()
 	{
-		return getGame().update();
+		try {
+			return getGame().update();
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			close();    // Won't return
+			return null;
+		}
 	}
 
 	/**

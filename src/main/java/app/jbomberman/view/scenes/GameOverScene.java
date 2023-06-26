@@ -4,7 +4,6 @@ import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.Model;
-import app.jbomberman.util.Maybe;
 import app.jbomberman.view.View;
 import app.jbomberman.view.widgets.Text;
 
@@ -18,7 +17,7 @@ public class GameOverScene extends SoundyBomberManScene
 	/**
 	 * gameOverText is the text to display when there is a gameOver
 	 */
-	private final Maybe<Text> gameOverText;
+	private final Text gameOverText;
 
 	/**
 	 * GAME_OVER_SOUND is the sound to play during the GameOverScene
@@ -40,7 +39,10 @@ public class GameOverScene extends SoundyBomberManScene
 			doTransition(StartDisplay::new);
 		}
 
-		return gameOverText.fromJust().getDrawing();
+		Drawing a = gameOverText.getDrawing();
+		a.setDimensions(Model.getInstance().getDimensions());
+
+		return a;
 	}
 
 	/**
@@ -66,11 +68,9 @@ public class GameOverScene extends SoundyBomberManScene
 		AudioPlayer.getInstance().stopAll();
 		getAudioHandle().playIfNeeded(GAME_OVER_SOUND);
 
-		gameOverText = Maybe.just(new Text("Game over", Text.TextColor.Black));
+		gameOverText = new Text("Game over", Text.TextColor.Black);
 
-		gameOverText.fromJust().setPosition(
-			Model.getInstance().getDimensions().div(2)
-		);
+		gameOverText.setPosition(Model.getInstance().getDimensions().div(2));
 	}
 }
 
