@@ -4,6 +4,7 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.model.game.Game;
+import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.AbstractObservable;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
@@ -26,7 +27,7 @@ public class Model extends AbstractObservable
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
 	/**
-	 * account is the current logged in account
+	 * account is the current account logged-in
 	 */
 	private Account account;
 
@@ -74,6 +75,8 @@ public class Model extends AbstractObservable
 	public void resetGame()
 	{
 		detachAllObservers();
+		if (account.getCapabilities().getNumberOfLives() == 0)
+			account.getCapabilities().setNumberOfLives(BomberManCapabilities.defaultCapabilities.getNumberOfLives());
 		game = Maybe.just(new Game());
 	}
 

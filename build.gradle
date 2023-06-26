@@ -8,7 +8,7 @@ plugins {
 }
 
 group 'app'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 applicationDefaultJvmArgs = ["-Dlog4j.configurationFile=log4j2.xml"]
 

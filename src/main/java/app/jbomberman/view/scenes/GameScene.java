@@ -63,7 +63,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		model.resetGame();
 
 
-		livesEntry = new Text("left  " + model.getAccount().getCapabilities().getNumberOfLives(), Text.TextColor.Black);
+		livesEntry = new Text("left  " + Math.max(0, model.getAccount().getCapabilities().getNumberOfLives()), Text.TextColor.Black);
 		timeEntry = new Text("", Text.TextColor.Black);
 		scoreEntry = new Text("", Text.TextColor.Black);
 
@@ -90,7 +90,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		BomberManCapabilities capabilities = Model.getInstance().getAccount().getCapabilities();
 
 		scoreEntry.setText(String.valueOf(capabilities.getPointsEarned()));
-		livesEntry.setText(String.valueOf(capabilities.getNumberOfLives()));
+		livesEntry.setText(String.valueOf(Math.max(0, capabilities.getNumberOfLives())));
 
 		Model model = Model.getInstance();
 

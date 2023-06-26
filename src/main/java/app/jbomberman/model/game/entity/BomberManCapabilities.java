@@ -26,14 +26,14 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 		);
 
 	public BomberManCapabilities(double speed,
-								 int bombPower, int availableBombs,
-								 boolean remoteControl,
-								 boolean goesThroughWalls,
-								 boolean goesThroughBombs,
-								 boolean goesThroughFire,
-								 boolean isInvincible,
-								 int score,
-								 int numberOfLives)
+															 int bombPower, int availableBombs,
+															 boolean remoteControl,
+															 boolean goesThroughWalls,
+															 boolean goesThroughBombs,
+															 boolean goesThroughFire,
+															 boolean isInvincible,
+															 int score,
+															 int numberOfLives)
 	{
 		super(goesThroughWalls, speed);
 
@@ -80,6 +80,11 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 	public void unsetIsInvincible()
 	{
 		isInvincible = false;
+	}
+
+	public void setNumberOfLives(int numberOfLives)
+	{
+		this.numberOfLives = numberOfLives;
 	}
 
 
