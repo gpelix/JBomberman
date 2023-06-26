@@ -1,7 +1,5 @@
 package app.jbomberman.audio;
 
-import app.jbomberman.JBomberManException;
-import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Resources;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -9,11 +7,12 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * AudioPlayer is the AudioPlayer needed to reproduce sounds.
@@ -25,18 +24,12 @@ import java.util.Set;
  * run simultaneously with the main thread
  * @see ThreadPlayer
  */
-public class AudioPlayer extends Thread
+public class AudioPlayer
 {
-	/**
-	 * players is a mapping between the file being reproduced and the actual list
-	 * of threads playing it
-	 */
-	private final Set<ThreadPlayer> players;
-
 	/**
 	 * audioPlayer is the singleton for AudioPlayer class
 	 */
-	private static volatile AudioPlayer audioPlayer;
+	private static AudioPlayer audioPlayer;
 
 	/**
 	 * stopAllTime registers the time at which all the ThreadPlayers have been stopped
@@ -44,27 +37,18 @@ public class AudioPlayer extends Thread
 	 * have passed or not. It's marked volatile as it needs to be accessed by many threads. As Optional is
 	 * immutable is thread-safe, and no other thread-safety measure must be picked
 	 */
-	private volatile long stopAllTime;
+	private long stopAllTime;
 
 	/**
-	 * AudioPlayer's thread is only responsible for joining the spawned threads
-	 * that play the sounds. So it has a busy wait loop that stops for a certain
-	 * number of milliseconds and threadJoinloopIntervalMillis is that time
-	 * interval
+	 * executorsPool is the pool of Threads from which will be taken the ones
+	 * to run ThreadPlayers
 	 */
-	private volatile long threadJoinloopIntervalMillis = 1000;
+	private final ExecutorService executorsPool;
 
 	/**
-	 * SUFFERENCE_LEVEL_IN_THREADS is the desired number of threads that the
-	 * joinloop must join at each iteration
+	 * audioHandles is the list of audio-handles created.
 	 */
-	private static final long SUFFERENCE_LEVEL_IN_THREADS = 2;
-
-	/**
-	 * MAX_JOINLOOP_INTERVAL_IN_MILLIS is the maximum number of
-	 * milliseconds for which the join loop can sleep
-	 */
-	private static final long MAX_JOINLOOP_INTERVAL_IN_MILLIS = 10_000;
+	private final Set<ThreadPlayer> audioHandles = new HashSet<>();
 
 	/**
 	 * pause is a boolean that represents whether the AudioPlayer has been paused.
@@ -86,11 +70,8 @@ public class AudioPlayer extends Thread
 	 */
 	public static AudioPlayer getInstance()
 	{
-		if (audioPlayer == null) {
+		if (audioPlayer == null)
 			audioPlayer = new AudioPlayer();
-			audioPlayer.start();
-			audioPlayer.setName("Audio Player");
-		}
 		return audioPlayer;
 	}
 
@@ -105,89 +86,11 @@ public class AudioPlayer extends Thread
 	 */
 	private AudioPlayer()
 	{
-		players = Collections.synchronizedSet(new HashSet<>());
 		stopAllTime = 0;
+		executorsPool = Executors.newCachedThreadPool();
 		pause = false;
 		logger = LogManager.getLogger(getClass());
 		soundPool = new HashMap<>();
-	}
-
-	/**
-	 * run() must be called by start. All it does is periodically check
-	 * if some spawned ThreadPlayer has ended, and in that case, it removes
-	 * it from the players set.
-	 */
-	@Override
-	public void run()
-	{
-		try {
-			while (true) {
-				logger.info("Sleep time is " + threadJoinloopIntervalMillis);
-				Thread.sleep(threadJoinloopIntervalMillis);
-				joinThreads();
-				if (isInterrupted())
-					throw new InterruptedException();
-			}
-		} catch (InterruptedException e) {
-			// We simply quit after shutting up all the ThreadPlayers and
-			// set a fake AudioPlayer instead of the current one
-			stopAll();
-			// A fake AudioPlayer
-			audioPlayer = new AudioPlayer()
-			{
-				@Override
-				public void run()
-				{
-					throw new JBomberManException(
-						"This is only a placeholder and not meant to be run");
-				}
-
-				@Override
-				public AudioHandle playSound(String ignored)
-				{
-					return new AudioHandle(Maybe.nothing());
-				}
-			};
-		}
-	}
-
-	/**
-	 * joinThreads is a private method used to join with the dead threads
-	 * It's synchronized as we might want to be able to all it from different
-	 * threads, hence it's a critical section (we could call join from the two
-	 * threads at the same time on the same dead thread and one of the two
-	 * will join with an error)
-	 */
-	private synchronized void joinThreads() throws InterruptedException
-	{
-		int joined = 0;
-		synchronized (players) {
-			java.util.Iterator<ThreadPlayer> i = players.iterator();
-
-			while (i.hasNext()) {
-				ThreadPlayer nextThread = i.next();
-
-				if (!nextThread.isAlive()) {
-					logger.info("Joining " + nextThread.getSoundFileName());
-					joined++;
-					nextThread.join();
-					i.remove();
-				} else
-					logger.info(nextThread.getSoundFileName() + " is still " +
-						"playing");
-			}
-		}
-
-		if (joined > SUFFERENCE_LEVEL_IN_THREADS) {
-			long newThreadJoinloopInterval =
-				threadJoinloopIntervalMillis / (int) Math.pow(2, (double) (joined / SUFFERENCE_LEVEL_IN_THREADS));
-			threadJoinloopIntervalMillis = (newThreadJoinloopInterval != 0) ?
-				newThreadJoinloopInterval : 1;
-		} else {
-			threadJoinloopIntervalMillis = Math.min(
-				threadJoinloopIntervalMillis * 2,
-				MAX_JOINLOOP_INTERVAL_IN_MILLIS);
-		}
 	}
 
 	/**
@@ -207,25 +110,11 @@ public class AudioPlayer extends Thread
 				logger.fatal("Unable to read file " + path + ". Caught exception " + e.getMessage());
 			}
 		}
-		ThreadPlayer t = new ThreadPlayer(path, soundPool.get(path), stopAllTime);
-		t.start();
-		players.add(t);
-		return new AudioHandle(Maybe.just(t));
-	}
+		ThreadPlayer threadPlayer = new ThreadPlayer(path, soundPool.get(path), stopAllTime);
+		executorsPool.execute(threadPlayer);
+		audioHandles.add(threadPlayer);
 
-	/**
-	 * stop() stops a {@link ThreadPlayer}. This method is meant also to be called directly
-	 * by the client to stop a single ThreadPlayer whose instance was returned
-	 * by playSound
-	 *
-	 * @param player the {@link ThreadPlayer} to be stopped
-	 */
-	/*~*/void stop(ThreadPlayer player)
-	{
-		if (Thread.currentThread() == player)
-			throw new JBomberManException("this thread is a player thread and is trying to " +
-				"stop itself");
-		player.setInterrupted();
+		return new AudioHandle(threadPlayer);
 	}
 
 	/**
@@ -234,10 +123,7 @@ public class AudioPlayer extends Thread
 	public void stopAll()
 	{
 		stopAllTime = System.currentTimeMillis();
-		synchronized (players) {
-			players.forEach(this::stop);
-			players.clear();
-		}
+		audioHandles.forEach(ThreadPlayer::setInterrupted);
 	}
 
 	/**
@@ -246,7 +132,9 @@ public class AudioPlayer extends Thread
 	 */
 	public void close()
 	{
-		this.interrupt();
+		stopAll();
+		executorsPool.shutdown();
+		executorsPool.shutdownNow();
 	}
 
 	/**
@@ -284,6 +172,16 @@ public class AudioPlayer extends Thread
 	/*~*/boolean getPause()
 	{
 		return pause;
+	}
+
+	/**
+	 * Whenever an ThreadPlayer terminates it needs to call this function
+	 *
+	 * @param threadPlayer the thread player that has finished playing
+	 */
+	public void hasFinished(ThreadPlayer threadPlayer)
+	{
+		audioHandles.remove(threadPlayer);
 	}
 }
 

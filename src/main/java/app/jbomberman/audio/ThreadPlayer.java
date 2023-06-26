@@ -25,7 +25,7 @@ import java.io.InputStream;
  * @see AudioPlayer
  * @see ThreadPlayer
  */
-class ThreadPlayer extends Thread
+class ThreadPlayer implements Runnable
 {
 	/**
 	 * BUFFER_SIZE indicates the chunk size in bytes
@@ -78,16 +78,7 @@ class ThreadPlayer extends Thread
 		this.soundBytes = soundBytes;
 	}
 
-	/**
-	 * isPlaying returns if the thread isAlive(); that is if the thread is playing
-	 * a sound
-	 *
-	 * @return whether the thread is playing an audio
-	 */
-	public boolean isPlaying()
-	{
-		return isAlive();
-	}
+	private boolean isDone;
 
 	/**
 	 * run() is meant to be called by start() method and contains the main routine
@@ -134,6 +125,18 @@ class ThreadPlayer extends Thread
 			throw new JBomberManException(
 				"Probably there was an error while decoding " + soundFile);
 		}
+		isDone = true;
+		AudioPlayer.getInstance().hasFinished(this);
+	}
+
+	/**
+	 * isDone() must be called to see if the threadPlayer has finished
+	 *
+	 * @return whether the thread player has finished playing the sound
+	 */
+	public boolean isDone()
+	{
+		return isDone;
 	}
 
 	/**

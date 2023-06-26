@@ -1,7 +1,5 @@
 package app.jbomberman.audio;
 
-import app.jbomberman.util.Maybe;
-
 /**
  * AudioHandle is a wrapper around threadPlayer that provides an additional
  * layer to call ThreadPlayer's functions. We don't want general functions to
@@ -25,7 +23,7 @@ public class AudioHandle
 	 * @implNote its type is Maybe because if the AudioPlayer gets shut down,
 	 * no more ThreadPlayers will be created and this will be Nothing
 	 */
-	private final Maybe<ThreadPlayer> threadPlayer;
+	private final ThreadPlayer threadPlayer;
 
 	/**
 	 * Constructor of AudioHandle from a ThreadPlayer
@@ -34,7 +32,7 @@ public class AudioHandle
 	 * @implNote its visibility is default as we only want this package (and
 	 * more specifically the AudioPlayer) to create AudioHandles
 	 */
-	AudioHandle(Maybe<ThreadPlayer> threadPlayer)
+	AudioHandle(ThreadPlayer threadPlayer)
 	{
 		this.threadPlayer = threadPlayer;
 	}
@@ -46,7 +44,7 @@ public class AudioHandle
 	 */
 	public boolean isPlaying()
 	{
-		return threadPlayer.compute(true, ThreadPlayer::isPlaying);
+		return !threadPlayer.isDone();
 	}
 
 	/**
@@ -54,9 +52,9 @@ public class AudioHandle
 	 *
 	 * @return the name of the file currently playing
 	 */
-	public Maybe<String> getSoundFileName()
+	public String getSoundFileName()
 	{
-		return threadPlayer.maybeCompute(ThreadPlayer::getSoundFileName);
+		return threadPlayer.getSoundFileName();
 	}
 
 	/**
@@ -64,7 +62,7 @@ public class AudioHandle
 	 */
 	public void stop()
 	{
-		threadPlayer.maybeDo(AudioPlayer.getInstance()::stop);
+		threadPlayer.setInterrupted();
 	}
 }
 

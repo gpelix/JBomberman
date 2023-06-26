@@ -31,9 +31,7 @@ public class BomberManDeadState extends DeadState
 	@Override
 	public void updateInModel()
 	{
-		if (bomberMan.getSoundHandle().fromJust().getSoundFileName()
-			.compute(false,
-				sound -> sound.equals(BomberMan.getBombermanDeathSound())) &&
+		if (bomberMan.getSoundHandle().fromJust().getSoundFileName().equals(BomberMan.getBombermanDeathSound()) &&
 			deathImageManager.hasDoneOneCycle())
 		{
 			GameGrid gameGrid = bomberMan.getGameGrid();
