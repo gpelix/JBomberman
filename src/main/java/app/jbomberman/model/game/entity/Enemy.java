@@ -42,7 +42,7 @@ public class Enemy extends GameCharacter
 	@Override
 	public void move()
 	{
-		Vector2D finalPlace = null; // Java say that it might be not be initialized
+		Vector2D finalPlace = null; // Java say that it might be not initialized
 		GameGrid gameGrid = getGameGrid();
 		MoveManager moveManager = gameGrid.getMoveManager();
 

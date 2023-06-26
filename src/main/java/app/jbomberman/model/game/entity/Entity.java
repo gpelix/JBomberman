@@ -46,7 +46,8 @@ public abstract class Entity extends MutableVector2D
 
 		Drawing newDrawing = new Drawing();
 
-		newDrawing.add(new LayeredDrawObject(this, img, EntityHierarchy.getInstance().getDrawLevelFor(this).unwrapOrThrow(() ->
+		newDrawing.add(new LayeredDrawObject(this, img,
+			EntityHierarchy.getInstance().getDrawLevelFor(this).unwrapOrThrow(() ->
 			new JBomberManException("Don't know where to place " + this.getClass().getName()))));
 
 		oldDrawing = Maybe.just(newDrawing);
