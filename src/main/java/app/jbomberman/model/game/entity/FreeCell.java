@@ -8,6 +8,7 @@ import app.jbomberman.util.Direction;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -184,7 +185,7 @@ public class FreeCell extends Cell
 		// Copying the starting set is necessary as updateInModel called on
 		// entities might update entities and throw java.util.ConcurrentModificationException
 
-		(new HashSet<>(entities)).forEach(Entity::updateInModel);
+		(new ArrayList<>(entities)).forEach(Entity::updateInModel);
 	}
 
 	@Override

@@ -11,7 +11,7 @@ import app.jbomberman.util.Maybe;
  * @implNote We really need this class because when the
  * AudioPlayer gets shut down, it won't play anything anymore, and it will not
  * create ThreadPlayers. So the clients would have to interact with objects of
- * type Maybe< ThreadPlayers>, they would have to know what went wrong, and it
+ * type Maybe\<ThreadPlayers\>, they would have to know what went wrong, and it
  * would induce tight coupling between the behavior of the ThreadPlayer and
  * other packages
  * @see AudioPlayer

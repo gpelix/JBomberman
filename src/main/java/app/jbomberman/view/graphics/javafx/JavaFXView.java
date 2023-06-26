@@ -136,7 +136,7 @@ public class JavaFXView extends View
 
 		drawing.getDrawObjects().forEach(layeredDrawObject -> assureExistingGroup(layeredDrawObject.getLayer()));
 
-		layers.forEach(l -> l.getChildren().clear());
+		//layers.forEach(l -> l.getChildren().clear());
 
 		Map<LayeredDrawObject, ImageView> toRemoveDrawObjectsMap = new HashMap<>();
 

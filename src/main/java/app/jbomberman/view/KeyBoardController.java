@@ -3,7 +3,6 @@ package app.jbomberman.view;
 import app.jbomberman.JBomberManException;
 import app.jbomberman.util.AbstractObservable;
 import app.jbomberman.util.Maybe;
-import com.google.common.collect.ImmutableSet;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -54,7 +53,7 @@ public abstract class KeyBoardController extends AbstractObservable
 		setUpdateInfo(new KeyBoardUpdateInfo(
 			KeyBoardUpdateInfo.KeyBoardEventType.KEY_PRESSED,
 			keyCode,
-			ImmutableSet.copyOf(pressedKeyCodes.iterator())));
+			pressedKeyCodes));
 
 		updateAllObservers();
 	}
@@ -71,7 +70,7 @@ public abstract class KeyBoardController extends AbstractObservable
 		setUpdateInfo(new KeyBoardUpdateInfo(
 			KeyBoardUpdateInfo.KeyBoardEventType.KEY_RELEASED,
 			keyCode,
-			ImmutableSet.copyOf(pressedKeyCodes.iterator())));
+			pressedKeyCodes));
 
 		updateAllObservers();
 	}

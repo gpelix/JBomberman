@@ -5,10 +5,10 @@ import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
-import com.google.common.collect.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -60,9 +60,9 @@ import java.util.stream.Stream;
 	 *
 	 * @return the list of entries
 	 */
-	public final ImmutableList<T> getEntries()
+	public final List<T> getEntries()
 	{
-		return ImmutableList.copyOf(entries);
+		return Collections.unmodifiableList(entries);
 	}
 
 	/**

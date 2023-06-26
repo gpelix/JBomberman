@@ -3,7 +3,6 @@ module app.jbomberman {
 	requires java.desktop;
 	requires org.json;
 	requires org.apache.logging.log4j;
-	requires com.google.common;
 
 	exports app.jbomberman;
 	exports app.jbomberman.view.scenes;

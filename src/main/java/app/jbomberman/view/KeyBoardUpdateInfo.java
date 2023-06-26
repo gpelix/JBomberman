@@ -1,6 +1,7 @@
 package app.jbomberman.view;
 
-import com.google.common.collect.ImmutableSet;
+import java.util.Collections;
+import java.util.Set;
 
 /**
  * KeyBoardUpdateInfo is a class meant to be accessed by the clients/observers
@@ -32,20 +33,20 @@ public class KeyBoardUpdateInfo
 	/**
 	 * currentlyPressed is a reference to the set of currently pressed keys
 	 */
-	private final ImmutableSet<KeyBoardControllerKeyCode> currentlyPressed;
+	private final Set<KeyBoardControllerKeyCode> currentlyPressed;
 
 	/**
 	 * KeyBoardUpdateInfo() is used to initialize a KeyBoardUpdateInfo from
 	 * the KeyBoardController
 	 *
 	 * @param keyBoardEventType the type of KeyBoardEvent
-	 * @param keyCode		   the code of the key that triggered the event
+	 * @param keyCode           the code of the key that triggered the event
 	 * @param pressedKeyCodes   the set of currently pressed codes
 	 */
 	/*~*/
 	public KeyBoardUpdateInfo(KeyBoardEventType keyBoardEventType,
-							  KeyBoardControllerKeyCode keyCode,
-							  ImmutableSet<KeyBoardControllerKeyCode> pressedKeyCodes)
+														KeyBoardControllerKeyCode keyCode,
+														Set<KeyBoardControllerKeyCode> pressedKeyCodes)
 	{
 		this.keyBoardEventType = keyBoardEventType;
 		this.keyCode = keyCode;
@@ -77,9 +78,9 @@ public class KeyBoardUpdateInfo
 	 *
 	 * @return the currently pressed key codes
 	 */
-	public ImmutableSet<KeyBoardControllerKeyCode> getCurrentlyPressed()
+	public Set<KeyBoardControllerKeyCode> getCurrentlyPressed()
 	{
-		return currentlyPressed;
+		return Collections.unmodifiableSet(currentlyPressed);
 	}
 }
 
