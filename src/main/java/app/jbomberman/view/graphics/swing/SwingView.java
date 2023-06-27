@@ -30,7 +30,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-// TODO: TODO javadoc
+/**
+ * SwingView is the concrete implementation of the View class for java swing
+ *
+ * @author gp
+ */
 public class SwingView extends View
 {
 	/**
@@ -38,6 +42,9 @@ public class SwingView extends View
 	 */
 	private final JFrame frame;
 
+	/**
+	 * callback to call on close of the View
+	 */
 	private Maybe<Callback> callback = Maybe.nothing();
 
 	/**

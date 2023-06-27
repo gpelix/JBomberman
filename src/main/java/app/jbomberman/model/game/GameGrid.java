@@ -149,6 +149,12 @@ public class GameGrid extends Grid<FreeCell>
 		addGameCharacterInFreeCell(character, coordinate);
 	}
 
+	/**
+	 * addGameCharacterInFreeCell adds a generic GameCharacter to a FreeCell
+	 *
+	 * @param gameCharacter the GameCharacter to add
+	 * @param coordinate    the grid-coordinate to which it must be added
+	 */
 	public void addGameCharacterInFreeCell(GameCharacter gameCharacter, Vector2D coordinate)
 	{
 		get(coordinate).addGameCharacter(gameCharacter);
@@ -238,8 +244,8 @@ public class GameGrid extends Grid<FreeCell>
 	 *
 	 * @param gameCharacter gameCharacter that must be moved. This parameter is mandatory in the case
 	 *                      there are more entities on the fromTopLeft coordinate
-	 * @param fromTopLeft
-	 * @param toTopLeft
+	 * @param fromTopLeft   the starting topleft model coordinate
+	 * @param toTopLeft     the final topLeftModelCoordinate
 	 */
 	public void moveCharacter(GameCharacter gameCharacter, Vector2D fromTopLeft, Vector2D toTopLeft)
 	{
@@ -256,6 +262,12 @@ public class GameGrid extends Grid<FreeCell>
 		addGameCharacterInFreeCell(gameCharacter, toGridCoordinate);
 	}
 
+	/**
+	 * getTopLeftCornerModelCoordinate() returns the topLeftModelCoordinate of the
+	 * GameGrid
+	 *
+	 * @return the topLeftModelCoordinate of the GameGrid
+	 */
 	public Vector2D getTopLeftCornerModelCoordinate()
 	{
 		return topLeftCorner;
@@ -263,6 +275,9 @@ public class GameGrid extends Grid<FreeCell>
 
 	/**
 	 * return the coordinate
+	 *
+	 * @param coordinate the model-coordinate of the top left corner
+	 * @return the gridCoordinate in which the top left corner is
 	 */
 	public Vector2D modelCoord2GridCoord(Vector2D coordinate)
 	{
@@ -270,7 +285,10 @@ public class GameGrid extends Grid<FreeCell>
 	}
 
 	/**
-	 * Return the top left corner of bucket
+	 * Return the top left corner of the bucket
+	 *
+	 * @param coordinate the grid-coordinate
+	 * @return the model-coordinate of the top left corner
 	 */
 	public Vector2D gridCoord2modelCoor(Vector2D coordinate)
 	{
@@ -279,6 +297,9 @@ public class GameGrid extends Grid<FreeCell>
 
 	/**
 	 * it simply sums half the SIZE_IN_MODEL
+	 *
+	 * @param modelCoordinate the model-coordinate of topLeft
+	 * @return the center of the block in model-coordinates
 	 */
 	public Vector2D getCenter(Vector2D modelCoordinate)
 	{
@@ -289,6 +310,9 @@ public class GameGrid extends Grid<FreeCell>
 	/**
 	 * get the grid coordinate of CURRENT OCCUPYING location of entity from top
 	 * left corner
+	 *
+	 * @param topLeftCorner the top left corner
+	 * @return the center of the lump in grid coordinate
 	 */
 	public Vector2D getCenterInGridCoord(Vector2D topLeftCorner)
 	{
@@ -319,7 +343,7 @@ public class GameGrid extends Grid<FreeCell>
 				x = RandomNumberGenerator.getInstance().nextInt(1, getWidth() - 1);
 				y = RandomNumberGenerator.getInstance().nextInt(1, getHeight() - 1);
 			} while (!moveManager.canAccessForCommonSizeEntity(
-				EntityFactory.getInstance().getCharacterCapabilities(8),
+				EntityFactory.getInstance().getEnemyCapabilities(8),
 				gridCoord2modelCoor(Vector2D.of(x, y)),
 				Vector2D.of(x, y),
 				Maybe.nothing()

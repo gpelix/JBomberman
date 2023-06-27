@@ -92,7 +92,10 @@ public class SwingKeyBoardController extends KeyBoardController
 	 */
 	private final KeyListener keyListener;
 
-
+	/**
+	 * public constructor of a SwingKeyBoardController meant to be called by the
+	 * SwingGraphicFactory
+	 */
 	public SwingKeyBoardController()
 	{
 		keyListener = new KeyListener()

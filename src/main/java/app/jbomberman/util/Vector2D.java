@@ -14,8 +14,18 @@ import java.util.function.BinaryOperator;
  */
 public class Vector2D extends Pair<Integer, Integer>
 {
+	/**
+	 * pool is the pool of Vector2D's used for caching
+	 */
 	private static final Map<Integer, Map<Integer, Vector2D>> pool = new HashMap<>();
 
+	/**
+	 * of() is a static method that must be called to get a Vector2D
+	 *
+	 * @param x the x coordinate
+	 * @param y the y coordinate
+	 * @return the Vector2D with the coordinates specified as parameters
+	 */
 	public static Vector2D of(int x, int y)
 	{
 		if (!pool.containsKey(x))
@@ -63,13 +73,14 @@ public class Vector2D extends Pair<Integer, Integer>
 
 	/**
 	 * equals() compares two coordinates to see if they indicate the same point.
+	 * <p>
+	 * we don't respect the symmetric property of the equivalence
+	 * relation. It would be nonsense to say that a coordinate is different
+	 * from a MutableVector2D just because they are not exactly the same type
 	 *
 	 * @param obj the other vector
 	 * @return a boolean saying whether this represents the same vector
 	 * as this
-	 * @implNote we don't respect the symmetric property of the equivalence
-	 * relation. It would be nonsense to say that a coordinate is different
-	 * from a MutableVector2D just because they are not exactly the same type
 	 */
 	@Override
 	public boolean equals(Object obj)
@@ -150,14 +161,14 @@ public class Vector2D extends Pair<Integer, Integer>
 	 * attribute
 	 *
 	 * @param otherVector the other vector used to compute the result
-	 * @param function	function of this.x and otherVector.x to determine the value
-	 *					of the x coordinate of the vector to return. The same gets
-	 *					done on the y coordinate
+	 * @param function    function of this.x and otherVector.x to determine the value
+	 *                    of the x coordinate of the vector to return. The same gets
+	 *                    done on the y coordinate
 	 * @return the vector whose coordinates are the result of the application of
 	 * function on the coordinate of this and otherVector
 	 */
 	public Vector2D elementWiseApply(Vector2D otherVector,
-									 BinaryOperator<Integer> function)
+																	 BinaryOperator<Integer> function)
 	{
 		return Vector2D.of(function.apply(getX(), otherVector.getX()),
 			function.apply(getY(), otherVector.getY()));

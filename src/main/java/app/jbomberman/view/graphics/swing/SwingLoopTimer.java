@@ -7,9 +7,10 @@ import javax.swing.Timer;
 
 /**
  * SwingLoopTimer is the concrete implementation of LoopTimer for java swing
+ * <p>
+ * We use a javax.swing.Timer as an underlying timer
  *
  * @author gp
- * @implNote we use a javax.swing.Timer as an underlying timer
  */
 public class SwingLoopTimer extends LoopTimer
 {
@@ -27,7 +28,7 @@ public class SwingLoopTimer extends LoopTimer
 	{
 		timer = new Timer(1000 / 60, e -> callback.run());
 	}
-	
+
 	/**
 	 * start() is called to start the LoopTimer
 	 */

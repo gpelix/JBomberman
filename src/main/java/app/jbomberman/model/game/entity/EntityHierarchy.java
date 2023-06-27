@@ -2,42 +2,41 @@ package app.jbomberman.model.game.entity;
 
 import app.jbomberman.util.Maybe;
 
-import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * EntityHierarchy is a singleton modelling the update hierarchy of Entities
+ *
+ * @author gp
+ */
 public class EntityHierarchy
 {
-	private final Map<Class<? extends Entity>, Integer> drawingHierarchy = new HashMap<>()
-	{
-		{
-			put(BomberMan.class, 6);
-			put(Enemy.class, 5);
-			put(Bomb.class, 4);
-			put(Wall.class, 4);
-			put(Fire.class, 4);
-			put(Block.class, 3);
-			put(Door.class, 2);
-			put(Powerup.class, 2);
-			put(FreeCell.class, 1);
-		}
-	};
+	/**
+	 * drawingHierarchy is the Hierarchy that associates with each class an
+	 * integer. Lower is the integer, and sooner it will be drawn
+	 */
+	private final Map<Class<? extends Entity>, Integer> drawingHierarchy = Map.of(
+		BomberMan.class, 6,
+		Enemy.class, 5,
+		Bomb.class, 4,
+		Wall.class, 4,
+		Fire.class, 4,
+		Block.class, 3,
+		Door.class, 2,
+		Powerup.class, 2,
+		FreeCell.class, 1
+	);
 
-	private final Map<Class<? extends Entity>, Integer> updateHierarchy = new HashMap<>()
-	{
-		{
-			put(Wall.class, 60);
-			put(Block.class, 60);
-			put(Bomb.class, 60);
-			put(PickableCell.class, 50);
-			put(Fire.class, 40);
-			put(BomberMan.class, 30);
-			put(Enemy.class, 30);
-			put(FreeCell.class, 20);
-		}
-	};
-
+	/**
+	 * instance keeps a reference to the unique instance of the EntityHierarchy
+	 */
 	private static EntityHierarchy instance;
 
+	/**
+	 * getInstance() must be used to get the unique instance of the EntityHierarchy
+	 *
+	 * @return the unique instance of the EntityHierarchy
+	 */
 	public static EntityHierarchy getInstance()
 	{
 		if (instance == null)
@@ -46,18 +45,36 @@ public class EntityHierarchy
 		return instance;
 	}
 
-
-	public Maybe<Integer> getUpdateLevelFor(Entity e)
+	/**
+	 * private empty constructor to forbid initialization the EntityHierarchy from
+	 * outside this class
+	 */
+	private EntityHierarchy()
 	{
-		return getAssociation(updateHierarchy, e);
 	}
 
+	/**
+	 * getDrawLevelFor() gets the Maybe Integer associated with the Entity's class
+	 *
+	 * @param e the Entity
+	 * @return the Integer that represents the priority of drawing
+	 */
 	public Maybe<Integer> getDrawLevelFor(Entity e)
 	{
 		return getAssociation(drawingHierarchy, e);
 	}
 
-	public Maybe<Integer> getAssociation(Map<Class<? extends Entity>, Integer> classMap, Entity e)
+	/**
+	 * getAssociation() gets must be used internally to get the priority of
+	 * Drawing for the Entity
+	 *
+	 * @param classMap the Map
+	 * @param e        the Entity whose priority must get
+	 * @return the priority of Drawing of the Entity e
+	 */
+	private Maybe<Integer> getAssociation(
+		Map<Class<? extends Entity>, Integer> classMap,
+		Entity e)
 	{
 		Class<?> classOfE = e.getClass();
 

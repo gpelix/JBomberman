@@ -27,8 +27,8 @@ public class GameOverScene extends SoundyBomberManScene
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
-	 *
-	 * @implNote We check if the audioHandle is playing something and, if not,
+	 * <p>
+	 * We check if the audioHandle is playing something and, if not,
 	 * we go onto another scene (StartDisplay)
 	 */
 	@Override
@@ -47,8 +47,8 @@ public class GameOverScene extends SoundyBomberManScene
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote does nothing
+	 * <p>
+	 * does nothing
 	 */
 	@Override
 	public void cleanup()

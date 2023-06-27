@@ -182,10 +182,11 @@ public class Model extends AbstractObservable
 	/**
 	 * keyBoardEvent must be called by the View to propagate a keyboard event to
 	 * the Model
+	 * <p>
+	 * We don't want the mode to directly observe the KeyBoardController
+	 * as we must allow the View to filter the keyboard events
 	 *
 	 * @param updateInfo the keyboard update info
-	 * @implNote We don't want the mode to directly observe the KeyBoardController
-	 * as we must allow the View to filter the keyboardevents
 	 */
 	public void keyBoardEvent(KeyBoardUpdateInfo updateInfo)
 	{

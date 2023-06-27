@@ -69,15 +69,20 @@ class ThreadPlayer implements Runnable
 	 * Create a new ThreadPlayer. Its visibility is default as we should only be able
 	 * to initialize ThreadPlayer's from the {@link AudioPlayer} class
 	 *
-	 * @param soundFile filename that contains the audio to play
+	 * @param soundFile   filename that contains the audio to play
+	 * @param soundBytes  the audio file loaded in a byte array
+	 * @param stopAllTime the time of the last stop of all sounds
 	 */
-	ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime)
+	/*~*/ThreadPlayer(String soundFile, byte[] soundBytes, long stopAllTime)
 	{
 		this.soundFile = soundFile;
 		this.stopAllTime = stopAllTime;
 		this.soundBytes = soundBytes;
 	}
 
+	/**
+	 * isDone keeps track of whether the ThreadPlayer has finished playing
+	 */
 	private boolean isDone;
 
 	/**

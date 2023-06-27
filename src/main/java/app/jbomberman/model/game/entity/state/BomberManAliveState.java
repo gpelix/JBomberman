@@ -10,14 +10,30 @@ import app.jbomberman.model.game.entity.Explosion;
 import app.jbomberman.util.CollectionUtils;
 import app.jbomberman.util.Maybe;
 
+/**
+ * BomberManAliveState is the state of BomberMan when it's alive
+ *
+ * @author gp
+ */
 public class BomberManAliveState extends AliveState
 {
+	/**
+	 * bomberMan is a reference to the bomberMan that has this as state
+	 */
 	private final BomberMan bomberMan;
 
+	/**
+	 * imageManager is bomberman's ImageManager
+	 */
 	private final MovingImageManager imageManager;
 
-	private boolean drawn;
-
+	/**
+	 * public constructor of BomberManAliveState
+	 *
+	 * @param bomberMan    the bomberman whose state is this one
+	 * @param imageManager bomberman's ImageManager
+	 * @param nextState    the state to set on BomberMan's death
+	 */
 	public BomberManAliveState(BomberMan bomberMan,
 														 MovingImageManager imageManager,
 														 AbstractState nextState)
@@ -25,9 +41,16 @@ public class BomberManAliveState extends AliveState
 		super(bomberMan, nextState);
 		this.bomberMan = bomberMan;
 		this.imageManager = imageManager;
-		this.drawn = false;
 	}
 
+	/**
+	 * notifyExplosion() handles an explosion.
+	 * If bomberman is invincible or can go through fire, it does nothing; otherwise
+	 * it kills bomberman
+	 *
+	 * @param explosion the Explosion object
+	 * @return false as bomberman doesn't stop explosions
+	 */
 	@Override
 	public boolean notifyExplosion(Explosion explosion)
 	{
@@ -38,32 +61,43 @@ public class BomberManAliveState extends AliveState
 		return false;
 	}
 
+	/**
+	 * updateInModel() moves bomberman
+	 */
 	@Override
 	public void updateInModel()
 	{
 		bomberMan.move();
 	}
 
+	/**
+	 * getDrawing() returns the current bomberman's image.
+	 * It simply returns the Drawing bomberman's getDrawing(AbstractImage)
+	 * returns
+	 *
+	 * @return BomberMan's Drawing
+	 */
 	@Override
 	public Drawing getDrawing()
 	{
-		//System.out.println("Bomberman is at " + bomberMan.getX() + " " + bomberMan.getY());
-		Drawing drawing = bomberMan.getDrawing(imageManager.getImage(drawn ?
-			CollectionUtils.pick(bomberMan.getDirections()) : Maybe.nothing()));
-
-		drawn = true;
-
-		return drawing;
+		return bomberMan.getDrawing(imageManager.getImage(
+			CollectionUtils.pick(bomberMan.getDirections())));
 	}
 
+	/**
+	 * notifyCaughtByEnemy() must be called when bomberman gets caught by
+	 * an enemy. If he's not invincible, he dies
+	 */
 	public void notifyCaughtByEnemy()
 	{
-		BomberManCapabilities cap = bomberMan.getCapabilities();
-
-		if (!cap.isInvincible())
+		if (!bomberMan.getCapabilities().isInvincible())
 			die();
 	}
 
+	/**
+	 * die() makes bomberman die, removes a life from his, and play the death
+	 * sound
+	 */
 	@Override
 	protected void die()
 	{

@@ -8,10 +8,10 @@ import java.util.stream.Stream;
 
 /**
  * VerticalMenu is a class that models a vertical menu.
+ * All it does is setting the correct arrangement policy
+ * (which is arrangeVertically) and overriding the (get/set)Width() methods
  *
  * @author gp
- * @implNote All it does is setting the correct arrangement policy
- * (which is arrangeVertically) and overriding the (get/set)Width() methods
  */
 public class VerticalMenu extends Menu
 {

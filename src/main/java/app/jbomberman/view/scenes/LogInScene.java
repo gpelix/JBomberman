@@ -148,8 +148,8 @@ public class LogInScene extends BomberManScene
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote resume playing and destruct the loginBoard and the menu
+	 * <p>
+	 * resume playing and destruct the loginBoard and the menu
 	 */
 	@Override
 	public void cleanup()

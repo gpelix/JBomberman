@@ -4,14 +4,15 @@ package app.jbomberman.audio;
  * AudioHandle is a wrapper around threadPlayer that provides an additional
  * layer to call ThreadPlayer's functions. We don't want general functions to
  * interact with the threadPlayer.
- *
- * @author gp
- * @implNote We really need this class because when the
+ * <p>
+ * We really need this class because when the
  * AudioPlayer gets shut down, it won't play anything anymore, and it will not
  * create ThreadPlayers. So the clients would have to interact with objects of
- * type Maybe\<ThreadPlayers\>, they would have to know what went wrong, and it
+ * type Maybe ThreadPlayers, they would have to know what went wrong, and it
  * would induce tight coupling between the behavior of the ThreadPlayer and
  * other packages
+ *
+ * @author gp
  * @see AudioPlayer
  * @see ThreadPlayer
  */
@@ -19,18 +20,19 @@ public class AudioHandle
 {
 	/**
 	 * threadPlayer is the threadPlayer that this class wraps
-	 *
-	 * @implNote its type is Maybe because if the AudioPlayer gets shut down,
+	 * <p>
+	 * its type is Maybe because if the AudioPlayer gets shut down,
 	 * no more ThreadPlayers will be created and this will be Nothing
 	 */
 	private final ThreadPlayer threadPlayer;
 
 	/**
 	 * Constructor of AudioHandle from a ThreadPlayer
+	 * <p>
+	 * its visibility is default as we only want this package (and
+	 * more specifically the AudioPlayer) to create AudioHandles
 	 *
 	 * @param threadPlayer the optional threadPlayer that this class will wrap
-	 * @implNote its visibility is default as we only want this package (and
-	 * more specifically the AudioPlayer) to create AudioHandles
 	 */
 	AudioHandle(ThreadPlayer threadPlayer)
 	{

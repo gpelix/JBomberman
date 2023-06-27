@@ -6,9 +6,10 @@ import javafx.animation.AnimationTimer;
 
 /**
  * JavaFXLoopTimer is the concrete implementation of LoopTimer for javafx
+ * <p>
+ * Under the hood we use an AnimationTimer
  *
  * @author gp
- * @implNote under the hood we use an AnimationTimer
  */
 public class JavaFXLoopTimer extends LoopTimer
 {

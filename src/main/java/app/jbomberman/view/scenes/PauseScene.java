@@ -25,7 +25,8 @@ public class PauseScene extends BomberManScene
 	/**
 	 * public constructor builds a PauseScene from a View
 	 *
-	 * @param view the View
+	 * @param view      the View
+	 * @param gameScene the GameScene
 	 */
 	public PauseScene(View view, GameScene gameScene)
 	{
@@ -54,8 +55,8 @@ public class PauseScene extends BomberManScene
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote resume playing and detach menu from keyboardcontroller
+	 * <p>
+	 * resume playing and detach menu from keyboardcontroller
 	 */
 	@Override
 	public void cleanup()
@@ -67,8 +68,8 @@ public class PauseScene extends BomberManScene
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
-	 *
-	 * @implNote simply return the drawing of the menu
+	 * <p>
+	 * simply return the drawing of the menu
 	 */
 	@Override
 	public Drawing update()

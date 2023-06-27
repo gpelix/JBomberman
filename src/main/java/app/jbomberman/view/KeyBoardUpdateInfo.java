@@ -17,7 +17,13 @@ public class KeyBoardUpdateInfo
 	 */
 	public enum KeyBoardEventType
 	{
+		/**
+		 * KEY_RELEASED is the event due to the pressing of a key
+		 */
 		KEY_PRESSED,
+		/**
+		 * KEY_RELEASED is the event due to the release of a key
+		 */
 		KEY_RELEASED
 	}
 

@@ -191,7 +191,7 @@ public class GameGridBuilderDirector
 				int numberOfEnemies = enemiesArrayJSON.getInt(typeOfEnemy - 1);
 
 				GameCharacterCapabilities capabilities = EntityFactory
-					.getInstance().getCharacterCapabilities(typeOfEnemy);
+					.getInstance().getEnemyCapabilities(typeOfEnemy);
 
 				// HERE WE NEED TO GET THE MOVE MANAGER AND ASK HIM WHETHER
 				// THE POSITION IS OK. WE CANNOT RECYCLE THE PREVIOUS ONES

@@ -78,8 +78,8 @@ public class GameScene extends SoundyBomberManScene implements Observer
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
-	 *
-	 * @implNote return the drawing of the model and add to it the topPanel. It
+	 * <p>
+	 * return the drawing of the model and add to it the topPanel. It
 	 * also updates the topPanel and does transitions to other scenes
 	 */
 	@Override
@@ -132,8 +132,8 @@ public class GameScene extends SoundyBomberManScene implements Observer
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote detaches this from the controller
+	 * <p>
+	 * detaches this from the controller
 	 */
 	@Override
 	public void cleanup()

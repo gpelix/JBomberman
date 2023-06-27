@@ -77,8 +77,8 @@ public class StartDisplay extends SoundyBomberManScene
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote detach the menu from the controller and stop every sound
+	 * <p>
+	 * detach the menu from the controller and stop every sound
 	 */
 	@Override
 	public void cleanup()
@@ -90,8 +90,8 @@ public class StartDisplay extends SoundyBomberManScene
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
-	 *
-	 * @implNote It loops and, if the audioHandle is not playing something, it plays
+	 * <p>
+	 * It loops and, if the audioHandle is not playing something, it plays
 	 * the startDisplaySound
 	 */
 	@Override

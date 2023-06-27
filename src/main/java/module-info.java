@@ -1,3 +1,6 @@
+/**
+ * app.jbomberman is the only module in our application
+ */
 module app.jbomberman {
 	requires javafx.controls;
 	requires java.desktop;

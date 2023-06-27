@@ -8,13 +8,16 @@ import java.io.InputStream;
 import java.util.Objects;
 import java.util.Scanner;
 
-/*
- * This utility class provides uniform access to the resources
+/**
+ * Resource is a utility class providing uniform access to the resources
  *
  * @author gp
  */
 public class Resources
 {
+	/**
+	 * relativeClass is the class to which the Resources are attributed
+	 */
 	private static final Class<?> relativeClass = JBomberMan.class;
 
 	/**
@@ -45,7 +48,7 @@ public class Resources
 	{
 		StringBuilder stringBuilder = new StringBuilder();
 		try (InputStream inputStream = getResourceAsStream(URI);
-			 Scanner scanner = new Scanner(inputStream))
+				 Scanner scanner = new Scanner(inputStream))
 		{
 			while (scanner.hasNext()) {
 				stringBuilder.append(scanner.next());

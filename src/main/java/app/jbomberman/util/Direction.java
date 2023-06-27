@@ -8,9 +8,21 @@ package app.jbomberman.util;
  */
 public enum Direction
 {
+	/**
+	 * NORTH direction
+	 */
 	NORTH(Vector2D.of(0, -1)),
+	/**
+	 * EAST direction
+	 */
 	EAST(Vector2D.of(1, 0)),
+	/**
+	 * SOUTH direction
+	 */
 	SOUTH(Vector2D.of(0, 1)),
+	/**
+	 * WEST direction
+	 */
 	WEST(Vector2D.of(-1, 0));
 
 	/**
@@ -23,7 +35,7 @@ public enum Direction
 	 * associated to it
 	 *
 	 * @param associatedVersor the versor that must be associated to the
-	 *						 enum
+	 *                         enum
 	 */
 	Direction(Vector2D associatedVersor)
 	{

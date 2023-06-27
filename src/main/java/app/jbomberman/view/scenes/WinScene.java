@@ -27,8 +27,8 @@ public class WinScene extends SoundyBomberManScene
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
-	 *
-	 * @implNote It checks if the audioHandle is palying something. In that case,
+	 * <p>
+	 * It checks if the audioHandle is playing something. In that case,
 	 * it does a transition to StartDisplay scene.
 	 */
 	@Override
@@ -45,8 +45,8 @@ public class WinScene extends SoundyBomberManScene
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote does nothing
+	 * <p>
+	 * It does nothing
 	 */
 	@Override
 	public void cleanup()

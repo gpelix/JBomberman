@@ -119,6 +119,8 @@ public abstract class GameCharacter extends Entity implements StateFul
 
 	/**
 	 * isDisappearing() calls the isDisappearing() method on the state
+	 *
+	 * @return whether the GameCharacter is disappearing
 	 */
 	public boolean isDisappearing()
 	{

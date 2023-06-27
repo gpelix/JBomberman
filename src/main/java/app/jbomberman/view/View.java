@@ -13,15 +13,27 @@ import app.jbomberman.view.scenes.StartDisplay;
  *
  * @author gp
  */
-public abstract class View //implements Observer
+public abstract class View
 {
+	/**
+	 * currentBomberManScene is the current Scene displayed on the View
+	 */
 	private BomberManScene currentBomberManScene;
 
+	/**
+	 * setup() must be called to effectively start the view. It goes onto the
+	 * first scene
+	 */
 	public void setup()
 	{
 		currentBomberManScene = new StartDisplay(this);
 	}
 
+	/**
+	 * setScene() sets the next Scene
+	 *
+	 * @param newScene the next Scene
+	 */
 	public void setScene(BomberManScene newScene)
 	{
 		currentBomberManScene = newScene;
@@ -141,6 +153,9 @@ public abstract class View //implements Observer
 	 */
 	public abstract void close();
 
+	/**
+	 * update() updates the view calling update() on the currentBomberManScene
+	 */
 	public void update()
 	{
 		draw(currentBomberManScene.update());

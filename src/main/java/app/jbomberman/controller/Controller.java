@@ -39,6 +39,8 @@ public class Controller
 	 * Controller() is the only constructor of the controller. It must not be called
 	 * by other classes, as, to do the startup, the static function Controller.launch()
 	 * must be called
+	 *
+	 * @param view the newly created view
 	 */
 	private Controller(View view)
 	{
@@ -63,8 +65,8 @@ public class Controller
 	/**
 	 * close() function must be used during the shutdown process of the
 	 * application
-	 *
-	 * @implNote it closes the view and stops the AudioPlayer. Not closing the
+	 * <p>
+	 * it closes the view and stops the AudioPlayer. Not closing the
 	 * audio player will prevent the JVM from exiting
 	 */
 	public void close()

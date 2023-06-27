@@ -38,11 +38,11 @@ public class CollectionUtils
 	}
 
 	/**
-	 * pick() is a function that picks a generic (non necessarily random)
+	 * pick() is a function that picks a generic (not necessarily random)
 	 * element from a collection
 	 *
 	 * @param collection the collection from which the element must be picked
-	 * @param <T>		the type of the elements in the Collection
+	 * @param <T>        the type of the elements in the Collection
 	 * @return the element picked
 	 */
 	public static <T> Maybe<T> pick(Collection<T> collection)

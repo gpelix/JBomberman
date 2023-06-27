@@ -93,6 +93,11 @@ public class Grid<T> implements Iterable<T>
 		grid = new Object[height][width];
 	}
 
+	/**
+	 * public constructor of the Grid from a Vector2D of dimensions
+	 *
+	 * @param dimensions the dimensions of the Grid
+	 */
 	public Grid(Vector2D dimensions)
 	{
 		this(dimensions.getX(), dimensions.getY());
@@ -163,6 +168,11 @@ public class Grid<T> implements Iterable<T>
 		return height;
 	}
 
+	/**
+	 * getDimensions() gets the dimensions of the Grid
+	 *
+	 * @return a Vector2D of dimensions of the grid
+	 */
 	public Vector2D getDimensions()
 	{
 		return Vector2D.of(width, height);

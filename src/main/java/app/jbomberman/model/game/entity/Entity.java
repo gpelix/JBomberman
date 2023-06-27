@@ -58,6 +58,8 @@ public abstract class Entity extends MutableVector2D
 	 *
 	 * @param img AbstractImage to draw at the coordinates specified by the
 	 *            coordinates of this Entity
+	 * @return the drawing of the Entity based on the image provided in input if
+	 * the object hasChanged otherwise the old drawing
 	 */
 	public Drawing getDrawing(AbstractImage img)
 	{
@@ -86,6 +88,8 @@ public abstract class Entity extends MutableVector2D
 	/**
 	 * getDrawing() should be overwritten in subclasses and must contain the logic to get
 	 * a drawing out of the Entity
+	 *
+	 * @return the Drawing of the Entity
 	 */
 	public abstract Drawing getDrawing();
 

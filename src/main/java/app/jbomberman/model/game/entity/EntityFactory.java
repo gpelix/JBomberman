@@ -1,6 +1,7 @@
 package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
+import app.jbomberman.Properties;
 import app.jbomberman.images.AbstractImage;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.game.FullMovementMovingImageManager;
@@ -15,27 +16,76 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * EntityFactory is the factory for the Entities.
+ * It employs the simple factory pattern as we want to limit the use of JSON
+ * in the Model to this class only.
+ * It also uses the Singleton pattern as it doesn't make much sense having more
+ * EntityFactories
+ *
+ * @author gp
+ */
 public class EntityFactory
 {
+	/**
+	 * factory keeps a reference to the unique instance of the EntityFactory
+	 */
 	private static EntityFactory factory;
 
+	/**
+	 * CHARACTER_SPECIFICATION_FILE maintains a reference to a String containing
+	 * the path of the json file in which there are the descriptions of the
+	 * characteristics of the characters
+	 */
 	private static final String CHARACTER_SPECIFICATION_FILE =
-		"json/entitiesSpecs.json";
+		Properties.getInstance().getCharacterSpecificationFile();
 
+	/**
+	 * Constant String left
+	 */
 	private static final String LEFT = "left";
+
+	/**
+	 * Constant String right
+	 */
 	private static final String RIGHT = "right";
+
+	/**
+	 * Constant String up
+	 */
 	private static final String UP = "up";
+
+	/**
+	 * Constant String down
+	 */
 	private static final String DOWN = "down";
 
+	/**
+	 * Constant String alive
+	 */
 	private static final String ALIVE = "alive";
 
+	/**
+	 * Constant String death
+	 */
 	private static final String DEATH = "death";
 
+	/**
+	 * Constant String speed
+	 */
 	private static final String SPEED = "speed";
+
+	/**
+	 * Constant String goesThroughWalls
+	 */
 	private static final String GOES_THROUGH_WALLS_KEY = "goesThroughWalls";
 
+	/**
+	 * getInstance() must be used to get the unique instance of the EntityFactory
+	 *
+	 * @return the unique instance of the EntityFactory
+	 */
 	public static EntityFactory getInstance()
 	{
 		if (factory == null)
@@ -44,12 +94,20 @@ public class EntityFactory
 		return factory;
 	}
 
-	private final JSONObject entitiesSpecification;
+	/**
+	 * entitySpecifications is the JSONObject containing the specifications of the
+	 * enemies
+	 */
+	private final JSONObject entitySpecifications;
 
+	/**
+	 * private constructor meant to be called be the getInstance() method to
+	 * initialize the unique instance of the EntityFactory
+	 */
 	private EntityFactory()
 	{
 		try {
-			entitiesSpecification =
+			entitySpecifications =
 				new JSONObject(Resources.readResource(CHARACTER_SPECIFICATION_FILE));
 		} catch (JSONException e) {
 			throw new RuntimeException(
@@ -58,12 +116,30 @@ public class EntityFactory
 		}
 	}
 
+	/**
+	 * getEnemySpecification() returns the specification of an enemy from its
+	 * number
+	 *
+	 * @param enemyNumber the number specifying the type of the enemy
+	 * @return the JSONObject that contains the specification of the Enemy
+	 */
 	private JSONObject getEnemySpecification(int enemyNumber)
 	{
-		return entitiesSpecification.getJSONObject("Enemy" + enemyNumber);
+		return entitySpecifications.getJSONObject("Enemy" + enemyNumber);
 	}
 
-	public Enemy buildEnemy(int enemyNumber, Vector2D screenCoordinate,
+	/**
+	 * buildEnemy() builds an Enemy from a model-coordinate and a reference to the
+	 * GameGrid to which it must be added and a number describing the type of
+	 * Enemy to build
+	 *
+	 * @param enemyNumber     the number specifying the type of the Enemy
+	 * @param modelCoordinate the model-coordinate
+	 * @param gameGrid        a reference to the GameGrid to which the Enemy must be
+	 *                        added
+	 * @return the newly built Enemy
+	 */
+	public Enemy buildEnemy(int enemyNumber, Vector2D modelCoordinate,
 													GameGrid gameGrid)
 	{
 		try {
@@ -83,7 +159,7 @@ public class EntityFactory
 			deathImages.add(FlightWeightImagesFactory.getInstance()
 				.getImage(deathAwardingPoints + ".png"));
 
-			return new Enemy(screenCoordinate, speed, goesThroughWalls,
+			return new Enemy(modelCoordinate, speed, goesThroughWalls,
 				gameGrid,
 				new LeftRightMovingImageManager(
 					getImagesList(enemySpecificationObject, LEFT),
@@ -96,12 +172,23 @@ public class EntityFactory
 		}
 	}
 
+	/**
+	 * buildPowerUp() builds a PowerUp from a model-coordinate and a reference to the
+	 * GameGrid to which it must be added and a number describing the type of
+	 * PowerUp
+	 *
+	 * @param powerupNumber   the number specifying the type of the powerup
+	 * @param modelCoordinate the model-coordinate
+	 * @param gameGrid        a reference to the GameGrid to which the Door must be
+	 *                        added
+	 * @return the newly built Powerup
+	 */
 	public Powerup buildPowerUp(int powerupNumber, Vector2D modelCoordinate,
 															GameGrid gameGrid)
 	{
 		try {
 			JSONObject powerupSpecification =
-				entitiesSpecification.getJSONObject("powerup" + powerupNumber);
+				entitySpecifications.getJSONObject("powerup" + powerupNumber);
 
 			int enemyNumber = powerupSpecification.getInt(
 				"enemyAfterExplosion");
@@ -137,10 +224,19 @@ public class EntityFactory
 		}
 	}
 
+	/**
+	 * buildDoor() builds a Door from a model-coordinate and a reference to the
+	 * GameGrid to which it must be added
+	 *
+	 * @param modelCoordinate the model-coordinate
+	 * @param gameGrid        a reference to the GameGrid to which the Door must be
+	 *                        added
+	 * @return the newly built Door
+	 */
 	public Door buildDoor(Vector2D modelCoordinate, GameGrid gameGrid)
 	{
 		try {
-			JSONObject doorSpec = entitiesSpecification.getJSONObject("door");
+			JSONObject doorSpec = entitySpecifications.getJSONObject("door");
 
 			AbstractImage image = FlightWeightImagesFactory.getInstance().getImage(
 				doorSpec.getString("img")
@@ -157,11 +253,20 @@ public class EntityFactory
 		}
 	}
 
-	public Wall buildWall(Vector2D screenCoordinate, GameGrid gameGrid)
+	/**
+	 * buildWall() builds a Wall from a model-coordinate and a reference to the
+	 * GameGrid to which it must be added
+	 *
+	 * @param modelCoordinate the model-coordinate
+	 * @param gameGrid        a reference to the GameGrid to which the Wall must be
+	 *                        added
+	 * @return the newly built Wall
+	 */
+	public Wall buildWall(Vector2D modelCoordinate, GameGrid gameGrid)
 	{
 		try {
 			JSONObject wallSpecificationObject =
-				entitiesSpecification.getJSONObject("wall");
+				entitySpecifications.getJSONObject("wall");
 
 			ImageManager deathImages = new ImageManager(getImagesList(wallSpecificationObject,
 				DEATH), 0);
@@ -169,7 +274,7 @@ public class EntityFactory
 			deathImages.setUpdateInterval(5); // This should be fine
 
 			return new Wall(
-				screenCoordinate,
+				modelCoordinate,
 				gameGrid,
 				new ImageManager(getImagesList(wallSpecificationObject,
 					ALIVE), 0),
@@ -181,15 +286,25 @@ public class EntityFactory
 		}
 	}
 
-	public BomberMan buildBomberMan(Vector2D screenCoordinate,
+	/**
+	 * buildBomberMan() builds Bomberman from a model-coordinate,
+	 * his capabilities, and a reference to the GameGrid to which it must be added
+	 *
+	 * @param modelCoordinate the model-coordinate
+	 * @param capabilities    the capabilities bomberman has
+	 * @param gameGrid        a reference to the GameGrid to which the BomberMan must be
+	 *                        added
+	 * @return the newly built bomberman
+	 */
+	public BomberMan buildBomberMan(Vector2D modelCoordinate,
 																	BomberManCapabilities capabilities,
 																	GameGrid gameGrid)
 	{
 		try {
 			JSONObject bomberManSpecification =
-				entitiesSpecification.getJSONObject("bomberMan");
+				entitySpecifications.getJSONObject("bomberMan");
 
-			return new BomberMan(screenCoordinate, capabilities,
+			return new BomberMan(modelCoordinate, capabilities,
 				gameGrid,
 				new FullMovementMovingImageManager(
 					getImagesList(bomberManSpecification, LEFT),
@@ -205,6 +320,19 @@ public class EntityFactory
 		}
 	}
 
+	/**
+	 * buildBomb() builds a bomb from the model-coordinate, its range, a reference
+	 * to the BomberMan that spawned the Bomb, a reference to the GameGrid to
+	 * which it must be added, and a constructor of the Bomb
+	 *
+	 * @param coordinate  the model-coordinate
+	 * @param bombRange   the range of the bomb when it explodes
+	 * @param bomberMan   the bomberman that spawned the bomb
+	 * @param gameGrid    a reference to the GameGrid to which the Bomb must be
+	 *                    added
+	 * @param constructor the constructor of the Bomb
+	 * @return the newly built bomb
+	 */
 	public Bomb buildBomb(Vector2D coordinate,
 												int bombRange,
 												BomberMan bomberMan,
@@ -213,7 +341,7 @@ public class EntityFactory
 	{
 		try {
 			JSONArray bombSpecification =
-				entitiesSpecification.getJSONArray("bomb");
+				entitySpecifications.getJSONArray("bomb");
 
 			return constructor.construct(coordinate, bombRange, bomberMan,
 				new ImageManager(getImageListFromJsonArray(bombSpecification)
@@ -224,13 +352,22 @@ public class EntityFactory
 		}
 	}
 
-
+	/**
+	 * buildFire() builds a fire from its type, model-coordinate and a reference
+	 * to the GameGrid to which it must be added
+	 *
+	 * @param fireType   the type of fire to be built
+	 * @param coordinate the model-coordinate
+	 * @param gameGrid   a reference to the GameGrid to which the Fire must be
+	 *                   added
+	 * @return the newly built fire
+	 */
 	public Fire buildFire(Fire.FireType fireType, Vector2D coordinate,
 												GameGrid gameGrid)
 	{
 		try {
 			JSONArray fireSpecification =
-				entitiesSpecification.getJSONObject("fire").getJSONArray(fireType.toString());
+				entitySpecifications.getJSONObject("fire").getJSONArray(fireType.toString());
 
 			ImageManager imageManager = new ImageManager(
 				getImageListFromJsonArray(fireSpecification), 0);
@@ -244,7 +381,14 @@ public class EntityFactory
 		}
 	}
 
-	public GameCharacterCapabilities getCharacterCapabilities(int enemyNumber)
+	/**
+	 * getEnemyCapabilities() gets the capabilities of the enemy whose number is
+	 * the one specified in input
+	 *
+	 * @param enemyNumber the number of the enemy to build
+	 * @return the capabilities of the enemy to build
+	 */
+	public GameCharacterCapabilities getEnemyCapabilities(int enemyNumber)
 	{
 		JSONObject enemySpecificationObject =
 			getEnemySpecification(enemyNumber);
@@ -257,20 +401,35 @@ public class EntityFactory
 		return new GameCharacterCapabilities(goesThroughWalls, speed);
 	}
 
+	/**
+	 * getImagesList is a method to be called internally that gets the List of
+	 * abstractImages loaded from the JSONArray in the specification with the key
+	 * passed in input
+	 *
+	 * @param specification the specification of the Entity
+	 * @param key           the key to which the list of image is associated
+	 * @return the loaded list of AbstractImages
+	 */
 	private List<AbstractImage> getImagesList(JSONObject specification, String key)
 	{
 		return getImageListFromJsonArray(specification.getJSONArray(key));
 	}
 
+	/**
+	 * getImageListFromJsonArray() transforms a JSONArray containing Strings to
+	 * representing paths to Images, to a List of AbstractImages
+	 *
+	 * @param jsonArrayListOfImages the JSONArray containing the paths
+	 * @return the List of loaded AbstractImages
+	 */
 	private List<AbstractImage> getImageListFromJsonArray(JSONArray jsonArrayListOfImages)
 	{
-		List<String> images = new ArrayList<>();
+		List<AbstractImage> images = new ArrayList<>();
 
 		for (int i = 0; i < jsonArrayListOfImages.length(); i++)
-			images.add(jsonArrayListOfImages.getString(i));
+			images.add(FlightWeightImagesFactory.getInstance().getImage(jsonArrayListOfImages.getString(i)));
 
-		return images.stream().map(FlightWeightImagesFactory.getInstance()::getImage)
-			.collect(Collectors.toList());
+		return images;
 	}
 }
 

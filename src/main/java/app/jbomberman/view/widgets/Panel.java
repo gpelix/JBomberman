@@ -15,10 +15,10 @@ import java.util.stream.Stream;
 
 /**
  * The Panel class contains some Text's and lays them out texts appropriately.
+ * We keep the arrangement policies here because they are not menu-specific
  *
  * @param <T> the type of the text that this panel will be showing
  * @author gp
- * @implNote we keep the arrangement policies here because they are not menu-specific
  * specific
  * @see Text
  */

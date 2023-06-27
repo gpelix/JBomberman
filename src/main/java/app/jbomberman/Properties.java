@@ -7,13 +7,19 @@ import org.json.JSONObject;
  * General settings for the program
  *
  * @author gp
- * @// TODO: 5/30/23 solve scale factor problem
  */
 public class Properties
 {
 	public enum GraphicLibrary
 	{
-		JAVAFX, SWING
+		/**
+		 * JAVAFX's constant
+		 */
+		JAVAFX,
+		/**
+		 * SWING's constant
+		 */
+		SWING
 	}
 
 	/**
@@ -27,6 +33,7 @@ public class Properties
 	private final String soundsDirectory;
 	private final String jbombermanDirectoryDataName;
 	private static final String playersFile = "players.json";
+	private static final String characterSpecificationFile = "entitiesSpecs.json";
 	private final GraphicLibrary graphicLibrary;
 	private final String icon;
 	private final int numberOfPowerUps;
@@ -126,6 +133,11 @@ public class Properties
 	public String getSoundPath(String filename)
 	{
 		return getSoundsDirectory() + filename;
+	}
+
+	public String getCharacterSpecificationFile()
+	{
+		return getJsonDirectory() + characterSpecificationFile;
 	}
 }
 

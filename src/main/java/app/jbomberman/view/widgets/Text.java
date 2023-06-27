@@ -29,7 +29,14 @@ public class Text extends MutableVector2D implements Drawable
 	 */
 	public enum TextColor
 	{
-		Black, Gray
+		/**
+		 * Black represents the black color
+		 */
+		Black,
+		/**
+		 * Gray is the enum representing the gray color
+		 */
+		Gray
 	}
 
 	/**

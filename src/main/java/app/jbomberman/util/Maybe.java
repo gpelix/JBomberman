@@ -62,7 +62,7 @@ public class Maybe<T>
 	 * get the nothing
 	 *
 	 * @param <T> the type of the elements that the Maybe might contain in the
-	 *			future
+	 *            future
 	 * @return a maybe that is nothing
 	 */
 	@SuppressWarnings("unchecked")
@@ -107,9 +107,11 @@ public class Maybe<T>
 	/**
 	 * bind monadic operation
 	 *
+	 * @param m        argument to unwrap and pass to function if it's something
 	 * @param function operation to be applied
-	 * @param <S>	  type of the result of the computation by function
-	 * @return nothing if the this was nothing or function applied to this
+	 * @param <S>      type of the result of the computation by function
+	 * @param <T>      type of the argument that function accepts
+	 * @return nothing if the Maybe was nothing or function applied to this
 	 */
 	public static <T, S> Maybe<? extends S> bindM(Maybe<? extends T> m, Function<? super T, Maybe<? extends S>> function)
 	{
@@ -133,8 +135,8 @@ public class Maybe<T>
 	 * elsevalue
 	 *
 	 * @param elsevalue alternative to return
-	 * @param func	  function to apply if this is just
-	 * @param <S>	   return type of func and of the elsevalue
+	 * @param func      function to apply if this is just
+	 * @param <S>       return type of func and of the elsevalue
 	 * @return the elsevalue or the result of applying func to this if this is
 	 * just
 	 */
@@ -148,7 +150,7 @@ public class Maybe<T>
 	 * whether this is a maybe or a just
 	 *
 	 * @param function the function to be applied if this is just
-	 * @param <S>	  the type returned by function
+	 * @param <S>      the type returned by function
 	 * @return nothing if this is nothing or just the wrapped return value of
 	 * function
 	 */
@@ -174,6 +176,7 @@ public class Maybe<T>
 	 * Brutally unwrap maybe specifying a supplier of RuntimeExceptions
 	 * to be thrown if this was a nothing
 	 *
+	 * @param supplier The supplier of the exception to eventually throw
 	 * @return the value contained if this was a just
 	 * @throws RuntimeException if this is nothing
 	 */
@@ -188,9 +191,9 @@ public class Maybe<T>
 	 * Unwrap this if this is just or return the result of calling the alternative
 	 *
 	 * @param alternative a supplier that returns the alternative if this is
-	 *					nothing. We choose to use a supplier and not a value
-	 *					directly because we want to be lazy and compute the
-	 *					alternative only if it's really needed
+	 *                    nothing. We choose to use a supplier and not a value
+	 *                    directly because we want to be lazy and compute the
+	 *                    alternative only if it's really needed
 	 * @return the alternative or the value contained in this depending
 	 * on whether or not
 	 */
@@ -214,13 +217,13 @@ public class Maybe<T>
 	 * doOrThrow calls toDoIfJust if this is just or it raises the exception supplied
 	 * by toThrowIfNothingSupplier
 	 *
-	 * @param toDoIfJust			   the consumer that must be called is this is just
+	 * @param toDoIfJust               the consumer that must be called is this is just
 	 * @param toThrowIfNothingSupplier a supplier of an exception to throw if this
-	 *								 is nothing
+	 *                                 is nothing
 	 * @throws RuntimeException is this is nothing
 	 */
 	public void doOrThrow(Consumer<? super T> toDoIfJust,
-						  Supplier<? extends RuntimeException> toThrowIfNothingSupplier)
+												Supplier<? extends RuntimeException> toThrowIfNothingSupplier)
 	{
 		isJustOrThrow(toThrowIfNothingSupplier);
 		toDoIfJust.accept(fromJust());
@@ -256,16 +259,16 @@ public class Maybe<T>
 	 * computeOfThrow applies function toApply if this is something otherwise
 	 * it throws the exception supplied by toThrowIfNothing
 	 *
-	 * @param toApply		  the function to call if this is just
+	 * @param toApply          the function to call if this is just
 	 * @param toThrowIfNothing the supplier that gives the exception if this is
-	 *						 nothing
-	 * @param <S>			  type parameter specifying the type of the return function of
-	 *						 to apply
+	 *                         nothing
+	 * @param <S>              type parameter specifying the type of the return function of
+	 *                         to apply
 	 * @return the result of toApply applied to this if this is just
 	 * @throws RuntimeException is this is nothing
 	 */
 	public <S> S computeOrThrow(Function<? super T, ? extends S> toApply,
-								Supplier<? extends RuntimeException> toThrowIfNothing)
+															Supplier<? extends RuntimeException> toThrowIfNothing)
 	{
 		return maybeCompute(toApply).unwrapOrThrow(toThrowIfNothing);
 	}
@@ -275,7 +278,7 @@ public class Maybe<T>
 	 * is nothing
 	 *
 	 * @param toApplyIfJust   a consumer that receives the object contained in
-	 *						this if this is something
+	 *                        this if this is something
 	 * @param toCallIfNothing a callback to be called if this is nothing
 	 */
 	public void doOrDo(Consumer<T> toApplyIfJust, Callback toCallIfNothing)
@@ -286,12 +289,23 @@ public class Maybe<T>
 			toCallIfNothing.run();
 	}
 
+	/**
+	 * toString() is only used for debugging purpose
+	 *
+	 * @return the String representation of the Entity
+	 */
 	@Override
 	public String toString()
 	{
 		return (isNothing()) ? "Nothing" : "Just(" + object + ")";
 	}
 
+	/**
+	 * unwrap() unwraps the Maybe and throws an exception if the Maybe is nothing
+	 *
+	 * @return the unwrapped maybe
+	 * @throws RuntimeException if the Maybe is nothing
+	 */
 	public T unwrap()
 	{
 		return unwrapOrThrow(() -> new RuntimeException("Error! Unwrapping nothing"));

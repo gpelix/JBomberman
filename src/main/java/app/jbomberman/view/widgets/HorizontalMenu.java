@@ -8,13 +8,16 @@ import java.util.stream.Stream;
 
 /**
  * HorizontalMenu is a class that models a horizontal menu.
+ * All it does is setting the correct arrangement policy
+ * (which is arrangeHorizontally) and overriding the (get/set)Height() methods
  *
  * @author gp
- * @implNote All it does is setting the correct arrangement policy
- * (which is arrangeHorizontally) and overriding the (get/set)Height() methods
  */
 public class HorizontalMenu extends Menu
 {
+	/**
+	 * width is the width of the horizontal menu
+	 */
 	private Maybe<Integer> width = Maybe.nothing();
 
 	/**

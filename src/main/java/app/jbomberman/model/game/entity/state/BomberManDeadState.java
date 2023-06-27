@@ -6,14 +6,30 @@ import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.entity.BomberMan;
-import app.jbomberman.model.game.entity.Explosion;
 
+/**
+ * BomberManDeadState is the state of BomberMan when he's dead
+ *
+ * @author gp
+ */
 public class BomberManDeadState extends DeadState
 {
+	/**
+	 * bomberMan is a reference to the bomberMan that has this as state
+	 */
 	private final BomberMan bomberMan;
 
+	/**
+	 * deathImageManager is bomberman's ImageManager
+	 */
 	private final ImageManager deathImageManager;
 
+	/**
+	 * public constructor of BomberManDeadState
+	 *
+	 * @param bomberMan         the bomberman whose state is this one
+	 * @param deathImageManager bomberman's ImageManager
+	 */
 	public BomberManDeadState(BomberMan bomberMan,
 														ImageManager deathImageManager)
 	{
@@ -22,12 +38,9 @@ public class BomberManDeadState extends DeadState
 		this.deathImageManager = deathImageManager;
 	}
 
-	@Override
-	public boolean notifyExplosion(Explosion explosion)
-	{
-		return false; // Just ignore
-	}
-
+	/**
+	 * updateInModel() waits until the death sound has ended and then ends the game
+	 */
 	@Override
 	public void updateInModel()
 	{
@@ -42,6 +55,11 @@ public class BomberManDeadState extends DeadState
 		}
 	}
 
+	/**
+	 * getDrawing() gets the BomberMan's Drawing
+	 *
+	 * @return the Drawing
+	 */
 	@Override
 	public Drawing getDrawing()
 	{

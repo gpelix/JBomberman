@@ -51,6 +51,12 @@ public class FlightWeightImagesFactory
 	 */
 	private static Maybe<AbstractImageBuilder> imageBuilder = Maybe.nothing();
 
+	/**
+	 * initializeImageBuilder must be called at an early stage during the
+	 * setup process to initialize the Builder of Images
+	 *
+	 * @param imageBuilder the AbstractImageBuilder that will build images
+	 */
 	public static void initializeImageBuilder(AbstractImageBuilder imageBuilder)
 	{
 		FlightWeightImagesFactory.imageBuilder = Maybe.just(imageBuilder);

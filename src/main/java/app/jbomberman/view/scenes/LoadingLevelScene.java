@@ -60,8 +60,8 @@ public class LoadingLevelScene extends SoundyBomberManScene
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
-	 *
-	 * @implNote if the handle is playing nothing, it transitions to a new GameScene
+	 * <p>
+	 * if the handle is playing nothing, it transitions to a new GameScene
 	 */
 	@Override
 	public Drawing update()
@@ -74,8 +74,8 @@ public class LoadingLevelScene extends SoundyBomberManScene
 
 	/**
 	 * cleanup() must be called before transition to a new scene
-	 *
-	 * @implNote stop all sounds
+	 * <p>
+	 * stop all sounds
 	 */
 	@Override
 	public void cleanup()

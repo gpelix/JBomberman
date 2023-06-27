@@ -13,13 +13,41 @@ import app.jbomberman.util.Vector2D;
 public class Fire extends Entity
 {
 	/**
-	 * FireType if the direction on which the Fire is propagating
+	 * FireType is the type of the fire. (Different images for different type of
+	 * fire)
 	 *
 	 * @author gp
 	 */
 	public enum FireType
 	{
-		CENTER, HORIZONTAL, VERTICAL, NORTH, SOUTH, EAST, WEST
+		/**
+		 * CENTER is the source of the fire
+		 */
+		CENTER,
+		/**
+		 * HORIZONTAL is a kind of fire extending horizontally
+		 */
+		HORIZONTAL,
+		/**
+		 * VERTICAL is a kind of fire extending vertically
+		 */
+		VERTICAL,
+		/**
+		 * NORTH is the northern tip of the surge
+		 */
+		NORTH,
+		/**
+		 * SOUTH is the southern tip of the surge
+		 */
+		SOUTH,
+		/**
+		 * EAST is the eastern tip of the surge
+		 */
+		EAST,
+		/**
+		 * WEST is the western tip of the surge
+		 */
+		WEST
 	}
 
 	/**
@@ -84,7 +112,9 @@ public class Fire extends Entity
 	}
 
 	/**
-	 * @// TODO: 26/6/23 remove
+	 * Fire allows bombs
+	 *
+	 * @return true as fire always allows bombs
 	 */
 	@Override
 	public boolean allowsBombs()

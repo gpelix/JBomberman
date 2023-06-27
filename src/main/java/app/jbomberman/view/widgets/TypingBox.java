@@ -13,10 +13,10 @@ import app.jbomberman.view.KeyBoardUpdateInfo;
 
 /**
  * TypingBox is a box that will display the text typed
+ * TypingBox implements the observer interface as it has to listen for
+ * key-pressed events. So it listens to the KeyBoardController
  *
  * @author gp
- * @implNote TypingBox implements the observer interface as it has to listen for
- * key-pressed events. So it listens to the KeyBoardController
  */
 public class TypingBox implements Observer, Drawable
 {

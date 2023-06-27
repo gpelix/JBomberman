@@ -7,11 +7,11 @@ package app.jbomberman.view;
  * In this way, for example, the function will be called in a JavaFx thread when
  * we use JavaFx
  * <p>
- *
- * @author gp
- * @implNote it might seem strange that we want clients to use LoopTimer without
+ * it might seem strange that we want clients to use LoopTimer without
  * even knowing what concrete timer we are using.
  * But this will be accomplished through the use of the GraphicFactory.
+ *
+ * @author gp
  */
 public abstract class LoopTimer
 {

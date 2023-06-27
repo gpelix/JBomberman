@@ -22,6 +22,7 @@ public class LayeredDrawObject extends DrawObject
 	 *
 	 * @param topLeftCorner the top left corner
 	 * @param image         the image to be encapsulated
+	 * @param layer         the layer of LayeredDrawObject
 	 */
 	public LayeredDrawObject(Vector2D topLeftCorner, AbstractImage image, int layer)
 	{

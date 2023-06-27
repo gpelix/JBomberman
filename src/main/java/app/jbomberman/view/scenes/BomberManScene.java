@@ -31,6 +31,8 @@ public abstract class BomberManScene
 	/**
 	 * update() should be called regularly by a timer like AnimationTimer in javafx
 	 * package. It should be used to update what gets displayed on the screen
+	 *
+	 * @return the Drawing of the Scene
 	 */
 	public abstract Drawing update();
 
@@ -43,11 +45,12 @@ public abstract class BomberManScene
 	/**
 	 * doTransition allows subclasses to make smooth painless uniform transitions
 	 * from one scene to another one
-	 *
-	 * @param nextSceneSupplier a supplier of a new scene
-	 * @implNote we pass a supplier in almost all the cases we want to defer
+	 * <p>
+	 * we pass a supplier in almost all the cases we want to defer
 	 * the creation and initialization of the new scene up to the moment after
 	 * which we did the cleanup of the previous scene
+	 *
+	 * @param nextSceneSupplier a supplier of a new scene
 	 */
 	protected void doTransition(Supplier<BomberManScene> nextSceneSupplier)
 	{

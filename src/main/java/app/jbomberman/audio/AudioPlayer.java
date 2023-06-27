@@ -20,8 +20,6 @@ import java.util.concurrent.Executors;
  * for the whole program.
  *
  * @author gp
- * @implNote It extends Thread as it needs to be able to
- * run simultaneously with the main thread
  * @see ThreadPlayer
  */
 public class AudioPlayer
