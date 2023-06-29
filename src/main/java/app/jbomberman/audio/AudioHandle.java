@@ -34,7 +34,7 @@ public class AudioHandle
 	 *
 	 * @param threadPlayer the optional threadPlayer that this class will wrap
 	 */
-	AudioHandle(ThreadPlayer threadPlayer)
+	/*~*/AudioHandle(ThreadPlayer threadPlayer)
 	{
 		this.threadPlayer = threadPlayer;
 	}

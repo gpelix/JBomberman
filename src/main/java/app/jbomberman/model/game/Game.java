@@ -1,7 +1,7 @@
 package app.jbomberman.model.game;
 
 import app.jbomberman.Properties;
-import app.jbomberman.audio.MaybeAudioHandle;
+import app.jbomberman.audio.EnhancedAudioHandle;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.images.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
@@ -73,10 +73,10 @@ public class Game
 	private boolean exiting = false;
 
 	/**
-	 * handle is the MaybeAudioHandle that will be responsible for playing the
+	 * handle is the EnhancedAudioHandle that will be responsible for playing the
 	 * background noise sound
 	 */
-	private final MaybeAudioHandle handle;
+	private final EnhancedAudioHandle handle;
 
 	/**
 	 * timerToEOG is the timerToEOG that will ring at the end of the game
@@ -102,7 +102,7 @@ public class Game
 	{
 		Model model = Model.getInstance();
 
-		handle = new MaybeAudioHandle();
+		handle = new EnhancedAudioHandle();
 
 		lastUpdate = Maybe.nothing();
 

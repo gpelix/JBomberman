@@ -2,7 +2,10 @@ EXEC = jbomberman
 NATIVE_IMAGE = ~/opt/graalvm-ce-java17-22.3.1/bin/native-image
 
 PHONY += all
-all:
+all: fatJar docs
+
+PHONY += build
+build:
 	./gradlew build
 
 PHONY += run

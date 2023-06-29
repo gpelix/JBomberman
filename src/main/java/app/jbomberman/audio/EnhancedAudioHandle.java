@@ -5,11 +5,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * MaybeAudioHandle is an AudioHandle that can be resumed, stopped and restarted
+ * EnhancedAudioHandle is an AudioHandle that can be resumed,
+ * stopped and restarted
  *
  * @author gp
  */
-public class MaybeAudioHandle
+public class EnhancedAudioHandle
 {
 	/**
 	 * audioHandle may contain the AudioHandle
@@ -17,16 +18,16 @@ public class MaybeAudioHandle
 	private Maybe<AudioHandle> audioHandle;
 
 	/**
-	 * Logger is the logger of the MaybeAudioHandle
+	 * Logger is the logger of the EnhancedAudioHandle
 	 */
 	private final Logger logger;
 
 	/**
-	 * public constructor of MaybeAudioHandle from an AudioHandle
+	 * public constructor of EnhancedAudioHandle from an AudioHandle
 	 *
 	 * @param audioHandle the underlying AudioHandle
 	 */
-	public MaybeAudioHandle(AudioHandle audioHandle)
+	public EnhancedAudioHandle(AudioHandle audioHandle)
 	{
 		this();
 		this.audioHandle = Maybe.just(audioHandle);
@@ -35,7 +36,7 @@ public class MaybeAudioHandle
 	/**
 	 * public constructor from that sets up an empty audioHandle
 	 */
-	public MaybeAudioHandle()
+	public EnhancedAudioHandle()
 	{
 		this.audioHandle = Maybe.nothing();
 		logger = LogManager.getLogger(getClass());
@@ -53,7 +54,7 @@ public class MaybeAudioHandle
 	}
 
 	/**
-	 *
+	 * stop the sound
 	 */
 	public void stopSound()
 	{

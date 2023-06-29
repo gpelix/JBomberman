@@ -1,6 +1,6 @@
 package app.jbomberman.view.scenes;
 
-import app.jbomberman.audio.MaybeAudioHandle;
+import app.jbomberman.audio.EnhancedAudioHandle;
 import app.jbomberman.view.View;
 
 /**
@@ -12,9 +12,9 @@ import app.jbomberman.view.View;
 public abstract class SoundyBomberManScene extends BomberManScene
 {
 	/**
-	 * audioHandle is a MaybeAudioHandle that will be used to handle the sound
+	 * audioHandle is a EnhancedAudioHandle that will be used to handle the sound
 	 */
-	private final MaybeAudioHandle audioHandle;
+	private final EnhancedAudioHandle audioHandle;
 
 	/**
 	 * protected constructor builds a SoundyBomberManScene from a View
@@ -24,7 +24,7 @@ public abstract class SoundyBomberManScene extends BomberManScene
 	protected SoundyBomberManScene(View view)
 	{
 		super(view);
-		audioHandle = new MaybeAudioHandle();
+		audioHandle = new EnhancedAudioHandle();
 	}
 
 	/**
@@ -32,7 +32,7 @@ public abstract class SoundyBomberManScene extends BomberManScene
 	 *
 	 * @return the audioHandle
 	 */
-	protected MaybeAudioHandle getAudioHandle()
+	protected EnhancedAudioHandle getAudioHandle()
 	{
 		return audioHandle;
 	}
