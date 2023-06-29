@@ -4,9 +4,9 @@ import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.image.FlightWeightImagesFactory;
-import app.jbomberman.model.Account;
-import app.jbomberman.model.AccountBuilder;
 import app.jbomberman.model.Model;
+import app.jbomberman.model.Player;
+import app.jbomberman.model.PlayerBuilder;
 import app.jbomberman.model.PlayerBuilderException;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Timer;
@@ -97,7 +97,7 @@ public class LogInScene extends BomberManScene
 					if (playerName.matches("[\\W]*")) {
 						maybeUnableToLogin.setText("Specify a valid username");
 					} else {
-						AccountBuilder.getInstance().buildPlayer(playerName);
+						PlayerBuilder.getInstance().buildPlayer(playerName);
 						maybeUnableToLogin.setText("Successful sign up. You can now sign in");
 					}
 				} catch (PlayerBuilderException e) {
@@ -108,7 +108,7 @@ public class LogInScene extends BomberManScene
 			}),
 			new MenuEntry("sign in", Text.TextColor.Black, () -> {
 				String playerName = loginBox.getText();
-				Maybe<Account> player = AccountBuilder.getInstance().retrievePlayer(playerName);
+				Maybe<Player> player = PlayerBuilder.getInstance().retrievePlayer(playerName);
 				if (player.isNothing()) {
 					maybeUnableToLogin.setText("Username: " + playerName + " Unable to login.");
 					errorMessageTimer.start();

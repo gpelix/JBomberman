@@ -18,7 +18,6 @@ import java.util.Set;
  */
 public abstract class KeyBoardController extends AbstractObservable
 {
-
 	/**
 	 * Set of KeyCodes currently pressed
 	 */

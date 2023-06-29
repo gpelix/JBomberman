@@ -3,11 +3,11 @@ package app.jbomberman.model;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 
 /**
- * Account is the class that model an account
+ * Player is the class that model an account
  *
  * @author gp
  */
-public class Account
+public class Player
 {
 	/**
 	 * playerName is the name of the player
@@ -25,16 +25,16 @@ public class Account
 	private BomberManCapabilities capabilities;
 
 	/**
-	 * public constructor of an Account from a name, a level, and the player's
+	 * public constructor of an Player from a name, a level, and the player's
 	 * capabilities
 	 *
-	 * @param name            the login name of the Account
+	 * @param name            the login name of the Player
 	 * @param level           the level that the player has reached
 	 * @param hisCapabilities the capabilities that the player's bomberman must
 	 *                        have
 	 */
-	public Account(String name, int level,
-								 BomberManCapabilities hisCapabilities)
+	public Player(String name, int level,
+								BomberManCapabilities hisCapabilities)
 	{
 		this.playerName = name;
 		this.level = level;

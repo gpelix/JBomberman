@@ -27,9 +27,9 @@ public class Model extends AbstractObservable
 	private final Vector2D dimensions = Vector2D.of(512, 480);
 
 	/**
-	 * account is the current account logged-in
+	 * player is the current player logged-in
 	 */
-	private Account account;
+	private Player player;
 
 	/**
 	 * logger is the logger for the Model
@@ -53,7 +53,7 @@ public class Model extends AbstractObservable
 	 */
 	private Model()
 	{
-		account = AccountBuilder.getInstance().getDefaultAccount("");
+		player = PlayerBuilder.getInstance().getDefaultAccount("");
 
 		logger = LogManager.getLogger(getClass());
 	}
@@ -75,8 +75,8 @@ public class Model extends AbstractObservable
 	public void resetGame()
 	{
 		detachAllObservers();
-		if (account.getCapabilities().getNumberOfLives() == 0)
-			account.getCapabilities().setNumberOfLives(BomberManCapabilities.defaultCapabilities.getNumberOfLives());
+		if (player.getCapabilities().getNumberOfLives() == 0)
+			player.getCapabilities().setNumberOfLives(BomberManCapabilities.defaultCapabilities.getNumberOfLives());
 		game = Maybe.just(new Game());
 	}
 
@@ -108,13 +108,14 @@ public class Model extends AbstractObservable
 	}
 
 	/**
-	 * setAccount() sets the account
+	 * setAccount() sets the player
 	 *
-	 * @param account the account to set
+	 * @param player the player to set
 	 */
-	public void setAccount(Account account)
+	public void setAccount(Player player)
 	{
-		this.account = account;
+		PlayerBuilder.getInstance().savePlayer(player);
+		this.player = player;
 	}
 
 	/**
@@ -128,13 +129,13 @@ public class Model extends AbstractObservable
 	}
 
 	/**
-	 * getAccount() gets the current logged-in account
+	 * getAccount() gets the current logged-in player
 	 *
-	 * @return the current logged-in account
+	 * @return the current logged-in player
 	 */
-	public Account getAccount()
+	public Player getAccount()
 	{
-		return account;
+		return player;
 	}
 
 	/**
@@ -142,7 +143,7 @@ public class Model extends AbstractObservable
 	 */
 	public void close()
 	{
-		AccountBuilder.getInstance().savePlayer(account);
+		PlayerBuilder.getInstance().savePlayer(player);
 		logger.info("Closing model");
 		controller.close();
 	}

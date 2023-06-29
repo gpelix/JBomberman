@@ -13,20 +13,20 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 /**
- * AccountBuilder is a class that is in charge of building the Account with some
+ * PlayerBuilder is a class that is in charge of building the Player with some
  * defaults.
  * <p>
  * We use the singleton pattern as we have no interest in creating more
- * instances of an AccountBuilder
+ * instances of an PlayerBuilder
  *
  * @author gp
  */
-public class AccountBuilder
+public class PlayerBuilder
 {
 	/**
-	 * instance is the only unique instance of the AccountBuilder
+	 * instance is the only unique instance of the PlayerBuilder
 	 */
-	private static AccountBuilder instance;
+	private static PlayerBuilder instance;
 
 	/**
 	 * LEVEL is the string that will be mapped to the level number in the json
@@ -91,22 +91,22 @@ public class AccountBuilder
 	private static final int START_LEVEL = 1;
 
 	/**
-	 * getInstance() gets the single instance of the AccountBuilder
+	 * getInstance() gets the single instance of the PlayerBuilder
 	 *
-	 * @return the single instance of the AccountBuilder
+	 * @return the single instance of the PlayerBuilder
 	 */
-	public static AccountBuilder getInstance()
+	public static PlayerBuilder getInstance()
 	{
 		if (instance == null)
-			instance = new AccountBuilder();
+			instance = new PlayerBuilder();
 		return instance;
 	}
 
 	/**
-	 * private empty constructor to avoid the creation of other AccountBuilder
+	 * private empty constructor to avoid the creation of other PlayerBuilder
 	 * instances
 	 */
-	private AccountBuilder()
+	private PlayerBuilder()
 	{
 	}
 
@@ -157,7 +157,7 @@ public class AccountBuilder
 	 * @param playerName the name of the player
 	 * @return the account
 	 */
-	public Maybe<Account> retrievePlayer(String playerName)
+	public Maybe<Player> retrievePlayer(String playerName)
 	{
 		JSONObject jsonPlayers;
 
@@ -168,7 +168,7 @@ public class AccountBuilder
 
 		JSONObject playerStats = jsonPlayers.getJSONObject(playerName);
 
-		return Maybe.just(new Account(
+		return Maybe.just(new Player(
 			playerName,
 			playerStats.getInt(LEVEL),
 			new BomberManCapabilities(
@@ -208,10 +208,10 @@ public class AccountBuilder
 	 *
 	 * @param account the account to be saved
 	 */
-	public void savePlayer(Account account)
+	public void savePlayer(Player account)
 	{
 		// If the player is the default one
-		if (account.getPlayerName().equals(""))
+		if (account.getPlayerName().matches("^\\W*"))
 			return;
 
 		JSONObject playerJSON = getPlayersJson();
@@ -263,12 +263,12 @@ public class AccountBuilder
 	/**
 	 * getDefaultAccount() creates a default empty account
 	 *
-	 * @param playerName the name of the Account
+	 * @param playerName the name of the Player
 	 * @return the built account
 	 */
-	public Account getDefaultAccount(String playerName)
+	public Player getDefaultAccount(String playerName)
 	{
-		return new Account(
+		return new Player(
 			playerName,
 			START_LEVEL,
 			BomberManCapabilities.defaultCapabilities);

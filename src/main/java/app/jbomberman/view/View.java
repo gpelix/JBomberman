@@ -39,7 +39,6 @@ public abstract class View
 		currentBomberManScene = newScene;
 	}
 
-
 	/**
 	 * GraphicFactory is the factory of abstract graphical components
 	 */

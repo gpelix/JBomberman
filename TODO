@@ -1,0 +1,50 @@
+isInvincible is not still working with enemy contact   FIXED
+add the possibility to take powerup for bomberman that is already on a wall and the wall explodes DONE
+Remove useless FReeCells passed as argument in entities   FIXED
+Remove dependencies over scenes from game
+Clenup stuff in FreeCell                  DONE
+Add enemy contact                         DONE
+Add Avatars                               DONE
+Check the saving of accounts              DONE
+Remove bomberman escaping from door       DONE
+Add scores                                DONE
+Final screen                             ~DONE
+Add time is up and spawn enemies          DONE
+Remove useless changes to the model size  DONE
+Add model timer                           DONE
+Move scenes out of the model...           DONE
+
+No all enemies are dead sound             DONE we were moving entities as if we were adding them to the grid and the number of enemies skyrocketed
+No bomberman has gone onto the door       DONE
+Door attracts bomberman                   DONE
+Bombs are placed on doors                 DONE
+
+pause scene got screwed                   DONE
+fix model/view protocol. Swing is terribly slow! DONE
+
+
+Optional:
+   Add bonuses
+   Add Moving prettier menu entries
+
+BUGS:
+   Bomberman doesn't move         FIXED
+   
+...
+Fix moving realligning things     FIXED
+Fix horrendous overlapping things FIXED
+Fix high CPU usage                FIXED
+
+JAVADOC:
+audio/                            DONE
+controller/                       DONE
+view/                             DONE
+util/                             DONE
+drawing/                          DONE
+images/                           DONE
+model/                            DONE
+
+add Observer/Observable on model/view communication TODO
+move Account somewhere else       WON'T
+javafx moves too fast             FIXED
+GameOverScene got screwed up      FIXED
