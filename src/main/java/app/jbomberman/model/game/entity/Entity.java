@@ -64,7 +64,7 @@ public abstract class Entity extends MutableVector2D
 	public Drawing getDrawing(AbstractImage img)
 	{
 		if (oldDrawing.isJust())
-			return oldDrawing.unwrap();
+			return oldDrawing.fromJust();
 
 		Drawing newDrawing = new Drawing();
 

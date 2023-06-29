@@ -83,11 +83,11 @@ public abstract class Menu extends Panel<MenuEntry> implements Observer
 	public final Drawing getDrawing()
 	{
 		if (oldDrawing.isJust())
-			return oldDrawing.unwrap();
+			return oldDrawing.fromJust();
 		getEntries().forEach(e -> e.setSelected(false));
 		getSelectedEntry().maybeDo(eIdx -> getEntries().get(eIdx).setSelected(true));
 		oldDrawing = Maybe.just(arrangementPolicy.get());
-		return oldDrawing.unwrap();
+		return oldDrawing.fromJust();
 	}
 
 	/**

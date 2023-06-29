@@ -167,9 +167,7 @@ public class Maybe<T>
 	 */
 	public T fromJust()
 	{
-		if (isNothing())
-			throw new RuntimeException("Unwrapping a nothing object");
-		return object;
+		return unwrapOrThrow(() -> new RuntimeException("Error! Unwrapping nothing"));
 	}
 
 	/**
@@ -298,17 +296,6 @@ public class Maybe<T>
 	public String toString()
 	{
 		return (isNothing()) ? "Nothing" : "Just(" + object + ")";
-	}
-
-	/**
-	 * unwrap() unwraps the Maybe and throws an exception if the Maybe is nothing
-	 *
-	 * @return the unwrapped maybe
-	 * @throws RuntimeException if the Maybe is nothing
-	 */
-	public T unwrap()
-	{
-		return unwrapOrThrow(() -> new RuntimeException("Error! Unwrapping nothing"));
 	}
 }
 

@@ -46,6 +46,8 @@ public interface Observable
 	 */
 	default void updateAllObservers()
 	{
+		// a copy of the ArrayList must be done as there are some nasty observers
+		// that detach themselves upon update
 		(new ArrayList<>(getObservers())).forEach(observer -> observer.update(this));
 	}
 
