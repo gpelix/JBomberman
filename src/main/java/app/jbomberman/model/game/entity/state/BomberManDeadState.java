@@ -1,7 +1,7 @@
 package app.jbomberman.model.game.entity.state;
 
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;

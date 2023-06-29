@@ -2,9 +2,9 @@ package app.jbomberman.controller;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.images.FlightWeightImagesFactory;
-import app.jbomberman.images.javafx.JavaFXImageBuilder;
-import app.jbomberman.images.swing.SwingImageBuilder;
+import app.jbomberman.image.FlightWeightImagesFactory;
+import app.jbomberman.image.javafx.JavaFXImageBuilder;
+import app.jbomberman.image.swing.SwingImageBuilder;
 import app.jbomberman.model.Model;
 import app.jbomberman.util.Observer;
 import app.jbomberman.view.View;

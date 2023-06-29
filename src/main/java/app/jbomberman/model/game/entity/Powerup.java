@@ -2,7 +2,7 @@ package app.jbomberman.model.game.entity;
 
 import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.util.Vector2D;

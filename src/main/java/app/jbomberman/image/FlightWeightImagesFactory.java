@@ -1,4 +1,4 @@
-package app.jbomberman.images;
+package app.jbomberman.image;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;

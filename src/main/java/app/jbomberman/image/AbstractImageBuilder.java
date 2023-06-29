@@ -1,4 +1,4 @@
-package app.jbomberman.images;
+package app.jbomberman.image;
 
 /**
  * AbstractImageBuild is an abstract class that must construct images.

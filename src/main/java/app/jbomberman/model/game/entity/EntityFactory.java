@@ -2,8 +2,8 @@ package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
-import app.jbomberman.images.AbstractImage;
-import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.image.AbstractImage;
+import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.model.game.FullMovementMovingImageManager;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;

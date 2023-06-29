@@ -1,6 +1,6 @@
-package app.jbomberman.images.swing;
+package app.jbomberman.image.swing;
 
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.util.Vector2D;
 
 import java.awt.image.BufferedImage;

@@ -1,6 +1,6 @@
-package app.jbomberman.images.javafx;
+package app.jbomberman.image.javafx;
 
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.util.Vector2D;
 import javafx.scene.image.Image;
 

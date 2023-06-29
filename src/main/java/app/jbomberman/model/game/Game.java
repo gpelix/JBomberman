@@ -3,7 +3,7 @@ package app.jbomberman.model.game;
 import app.jbomberman.Properties;
 import app.jbomberman.audio.EnhancedAudioHandle;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.CallbackOnce;

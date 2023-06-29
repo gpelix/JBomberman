@@ -3,7 +3,7 @@ package app.jbomberman.view.scenes;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.model.Account;
 import app.jbomberman.model.AccountBuilder;
 import app.jbomberman.model.Model;

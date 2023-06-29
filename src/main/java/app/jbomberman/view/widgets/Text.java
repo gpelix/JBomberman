@@ -3,8 +3,8 @@ package app.jbomberman.view.widgets;
 import app.jbomberman.drawing.Drawable;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.LayeredDrawObject;
-import app.jbomberman.images.AbstractImage;
-import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.image.AbstractImage;
+import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.util.MutableVector2D;
 import app.jbomberman.util.Vector2D;
 

@@ -2,9 +2,9 @@ package app.jbomberman.view.graphics.swing;
 
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.LayeredDrawObject;
-import app.jbomberman.images.AbstractImage;
-import app.jbomberman.images.FlightWeightImagesFactory;
-import app.jbomberman.images.swing.SwingImage;
+import app.jbomberman.image.AbstractImage;
+import app.jbomberman.image.FlightWeightImagesFactory;
+import app.jbomberman.image.swing.SwingImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;

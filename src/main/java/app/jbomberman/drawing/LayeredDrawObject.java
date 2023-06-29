@@ -1,6 +1,6 @@
 package app.jbomberman.drawing;
 
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.util.Vector2D;
 
 /**

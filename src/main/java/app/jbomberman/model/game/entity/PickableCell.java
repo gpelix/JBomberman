@@ -1,6 +1,6 @@
 package app.jbomberman.model.game.entity;
 
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.util.Vector2D;
 

@@ -2,7 +2,7 @@ package app.jbomberman.model.game.entity;
 
 import app.jbomberman.JBomberManException;
 import app.jbomberman.drawing.Drawing;
-import app.jbomberman.images.FlightWeightImagesFactory;
+import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.GamePlayException;
 import app.jbomberman.util.Direction;

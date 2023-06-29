@@ -1,7 +1,7 @@
-package app.jbomberman.images.swing;
+package app.jbomberman.image.swing;
 
 import app.jbomberman.JBomberManException;
-import app.jbomberman.images.AbstractImageBuilder;
+import app.jbomberman.image.AbstractImageBuilder;
 import app.jbomberman.util.Resources;
 
 import javax.imageio.ImageIO;

@@ -14,12 +14,12 @@ module app.jbomberman {
 	exports app.jbomberman.model.game;
 	exports app.jbomberman.audio;
 	exports app.jbomberman.controller;
-	exports app.jbomberman.images;
+	exports app.jbomberman.image;
 	exports app.jbomberman.model;
 	opens app.jbomberman.view to javafx.graphics;
 	exports app.jbomberman.model.game.entity.state;
 	exports app.jbomberman.drawing;
-	exports app.jbomberman.images.javafx;
+	exports app.jbomberman.image.javafx;
 	exports app.jbomberman.view;
 	exports app.jbomberman.view.graphics.javafx;
 	opens app.jbomberman.view.graphics.javafx to javafx.graphics;

@@ -1,6 +1,6 @@
 package app.jbomberman.model.game;
 
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 
 import java.util.List;
 

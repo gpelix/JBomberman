@@ -4,7 +4,7 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
 import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.LayeredDrawObject;
-import app.jbomberman.images.AbstractImage;
+import app.jbomberman.image.AbstractImage;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.MutableVector2D;
