@@ -25,7 +25,7 @@ public class DirUtils
 		String OS = (System.getProperty("os.name")).toUpperCase();
 		if (OS.contains("WIN"))
 			ret = System.getenv("APPDATA");
-		else if (OS.contains("LINUX"))
+		else if (OS.contains("LINUX") || OS.contains("SOLARIS") || OS.contains("BSD"))
 			ret = System.getProperty("user.home") + File.separator + ".config";
 		else if (OS.contains("MAC"))
 			ret = System.getProperty("user.home") + "/Library/Application Support";
