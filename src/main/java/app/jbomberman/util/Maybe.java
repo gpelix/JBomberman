@@ -107,15 +107,13 @@ public class Maybe<T>
 	/**
 	 * bind monadic operation
 	 *
-	 * @param m        argument to unwrap and pass to function if it's something
 	 * @param function operation to be applied
 	 * @param <S>      type of the result of the computation by function
-	 * @param <T>      type of the argument that function accepts
 	 * @return nothing if the Maybe was nothing or function applied to this
 	 */
-	public static <T, S> Maybe<? extends S> bindM(Maybe<? extends T> m, Function<? super T, Maybe<? extends S>> function)
+	public <S> Maybe<? extends S> bindM(Function<? super T, Maybe<? extends S>> function)
 	{
-		return m.isNothing() ? Maybe.nothing() : function.apply(m.fromJust());
+		return isNothing() ? Maybe.nothing() : function.apply(fromJust());
 	}
 
 	/**

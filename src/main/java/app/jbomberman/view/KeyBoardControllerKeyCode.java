@@ -152,6 +152,10 @@ public enum KeyBoardControllerKeyCode
 	 * the enum for Z letter
 	 */
 	Z('z'),
+	/**
+	 * the enum for slash
+	 */
+	SLASH('/'),
 
 	/**
 	 * OTHER represents an unknown character (thus it's not one of the ones

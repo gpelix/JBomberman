@@ -2,6 +2,8 @@ package app.jbomberman.model;
 
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 
+import java.nio.file.Path;
+
 /**
  * Player is the class that model an account
  *
@@ -98,6 +100,11 @@ public class Player
 	public void setLevel(int level)
 	{
 		this.level = level;
+	}
+
+	public void setAvatar(Path path)
+	{
+		capabilities.setAvatarPath(path);
 	}
 }
 

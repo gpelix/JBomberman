@@ -1,5 +1,7 @@
 package app.jbomberman.view.scenes;
 
+import app.jbomberman.JBomberManException;
+import app.jbomberman.Properties;
 import app.jbomberman.audio.AudioPlayer;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
@@ -8,6 +10,7 @@ import app.jbomberman.model.Model;
 import app.jbomberman.model.Player;
 import app.jbomberman.model.PlayerBuilder;
 import app.jbomberman.model.PlayerBuilderException;
+import app.jbomberman.util.DirUtils;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Timer;
 import app.jbomberman.util.Vector2D;
@@ -16,7 +19,13 @@ import app.jbomberman.view.widgets.HorizontalMenu;
 import app.jbomberman.view.widgets.MenuEntry;
 import app.jbomberman.view.widgets.Text;
 import app.jbomberman.view.widgets.TypingBox;
+import org.apache.logging.log4j.LogManager;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.FileAlreadyExistsException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.stream.Stream;
 
 /**
@@ -43,17 +52,17 @@ public class LogInScene extends BomberManScene
 	private final Text insertLoginName;
 
 	/**
-	 * maybeUnableToLogin is a text possibly empty that will contain an error
+	 * messagesConsole is a text possibly empty that will contain an error
 	 * message if there was an error while logging in with an account or a
 	 * problem while creating one
 	 */
-	private final Text maybeUnableToLogin;
+	private final Text messagesConsole;
 
 	/**
-	 * the errorMessageTimer as a timer used to clear the maybeUnableToLogin text
+	 * the messageTimer as a timer used to clear the messagesConsole text
 	 * after a certain amount of time
 	 */
-	private final Timer errorMessageTimer;
+	private final Timer messageTimer;
 
 	/**
 	 * MARGIN is the amount of margin that will be used when placing the text
@@ -72,7 +81,7 @@ public class LogInScene extends BomberManScene
 
 		AudioPlayer.getInstance().pausePlaying();
 
-		errorMessageTimer = new Timer(10_000);
+		messageTimer = new Timer(10_000);
 
 		Model model = Model.getInstance();
 
@@ -86,7 +95,7 @@ public class LogInScene extends BomberManScene
 			dimensions.getY() / 2
 		));
 
-		maybeUnableToLogin = new Text(Text.TextColor.Black, Vector2D.of(dimensions.getX() / 2, dimensions.getY() * 2 / 3));
+		messagesConsole = new Text(Text.TextColor.Black, Vector2D.of(dimensions.getX() / 2, dimensions.getY() * 2 / 3));
 
 		menu = new HorizontalMenu(
 			new MenuEntry("go back", Text.TextColor.Black, () ->
@@ -95,36 +104,103 @@ public class LogInScene extends BomberManScene
 				String playerName = loginBox.getText();
 				try {
 					if (playerName.matches("[\\W]*")) {
-						maybeUnableToLogin.setText("Specify a valid username");
+						setMessage("Specify a valid username");
 					} else {
 						PlayerBuilder.getInstance().buildPlayer(playerName);
-						maybeUnableToLogin.setText("Successful sign up. You can now sign in");
+						setMessage("Successful sign up. You can now sign in");
 					}
 				} catch (PlayerBuilderException e) {
-					maybeUnableToLogin.setText(e.getMessage());
+					messagesConsole.setText(e.getMessage());
 				} finally {
-					errorMessageTimer.start();
+					messageTimer.start();
 				}
 			}),
 			new MenuEntry("sign in", Text.TextColor.Black, () -> {
 				String playerName = loginBox.getText();
 				Maybe<Player> player = PlayerBuilder.getInstance().retrievePlayer(playerName);
 				if (player.isNothing()) {
-					maybeUnableToLogin.setText("Username: " + playerName + " Unable to login.");
-					errorMessageTimer.start();
+					setMessage("Username: " + playerName + " Unable to login.");
 				} else {
+					setMessage("Successfully signed in");
 					model.setAccount(player.fromJust());
-					doTransition(StartDisplay::new);
 				}
-			}));
+			}),
+			new MenuEntry("set avatar", Text.TextColor.Black, () -> {
+				if (model.getAccount().getPlayerName().isBlank()) {
+					setMessage("You have to log in first");
+					return;
+				}
+				Maybe<File> file = view.getFileChooser().getFile();
+				if (file.isNothing())
+					return;
 
-		menu.setWidth(dimensions.getX());
+				File f = file.fromJust();
+
+				if (!checkIfImage(f.getName())) {
+					setMessage("The file you specified is not an image");
+					return;
+				}
+
+				Path avatarDirectory = Path.of(
+					DirUtils.getAppData(),
+					Properties.getInstance().getJbombermanDirectoryDataName());
+
+				Path finalAvatarPath = Path.of(avatarDirectory.toString(), f.getName());
+				try {
+					Files.createDirectory(avatarDirectory);
+				} catch (FileAlreadyExistsException ignored) {
+				} catch (IOException e) {
+					throw new JBomberManException("Error while creating avatar directory");
+				}
+
+				try {
+					Files.copy(Path.of(f.getPath()), finalAvatarPath);
+				} catch (FileAlreadyExistsException ignored) {
+					LogManager.getLogger(getClass()).info("File already there");
+					setMessage("Error while loading avatar");
+				} catch (IOException e) {
+					throw new JBomberManException("Error while writing configuration files");
+				}
+
+				setMessage("Avatar set correctly");
+				model.getAccount().setAvatar(finalAvatarPath.getFileName());
+			})
+		);
+
+		menu.setWidth(dimensions.getX() * 2);
 		menu.setTopLeft(
-			Vector2D.of(0, dimensions.getY() - FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)
+			Vector2D.of(-dimensions.getX() / 2, dimensions.getY() - FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL * 2)
 		);
 
 		Controller.controller.attachKeyBoardObserver(menu);
 
+	}
+
+	/**
+	 * checkIfImage() checks if the filename named name is a valid image.
+	 * It uses the extension to determine if the filename is an image
+	 *
+	 * @param name the image
+	 * @return true if the filename is an image
+	 */
+	private boolean checkIfImage(String name)
+	{
+		String nameLowerCase = name.toLowerCase();
+
+		return nameLowerCase.endsWith(".png") ||
+			nameLowerCase.endsWith(".jpg") ||
+			nameLowerCase.endsWith(".jpeg");
+	}
+
+	/**
+	 * setMessage copies the msg to the maybeFileNotFound Text container
+	 *
+	 * @param msg the message to copy
+	 */
+	private void setMessage(String msg)
+	{
+		messagesConsole.setText(msg);
+		messageTimer.start();
 	}
 
 	/**
@@ -134,11 +210,11 @@ public class LogInScene extends BomberManScene
 	@Override
 	public Drawing update()
 	{
-		if (maybeUnableToLogin.length() != 0 && errorMessageTimer.hasStarted() && errorMessageTimer.timeIsUp())
-			maybeUnableToLogin.setText("");
+		if (messagesConsole.length() != 0 && messageTimer.hasStarted() && messageTimer.timeIsUp())
+			messagesConsole.setText("");
 
 		Drawing drawing = new Drawing();
-		Stream.of(menu, loginBox, insertLoginName, maybeUnableToLogin)
+		Stream.of(menu, loginBox, insertLoginName, messagesConsole)
 			.forEach(d -> drawing.merge(d.getDrawing()));
 
 		drawing.setDimensions(Model.getInstance().getDimensions());

@@ -1,6 +1,7 @@
 package app.jbomberman.view.graphics.javafx;
 
 import app.jbomberman.util.Callback;
+import app.jbomberman.view.FileChooser;
 import app.jbomberman.view.GraphicFactory;
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.LoopTimer;
@@ -35,6 +36,11 @@ public class JavaFXGraphicFactory extends GraphicFactory
 	{
 
 		return new JavaFXKeyBoardController();
+	}
+
+	public FileChooser getFileChooser(JavaFXView view)
+	{
+		return new JavaFXFileChooser(view.getStage());
 	}
 }
 

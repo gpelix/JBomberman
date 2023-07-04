@@ -34,6 +34,7 @@ import static app.jbomberman.view.KeyBoardControllerKeyCode.Q;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.R;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.RIGHT;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.S;
+import static app.jbomberman.view.KeyBoardControllerKeyCode.SLASH;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.SPACE;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.T;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.U;
@@ -69,6 +70,7 @@ import static java.awt.event.KeyEvent.VK_Q;
 import static java.awt.event.KeyEvent.VK_R;
 import static java.awt.event.KeyEvent.VK_RIGHT;
 import static java.awt.event.KeyEvent.VK_S;
+import static java.awt.event.KeyEvent.VK_SLASH;
 import static java.awt.event.KeyEvent.VK_SPACE;
 import static java.awt.event.KeyEvent.VK_T;
 import static java.awt.event.KeyEvent.VK_U;
@@ -198,6 +200,7 @@ public class SwingKeyBoardController extends KeyBoardController
 			case VK_X -> X;
 			case VK_Y -> Y;
 			case VK_Z -> Z;
+			case VK_SLASH -> SLASH;
 			default -> OTHER;
 
 		};

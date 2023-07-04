@@ -1,5 +1,9 @@
 package app.jbomberman.model.game.entity;
 
+import app.jbomberman.util.Maybe;
+
+import java.nio.file.Path;
+
 /**
  * BomberManCapabilities is the class that represents the capabilities
  * bomberman has
@@ -60,8 +64,14 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 			false,
 			false,
 			0,
-			3
+			3,
+			Maybe.nothing()
 		);
+
+	/**
+	 * avatarPath is the path of the avatar
+	 */
+	private Maybe<Path> avatarPath;
 
 	/**
 	 * @param speed            the speed of the BomberMan
@@ -88,7 +98,8 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 															 boolean goesThroughFire,
 															 boolean isInvincible,
 															 int score,
-															 int numberOfLives)
+															 int numberOfLives,
+															 Maybe<Path> avatarPath)
 	{
 		super(goesThroughWalls, speed);
 
@@ -100,6 +111,7 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 		this.isInvincible = isInvincible;
 		this.score = score;
 		this.numberOfLives = numberOfLives;
+		this.avatarPath = avatarPath;
 	}
 
 	/**
@@ -271,6 +283,16 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 	public void addPoints(int points)
 	{
 		score += points;
+	}
+
+	public void setAvatarPath(Path path)
+	{
+		avatarPath = Maybe.just(path);
+	}
+
+	public Maybe<Path> getAvatar()
+	{
+		return avatarPath;
 	}
 }
 

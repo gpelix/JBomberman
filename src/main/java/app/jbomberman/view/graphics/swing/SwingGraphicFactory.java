@@ -1,6 +1,7 @@
 package app.jbomberman.view.graphics.swing;
 
 import app.jbomberman.util.Callback;
+import app.jbomberman.view.FileChooser;
 import app.jbomberman.view.GraphicFactory;
 import app.jbomberman.view.KeyBoardController;
 import app.jbomberman.view.LoopTimer;
@@ -34,6 +35,11 @@ public class SwingGraphicFactory extends GraphicFactory
 	public KeyBoardController getKeyBoardController()
 	{
 		return new SwingKeyBoardController();
+	}
+
+	public FileChooser getFileChooser()
+	{
+		return new SwingFileChooser();
 	}
 }
 

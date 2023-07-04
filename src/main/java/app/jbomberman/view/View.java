@@ -159,6 +159,8 @@ public abstract class View
 	{
 		draw(currentBomberManScene.update());
 	}
+
+	public abstract FileChooser getFileChooser();
 }
 
 /* vim: set ts=2 sw=2 tw=0 noet :*/

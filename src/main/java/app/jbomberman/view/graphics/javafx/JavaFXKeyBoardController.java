@@ -34,6 +34,7 @@ import static app.jbomberman.view.KeyBoardControllerKeyCode.Q;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.R;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.RIGHT;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.S;
+import static app.jbomberman.view.KeyBoardControllerKeyCode.SLASH;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.SPACE;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.T;
 import static app.jbomberman.view.KeyBoardControllerKeyCode.U;
@@ -145,6 +146,7 @@ public class JavaFXKeyBoardController extends KeyBoardController
 			case X -> X;
 			case Y -> Y;
 			case Z -> Z;
+			case SLASH -> SLASH;
 			default -> OTHER;
 		};
 	}

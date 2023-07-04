@@ -7,6 +7,7 @@ import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.image.javafx.JavaFXImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.FileChooser;
 import app.jbomberman.view.View;
 import javafx.application.Platform;
 import javafx.scene.Cursor;
@@ -271,6 +272,17 @@ public class JavaFXView extends View
 	{
 		logger.info("Closing view");
 		Platform.exit();
+	}
+
+	@Override
+	public FileChooser getFileChooser()
+	{
+		return ((JavaFXGraphicFactory) getGraphicFactory()).getFileChooser(this);
+	}
+
+	public Stage getStage()
+	{
+		return stage;
 	}
 }
 

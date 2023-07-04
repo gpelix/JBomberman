@@ -108,6 +108,7 @@ public class FlightWeightImagesFactory
 			case '.' -> "dot";
 			case ' ' -> "space";
 			case ':' -> "column";
+			case '/' -> "slash";
 			default -> String.valueOf(c);
 		} + (color == Text.TextColor.Black ? "" : "_gray") + ".png");
 	}

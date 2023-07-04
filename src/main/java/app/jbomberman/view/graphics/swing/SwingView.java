@@ -8,6 +8,7 @@ import app.jbomberman.image.swing.SwingImage;
 import app.jbomberman.util.Callback;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Vector2D;
+import app.jbomberman.view.FileChooser;
 import app.jbomberman.view.View;
 
 import javax.swing.ImageIcon;
@@ -252,6 +253,12 @@ public class SwingView extends View
 	public void close()
 	{
 		System.exit(0);
+	}
+
+	@Override
+	public FileChooser getFileChooser()
+	{
+		return ((SwingGraphicFactory) getGraphicFactory()).getFileChooser();
 	}
 }
 

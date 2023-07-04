@@ -5,6 +5,7 @@ import app.jbomberman.Properties;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.util.DirUtils;
 import app.jbomberman.util.Maybe;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -83,7 +84,11 @@ public class PlayerBuilder
 	 * NO_OF_LIVES is the string that will be mapped to the number of lives of
 	 * the account in the json file
 	 */
-	NO_OF_LIVES = "numberOfLives";
+	NO_OF_LIVES = "numberOfLives",
+	/**
+	 * NO_OF_LIVES is the string that will be mapped to the path of the avatar image
+	 */
+	AVATAR_PATH = "avatarPath";
 
 	/**
 	 * START_LEVEL is the start level = 1
@@ -168,6 +173,13 @@ public class PlayerBuilder
 
 		JSONObject playerStats = jsonPlayers.getJSONObject(playerName);
 
+		Maybe<Path> avatarPath = Maybe.nothing();
+		try {
+			avatarPath = Maybe.just(Path.of(playerStats.getString(AVATAR_PATH)));
+		} catch (JSONException ignored) {
+			// It was null
+		}
+
 		return Maybe.just(new Player(
 			playerName,
 			playerStats.getInt(LEVEL),
@@ -181,7 +193,8 @@ public class PlayerBuilder
 				playerStats.getBoolean(GOES_THROUGH_FIRE),
 				false, // Invincibility cannot be inherited
 				playerStats.getInt(POINTS_EARNED),
-				playerStats.getInt(NO_OF_LIVES)
+				playerStats.getInt(NO_OF_LIVES),
+				avatarPath
 			)
 		));
 	}
@@ -240,6 +253,10 @@ public class PlayerBuilder
 		player.put(GOES_THROUGH_BOMBS, cap.goesThroughBombs());
 		player.put(GOES_THROUGH_FIRE, cap.goesThroughFire());
 		player.put(IS_INVINCIBLE, cap.isInvincible());
+		cap.getAvatar().doOrDo(
+			ava -> player.put(AVATAR_PATH, ava.toString()),
+			() -> player.put(AVATAR_PATH, JSONObject.NULL)
+		);
 
 		saveFile(playerJSON);
 	}
