@@ -52,9 +52,9 @@ public class FreeCell extends Cell
 	private Maybe<Door> door = Maybe.nothing();
 
 	/**
-	 * fire contains a reference to a fire if there is any on the FreeCell
+	 * fires contains a reference to all the Fires that are on the FreeCell
 	 */
-	private Maybe<Fire> fire = Maybe.nothing();
+	private Set<Fire> fires = new HashSet<>();
 
 	/**
 	 * BomberMan contains a reference to bomberman if it's on this FreeCell
@@ -96,7 +96,7 @@ public class FreeCell extends Cell
 				.anyMatch(e -> e instanceof Enemy && !((Enemy) e).isDisappearing()))
 				bomberManU.caughtByEnemy();
 		}
-		if (fire.isJust())
+		if (!fires.isEmpty())
 			gameCharacter.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
 
 		entities.add(gameCharacter);
@@ -112,7 +112,7 @@ public class FreeCell extends Cell
 		this.powerup = Maybe.just(powerup);
 
 		// This is not possible
-		if (fire.isJust())
+		if (!fires.isEmpty())
 			powerup.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
 
 		entities.add(powerup);
@@ -127,7 +127,7 @@ public class FreeCell extends Cell
 	{
 		this.wall = Maybe.just(wall);
 		// this is not possible
-		if (fire.isJust())
+		if (!fires.isEmpty())
 			wall.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
 
 		entities.add(wall);
@@ -152,7 +152,7 @@ public class FreeCell extends Cell
 	{
 		this.bomb = Maybe.just(bomb);
 
-		if (fire.isJust())
+		if (!fires.isEmpty())
 			bomb.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
 
 		entities.add(bomb);
@@ -168,7 +168,7 @@ public class FreeCell extends Cell
 		this.door = Maybe.just(door);
 
 		// This is not possible
-		if (fire.isJust())
+		if (!fires.isEmpty())
 			door.notifyExplosion(new Explosion(0, getCenterInGridCoord()));
 
 		entities.add(door);
@@ -181,7 +181,7 @@ public class FreeCell extends Cell
 	 */
 	public void addFire(Fire fire)
 	{
-		this.fire = Maybe.just(fire);
+		fires.add(fire);
 
 		entities.add(fire);
 	}
@@ -227,16 +227,16 @@ public class FreeCell extends Cell
 	 * removeFire() removes the Fire from the FreeCell
 	 *
 	 * @param entity the fire to remove
+	 * @throws GamePlayException if there is no Fire on the FreeCell or if the
+	 *                           fire on the FreeCell is different from the one
+	 *                           specified in input
 	 */
 	public void removeFire(Fire entity)
 	{
-		// There's no need
-//		if (fire.unwrapOrThrow(() -> new GamePlayException(
-//			"Removing a Fire from a FreeCell not containing fire. Weird!"
-//		)) != entity)
-//			throw new GamePlayException("Wrong fire to remove");
+		if (!fires.contains(entity))
+			throw new GamePlayException("Wrong fire to remove");
 
-		fire = Maybe.nothing();
+		fires.remove(entity);
 		entities.remove(entity);
 	}
 
