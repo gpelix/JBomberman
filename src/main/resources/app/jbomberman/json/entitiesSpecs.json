@@ -15,7 +15,8 @@
       "Enemy1_8.png",
       "Enemy1_9.png",
       "Enemy1_10.png",
-      "Enemy1_11.png"
+      "Enemy1_11.png",
+      "100.png"
     ],
     "points": 100,
     "speed": 0.35,
@@ -38,7 +39,8 @@
       "Enemy5_8.png",
       "Enemy5_9.png",
       "Enemy5_10.png",
-      "Enemy5_11.png"
+      "Enemy5_11.png",
+      "200.png"
     ],
     "points": 200,
     "speed": 0.5,
@@ -60,7 +62,8 @@
       "Enemy3_8.png",
       "Enemy3_9.png",
       "Enemy3_10.png",
-      "Enemy3_11.png"
+      "Enemy3_11.png",
+      "400.png"
     ],
     "points": 400,
     "speed": 0.65,
@@ -83,7 +86,8 @@
       "Enemy1_8.png",
       "Enemy1_9.png",
       "Enemy1_10.png",
-      "Enemy1_11.png"
+      "Enemy1_11.png",
+      "800.png"
     ],
     "points": 800,
     "speed": 0.75,
@@ -105,7 +109,8 @@
       "Enemy5_8.png",
       "Enemy5_9.png",
       "Enemy5_10.png",
-      "Enemy5_11.png"
+      "Enemy5_11.png",
+      "1000.png"
     ],
     "points": 1000,
     "speed": 0.25,
@@ -128,7 +133,8 @@
       "Enemy3_8.png",
       "Enemy3_9.png",
       "Enemy3_10.png",
-      "Enemy3_11.png"
+      "Enemy3_11.png",
+      "2000.png"
     ],
     "points": 2000,
     "speed": 0.65,
@@ -151,7 +157,8 @@
       "Enemy1_8.png",
       "Enemy1_9.png",
       "Enemy1_10.png",
-      "Enemy1_11.png"
+      "Enemy1_11.png",
+      "4000.png"
     ],
     "points": 4000,
     "speed": 0.75,
@@ -176,7 +183,8 @@
       "Enemy1_8.png",
       "Enemy1_9.png",
       "Enemy1_10.png",
-      "Enemy1_11.png"
+      "Enemy1_11.png",
+      "8000.png"
     ],
     "points": 8000,
     "speed": 1.0,
