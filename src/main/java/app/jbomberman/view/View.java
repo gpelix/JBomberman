@@ -160,6 +160,11 @@ public abstract class View
 		draw(currentBomberManScene.update());
 	}
 
+	/**
+	 * getFileChooser() must be used to get the FileChooser
+	 *
+	 * @return the FileChooser
+	 */
 	public abstract FileChooser getFileChooser();
 }
 

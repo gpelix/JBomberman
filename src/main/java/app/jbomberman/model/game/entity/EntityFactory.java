@@ -8,7 +8,6 @@ import app.jbomberman.model.game.FullMovementMovingImageManager;
 import app.jbomberman.model.game.GameGrid;
 import app.jbomberman.model.game.ImageManager;
 import app.jbomberman.model.game.LeftRightMovingImageManager;
-import app.jbomberman.util.Maybe;
 import app.jbomberman.util.Resources;
 import app.jbomberman.util.Vector2D;
 import org.json.JSONArray;
@@ -211,8 +210,7 @@ public class EntityFactory
 				capabilitiesJson.getBoolean("goesThroughFire"),
 				capabilitiesJson.getBoolean("isInvincible"),
 				0, // For now no powerup causes an increase of score or an addition of lives
-				0,
-				Maybe.nothing()
+				0
 			);
 
 			return new Powerup(modelCoordinate, gameGrid,

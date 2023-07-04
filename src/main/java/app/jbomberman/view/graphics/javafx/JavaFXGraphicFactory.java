@@ -38,6 +38,12 @@ public class JavaFXGraphicFactory extends GraphicFactory
 		return new JavaFXKeyBoardController();
 	}
 
+	/**
+	 * getFileChooser() gets the FileChooser from the JavaFXView
+	 *
+	 * @param view the JavaFXView to which the FileChooser must be attached
+	 * @return the FileChooser newly created
+	 */
 	public FileChooser getFileChooser(JavaFXView view)
 	{
 		return new JavaFXFileChooser(view.getStage());

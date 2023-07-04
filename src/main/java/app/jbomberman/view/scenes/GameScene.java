@@ -4,9 +4,12 @@ import app.jbomberman.JBomberManException;
 import app.jbomberman.Properties;
 import app.jbomberman.controller.Controller;
 import app.jbomberman.drawing.Drawing;
+import app.jbomberman.image.FlightWeightImagesFactory;
 import app.jbomberman.model.Model;
+import app.jbomberman.model.Player;
 import app.jbomberman.model.game.entity.BomberManCapabilities;
 import app.jbomberman.model.game.entity.Entity;
+import app.jbomberman.util.DirUtils;
 import app.jbomberman.util.Observable;
 import app.jbomberman.util.Observer;
 import app.jbomberman.util.Vector2D;
@@ -16,6 +19,8 @@ import app.jbomberman.view.KeyBoardUpdateInfo;
 import app.jbomberman.view.View;
 import app.jbomberman.view.widgets.HorizontalPanel;
 import app.jbomberman.view.widgets.Text;
+
+import java.nio.file.Path;
 
 /**
  * GameScene represents a game
@@ -75,11 +80,17 @@ public class GameScene extends SoundyBomberManScene implements Observer
 				livesEntry
 			);
 		} else {
+			Player player = model.getAccount();
+			Text playerText = new Text("player: " + player.getPlayerName(), Text.TextColor.Black);
+			player.getAvatar().maybeDo(avatar ->
+				playerText.setIcon(
+					FlightWeightImagesFactory.getInstance().getImageFromAbsolute(
+						Path.of(DirUtils.getAppData(), Properties.getInstance().getJbombermanDirectoryDataName(), avatar.toString()))));
 			topPanel = new HorizontalPanel<>(
 				timeEntry,
 				scoreEntry,
 				livesEntry,
-				new Text("player: " + model.getAccount().getPlayerName(), Text.TextColor.Black)
+				playerText
 			);
 		}
 

@@ -1,6 +1,7 @@
 package app.jbomberman.model;
 
 import app.jbomberman.model.game.entity.BomberManCapabilities;
+import app.jbomberman.util.Maybe;
 
 import java.nio.file.Path;
 
@@ -22,6 +23,11 @@ public class Player
 	private int level;
 
 	/**
+	 * avatarPath is the path of the avatar
+	 */
+	private Maybe<Path> avatarPath = Maybe.nothing();
+
+	/**
 	 * capabilities are the capabilities that the player has acquired playing
 	 */
 	private BomberManCapabilities capabilities;
@@ -32,15 +38,17 @@ public class Player
 	 *
 	 * @param name            the login name of the Player
 	 * @param level           the level that the player has reached
+	 * @param avatarPath      the path of the avatar
 	 * @param hisCapabilities the capabilities that the player's bomberman must
 	 *                        have
 	 */
-	public Player(String name, int level,
+	public Player(String name, int level, Maybe<Path> avatarPath,
 								BomberManCapabilities hisCapabilities)
 	{
 		this.playerName = name;
 		this.level = level;
 		this.capabilities = hisCapabilities;
+		this.avatarPath = avatarPath;
 	}
 
 	/**
@@ -102,9 +110,24 @@ public class Player
 		this.level = level;
 	}
 
+	/**
+	 * setAvatar() must be used to set the avatar
+	 *
+	 * @param path the path of the avatar
+	 */
 	public void setAvatar(Path path)
 	{
-		capabilities.setAvatarPath(path);
+		avatarPath = Maybe.just(path);
+	}
+
+	/**
+	 * getAvatar() gets the path of the avatar
+	 *
+	 * @return the path of the avatar
+	 */
+	public Maybe<Path> getAvatar()
+	{
+		return avatarPath;
 	}
 }
 

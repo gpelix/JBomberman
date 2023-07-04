@@ -183,6 +183,7 @@ public class PlayerBuilder
 		return Maybe.just(new Player(
 			playerName,
 			playerStats.getInt(LEVEL),
+			avatarPath,
 			new BomberManCapabilities(
 				playerStats.getDouble(SPEED),
 				playerStats.getInt(BOMB_POWER),
@@ -193,10 +194,8 @@ public class PlayerBuilder
 				playerStats.getBoolean(GOES_THROUGH_FIRE),
 				false, // Invincibility cannot be inherited
 				playerStats.getInt(POINTS_EARNED),
-				playerStats.getInt(NO_OF_LIVES),
-				avatarPath
-			)
-		));
+				playerStats.getInt(NO_OF_LIVES)
+			)));
 	}
 
 	/**
@@ -253,7 +252,7 @@ public class PlayerBuilder
 		player.put(GOES_THROUGH_BOMBS, cap.goesThroughBombs());
 		player.put(GOES_THROUGH_FIRE, cap.goesThroughFire());
 		player.put(IS_INVINCIBLE, cap.isInvincible());
-		cap.getAvatar().doOrDo(
+		account.getAvatar().doOrDo(
 			ava -> player.put(AVATAR_PATH, ava.toString()),
 			() -> player.put(AVATAR_PATH, JSONObject.NULL)
 		);
@@ -288,6 +287,7 @@ public class PlayerBuilder
 		return new Player(
 			playerName,
 			START_LEVEL,
+			Maybe.nothing(),
 			BomberManCapabilities.defaultCapabilities);
 	}
 }

@@ -33,7 +33,11 @@ public class Controller
 	 */
 	private final Logger logger;
 
-	public static Controller controller; // Kind o horror TODO:
+	/**
+	 * the controller. We don't want to use the singleton pattern as there is no
+	 * way to initialize it but at the start of the program
+	 */
+	public static Controller controller;
 
 	/**
 	 * Controller() is the only constructor of the controller. It must not be called

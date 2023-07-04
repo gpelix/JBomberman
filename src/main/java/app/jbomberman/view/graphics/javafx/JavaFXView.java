@@ -280,6 +280,11 @@ public class JavaFXView extends View
 		return ((JavaFXGraphicFactory) getGraphicFactory()).getFileChooser(this);
 	}
 
+	/**
+	 * getStage() must be used to retrieve the stage
+	 *
+	 * @return the Stage
+	 */
 	public Stage getStage()
 	{
 		return stage;

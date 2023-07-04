@@ -21,6 +21,10 @@ import app.jbomberman.view.widgets.Text;
 import app.jbomberman.view.widgets.TypingBox;
 import org.apache.logging.log4j.LogManager;
 
+import javax.imageio.ImageIO;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
@@ -145,7 +149,7 @@ public class LogInScene extends BomberManScene
 					DirUtils.getAppData(),
 					Properties.getInstance().getJbombermanDirectoryDataName());
 
-				Path finalAvatarPath = Path.of(avatarDirectory.toString(), f.getName());
+				Path finalAvatarPath = Path.of(avatarDirectory.toString(), f.getName() + ".png");
 				try {
 					Files.createDirectory(avatarDirectory);
 				} catch (FileAlreadyExistsException ignored) {
@@ -154,7 +158,11 @@ public class LogInScene extends BomberManScene
 				}
 
 				try {
-					Files.copy(Path.of(f.getPath()), finalAvatarPath);
+					BufferedImage bufferedImage = ImageIO.read(f);
+					ImageIO.write(
+						toBufferedImage(bufferedImage.getScaledInstance(32, 32, Image.SCALE_DEFAULT)),
+						"png",
+						new File(finalAvatarPath.toString()));
 				} catch (FileAlreadyExistsException ignored) {
 					LogManager.getLogger(getClass()).info("File already there");
 					setMessage("Error while loading avatar");
@@ -174,6 +182,33 @@ public class LogInScene extends BomberManScene
 
 		Controller.controller.attachKeyBoardObserver(menu);
 
+	}
+
+	/**
+	 * Converts a given Image into a BufferedImage
+	 *
+	 * @param img The Image to be converted
+	 * @return The converted BufferedImage
+	 */
+	public static BufferedImage toBufferedImage(Image img)
+	{
+		if (img instanceof BufferedImage) {
+			return (BufferedImage) img;
+		}
+
+		// Create a buffered image with transparency
+		BufferedImage bimage = new BufferedImage(
+			img.getWidth(null),
+			img.getHeight(null),
+			BufferedImage.TYPE_INT_ARGB);
+
+		// Draw the image on to the buffered image
+		Graphics2D bGr = bimage.createGraphics();
+		bGr.drawImage(img, 0, 0, null);
+		bGr.dispose();
+
+		// Return the buffered image
+		return bimage;
 	}
 
 	/**

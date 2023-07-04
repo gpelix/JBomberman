@@ -1,5 +1,7 @@
 package app.jbomberman.image;
 
+import java.nio.file.Path;
+
 /**
  * AbstractImageBuild is an abstract class that must construct images.
  *
@@ -15,6 +17,14 @@ public abstract class AbstractImageBuilder
 	 * @return the AbstractImage built from image/path
 	 */
 	public abstract AbstractImage getImage(String path);
+
+	/**
+	 * getImageFromAbsolute() gets the image from an absolute path
+	 *
+	 * @param path the absolute path of the image
+	 * @return the newly built AbstractImage
+	 */
+	public abstract AbstractImage getImageFromAbsolute(Path path);
 }
 
 /* vim: set ts=2 sw=2 tw=0 noet :*/

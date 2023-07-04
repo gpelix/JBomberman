@@ -5,6 +5,7 @@ import app.jbomberman.Properties;
 import app.jbomberman.util.Maybe;
 import app.jbomberman.view.widgets.Text;
 
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -87,10 +88,14 @@ public class FlightWeightImagesFactory
 	public AbstractImage getImage(String path)
 	{
 		return images.computeIfAbsent(path,
-			p -> imageBuilder.unwrapOrThrow(() -> new JBomberManException(
-				"FlightWeightImagesFactory must be initialized before its first use calling initializeImageBuilder")
-			).getImage(Properties.getInstance().getImagesDirectory() + p)
+			p -> getImageBuilder().getImage(Properties.getInstance().getImagesDirectory() + p)
 		);
+	}
+
+	private AbstractImageBuilder getImageBuilder()
+	{
+		return imageBuilder.unwrapOrThrow(() -> new JBomberManException(
+			"FlightWeightImagesFactory must be initialized before its first use calling initializeImageBuilder"));
 	}
 
 	/**
@@ -111,6 +116,18 @@ public class FlightWeightImagesFactory
 			case '/' -> "slash";
 			default -> String.valueOf(c);
 		} + (color == Text.TextColor.Black ? "" : "_gray") + ".png");
+	}
+
+	/**
+	 * getImageFromAbsolute() gets an image not loading it from a resource but
+	 * from an absolute path
+	 *
+	 * @param path the absolute path
+	 * @return the AbstractImage newly built
+	 */
+	public AbstractImage getImageFromAbsolute(Path path)
+	{
+		return getImageBuilder().getImageFromAbsolute(path);
 	}
 }
 

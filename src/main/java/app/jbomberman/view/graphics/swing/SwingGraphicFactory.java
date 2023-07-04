@@ -37,6 +37,11 @@ public class SwingGraphicFactory extends GraphicFactory
 		return new SwingKeyBoardController();
 	}
 
+	/**
+	 * getFileChooser() gets a FileChooser for java swing
+	 *
+	 * @return the java swing file chooser
+	 */
 	public FileChooser getFileChooser()
 	{
 		return new SwingFileChooser();

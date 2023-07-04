@@ -5,6 +5,7 @@ import app.jbomberman.drawing.Drawing;
 import app.jbomberman.drawing.LayeredDrawObject;
 import app.jbomberman.image.AbstractImage;
 import app.jbomberman.image.FlightWeightImagesFactory;
+import app.jbomberman.util.Maybe;
 import app.jbomberman.util.MutableVector2D;
 import app.jbomberman.util.Vector2D;
 
@@ -54,6 +55,8 @@ public class Text extends MutableVector2D implements Drawable
 	 */
 	private List<AbstractImage> images;
 
+	private Maybe<AbstractImage> icon = Maybe.nothing();
+
 	/**
 	 * drawing is the current drawing associated to the list of images
 	 */
@@ -94,6 +97,26 @@ public class Text extends MutableVector2D implements Drawable
 	public Text(TextColor color, Vector2D coordinatePosition)
 	{
 		this("", color, coordinatePosition);
+	}
+
+	/**
+	 * setIcon() must be used to set an icon to the right of the Text
+	 *
+	 * @param icon the AbstractImage to set as icon
+	 */
+	public void setIcon(AbstractImage icon)
+	{
+		this.icon = Maybe.just(icon);
+		updateDrawing();
+	}
+
+	/**
+	 * unsetIcon() must be used to remove the icon
+	 */
+	public void unsetIcon()
+	{
+		this.icon = Maybe.nothing();
+		updateDrawing();
 	}
 
 	/**
@@ -166,13 +189,17 @@ public class Text extends MutableVector2D implements Drawable
 	 */
 	private void updateDrawing()
 	{
+		int last = icon.isJust() ? length() + 1 : length();
 		// This is the center of the text
-		drawing = new Drawing(IntStream.range(0, length()).boxed()
-			.map(index -> new LayeredDrawObject(
-				this.sum(Vector2D.of((-length() / 2 + index) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, 0)),
-				images.get(index), 0)
+		drawing = new Drawing(IntStream.range(0, last).boxed()
+			.map(index -> {
+					boolean isSpecial = index == length();
+					return new LayeredDrawObject(
+						this.sum(Vector2D.of((-last / 2 + index) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, isSpecial ? -FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL / 2 : 0)),
+						isSpecial ? icon.fromJust() : images.get(index), 0);
+				}
 			));
-		drawing.setDimensions(Vector2D.of((length() / 2) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
+		drawing.setDimensions(Vector2D.of((last / 2) * FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL, FlightWeightImagesFactory.CHARACTER_SIZE_IN_PIXEL));
 	}
 
 	/**
