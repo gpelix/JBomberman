@@ -63,14 +63,25 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		model.resetGame();
 
 
-		livesEntry = new Text("left  " + Math.max(0, model.getAccount().getCapabilities().getNumberOfLives()), Text.TextColor.Black);
+		livesEntry = new Text("left: " + Math.max(0, model.getAccount().getCapabilities().getNumberOfLives()), Text.TextColor.Black);
 		timeEntry = new Text("", Text.TextColor.Black);
 		scoreEntry = new Text("", Text.TextColor.Black);
 
-		topPanel = new HorizontalPanel<>(
-			timeEntry,
-			scoreEntry,
-			livesEntry);
+
+		if (model.getAccount().getPlayerName().isBlank()) {
+			topPanel = new HorizontalPanel<>(
+				timeEntry,
+				scoreEntry,
+				livesEntry
+			);
+		} else {
+			topPanel = new HorizontalPanel<>(
+				timeEntry,
+				scoreEntry,
+				livesEntry,
+				new Text("player: " + model.getAccount().getPlayerName(), Text.TextColor.Black)
+			);
+		}
 
 		initialize();
 	}
@@ -89,8 +100,8 @@ public class GameScene extends SoundyBomberManScene implements Observer
 
 		BomberManCapabilities capabilities = Model.getInstance().getAccount().getCapabilities();
 
-		scoreEntry.setText(String.valueOf(capabilities.getPointsEarned()));
-		livesEntry.setText(String.valueOf(Math.max(0, capabilities.getNumberOfLives())));
+		scoreEntry.setText("points: " + capabilities.getPointsEarned());
+		livesEntry.setText("left: " + Math.max(0, capabilities.getNumberOfLives()));
 
 		Model model = Model.getInstance();
 
@@ -105,7 +116,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 				doTransition(GameOverScene::new);
 		}
 
-		timeEntry.setText("time  " + Math.max(0, model.getGame().secsToEnd()));
+		timeEntry.setText("time: " + Math.max(0, model.getGame().secsToEnd()));
 		drawing.merge(topPanel.getDrawing());
 		return drawing;
 	}

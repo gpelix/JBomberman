@@ -227,16 +227,14 @@ public class FreeCell extends Cell
 	 * removeFire() removes the Fire from the FreeCell
 	 *
 	 * @param entity the fire to remove
-	 * @throws GamePlayException if there is no Fire on the FreeCell or if the
-	 *                           fire on the FreeCell is different from the one
-	 *                           specified in input
 	 */
 	public void removeFire(Fire entity)
 	{
-		if (fire.unwrapOrThrow(() -> new GamePlayException(
-			"Removing a Fire from a FreeCell not containing fire. Weird!"
-		)) != entity)
-			throw new GamePlayException("Wrong fire to remove");
+		// There's no need
+//		if (fire.unwrapOrThrow(() -> new GamePlayException(
+//			"Removing a Fire from a FreeCell not containing fire. Weird!"
+//		)) != entity)
+//			throw new GamePlayException("Wrong fire to remove");
 
 		fire = Maybe.nothing();
 		entities.remove(entity);
