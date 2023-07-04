@@ -10,6 +10,9 @@ import org.json.JSONObject;
  */
 public class Properties
 {
+	/**
+	 * GraphicLibrary is an enum representing a GraphicLibrary
+	 */
 	public enum GraphicLibrary
 	{
 		/**
@@ -231,7 +234,8 @@ public class Properties
 	/**
 	 * getSoundPath() gets the soundPath
 	 *
-	 * @return the soundPath
+	 * @param filename the audiofile of which we want the resource path
+	 * @return the soundPath of the file
 	 */
 	public String getSoundPath(String filename)
 	{
