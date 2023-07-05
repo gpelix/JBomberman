@@ -19,3 +19,5 @@ public abstract class FileChooser
 	 */
 	public abstract Maybe<File> getFile();
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

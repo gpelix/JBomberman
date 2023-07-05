@@ -115,7 +115,7 @@ public class Game
 
 
 		if (model.getAccount().getCapabilities().getNumberOfLives() < 0)
-			model.getAccount().setCapabilities(BomberManCapabilities.defaultCapabilities);
+			model.getAccount().setCapabilities(new BomberManCapabilities(BomberManCapabilities.defaultCapabilities));
 
 		GameGridBuilderDirector director =
 			new GameGridBuilderDirector(builder, levelNumber,
@@ -162,10 +162,8 @@ public class Game
 			handle.playIfNeeded(currentlyPlayingBackgroundNoiseName);
 
 		long now = System.currentTimeMillis();
-		if (lastUpdate.isJust() && now - lastUpdate.fromJust().getX() < UPDATE_FREQ) {
-//			LogManager.getLogger(getClass()).info("Dropping frame");
+		if (lastUpdate.isJust() && now - lastUpdate.fromJust().getX() < UPDATE_FREQ)
 			return lastUpdate.fromJust().getY();
-		}
 
 		if (!timerToEOG.hasStarted())
 			timerToEOG.start();
@@ -177,8 +175,6 @@ public class Game
 			// The View might be calling update infrequently, and so we must be sure
 			// the game remains consistent. So we call many times update on the GameGrid
 			// to recover the time lost
-//			if (now - lastUpdateTime >= UPDATE_FREQ * 2)
-//				System.out.println("Updating many times");
 			while (lastUpdateTime <= now) {
 				gameGrid.update();
 				lastUpdateTime += UPDATE_FREQ;

@@ -46,3 +46,5 @@ public class JavaFXFileChooser extends FileChooser
 		return f == null ? Maybe.nothing() : Maybe.just(f);
 	}
 }
+
+/* vim: set ts=2 sw=2 tw=0 noet :*/

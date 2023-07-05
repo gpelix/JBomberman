@@ -80,7 +80,8 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 	 * @param numberOfLives    the number of lives that the BomberMan still has
 	 */
 	public BomberManCapabilities(double speed,
-															 int bombPower, int availableBombs,
+															 int bombPower,
+															 int availableBombs,
 															 boolean remoteControl,
 															 boolean goesThroughWalls,
 															 boolean goesThroughBombs,
@@ -99,6 +100,13 @@ public class BomberManCapabilities extends GameCharacterCapabilities
 		this.isInvincible = isInvincible;
 		this.score = score;
 		this.numberOfLives = numberOfLives;
+	}
+
+	public BomberManCapabilities(BomberManCapabilities other)
+	{
+		this(other.getSpeed(), other.bombPower, other.availableBombs, other.remoteControl,
+			other.goesThroughWalls(), other.goesThroughBombs, other.goesThroughFire, other.isInvincible,
+			other.score, other.numberOfLives);
 	}
 
 	/**

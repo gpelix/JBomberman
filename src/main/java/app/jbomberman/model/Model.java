@@ -75,8 +75,8 @@ public class Model extends AbstractObservable
 	public void resetGame()
 	{
 		detachAllObservers();
-		if (player.getCapabilities().getNumberOfLives() == 0)
-			player.getCapabilities().setNumberOfLives(BomberManCapabilities.defaultCapabilities.getNumberOfLives());
+		if (player.getCapabilities().getNumberOfLives() == -1)
+			player.setCapabilities(BomberManCapabilities.defaultCapabilities);
 		game = Maybe.just(new Game());
 	}
 

@@ -35,6 +35,11 @@ public class GameCharacterCapabilities
 		this.goesThroughWallsFlag = goesThroughWalls;
 	}
 
+	public GameCharacterCapabilities(GameCharacterCapabilities other)
+	{
+		this(other.goesThroughWallsFlag, other.speed);
+	}
+
 	/**
 	 * getSpeed() gets the speed of the GameCharacter
 	 *

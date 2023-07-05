@@ -117,7 +117,7 @@ public class GameScene extends SoundyBomberManScene implements Observer
 		Model model = Model.getInstance();
 
 		if (model.getGame().exited()) {
-			if (Model.getInstance().getAccount().getCapabilities().getNumberOfLives() >= 0) {
+			if (model.getAccount().getCapabilities().getNumberOfLives() >= 0) {
 				if (model.getAccount().getLevel() == LAST_LEVEL + 1) {
 					doTransition(WinScene::new);
 					model.getAccount().setLevel(1);

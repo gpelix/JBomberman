@@ -52,3 +52,5 @@ dependencies {
     implementation 'org.apache.logging.log4j:log4j-api:2.20.0'
     implementation 'org.apache.logging.log4j:log4j-core:2.20.0'
 }
+
+/* vim: set ts=4 sw=4 tw=0 et :*/
