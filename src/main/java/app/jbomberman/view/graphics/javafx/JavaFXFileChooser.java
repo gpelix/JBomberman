@@ -40,6 +40,7 @@ public class JavaFXFileChooser extends FileChooser
 	public Maybe<File> getFile()
 	{
 		javafx.stage.FileChooser fileChooser = new javafx.stage.FileChooser();
+		fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
 		File f = fileChooser.showOpenDialog(stage);
 

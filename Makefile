@@ -14,7 +14,7 @@ run:
 
 PHONY += clean
 clean:
-	rm -rf build/ .gradle/
+	rm -rf build/ .gradle/ bin/
 
 PHONY += fatJar
 fatJar:
