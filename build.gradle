@@ -10,14 +10,14 @@ plugins {
 group 'app'
 version '1.0'
 
-applicationDefaultJvmArgs = ["-Dlog4j.configurationFile=log4j2.xml"]
 
 repositories {
     mavenCentral()
 }
 
-sourceCompatibility = '17'
-targetCompatibility = '17'
+java {
+    sourceCompatibility = '17'
+}
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
@@ -26,6 +26,7 @@ tasks.withType(JavaCompile).configureEach {
 application {
     mainModule = 'app.jbomberman'
     mainClass = 'app.jbomberman.JBomberMan'
+    applicationDefaultJvmArgs = ["-Dlog4j.configurationFile=log4j2.xml"]
 }
 
 javafx {
