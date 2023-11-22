@@ -1,0 +1,415 @@
+<mxGraphModel dx="0" dy="0" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" background="none" math="0" shadow="0">
+  <root>
+    <mxCell id="0" />
+    <mxCell id="1" parent="0" />
+    <mxCell id="node37" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AbstractState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# AbstractState(StateFul, boolean): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- isDisappearing: boolean&lt;br/&gt;- stateFul: StateFul&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;+ isDisappearing(): boolean&lt;br/&gt;# getStateful(): StateFul&lt;br/&gt;+ getDrawing(): Drawing&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2929" y="730" width="268" height="229" as="geometry" />
+    </mxCell>
+    <mxCell id="node36" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AliveState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# AliveState(StateFul, AbstractState): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- deathState: AbstractState&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# die(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1033" y="698" width="271" height="123" as="geometry" />
+    </mxCell>
+    <mxCell id="node32" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;AutoBomb&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ AutoBomb(Vector2D, int, BomberMan, ImageManager, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- BOMB_EXPLOSION_INTERVAL: int&lt;br/&gt;- timeToExplosion: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ toString(): String&lt;br/&gt;+ makeExplode(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2322" y="796" width="463" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node24" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Block&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Block(Vector2D, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- img: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ updateInModel(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3120" y="1041" width="268" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="node21" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Bomb&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# Bomb(Vector2D, int, BomberMan, ImageManager, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- BOMB_DETONATION_SOUND: String&lt;br/&gt;- bombRange: int&lt;br/&gt;- imageManager: ImageManager&lt;br/&gt;- bomberman: BomberMan&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ makeExplode(): void&lt;br/&gt;# updateWithExplosion(): void&lt;br/&gt;+ toString(): String&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ allowsBombs(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1899" y="370" width="433" height="298" as="geometry" />
+    </mxCell>
+    <mxCell id="node45" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;BombConstructor&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ construct(Vector2D, int, BomberMan, ImageManager, GameGrid): Bomb&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="201" y="240" width="188" height="35" as="geometry" />
+    </mxCell>
+    <mxCell id="node15" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BomberMan&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ BomberMan(Vector2D, BomberManCapabilities, GameGrid, MovingImageManager, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- HORIZONTAL_MOVE_SOUND_FILE: String&lt;br/&gt;- hasSteppedOnDoor: boolean&lt;br/&gt;- directions: Set&amp;lt;Direction&amp;gt;&lt;br/&gt;- BOMB_PLACED_SOUND: String&lt;br/&gt;- bombs: Queue&amp;lt;Bomb&amp;gt;&lt;br/&gt;- soundHandle: Maybe&amp;lt;AudioHandle&amp;gt;&lt;br/&gt;- INVINCIBILITY_DURATION_IN_MILLIS: long&lt;br/&gt;- BOMBERMAN_DEATH_SOUND: String&lt;br/&gt;- stepSize: double&lt;br/&gt;- invincibilityTimer: Maybe&amp;lt;Timer&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ setCapabilities(GameCharacterCapabilities): void&lt;br/&gt;+ setSoundHandle(Maybe&amp;lt;AudioHandle&amp;gt;): void&lt;br/&gt;- update(KeyBoardUpdateInfo): void&lt;br/&gt;+ stopListening(): void&lt;br/&gt;+ caughtByEnemy(): void&lt;br/&gt;+ update(Observable): void&lt;br/&gt;+ bombHasExploded(Bomb): void&lt;br/&gt;+ keyCodeToDirection(KeyBoardControllerKeyCode): Maybe&amp;lt;Direction&amp;gt;&lt;br/&gt;+ move(): void&lt;br/&gt;+ takePowerup(Powerup): void&lt;br/&gt;- checkCoordinateAccess(Vector2D, Maybe&amp;lt;Direction&amp;gt;): boolean&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;+ getSoundHandle(): Maybe&amp;lt;AudioHandle&amp;gt;&lt;br/&gt;+ getCapabilities(): BomberManCapabilities&lt;br/&gt;+ getBombermanDeathSound(): String&lt;br/&gt;+ getDirections(): Set&amp;lt;Direction&amp;gt;&lt;br/&gt;+ steppedOnDoor(Door): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4649" y="1004" width="482" height="712" as="geometry" />
+    </mxCell>
+    <mxCell id="node43" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BomberManAliveState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ BomberManAliveState(BomberMan, MovingImageManager, AbstractState): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- imageManager: MovingImageManager&lt;br/&gt;- bomberMan: BomberMan&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;# die(): void&lt;br/&gt;+ notifyCaughtByEnemy(): void&lt;br/&gt;+ getDrawing(): Drawing&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="715" y="397" width="476" height="229" as="geometry" />
+    </mxCell>
+    <mxCell id="node28" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BomberManCapabilities&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ BomberManCapabilities(double, int, int, boolean, boolean, boolean, boolean, boolean, int, int): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- goesThroughFire: boolean&lt;br/&gt;- availableBombs: int&lt;br/&gt;- remoteControl: boolean&lt;br/&gt;- numberOfLives: int&lt;br/&gt;+ defaultCapabilities: BomberManCapabilities&lt;br/&gt;- isInvincible: boolean&lt;br/&gt;- goesThroughBombs: boolean&lt;br/&gt;- bombPower: int&lt;br/&gt;- score: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getAvailableBombs(): int&lt;br/&gt;+ getNumberOfLives(): int&lt;br/&gt;+ toString(): String&lt;br/&gt;+ addPoints(int): void&lt;br/&gt;+ hasRemoteControl(): boolean&lt;br/&gt;+ addLife(): void&lt;br/&gt;+ goesThroughFire(): boolean&lt;br/&gt;+ unsetIsInvincible(): void&lt;br/&gt;+ getPointsEarned(): int&lt;br/&gt;+ goesThroughBombs(): boolean&lt;br/&gt;+ addDelta(BomberManCapabilities): void&lt;br/&gt;+ isInvincible(): boolean&lt;br/&gt;+ removeLife(): void&lt;br/&gt;+ setNumberOfLives(int): void&lt;br/&gt;+ takesPowerUps(): boolean&lt;br/&gt;+ getBombPower(): int&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1879" y="1551" width="407" height="643" as="geometry" />
+    </mxCell>
+    <mxCell id="node34" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;BomberManDeadState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ BomberManDeadState(BomberMan, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- bomberMan: BomberMan&lt;br/&gt;- deathImageManager: ImageManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ getDrawing(): Drawing&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="5310" y="52" width="377" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="node14" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Cell&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# Cell(Vector2D, AbstractImage, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- img: AbstractImage&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getDrawing(): Drawing&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3347" y="868" width="312" height="123" as="geometry" />
+    </mxCell>
+    <mxCell id="node19" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ControlledBomb&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ ControlledBomb(Vector2D, int, BomberMan, ImageManager, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- doDetonation: boolean&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ makeExplode(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1794" y="727" width="467" height="148" as="geometry" />
+    </mxCell>
+    <mxCell id="node40" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;DeadState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# DeadState(StateFul): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ notifyExplosion(Explosion): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4869" y="138" width="268" height="95" as="geometry" />
+    </mxCell>
+    <mxCell id="node22" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Door&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Door(Vector2D, AbstractImage, GameGrid, Supplier&amp;lt;Enemy&amp;gt;): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ pick(BomberMan): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2898" y="1325" width="438" height="95" as="geometry" />
+    </mxCell>
+    <mxCell id="node26" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Enemy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Enemy(Vector2D, double, boolean, GameGrid, MovingImageManager, ImageManager, int): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- previousMoveDirection: Maybe&amp;lt;Direction&amp;gt;&lt;br/&gt;- streak: int&lt;br/&gt;- deathPoints: int&lt;br/&gt;- MEAN_STREAK: int&lt;br/&gt;- stepSize: double&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- getNextStreak(): int&lt;br/&gt;+ move(): void&lt;br/&gt;+ getDeathPoints(): int&lt;br/&gt;+ getPreviousMoveDirection(): Maybe&amp;lt;Direction&amp;gt;&lt;br/&gt;+ allowsBombs(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4135" y="1023" width="454" height="298" as="geometry" />
+    </mxCell>
+    <mxCell id="node41" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;EnemyAliveState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ EnemyAliveState(Enemy, MovingImageManager, AbstractState): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- imageManager: MovingImageManager&lt;br/&gt;- enemy: Enemy&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="155" y="868" width="449" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node42" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;EnemyDeadState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ EnemyDeadState(Enemy, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4978" y="331" width="311" height="95" as="geometry" />
+    </mxCell>
+    <mxCell id="node31" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Entity&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# Entity(Vector2D, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ SIZE_IN_MODEL: int&lt;br/&gt;- gameGrid: GameGrid&lt;br/&gt;- oldDrawing: Maybe&amp;lt;Drawing&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getDrawing(AbstractImage): Drawing&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ hasChanged(): void&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;+ toString(): String&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ getCenterInGridCoord(): Vector2D&lt;br/&gt;+ getUnderlyingFreeCell(): FreeCell&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ getGameGrid(): GameGrid&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3817" y="-14" width="275" height="367" as="geometry" />
+    </mxCell>
+    <mxCell id="node23" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;EntityFactory&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- EntityFactory(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- UP: String&lt;br/&gt;- CHARACTER_SPECIFICATION_FILE: String&lt;br/&gt;- SPEED: String&lt;br/&gt;- GOES_THROUGH_WALLS_KEY: String&lt;br/&gt;- DEATH: String&lt;br/&gt;- DOWN: String&lt;br/&gt;- ALIVE: String&lt;br/&gt;- entitySpecifications: JSONObject&lt;br/&gt;- RIGHT: String&lt;br/&gt;- factory: EntityFactory&lt;br/&gt;- LEFT: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getInstance(): EntityFactory&lt;br/&gt;+ buildDoor(Vector2D, GameGrid): Door&lt;br/&gt;+ buildPowerUp(int, Vector2D, GameGrid): Powerup&lt;br/&gt;+ buildFire(FireType, Vector2D, GameGrid): Fire&lt;br/&gt;- getEnemySpecification(int): JSONObject&lt;br/&gt;+ buildWall(Vector2D, GameGrid): Wall&lt;br/&gt;+ getEnemyCapabilities(int): GameCharacterCapabilities&lt;br/&gt;- getImageListFromJsonArray(JSONArray): List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;+ buildBomb(Vector2D, int, BomberMan, GameGrid, BombConstructor): Bomb&lt;br/&gt;- getImagesList(JSONObject, String): List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;+ buildBomberMan(Vector2D, BomberManCapabilities, GameGrid): BomberMan&lt;br/&gt;+ buildEnemy(int, Vector2D, GameGrid): Enemy&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="399" y="1442" width="525" height="597" as="geometry" />
+    </mxCell>
+    <mxCell id="node25" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;EntityHierarchy&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- EntityHierarchy(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- drawingHierarchy: Map&amp;lt;Class&amp;lt;Entity&amp;gt;, Integer&amp;gt;&lt;br/&gt;- instance: EntityHierarchy&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- getAssociation(Map&amp;lt;Class&amp;lt;Entity&amp;gt;, Integer&amp;gt;, Entity): Maybe&amp;lt;Integer&amp;gt;&lt;br/&gt;+ getDrawLevelFor(Entity): Maybe&amp;lt;Integer&amp;gt;&lt;br/&gt;+ getInstance(): EntityHierarchy&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="5375" y="322" width="489" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node33" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Explosion&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Explosion(int, Vector2D): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- fromGridCoordinate: Vector2D&lt;br/&gt;- strength: int&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getStrength(): int&lt;br/&gt;+ getFromGridCoordinate(): Vector2D&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1920" y="1313" width="269" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="node20" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Fire&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Fire(Vector2D, GameGrid, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- imageManager: ImageManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getDrawing(): Drawing&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3448" y="1136" width="315" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node46" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;enumeration&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;FireType&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ FireType(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ HORIZONTAL: &lt;br/&gt;+ EAST: &lt;br/&gt;+ VERTICAL: &lt;br/&gt;+ WEST: &lt;br/&gt;+ NORTH: &lt;br/&gt;+ SOUTH: &lt;br/&gt;+ CENTER: &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ valueOf(String): FireType&lt;br/&gt;+ values(): FireType[]&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1165" y="240" width="117" height="35" as="geometry" />
+    </mxCell>
+    <mxCell id="node17" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FreeCell&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ FreeCell(Vector2D, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- fires: Set&amp;lt;Fire&amp;gt;&lt;br/&gt;- bomberMan: Maybe&amp;lt;BomberMan&amp;gt;&lt;br/&gt;- entities: Set&amp;lt;Entity&amp;gt;&lt;br/&gt;- GREEN_BACKGROUND: String&lt;br/&gt;- powerup: Maybe&amp;lt;Powerup&amp;gt;&lt;br/&gt;- bomb: Maybe&amp;lt;Bomb&amp;gt;&lt;br/&gt;- door: Maybe&amp;lt;Door&amp;gt;&lt;br/&gt;- wall: Maybe&amp;lt;Wall&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ addBomb(Bomb): void&lt;br/&gt;+ removePowerup(Powerup): void&lt;br/&gt;+ contains(Entity): boolean&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;+ addWall(Wall): void&lt;br/&gt;+ addDoor(Door): void&lt;br/&gt;+ removeFire(Fire): void&lt;br/&gt;+ getEntitiesOn(): Set&amp;lt;Entity&amp;gt;&lt;br/&gt;+ removeCharacter(GameCharacter): void&lt;br/&gt;+ addFire(Fire): void&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ addGameCharacter(GameCharacter): void&lt;br/&gt;+ addBlock(Block): void&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ removeWall(Wall): void&lt;br/&gt;+ addPowerUp(Powerup): void&lt;br/&gt;+ removeBomb(Bomb): void&lt;br/&gt;+ getDrawing(): Drawing&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3770" y="412" width="305" height="666" as="geometry" />
+    </mxCell>
+    <mxCell id="node12" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FullMovementMovingImageManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ FullMovementMovingImageManager(List&amp;lt;AbstractImage&amp;gt;, List&amp;lt;AbstractImage&amp;gt;, List&amp;lt;AbstractImage&amp;gt;, List&amp;lt;AbstractImage&amp;gt;): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- right: List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;- left: List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;- up: List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;- down: List&amp;lt;AbstractImage&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# getImageSet(Direction): List&amp;lt;AbstractImage&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="48" y="1201" width="439" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node11" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Game&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Game(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- TIME: long&lt;br/&gt;- exiting: boolean&lt;br/&gt;- UPDATE_FREQ: int&lt;br/&gt;- WIN_SOUND: String&lt;br/&gt;- currentlyPlayingBackgroundNoiseName: String&lt;br/&gt;- lastUpdate: Maybe&amp;lt;Pair&amp;lt;Long, Drawing&amp;gt;&amp;gt;&lt;br/&gt;- gameGrid: GameGrid&lt;br/&gt;- POWERUP_TAKEN_BACKGROUND_NOISE: String&lt;br/&gt;- NORMAL_BACKGROUND_NOISE: String&lt;br/&gt;- GAME_OVER_SOUND: String&lt;br/&gt;- timerToEOG: Timer&lt;br/&gt;- func: CallbackOnce&lt;br/&gt;- handle: EnhancedAudioHandle&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ update(): Drawing&lt;br/&gt;+ endGame(boolean): void&lt;br/&gt;+ secsToEnd(): long&lt;br/&gt;+ exited(): boolean&lt;br/&gt;+ exiting(): boolean&lt;br/&gt;+ getDimensions(): Vector2D&lt;br/&gt;+ powerUpTaken(): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4003" y="1380" width="344" height="528" as="geometry" />
+    </mxCell>
+    <mxCell id="node16" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameCharacter&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# GameCharacter(Vector2D, GameCharacterCapabilities, GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- stateIsNothingError: Supplier&amp;lt;JBomberManException&amp;gt;&lt;br/&gt;- capabilities: GameCharacterCapabilities&lt;br/&gt;- state: Maybe&amp;lt;AbstractState&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ setState(AbstractState): void&lt;br/&gt;+ updateInModel(): void&lt;br/&gt;+ setCapabilities(GameCharacterCapabilities): void&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ move(): void&lt;br/&gt;+ isDisappearing(): boolean&lt;br/&gt;+ getCapabilities(): GameCharacterCapabilities&lt;br/&gt;+ getState(): AbstractState&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3245" y="325" width="464" height="344" as="geometry" />
+    </mxCell>
+    <mxCell id="node30" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameCharacterCapabilities&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ GameCharacterCapabilities(boolean, double): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- goesThroughWallsFlag: boolean&lt;br/&gt;- speed: double&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ goesThroughWalls(): boolean&lt;br/&gt;+ setSpeed(double): void&lt;br/&gt;+ toString(): String&lt;br/&gt;+ getSpeed(): double&lt;br/&gt;+ setGoesThroughWalls(boolean): void&lt;br/&gt;+ getSpeedInstance(): double&lt;br/&gt;+ takesPowerUps(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1573" y="922" width="331" height="275" as="geometry" />
+    </mxCell>
+    <mxCell id="node10" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameGrid&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ GameGrid(Vector2D, Vector2D, GameGridBuilder): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- numberOfEnemies: int&lt;br/&gt;- moveManager: MoveManager&lt;br/&gt;- ALL_ENEMIES_ARE_DEAD_SOUND: String&lt;br/&gt;- gameGridBuilder: GameGridBuilder&lt;br/&gt;- topLeftCorner: Vector2D&lt;br/&gt;- deadEnemiesSoundPlayer: CallbackOnce&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ update(): void&lt;br/&gt;+ getCenterInGridCoord(Vector2D): Vector2D&lt;br/&gt;+ doWhenTimeHasEnded(): void&lt;br/&gt;+ addFire(Fire, Vector2D): void&lt;br/&gt;+ addGameCharacter(GameCharacter, Vector2D): void&lt;br/&gt;+ addWall(Wall, Vector2D): void&lt;br/&gt;+ getCenter(Vector2D): Vector2D&lt;br/&gt;+ gridCoord2modelCoor(Vector2D): Vector2D&lt;br/&gt;+ addBlock(Block, Vector2D): void&lt;br/&gt;+ addPowerup(Powerup, Vector2D): void&lt;br/&gt;+ modelCoord2GridCoord(Vector2D): Vector2D&lt;br/&gt;+ getMoveManager(): MoveManager&lt;br/&gt;+ addDoor(Door, Vector2D): void&lt;br/&gt;+ enemyIsDead(): void&lt;br/&gt;+ moveCharacter(GameCharacter, Vector2D, Vector2D): void&lt;br/&gt;+ finalize(): void&lt;br/&gt;+ getTopLeftCornerModelCoordinate(): Vector2D&lt;br/&gt;+ getNumberOfEnemiesStillAlive(): int&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ addGameCharacterInFreeCell(GameCharacter, Vector2D): void&lt;br/&gt;+ addBomb(Bomb, Vector2D): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1382" y="1352" width="435" height="689" as="geometry" />
+    </mxCell>
+    <mxCell id="node5" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameGridBuilder&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ GameGridBuilder(Vector2D): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- grid: Maybe&amp;lt;GameGrid&amp;gt;&lt;br/&gt;- topLeft: Vector2D&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ addDoor(Vector2D): void&lt;br/&gt;+ getGrid(): GameGrid&lt;br/&gt;+ addBomberMan(Vector2D, BomberManCapabilities): void&lt;br/&gt;+ addPowerUp(Vector2D, int): void&lt;br/&gt;+ addEnemy(Vector2D, int): void&lt;br/&gt;+ addBlock(Vector2D): void&lt;br/&gt;+ setup(Vector2D): void&lt;br/&gt;+ addFreeCell(Vector2D): void&lt;br/&gt;+ addWall(Vector2D): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4977" y="597" width="399" height="321" as="geometry" />
+    </mxCell>
+    <mxCell id="node8" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GameGridBuilderDirector&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ GameGridBuilderDirector(GameGridBuilder, int, BomberManCapabilities): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- gridWidth: int&lt;br/&gt;- levelNumber: int&lt;br/&gt;- capabilities: BomberManCapabilities&lt;br/&gt;- NUMBER_OF_POWERUPS: int&lt;br/&gt;- bombermanEntryPointGridRelative: Vector2D&lt;br/&gt;- gridHeight: int&lt;br/&gt;- LEVEL_JSON_FILE: String&lt;br/&gt;- builder: GameGridBuilder&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ allCoordinatesButBlocks(): Stream&amp;lt;Vector2D&amp;gt;&lt;br/&gt;+ construct(): void&lt;br/&gt;- levelAgnosticConstruction(): void&lt;br/&gt;- allGridCoordinates(): Stream&amp;lt;Vector2D&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3459" y="1378" width="441" height="344" as="geometry" />
+    </mxCell>
+    <mxCell id="node7" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;GamePlayException&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ GamePlayException(String): &lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4194" y="764" width="222" height="67" as="geometry" />
+    </mxCell>
+    <mxCell id="node6" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ImageManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ ImageManager(List&amp;lt;AbstractImage&amp;gt;, int): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- updateInterval: int&lt;br/&gt;- DEFAULT_UPDATE_INTERVAL: int&lt;br/&gt;- timeToUpdate: int&lt;br/&gt;- idxInImages: int&lt;br/&gt;- hasDoneOneCycle: boolean&lt;br/&gt;- images: List&amp;lt;AbstractImage&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ getImage(): AbstractImage&lt;br/&gt;+ setImages(List&amp;lt;AbstractImage&amp;gt;): void&lt;br/&gt;+ setIdxInImages(int): void&lt;br/&gt;+ setUpdateInterval(int): void&lt;br/&gt;+ getCurrentImage(): AbstractImage&lt;br/&gt;+ hasChanged(): boolean&lt;br/&gt;+ hasDoneOneCycle(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="665" y="689" width="308" height="367" as="geometry" />
+    </mxCell>
+    <mxCell id="node4" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;LeftRightMovingImageManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ LeftRightMovingImageManager(List&amp;lt;AbstractImage&amp;gt;, List&amp;lt;AbstractImage&amp;gt;): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- left: List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;- right: List&amp;lt;AbstractImage&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# getImageSet(Direction): List&amp;lt;AbstractImage&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1055" y="1073" width="457" height="148" as="geometry" />
+    </mxCell>
+    <mxCell id="node0" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Model&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- Model(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- dimensions: Vector2D&lt;br/&gt;- game: Maybe&amp;lt;Game&amp;gt;&lt;br/&gt;- controller: Controller&lt;br/&gt;- instance: Model&lt;br/&gt;- player: Player&lt;br/&gt;- logger: Logger&lt;br/&gt;- keyBoardUpdateInfo: Maybe&amp;lt;KeyBoardUpdateInfo&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ close(): void&lt;br/&gt;+ resetGame(): void&lt;br/&gt;+ setController(Controller): void&lt;br/&gt;+ getInstance(): Model&lt;br/&gt;+ getGame(): Game&lt;br/&gt;+ getAccount(): Player&lt;br/&gt;+ getDimensions(): Vector2D&lt;br/&gt;+ setAccount(Player): void&lt;br/&gt;+ keyBoardEvent(KeyBoardUpdateInfo): void&lt;br/&gt;+ update(): Drawing&lt;br/&gt;+ getKeyBoardUpdateInfo(): Maybe&amp;lt;KeyBoardUpdateInfo&amp;gt;&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2347" y="1301" width="401" height="482" as="geometry" />
+    </mxCell>
+    <mxCell id="node9" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MoveManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ MoveManager(GameGrid): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- MODEL_SQUARE_OFFSET: int&lt;br/&gt;- gameGrid: GameGrid&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- generalCanAccess(Stream&amp;lt;Vector2D&amp;gt;, GameCharacterCapabilities, Vector2D, Maybe&amp;lt;Direction&amp;gt;): boolean&lt;br/&gt;+ isOnAliveWall(Vector2D): boolean&lt;br/&gt;+ isOnBomb(Vector2D): boolean&lt;br/&gt;+ getTopRight(Vector2D): Vector2D&lt;br/&gt;+ getBottomLeft(Vector2D): Vector2D&lt;br/&gt;- isOnPowerUp(Vector2D): boolean&lt;br/&gt;+ checkCoordinate(Vector2D, GameCharacterCapabilities, Vector2D, Maybe&amp;lt;Direction&amp;gt;): boolean&lt;br/&gt;+ isOnBlock(Vector2D): boolean&lt;br/&gt;+ getBottomRight(Vector2D): Vector2D&lt;br/&gt;+ isAtCrossroad(Vector2D): boolean&lt;br/&gt;+ canAccessForSmallEntity(BomberManCapabilities, Vector2D, Vector2D, Direction): boolean&lt;br/&gt;+ canAccessForCommonSizeEntity(GameCharacterCapabilities, Vector2D, Vector2D, Maybe&amp;lt;Direction&amp;gt;): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="-168" y="1548" width="484" height="390" as="geometry" />
+    </mxCell>
+    <mxCell id="node13" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;MovingImageManager&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# MovingImageManager(List&amp;lt;AbstractImage&amp;gt;, int): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- previousMoveDirection: Maybe&amp;lt;Direction&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;# getImageSet(Direction): List&amp;lt;AbstractImage&amp;gt;&lt;br/&gt;+ getImage(Maybe&amp;lt;Direction&amp;gt;): AbstractImage&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="567" y="1145" width="354" height="148" as="geometry" />
+    </mxCell>
+    <mxCell id="node27" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PickableCell&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ PickableCell(Vector2D, GameGrid, AbstractImage, Supplier&amp;lt;Enemy&amp;gt;): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- enemySupplier: Supplier&amp;lt;Enemy&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ pick(BomberMan): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2485" y="1059" width="452" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node2" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Player&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Player(String, int, Maybe&amp;lt;Path&amp;gt;, BomberManCapabilities): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- capabilities: BomberManCapabilities&lt;br/&gt;- level: int&lt;br/&gt;- playerName: String&lt;br/&gt;- avatarPath: Maybe&amp;lt;Path&amp;gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ setAvatar(Path): void&lt;br/&gt;+ getLevel(): int&lt;br/&gt;+ incrementLevel(): void&lt;br/&gt;+ setLevel(int): void&lt;br/&gt;+ getPlayerName(): String&lt;br/&gt;+ getAvatar(): Maybe&amp;lt;Path&amp;gt;&lt;br/&gt;+ getCapabilities(): BomberManCapabilities&lt;br/&gt;+ setCapabilities(BomberManCapabilities): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="2935" y="1681" width="411" height="344" as="geometry" />
+    </mxCell>
+    <mxCell id="node3" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PlayerBuilder&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- PlayerBuilder(): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- BOMB_POWER: String&lt;br/&gt;- SPEED: String&lt;br/&gt;- REMOTE_CONTROL: String&lt;br/&gt;- GOES_THROUGH_FIRE: String&lt;br/&gt;- NO_OF_LIVES: String&lt;br/&gt;- instance: PlayerBuilder&lt;br/&gt;- IS_INVINCIBLE: String&lt;br/&gt;- GOES_THROUGH_BOMBS: String&lt;br/&gt;- AVAILABLE_BOMBS: String&lt;br/&gt;- LEVEL: String&lt;br/&gt;- AVATAR_PATH: String&lt;br/&gt;- START_LEVEL: int&lt;br/&gt;- GOES_THROUGH_WALLS: String&lt;br/&gt;- POINTS_EARNED: String&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ savePlayer(Player): void&lt;br/&gt;- getFilePath(): Path&lt;br/&gt;+ retrievePlayer(String): Maybe&amp;lt;Player&amp;gt;&lt;br/&gt;+ buildPlayer(String): void&lt;br/&gt;- getPlayersJson(): JSONObject&lt;br/&gt;+ getDefaultAccount(String): Player&lt;br/&gt;+ getInstance(): PlayerBuilder&lt;br/&gt;- saveFile(JSONObject): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="985" y="1338" width="284" height="574" as="geometry" />
+    </mxCell>
+    <mxCell id="node1" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;PlayerBuilderException&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ PlayerBuilderException(String): &lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="3826" y="1194" width="242" height="67" as="geometry" />
+    </mxCell>
+    <mxCell id="node29" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Powerup&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Powerup(Vector2D, GameGrid, AbstractImage, Enemy, BomberManCapabilities): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- POWERUP_TAKEN_MUSIC: String&lt;br/&gt;- deltaCapabilities: BomberManCapabilities&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ pick(BomberMan): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1966" y="1038" width="458" height="160" as="geometry" />
+    </mxCell>
+    <mxCell id="node39" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;SimpleDeadState&lt;T&gt;&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ SimpleDeadState(T, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- deathImageManager: ImageManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;# getEntity(): Entity&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;# getDeathImageManager(): ImageManager&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4612" y="394" width="304" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node38" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br/&gt;&lt;b&gt;StateFul&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ setState(AbstractState): void&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4558" y="268" width="227" height="78" as="geometry" />
+    </mxCell>
+    <mxCell id="node18" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Wall&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ Wall(Vector2D, GameGrid, ImageManager, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- state: AbstractState&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;br/&gt;+ allowsBombs(): boolean&lt;br/&gt;+ setState(AbstractState): void&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ isDisappearing(): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4136" y="450" width="416" height="229" as="geometry" />
+    </mxCell>
+    <mxCell id="node35" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;WallAliveState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ WallAliveState(Wall, AbstractState, ImageManager): &lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;- wall: Wall&lt;br/&gt;- imageManager: ImageManager&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ updateInModel(): void&lt;br/&gt;+ getDrawing(): Drawing&lt;br/&gt;+ notifyExplosion(Explosion): boolean&lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="1364" y="520" width="369" height="183" as="geometry" />
+    </mxCell>
+    <mxCell id="node44" parent="1" vertex="1" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;WallDeadState&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot;/&gt;&lt;p style=&quot;margin:0 0 0 4px;line-height:1.6;&quot;&gt;+ WallDeadState(Wall, ImageManager): &lt;/p&gt;" style="verticalAlign=top;align=left;overflow=fill;fontSize=14;fontFamily=Helvetica;html=1;rounded=0;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;">
+      <mxGeometry x="4561" y="742" width="277" height="67" as="geometry" />
+    </mxCell>
+    <mxCell id="edge20" edge="1" value="" parent="1" source="node36" target="node37" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=1.000;exitY=0.500;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1776" y="754" />
+          <mxPoint x="1776" y="132" />
+          <mxPoint x="3063" y="132" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge13" edge="1" value="" parent="1" source="node32" target="node21" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.000;exitY=0.500;exitDx=0;exitDy=0;entryX=0.909;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2292" y="887" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge7" edge="1" value="" parent="1" source="node24" target="node14" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.452;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3254" y="1026" />
+          <mxPoint x="3488" y="1026" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge17" edge="1" value="" parent="1" source="node21" target="node31" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2115" y="697" />
+          <mxPoint x="2811" y="697" />
+          <mxPoint x="2811" y="169" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge31" edge="1" value="" parent="1" source="node45" target="node21" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=circlePlus;startFill=0;endArrow=none;strokeColor=#820000;exitX=0.500;exitY=0.001;exitDx=0;exitDy=0;entryX=0.000;entryY=0.422;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="295" y="220" />
+          <mxPoint x="474" y="220" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge6" edge="1" value="" parent="1" source="node15" target="node16" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.000;exitY=0.433;exitDx=0;exitDy=0;entryX=1.000;entryY=0.143;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4606" y="1312" />
+          <mxPoint x="4606" y="1349" />
+          <mxPoint x="4109" y="1349" />
+          <mxPoint x="4109" y="373" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge23" edge="1" value="" parent="1" source="node43" target="node36" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="953" y="657" />
+          <mxPoint x="1169" y="657" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge15" edge="1" value="" parent="1" source="node28" target="node30" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.018;exitY=0.000;exitDx=0;exitDy=0;entryX=0.948;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge18" edge="1" value="" parent="1" source="node34" target="node40" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="5498" y="247" />
+          <mxPoint x="5003" y="247" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge14" edge="1" value="" parent="1" source="node14" target="node31" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3503" y="1010" />
+          <mxPoint x="2837" y="1010" />
+          <mxPoint x="2837" y="697" />
+          <mxPoint x="2811" y="697" />
+          <mxPoint x="2811" y="169" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge5" edge="1" value="" parent="1" source="node19" target="node21" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=1.000;exitY=0.500;exitDx=0;exitDy=0;entryX=0.909;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2292" y="794" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge24" edge="1" value="" parent="1" source="node40" target="node37" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="5003" y="-46" />
+          <mxPoint x="2402" y="-46" />
+          <mxPoint x="2402" y="132" />
+          <mxPoint x="3063" y="132" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge3" edge="1" value="" parent="1" source="node22" target="node27" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3117" y="1271" />
+          <mxPoint x="2711" y="1271" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge11" edge="1" value="" parent="1" source="node26" target="node16" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=1.000;entryY=0.143;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4362" y="1349" />
+          <mxPoint x="4109" y="1349" />
+          <mxPoint x="4109" y="373" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge26" edge="1" value="" parent="1" source="node41" target="node36" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="380" y="657" />
+          <mxPoint x="1169" y="657" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge27" edge="1" value="" parent="1" source="node42" target="node39" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.000;exitY=0.500;exitDx=0;exitDy=0;entryX=1.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4947" y="375" />
+          <mxPoint x="4947" y="485" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge8" edge="1" value="" parent="1" source="node20" target="node31" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3606" y="1010" />
+          <mxPoint x="2837" y="1010" />
+          <mxPoint x="2837" y="697" />
+          <mxPoint x="2811" y="697" />
+          <mxPoint x="2811" y="169" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge32" edge="1" value="" parent="1" source="node46" target="node20" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=circlePlus;startFill=0;endArrow=none;strokeColor=#820000;exitX=1.000;exitY=0.878;exitDx=0;exitDy=0;entryX=0.000;entryY=0.215;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge4" edge="1" value="" parent="1" source="node17" target="node14" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.000;exitY=0.500;exitDx=0;exitDy=0;entryX=0.452;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3677" y="744" />
+          <mxPoint x="3677" y="1026" />
+          <mxPoint x="3488" y="1026" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge1" edge="1" value="" parent="1" source="node12" target="node13" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=1.000;exitY=0.395;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="549" y="1272" />
+          <mxPoint x="549" y="1309" />
+          <mxPoint x="744" y="1309" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge9" edge="1" value="" parent="1" source="node16" target="node31" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3477" y="697" />
+          <mxPoint x="2811" y="697" />
+          <mxPoint x="2811" y="169" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge21" edge="1" value="" parent="1" source="node16" target="node38" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=block;endSize=12;strokeColor=#008200;exitX=1.000;exitY=0.500;exitDx=0;exitDy=0;entryX=0.137;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="3752" y="496" />
+          <mxPoint x="3752" y="388" />
+          <mxPoint x="4590" y="388" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge0" edge="1" value="" parent="1" source="node4" target="node13" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1284" y="1309" />
+          <mxPoint x="744" y="1309" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge2" edge="1" value="" parent="1" source="node13" target="node6" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.713;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge10" edge="1" value="" parent="1" source="node27" target="node14" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.452;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2711" y="1026" />
+          <mxPoint x="3488" y="1026" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge16" edge="1" value="" parent="1" source="node29" target="node27" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=1.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="2195" y="1271" />
+          <mxPoint x="2711" y="1271" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge30" edge="1" value="" parent="1" source="node39" target="node40" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.627;exitY=0.000;exitDx=0;exitDy=0;entryX=0.500;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4803" y="247" />
+          <mxPoint x="5003" y="247" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge22" edge="1" value="" parent="1" source="node39" target="node31" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=1.000;entryY=0.987;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4764" y="348" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge29" edge="1" value="" parent="1" source="node39" target="node38" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=openThin;endSize=12;strokeColor=#595959;exitX=0.549;exitY=0.000;exitDx=0;exitDy=0;entryX=0.973;entryY=1.001;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points" />
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge12" edge="1" value="" parent="1" source="node18" target="node31" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.500;exitY=0.000;exitDx=0;exitDy=0;entryX=0.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4344" y="-31" />
+          <mxPoint x="2811" y="-31" />
+          <mxPoint x="2811" y="169" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge28" edge="1" value="" parent="1" source="node18" target="node38" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=1;startArrow=none;endArrow=block;endSize=12;strokeColor=#008200;exitX=0.059;exitY=0.000;exitDx=0;exitDy=0;entryX=0.137;entryY=1.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4161" y="388" />
+          <mxPoint x="4590" y="388" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge25" edge="1" value="" parent="1" source="node35" target="node36" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=0.000;exitY=0.500;exitDx=0;exitDy=0;entryX=0.500;entryY=0.000;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="1209" y="611" />
+          <mxPoint x="1209" y="657" />
+          <mxPoint x="1169" y="657" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+    <mxCell id="edge19" edge="1" value="" parent="1" source="node44" target="node39" style="html=1;rounded=1;edgeStyle=orthogonalEdgeStyle;dashed=0;startArrow=none;endArrow=block;endSize=12;strokeColor=#000082;exitX=1.000;exitY=0.500;exitDx=0;exitDy=0;entryX=1.000;entryY=0.500;entryDx=0;entryDy=0;">
+      <mxGeometry width="50" height="50" relative="1" as="geometry">
+        <Array as="points">
+          <mxPoint x="4947" y="773" />
+          <mxPoint x="4947" y="485" />
+        </Array>
+      </mxGeometry>
+    </mxCell>
+  </root>
+</mxGraphModel>

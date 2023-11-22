@@ -28,6 +28,10 @@ PHONY += docs
 docs:
 	./gradlew javadoc
 
+PHONY += gradleUpgrade
+gradleUpgrade:
+	./gradlew wrapper --gradle-version latest
+
 .PHONY: $(PHONY)
 
 # vim: set ts=8 sw=8 tw=0 noet :
